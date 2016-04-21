@@ -1,0 +1,72 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  background-color: @body-color;
+  font-size: 12px; /* no */
+  -webkit-font-smoothing: antialiased;
+  font-family: arial, sans-serif;
+}
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, iframe {
+  margin: 0;
+  padding: 0;
+}
+img, article, aside, details, figcaption, figure, footer, header, menu, nav, section, summary, time, mark, audio, video {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+}
+fieldset, img {
+  border: 0;
+}
+address, caption, cite, dfn, em, th, var, i, em {
+  font-style: normal;
+  font-weight: normal;
+}
+ol, ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:hover {
+  text-decoration: none
+}
+a, label, button, input, select {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+input, select, button {
+  font: 100% tahoma, \5b8b\4f53, arial;
+  vertical-align: baseline;
+  outline: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+textarea {
+  outline: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  overflow: auto;
+  resize: none;
+  font: 100% tahoma, \5b8b\4f53, arial;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

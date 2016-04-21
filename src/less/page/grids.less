@@ -1,0 +1,63 @@
+.m-grids {
+  overflow: hidden;
+  position: relative;
+  background-color: #FFF;
+  text-align: center;
+  font-size: .24rem; /* px */
+  align-items: center;
+  width: 100%;
+  &:before, &:after {
+    content: '';
+    background-color: @line-color;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:before {
+    width: 100%;
+    height: 1px; /* no */
+  }
+  &:after {
+    height: 100%;
+    width: 1px; /* no */
+  }
+}
+.m-grids > li {
+  width: 25%;
+  position: relative;
+  float: left;
+  overflow: hidden;
+  .grids-item {
+    padding: .5rem 0;
+    display: block;
+    font-size: .28rem; /* px */
+    > i {
+      display: block;
+      font-size: .6rem;
+      color: #999;
+    }
+    > span {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &:before, &:after {
+      content: '';
+      background-color: @line-color;
+      position: absolute;
+    }
+    &:before {
+      width: 100%;
+      height: 1px; /* no */
+      bottom: 0;
+      left: 0;
+    }
+    &:after {
+      height: 100%;
+      width: 1px; /* no */
+      top: 0;
+      right: 0;
+    }
+  }
+}

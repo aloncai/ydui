@@ -1,0 +1,121 @@
+.m-celltitle {
+  padding: .15rem .24rem .1rem;
+  font-size: .3rem; /* px */
+  color: #888;
+  border-bottom: 1px solid @line-color; /* no */
+}
+.m-cell {
+  background-color: #FFF;
+  margin-bottom: .2rem;
+  border-bottom: 1px solid @line-high-color; /* no */
+  a.u-cellitem,
+  label.cellright {
+    .tap-color(#FFF, .96);
+  }
+}
+.u-cellitem {
+  display: flex;
+  position: relative;
+  z-index: 0;
+  padding-left: .24rem;
+  overflow: hidden;
+  &:not(:last-child):after {
+    content: '';
+    width: 100%;
+    height: 1px; /* no */
+    background-color: @line-color;
+    position: absolute;
+    left: .24rem;
+    bottom: 0;
+  }
+}
+.cellleft {
+  color: #333;
+  font-size: .3rem; /* px */
+  white-space: nowrap;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+.cellright {
+  flex: 1;
+  width: 100%;
+  min-height: 1rem;
+  color: #525252;
+  text-align: right;
+  font-size: .28rem; /* px */
+  padding-right: .24rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .cell-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    line-height: 1.25;
+    font-size: .3rem; /* px */
+    background: transparent;
+    color: #555;
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    text-align: left; /* fuck UC */
+  }
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="time"] {
+    line-height: 1rem;
+  }
+  input[type="radio"], input[type="checkbox"]:not(.u-checkbox-ios) {
+    appearance: none;
+    position: absolute;
+    left: -9999em;
+    & + .cell-radio-ico:after, & + .cell-checkbox-ico:after {
+      display: none;
+      font-size: .4rem; /* px */
+    }
+    &:checked {
+      & + .cell-radio-ico:after {
+        color: #4CD864;
+        content: '\e617';
+        display: inline-block;
+        font-family: @iconfont;
+      }
+      & + .cell-checkbox-ico:after {
+        color: #4CD864;
+        content: '\e635';
+        display: inline-block;
+        font-family: @iconfont;
+      }
+    }
+  }
+  textarea {
+    width: 100%;
+    border: none;
+    display: block; /* for old android */
+    height: 1.5rem;
+    padding: .2rem 0;
+  }
+  .select {
+    flex: 1;
+    width: 100%;
+    border: none;
+    height: 1rem; /* fuck uc */
+    display: block;
+    color: #A9A9A9;
+    line-height: 1rem;
+    font-size: .3rem; /* px */
+    margin-left: -.08rem; /* 去除select默认缩进 */
+  }
+}
+.u-cellitem .cellico:before {
+  line-height: 1;
+  color: #A6A5A5;
+  font-size: .42rem; /* px */
+  margin-right: .1rem;
+}
+.u-cellitem .cellarrow:after {
+  content: '';
+  margin-left: .05rem;
+  .arrow(#C9C9C9, .2rem, 2px, 45deg);
+}

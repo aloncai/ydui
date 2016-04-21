@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css"/>
+    <link rel="stylesheet" href="../css/example.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/yd_flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="../index.html" class="back-ico"></a>
+            <div class="center">List</div>
+            <a href="javascript:;" class="nav-ico icon-sortlist" id="J_ChangeView"></a>
+        </nav>
+    </header>
+    <aside class="example-tip">
+        <p>本页包含功能点：</p>
+        <p><i>①</i>进入详情页后，返回后，定位之前位置；</p>
+        <p><i>②</i>图片不管是否正方形，不会导致页面显示错乱；</p>
+        <p><i>③</i>三种排版方式切换；</p>
+        <p><i>④</i>滚动加载数据；需要“点击加载更多”<a href="loadmore.html">在这里</a>；</p>
+    </aside>
+    <section class="m-list" id="J_ListCon">
+        <section class="m-listbox" id="J_List"></section><!-- 数据填充DOM -->
+        <div class="list-tip" id="J_ListTip">没有更多数据了</div><!-- 没有数据时显示 -->
+        <div class="loading" id="J_Loading"><img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg" /></div>
+    </section>
+</section>
+<!-- 列表数据模板 -->
+<script id="J_ListHtml" type="text/html">
+    {{each list as data}}
+    <a href="javascript:;" class="m-listitem J_ListRedirect" data-page="{{list.realpage}}" data-href="{{data.url}}">
+        <div class="m-listimg">
+            <img src="http://static.ydcss.com/uploads/ydui/default.jpg" data-original="{{data.img}}"/>
+        </div>
+        <div class="m-listtitle">
+            <h3 class="title">{{data.title}}(page{{list.realpage}})</h3>
+            <p><span class="price"><em>¥</em>{{data.marketprice}}</span>
+                <del>¥{{data.productprice}}</del>
+            </p>
+        </div>
+    </a>
+    {{/each}}
+</script>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="http://static.ydcss.com/libs/arttemplate/template.js"></script>
+<script src="http://static.ydcss.com/libs/lazyload/jquery.lazyload.js"></script>
+<script src="../libs/dataload/jquery.dataload.js"></script>
+<script src="../js/util.js"></script>
+<script>
+    /**
+     * 返回后，定位之前位置逻辑：
+     * ①加载数据后将每页数据存入SessionStorage
+     * ②链接跳转详情页，改为js触发跳转并将当前元素的offset().top和页码记录到SessionStorage
+     * ③返回列表页判断是否需要滚动至之前位置，是则滚动至指定位置
+     */
+    !function ($, window, util) {
+        var listView = {
+                key: 'viewtype',//本地存储key(排版方式)
+                viewtype: ['larger', 'largest', 'list'],//排版方式
+                // 需要找三种图片的规则 http://img1.shikee.com/try/2016/02/29/12240320922862852966.jpg_295x295.jpg
+                imgwidth: ['_220x220.jpg', '_295x295.jpg', '_180x180.jpg'],
+                //切换排版方式
+                changeLayout: function () {
+                    $('#J_ChangeView').removeClass().addClass('nav-ico icon-sort' + listView.viewtype[viewTypeIndex]);
+                    $('#J_List').removeClass()
+                            .addClass('m-listbox ' + listView.viewtype[viewTypeIndex] + '-view')
+                            .find('img').each(function () {
+                                var $this = $(this);
+                                $this.attr('src', $this.data('original') + listView.imgwidth[viewTypeIndex]);
+                            });
+                }
+            },
+            localKey = util.getLocalStorage(listView.key),
+            viewTypeIndex = localKey ? listView.viewtype.indexOf(localKey) : 0;
+
+        listView.changeLayout();
+
+        var page = 1;//起始页码
+        var backPosition = {
+            storageTagKey: 'LIST_STATUS',//储存当前坐标和页码的本地存储key
+            storageListKey: 'LIST_DATA',//储存列表数据的本地存储key
+            storageVal: null,//当前坐标和页码值
+            //从本地存储读取需要的数据并显示，然后滚动到之前位置
+            appendFormStorage: function () {
+                var that = this;
+                that.showMask();
+
+                var n = that.storageVal.page;
+                page = n + 1;//已经自动滚动并加载数据后，记录下次加载的正确页数
+
+                var _tempHtml = '';
+                //从SessionStorage获取需要显示的列表数据
+                for (var i = 1; i <= n; i++) {
+                    var _d = JSON.parse(util.getSessionStorage(that.storageListKey + i));
+                    if (_d) {
+                        _d.realpage = i;
+                        _tempHtml += template('J_ListHtml', {list: _d});
+                    }
+                }
+                //填充HTML
+                $('#J_List').append(_tempHtml).find('img').each(function () {
+                    var $this = $(this);
+                    $this.attr('data-original', $this.data('original') + listView.imgwidth[viewTypeIndex]);
+                }).lazyload();
+
+                that.hideMask();
+            },
+            //显示遮罩层 弱化显示滚动过程
+            showMask: function () {
+                $('body').append('<div id="J_ListMask" class="maks-white-high"></div>');
+            },
+            //移除遮罩层
+            hideMask: function () {
+                var that = this;
+                var navHeight = parseInt($('html').css('font-size')) * 0.88;//nav的高度
+                $('body,html').animate({scrollTop: that.storageVal.st - navHeight}, 20, function () {
+                    $('#J_ListMask').remove();
+                });
+            },
+            getStorage: function () {
+                var _storage = null;
+
+                var storageTemp = util.getSessionStorage(backPosition.storageTagKey);
+                if (storageTemp)_storage = JSON.parse(storageTemp);
+
+                //取出数据后立即将其删除！！！
+                util.removeSessionStorage(backPosition.storageTagKey);
+
+                backPosition.storageVal = _storage;
+
+                return _storage;
+            }
+        };
+
+        //判断是否需要自动加载数据并滚动页面
+        !!backPosition.getStorage() && backPosition.appendFormStorage();
+
+        //调用插件实现滚动加载
+        $('#J_ListCon').dataload({
+            url: 'http://static.ydcss.com/uploads/ydui/list.js',//模拟的jsonp数据
+            page: page,
+            pageSize: 10,
+            dataType: 'jsonp',
+            pagestr: 'testpage',
+            jsonpCallback: 'callback',
+            loadtype: 'scroll',
+            data: {aaa: 'aaa'},
+            loadingdom: '#J_Loading',
+            callback: function (ret, retPage) {
+                ret.realpage = retPage;
+                //填充HTML
+                $('#J_List').append(template('J_ListHtml', {list: ret})).find('img').each(function () {
+                    var $this = $(this);
+                    $this.attr('data-original', $this.data('original') + listView.imgwidth[viewTypeIndex]);
+                }).lazyload();
+
+                //储存每页数据
+                util.setSessionStorage(backPosition.storageListKey + retPage, JSON.stringify(ret));
+            }
+        }).delegate('.J_ListRedirect', 'click', function (e) {
+            //原来的a链接 改用js触发跳转方式
+            e.stopPropagation();
+
+            var $this = $(this);
+            //储存当前坐标和页码
+            util.setSessionStorage(backPosition.storageTagKey, JSON.stringify({
+                st: $this.offset().top,
+                page: $this.data('page')
+            }));
+            location.href = $this.data('href');
+        });
+
+        //切换排版方式
+        $('#J_ChangeView').on('click', function () {
+            ++viewTypeIndex;
+            if (viewTypeIndex > listView.viewtype.length - 1) {
+                viewTypeIndex = 0;
+            }
+            util.setLocalStorage(listView.key, listView.viewtype[viewTypeIndex % listView.viewtype.length]);
+            listView.changeLayout();
+            $(window).trigger('scroll');
+        });
+    }(jQuery, window, YDUI.util);
+</script>
+</body>
+</html>

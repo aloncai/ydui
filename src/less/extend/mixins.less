@@ -1,0 +1,50 @@
+// 按下去背景颜色
+// -----------------------------------------------------------------------------
+.tap-color(@color, @opacity: .9) {
+  background-color: @color;
+  border-color: @color;
+  &:active {
+    background-color: @color * @opacity;
+    border-color: @color * @opacity;
+  }
+}
+// 遮罩层
+// -----------------------------------------------------------------------------
+.mask(@color, @opacity) {
+  background-color: @color;
+  opacity: @opacity;
+  position: fixed;
+  z-index: 998;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+// 多行文本溢出显示省略号
+// -----------------------------------------------------------------------------
+.line-clamp(@line: 2, @line-height: .38rem) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: @line;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  line-height: @line-height;
+  max-height: @line-height * @line + .2rem;
+}
+// 三角形箭头
+// -----------------------------------------------------------------------------
+// @deg:  45deg - right
+//       135deg - down
+//       -45deg - up
+//      -135deg - left
+// ------------------------------------------------------------------------
+.arrow(@color: #DDD, @width: .2rem, @border-width: 2px, @deg: 45deg) {
+  display: inline-block;
+  width: @width;
+  height: @width;
+  border-style: solid;
+  border-color: @color;
+  border-width: @border-width @border-width 0 0; /* no */
+  transform: rotate(@deg);
+}

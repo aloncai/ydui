@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Spinner</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../../css/ydui.css"/>
+    <link rel="stylesheet" href="../../css/example.css"/>
+    <!-- build:tb_flexible -->
+    <script src="../../js/yd_flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="../../html/plugins.html" class="back-ico"></a>
+            <div class="center">Spinner</div>
+        </nav>
+    </header>
+    <div style="background-color: #FFF;padding: .24rem;" class="example-small-pitch">
+        <span class="m-spinner J_Quantity">
+            <a href="javascript:;" class="J_Del">-</a>
+            <input type="number" class="J_Input" value="1" placeholder=""/>
+            <a href="javascript:;" class="J_Add">+</a>
+        </span>
+        <span class="m-spinner J_Quantity">
+            <a href="javascript:;" class="J_Del">-</a>
+            <input type="text" class="J_Input" data-max="50" value="1" placeholder=""/>
+            <a href="javascript:;" class="J_Add">+</a>
+        </span>
+    </div>
+</section>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="jquery.spinner.js"></script>
+<script>
+    !function () {
+        $('.J_Quantity').spinner({
+            input: '.J_Input',
+            add: '.J_Add',
+            minus: '.J_Del',
+            min: 1,
+            isMaxDataAttr: true,
+            //max: 11,
+            max: function () {
+                return 9;
+            },
+            callback: function (v, ele) {
+                ele.css('background', '#FF5E53');
+                console.log(v, ele);
+            }
+        });
+    }();
+</script>
+</body>
+</html>

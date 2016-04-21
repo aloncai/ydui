@@ -1,0 +1,71 @@
+@tab-cur-color: #FF5E53;
+@scroll-tab-cur-color: #FF5E53;
+.m-tab {
+  display: flex;
+  background-color: #FFF;
+  border-bottom: 1px solid @line-high-color; /* no */
+  > li {
+    text-align: center;
+    position: relative;
+    width: 1%;
+    flex: 1;
+    .tap-color(#FFF);
+    > a {
+      color: #585858;
+      font-size: .28rem; /* px */
+      line-height: .85rem;
+      display: block;
+    }
+    &:not(:last-child):after {
+      position: absolute;
+      top: .28rem;
+      right: 0;
+      content: '';
+      width: 1px; /* no */
+      height: .28rem;
+      background-color: @line-color;
+    }
+    &.cur {
+      > a {
+        color: @tab-cur-color;
+      }
+      &:before {
+        content: '';
+        width: 70%;
+        left: 50%;
+        position: absolute;
+        bottom: -1px; /* no */
+        height: 2px; /* no */
+        margin-left: -35%;
+        background-color: @tab-cur-color;
+      }
+    }
+  }
+}
+.m-scrolltab {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background-color: #FFF;
+  border-bottom: 1px solid @line-high-color; /* no */
+  -webkit-overflow-scrolling: touch;
+  > li {
+    flex: 1;
+    margin: 0 2%;
+    height: .76rem;
+    line-height: .8rem;
+    > a {
+      color: #3E3E3E;
+      padding: 0 .16rem;
+      font-size: .28rem; /* px */
+    }
+    &.cur {
+      border-bottom: 2px solid @scroll-tab-cur-color; /* no */
+      > a {
+        color: @scroll-tab-cur-color;
+      }
+    }
+  }
+}

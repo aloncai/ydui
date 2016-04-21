@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Toast</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css"/>
+    <link rel="stylesheet" href="../css/example.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/yd_flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="../index.html" class="back-ico"></a>
+            <div class="center">Toast</div>
+        </nav>
+    </header>
+    <div class="m-button">
+        <button type="button" class="btn btn-block btn-primary" id="J_Confirm">Confirm</button>
+        <button type="button" class="btn btn-block btn-primary" id="J_Alert">Alert</button>
+        <button type="button" class="btn btn-block btn-danger" id="J_TipMesS">TipMes->Success</button>
+        <button type="button" class="btn btn-block btn-danger" id="J_TipMesE">TipMes->Error</button>
+        <button type="button" class="btn btn-block btn-hollow" id="J_Loading">Loading</button>
+    </div>
+</section>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="../js/util.js"></script>
+<script>
+    !function ($, util) {
+        //确认框
+        $('#J_Confirm').on('click', function () {
+            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function(){
+                util.tipMes('你点了确定！', 'success', 1000);
+            });
+        });
+
+        //普通提示框
+        $('#J_Alert').on('click', function () {
+            util.alert('弹出标题', '我有一个小毛驴我从来也不骑！', function(){
+                util.tipMes('你点了确定！', 'success', 1000);
+            });
+        });
+
+        //正确提示框
+        $('#J_TipMesS').on('click', function () {
+            util.tipMes('鼠标不错哟！', 'success', 2000);
+        });
+
+        //错误提示框
+        $('#J_TipMesE').on('click', function () {
+            util.tipMes('别乱点啊！', 'error', 2000);
+        });
+
+        //加载中提示框
+        $('#J_Loading').on('click', function () {
+            util.showLoading('很快加载好了');
+            setTimeout(function () {
+                util.hideLoading();//移除loading
+            }, 2000);
+        });
+    }(jQuery, YDUI.util)
+</script>
+</body>
+</html>

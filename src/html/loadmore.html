@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LoadMore</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css"/>
+    <link rel="stylesheet" href="../css/example.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/yd_flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="list.html" class="back-ico"></a>
+            <div class="center">LoadMore</div>
+        </nav>
+    </header>
+    <div id="J_TabDetail">
+        <ul class="m-tab">
+            <li class="cur"><a href="javascript:;">详情</a></li>
+            <li><a href="javascript:;" id="J_GetData">评论</a></li>
+            <li><a href="javascript:;">其他</a></li>
+        </ul>
+        <section class="tab-detail">1</section>
+        <section class="tab-detail" style="display: none;">
+            <div class="m-listbox list-view" id="J_TabContent"></div>
+            <div class="loadmore-btn" id="J_LoadMore"><a href="javascript:;">加载更多</a></div>
+            <div class="loading" id="J_Loading"><img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg" /></div>
+        </section>
+        <section class="tab-detail" style="display: none;">3</section>
+    </div>
+</section>
+<script id="J_ListHtml" type="text/html">
+    {{each list as data}}
+    <a class="m-listitem" href="{{data.url}}">
+        <div class="m-listimg">
+            <img src="http://static.ydcss.com/uploads/ydui/default.jpg" data-original="{{data.img}}_220x220.jpg"/>
+        </div>
+        <div class="m-listtitle">
+            <h3 class="title">{{data.title}}</h3>
+            <p><span class="price"><em>¥</em>{{data.marketprice}}</span>
+                <del>¥{{data.productprice}}</del>
+            </p>
+        </div>
+    </a>
+    {{/each}}
+</script>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="http://static.ydcss.com/libs/arttemplate/template.js"></script>
+<script src="http://static.ydcss.com/libs/lazyload/jquery.lazyload.js"></script>
+<script src="../libs/tab/jquery.tab.js"></script>
+<script src="../libs/dataload/jquery.dataload.js"></script>
+<script>
+    !function ($) {
+        $('#J_TabDetail').tab({
+            eType: 'click',
+            card: '.m-tab li',
+            panel: '.tab-detail',
+            curClass: 'cur'
+        }).dataload({
+            url: 'http://static.ydcss.com/uploads/ydui/list.js',//模拟的jsonp数据
+            type: 'get',
+            data: {testdata: 'aaaa'},//传输数据
+            page: 1,//起始页码
+            pageSize: 10,//每页加载数据
+            pagestr: 'custompage',
+            dataType: 'jsonp',
+            jsonpCallback: 'callback',
+            initLoad: false,
+            loadtype: 'click',
+            triggerdom: '#J_GetData',
+            loadingdom: '#J_Loading',
+            loadmoredom: '#J_LoadMore',
+            callback: function (ret, page) {
+                $('#J_TabContent').append(template('J_ListHtml', {list: ret})).find('img').lazyload();
+                console.log('Page is ' + page);
+            }
+        });
+    }(jQuery);
+</script>
+</body>
+</html>
