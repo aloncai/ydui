@@ -1708,38 +1708,31 @@ table {
 }
 .m-scrolltab {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   background-color: #FFF;
+  -webkit-overflow-scrolling: touch;
   border-bottom: 1px solid #DCDCDC;
   /* no */
-  -webkit-overflow-scrolling: touch;
 }
 .m-scrolltab > li {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  display: inline-block;
   margin: 0 2%;
   height: .76rem;
   line-height: .8rem;
 }
-.m-scrolltab > li > a {
+.m-scrolltab > li a {
   color: #3E3E3E;
-  padding: 0 .16rem;
   font-size: .28rem;
   /* px */
+  padding: 0 .16rem;
 }
 .m-scrolltab > li.cur {
   border-bottom: 2px solid #FF5E53;
   /* no */
 }
-.m-scrolltab > li.cur > a {
+.m-scrolltab > li.cur a {
   color: #FF5E53;
 }
 .m-nav {
