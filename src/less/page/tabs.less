@@ -44,26 +44,25 @@
 }
 .m-scrolltab {
   width: 100%;
-  display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   background-color: #FFF;
-  border-bottom: 1px solid @line-high-color; /* no */
   -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid @line-high-color;/* no */
   > li {
-    flex: 1;
+    display: inline-block;
     margin: 0 2%;
     height: .76rem;
     line-height: .8rem;
-    > a {
+    a {
       color: #3E3E3E;
+      font-size: .28rem;/* px */
       padding: 0 .16rem;
-      font-size: .28rem; /* px */
     }
     &.cur {
-      border-bottom: 2px solid @scroll-tab-cur-color; /* no */
-      > a {
+      border-bottom: 2px solid @scroll-tab-cur-color;/* no */
+      a {
         color: @scroll-tab-cur-color;
       }
     }
