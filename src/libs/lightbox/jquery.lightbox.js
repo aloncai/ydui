@@ -1,10 +1,10 @@
 /**
- * @extends jquery 1.11.2
+ * @extends jQuery-1.11.2
  * @fileOverview 移动端灯箱插件【只为移动端】
  * @author 一点
  * @ps 浏览器后退关闭操作处理参看 http://photoswipe.com/
  * @email surging2@qq.com
- * @url http://www.ydcss.com
+ * @url http://www.yui.org
  * @version 0.1
  * @date 2015/12/9
  * Copyright (c) 2010-2016

@@ -1,9 +1,9 @@
 /**
- * @extends jquery 1.11.2
+ * @extends jQuery-1.11.2
  * @fileOverview 省市县级联【包含地址数据】
  * @author 一点
  * @email surging2@qq.com
- * @url http://www.ydcss.com
+ * @url http://www.ydui.org
  * @version 1.0
  * @date 2015/11/23
  * Copyright (c) 2014-2016

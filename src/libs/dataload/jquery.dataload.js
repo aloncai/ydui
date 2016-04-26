@@ -1,9 +1,9 @@
 /**
- * @extends jquery 1.11.2
+ * @extends jQuery-1.11.2
  * @fileOverview 加载更多插件
  * @author 一点
  * @email surging2@qq.com
- * @url http://www.ydcss.com
+ * @url http://www.ydui.org
  * @version 0.1
  * @date 2015/12/11
  * Copyright (c) 2010-2016

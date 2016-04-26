@@ -23,14 +23,14 @@
         </nav>
     </header>
     <div style="background-color: #FFF;padding: .24rem;" class="example-small-pitch">
-        <span class="m-spinner J_Quantity">
+        <span class="m-spinner" id="J_Quantity1">
             <a href="javascript:;" class="J_Del">-</a>
-            <input type="number" class="J_Input" value="1" placeholder=""/>
+            <input type="number" class="J_Input" value="1" data-max="30" placeholder=""/>
             <a href="javascript:;" class="J_Add">+</a>
         </span>
-        <span class="m-spinner J_Quantity">
+        <span class="m-spinner" id="J_Quantity2">
             <a href="javascript:;" class="J_Del">-</a>
-            <input type="text" class="J_Input" data-max="50" value="1" placeholder=""/>
+            <input type="text" class="J_Input" value="1" placeholder=""/>
             <a href="javascript:;" class="J_Add">+</a>
         </span>
     </div>
@@ -39,19 +39,25 @@
 <script src="jquery.spinner.js"></script>
 <script>
     !function () {
-        $('.J_Quantity').spinner({
+        //max 取值有两种：参数max 和 input's data-max；后者优先级大于前者
+        $('#J_Quantity1').spinner({
             input: '.J_Input',
             add: '.J_Add',
             minus: '.J_Del',
-            min: 1,
-            isMaxDataAttr: true,
+            unit: 5 //倍数 暂不支持小数
+        });
+
+        $('#J_Quantity2').spinner({
+            input: '.J_Input',
+            add: '.J_Add',
+            minus: '.J_Del',
             //max: 11,
             max: function () {
-                return 9;
+                return 3 + 3 + 3;
             },
-            callback: function (v, ele) {
+            callback: function (value, ele) {
                 ele.css('background', '#FF5E53');
-                console.log(v, ele);
+                console.log(value, ele);
             }
         });
     }();
