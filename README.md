@@ -1,6 +1,8 @@
-YDUI是参考<a href="https://github.com/weui/weui" target="_blank">WEUI</a>做一套更适合自己的移动端&微信UI。
+YDUI是参考<a href="https://github.com/weui/weui">WEUI</a>做一套更适合自己的移动端&微信UI。
 
-Blog: <a href="http://www.ydcss.com" target="_blank">www.ydcss.com</a>
+Home: <a href="http://www.ydui.org">www.ydui.org</a>
+
+Blog: <a href="http://www.ydcss.com">www.ydcss.com</a>
 
 Wiki：编写中...
 
