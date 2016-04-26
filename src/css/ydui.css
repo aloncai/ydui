@@ -177,11 +177,10 @@ table {
   right: 0;
   left: 0;
   top: 0;
-  opacity: .98;
 }
 @font-face {
   font-family: 'YDUI';
-  src: url('//at.alicdn.com/t/font_1461139240_0312312.ttf') format('truetype');
+  src: url('../iconfont/ydui.ttf#datauri') format('truetype');
 }
 .m-grids {
   overflow: hidden;
@@ -356,13 +355,17 @@ table {
   -webkit-animation: bounceInDown .3s ease forwards;
   animation: bounceInDown .3s ease forwards;
 }
-.m-confirm.alert {
-  -webkit-animation: zoomIn .3s ease forwards;
-  animation: zoomIn .3s ease forwards;
+.m-confirm.m-alert {
+  -webkit-animation: zoomIn .25s ease forwards;
+  animation: zoomIn .25s ease forwards;
 }
-.m-confirm.alert .confirm-hd,
-.m-confirm.alert .confirm-bd {
+.m-confirm.m-alert .confirm-hd,
+.m-confirm.m-alert .confirm-bd {
   text-align: center;
+}
+.m-confirm.m-alert .confirm-bd {
+  padding: 20px 20px 0 20px;
+  /* no */
 }
 .m-confirm .confirm-hd {
   text-align: left;
@@ -402,23 +405,23 @@ table {
 }
 .m-confirm .confirm-ft a {
   position: relative;
-  width: 1%;
   display: block;
+  width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 .m-confirm .confirm-ft a.confirm-btn.default {
   color: #353535;
 }
-.m-confirm .confirm-ft a.confirm-btn.primary {
-  color: #0BB20C;
-}
-.m-confirm .confirm-ft a.confirm-btn.primary:after {
+.m-confirm .confirm-ft a.confirm-btn.default:after {
   content: '';
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   width: 2px;
   /* no */
@@ -429,6 +432,9 @@ table {
   transform-origin: 0 0;
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
+}
+.m-confirm .confirm-ft a.confirm-btn.primary {
+  color: #0BB20C;
 }
 @media screen and (min-width: 768px) {
   .m-confirm {

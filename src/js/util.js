@@ -1,9 +1,9 @@
 /**
- * @extends jquery 2.1.1
+ * @extends jQuery 2.1.1
  * @fileOverview YDUI 移动端工具类
  * @author Surging
  * @email surging2@qq.com
- * @version 0.1
+ * @version 0.1.1
  * @date 2015/11/25
  * Copyright (c) 2014-2016
  *
@@ -19,11 +19,19 @@
      * @param title
      * @param mes
      * @param callback
+     * @param txtArr
      * @constructor
      */
-    util.confirm = function (title, mes, callback) {
+    util.confirm = function (title, mes, callback, txtArr) {
         title = title || '提示';
         mes = mes || '确认要删除吗？';
+
+        var t1 = '取消';
+        var t2 = '确定';
+        if (txtArr instanceof Array) {
+            t1 = txtArr[0] || '取消';
+            t2 = txtArr[1] || '确定';
+        }
         var $str = $(
             '<div>' +
             '    <div class="mask-black"></div>' +
@@ -31,8 +39,8 @@
             '        <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '        <div class="confirm-bd">' + mes + '</div>' +
             '        <div class="confirm-ft">' +
-            '            <a href="javascript:;" class="confirm-btn default" id="J_ConfirmCancel">取消</a>' +
-            '            <a href="javascript:;" class="confirm-btn primary" id="J_ConfirmEnter">确定</a>' +
+            '            <a href="javascript:;" class="confirm-btn default" id="J_ConfirmCancel">' + t1 + '</a>' +
+            '            <a href="javascript:;" class="confirm-btn primary" id="J_ConfirmEnter">' + t2 + '</a>' +
             '        </div>' +
             '    </div>' +
             '</div>');
@@ -59,8 +67,7 @@
         var $str = $(
             '<div>' +
             '    <div class="mask-black"></div>' +
-            '    <div class="m-confirm alert">' +
-            '        <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
+            '    <div class="m-confirm m-alert">' +
             '        <div class="confirm-bd">' + mes + '</div>' +
             '        <div class="confirm-ft">' +
             '            <a href="javascript:;" class="confirm-btn primary" id="J_ConfirmEnter">确定</a>' +
@@ -157,17 +164,109 @@
     };
 
     /**
+     * 时间补零
+     * @param i
+     * @returns {*}
+     */
+    util.checkTime = function (i) {
+        return i < 10 ? '0' + i : i;
+    };
+
+    /**
      * 转换时间
-     * @param ts 单位 秒
+     * @param format 时间格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * @param time 单位 毫秒
      * @returns {string}
      */
-    util.timestampTotime = function (ts) {
-        var _this = this,
-            dd = _this.checkTime(parseInt(ts / 60 / 60 / 24, 10)),
-            hh = _this.checkTime(parseInt(ts / 60 / 60 % 24, 10)),
-            mm = _this.checkTime(parseInt(ts / 60 % 60, 10)),
-            ss = _this.checkTime(parseInt(ts % 60, 10));
-        return ts <= 0 ? '已过期' : (dd > 0 ? dd + '天' : '') + (hh > 0 ? hh + '时' : '') + (mm > 0 ? mm + '分' : '') + (ss > 0 ? ss + '秒' : '');
+    util.timestampTotime = function (format, time) {
+        var that = this, t = {};
+        t.f = time % 1000;
+        time = Math.floor(time / 1000);
+        t.s = time % 60;
+        time = Math.floor(time / 60);
+        t.m = time % 60;
+        time = Math.floor(time / 60);
+        t.h = time % 24;
+        t.d = Math.floor(time / 24);
+
+        var ment = function (a) {
+            return '$1' + that.checkTime(a) + '$2';
+        };
+
+        format = format.replace(/\{([^{]*?)%d(.*?)\}/g, ment(t.d));
+        format = format.replace(/\{([^{]*?)%h(.*?)\}/g, ment(t.h));
+        format = format.replace(/\{([^{]*?)%m(.*?)\}/g, ment(t.m));
+        format = format.replace(/\{([^{]*?)%s(.*?)\}/g, ment(t.s));
+        format = format.replace(/\{([^{]*?)%f(.*?)\}/g, ment(t.f));
+
+        return format;
+    };
+
+    /**
+     * js倒计时
+     * @param format 时间格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * @param time 时间 毫秒
+     * @param speed 速度 毫秒
+     * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
+     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', 60000, 1000, function(ret){ console.log(ret); }
+     */
+    util.countdown = function (format, time, speed, callback) {
+        var that = this, tm = new Date().getTime();
+        var timer = setInterval(function () {
+            var l_time = time - new Date().getTime() + tm;
+            if (l_time > 0) {
+                callback(that.timestampTotime(format, l_time));
+            } else {
+                clearInterval(timer);
+                typeof callback == 'function' && callback('');
+            }
+        }, speed);
+    };
+
+    /**
+     * js 加减乘除
+     * @param arg1 数值1
+     * @param arg2 数值2
+     * @param op 操作符string + - * /
+     * @returns {Object} arg1 乘 arg2的精确结果
+     */
+    util.calc = function (arg1, arg2, op) {
+        var ra = 1, rb = 1, m;
+
+        try {
+            ra = arg1.toString().split('.')[1].length;
+        } catch (e) {
+        }
+        try {
+            rb = arg2.toString().split('.')[1].length;
+        } catch (e) {
+        }
+        m = Math.pow(10, Math.max(ra, rb));
+
+        switch (op) {
+            case '+':
+            case '-':
+                arg1 = Math.round(arg1 * m);
+                arg2 = Math.round(arg2 * m);
+                break;
+            case '*':
+                ra = Math.pow(10, ra);
+                rb = Math.pow(10, rb);
+                m = ra * rb;
+                arg1 = Math.round(arg1 * ra);
+                arg2 = Math.round(arg2 * rb);
+                break;
+            case '/':
+                arg1 = Math.round(arg1 * m);
+                arg2 = Math.round(arg2 * m);
+                m = 1;
+                break;
+        }
+        try {
+            var result = eval('(' + '(' + arg1 + ')' + op + '(' + arg2 + ')' + ')/' + m);
+        } catch (e) {
+        }
+        return result;
     };
 
     /**
@@ -184,18 +283,6 @@
         tt[3] = (num << 24) >>> 24;
         str = String(tt[0]) + '.' + String(tt[1]) + '.' + String(tt[2]) + '.' + String(tt[3]);
         return str;
-    };
-
-    /**
-     * 时间补零
-     * @param i
-     * @returns {*}
-     */
-    util.checkTime = function (i) {
-        if (i < 10) {
-            i = '0' + i;
-        }
-        return i;
     };
 
     /**
@@ -231,10 +318,10 @@
     };
 
     /**
-     * 判读是否支持localStorage本地存储
+     * 判读是否支持本地存储
      * @returns {boolean}
      */
-    util.supportLocalStorage = function () {
+    util.isSupportStorage = function () {
         try {
             return 'localStorage' in window && window['localStorage'] !== null;
         } catch (e) {
@@ -243,87 +330,45 @@
     };
 
     /**
-     * 设置HTML5本地存储 IE8+
-     * @param key
-     * @param value
+     * 本地存储(一个参数为get,两个参数为set)
+     * @param key 键
+     * @param value 值
      */
-    util.setLocalStorage = function (key, value) {
-        if (this.supportLocalStorage()) {
-            try {
-                localStorage.removeItem(key);
-                localStorage.setItem(key, value);
-            } catch (e) {
-                throw e;
+    util.localStorage = function (key, value) {
+        if (isSupportStorage) {
+            var ls = win.localStorage;
+            if (arguments.length >= 2) {
+                ls.setItem(key, value);
+            } else {
+                return ls.getItem(key);
             }
         }
     };
 
     /**
-     * 获取HTML5本地存储 IE8+
-     * @param key
-     * @returns {*}
+     * Session存储(一个参数为get,两个参数为set)
+     * @param key 键
+     * @param value 值
      */
-    util.getLocalStorage = function (key) {
-        if (this.supportLocalStorage()) {
-            try {
-                return localStorage.getItem(key);
-            } catch (e) {
-                return '';
-            }
-        }
-        return '';
-    };
-
-    /**
-     * 删除HTML5本地存储 IE8+
-     * @param key
-     * @returns {boolean|*}
-     */
-    util.removeLocalStorage = function (key) {
-        return this.supportLocalStorage() && localStorage.removeItem(key);
-    };
-
-    /**
-     * 设置HTML5本地存储 IE8+
-     * @param key
-     * @param value
-     */
-    util.setSessionStorage = function (key, value) {
-        if (this.supportLocalStorage()) {
-            try {
-                sessionStorage.removeItem(key);
-                sessionStorage.setItem(key, value);
-            } catch (e) {
-                throw e;
+    util.sessionStorage = function (key, value) {
+        if (isSupportStorage) {
+            var ls = win.sessionStorage;
+            if (arguments.length >= 2) {
+                ls.setItem(key, value);
+            } else {
+                return ls.getItem(key);
             }
         }
     };
 
     /**
-     * 获取HTML5本地存储 IE8+
-     * @param key
-     * @returns {*}
-     */
-    util.getSessionStorage = function (key) {
-        if (this.supportLocalStorage()) {
-            try {
-                return sessionStorage.getItem(key);
-            } catch (e) {
-                return '';
-            }
-        }
-        return '';
-    };
-
-    /**
-     * 删除HTML5本地存储 IE8+
+     * 删除本地存储
      * @param key
      * @returns {boolean|*}
      */
     util.removeSessionStorage = function (key) {
-        return this.supportLocalStorage() && sessionStorage.removeItem(key);
+        return isSupportStorage && sessionStorage.removeItem(key);
     };
-
 
     /**
      * 获取 Cookie
@@ -378,8 +423,7 @@
      * @return {Boolean}
      */
     util.isMobile = function () {
-        var ua = util.getUA();
-        return !!ua.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement;
+        return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement;
     };
 
     /**
@@ -387,8 +431,7 @@
      * @returns {boolean}
      */
     util.isIOS = function () {
-        var ua = util.getUA();
-        return !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        return !!getUA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
     };
 
     /**
@@ -396,7 +439,12 @@
      * @returns {boolean}
      */
     util.isWeixin = function () {
-        var ua = util.getUA();
-        return ua.indexOf('MicroMessenger') > -1;
+        return getUA.indexOf('MicroMessenger') > -1;
     };
+
+    var getUA = util.getUA();
+    var isSupportStorage = util.isSupportStorage();
+    win.isWeixin = util.isWeixin();
+    win.isIOS = util.isIOS();
+
 }(window, jQuery);

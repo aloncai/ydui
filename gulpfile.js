@@ -53,6 +53,9 @@ gulp.task('watch', function () {
 
 gulp.task('build:cssmin', ['less'], function () {
     gulp.src('src/css/ydui.css')
+        .pipe($.cssBase64({
+            extensionsAllowed: ['.ttf']
+        }))
         .pipe($.cleanCss())
         .pipe($.header(banner, {pkg: pkg}))
         .pipe(gulp.dest('dist/build/css'));
@@ -69,6 +72,9 @@ gulp.task('example:css', function () {
     var _stream = gulp.src(['src/less/{ydui,example}.less']);
     if (flexible.isUse) {
         _stream.pipe($.less())
+            .pipe($.cssBase64({
+                extensionsAllowed: ['.ttf']
+            }))
             .pipe($.rem2px())//将已存在rem转成px
             .pipe($.postcss([$.px2rem({remUnit: 75})]))//将px转成flexible rem
             .pipe($.autoprefixer({
@@ -78,6 +84,9 @@ gulp.task('example:css', function () {
     } else {
         _stream.pipe($.sourcemaps.init())
             .pipe($.less())
+            .pipe($.cssBase64({
+                extensionsAllowed: ['.ttf']
+            }))
             .pipe($.autoprefixer({
                 browsers: ['last 2 versions', 'Android >= 4.0'], cascade: false, remove: true
             }))

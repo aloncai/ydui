@@ -23,8 +23,9 @@
         </nav>
     </header>
     <div class="m-button">
-        <button type="button" class="btn btn-block btn-primary" id="J_Confirm">Confirm</button>
-        <button type="button" class="btn btn-block btn-primary" id="J_Alert">Alert</button>
+        <button type="button" class="btn btn-block btn-primary" id="J_Confirm1">Confirm</button>
+        <button type="button" class="btn btn-block btn-primary" id="J_Confirm2">Confirm->Custom</button>
+        <button type="button" class="btn btn-block btn-hollow" id="J_Alert">Alert</button>
         <button type="button" class="btn btn-block btn-danger" id="J_TipMesS">TipMes->Success</button>
         <button type="button" class="btn btn-block btn-danger" id="J_TipMesE">TipMes->Error</button>
         <button type="button" class="btn btn-block btn-hollow" id="J_Loading">Loading</button>
@@ -35,15 +36,20 @@
 <script>
     !function ($, util) {
         //确认框
-        $('#J_Confirm').on('click', function () {
-            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function(){
+        $('#J_Confirm1').on('click', function () {
+            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function () {
                 util.tipMes('你点了确定！', 'success', 1000);
             });
+        });
+        $('#J_Confirm2').on('click', function () {
+            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function () {
+                util.tipMes('你点了确定！', 'success', 1000);
+            }, ['自定义1', '自定义2']);
         });
 
         //普通提示框
         $('#J_Alert').on('click', function () {
-            util.alert('弹出标题', '我有一个小毛驴我从来也不骑！', function(){
+            util.alert('弹出标题', '我有一个小毛驴我从来也不骑！', function () {
                 util.tipMes('你点了确定！', 'success', 1000);
             });
         });

@@ -42,10 +42,13 @@
   border-radius: 3px; /* no */
   margin-left: -42.5%;
   animation: bounceInDown .3s ease forwards;
-  &.alert {
-    animation: zoomIn .3s ease forwards;
+  &.m-alert {
+    animation: zoomIn .25s ease forwards;
     .confirm-hd, .confirm-bd {
-      text-align: center
+      text-align: center;
+    }
+    .confirm-bd{
+      padding: 20px 20px 0 20px; /* no */
     }
   }
   .confirm-hd {
@@ -73,18 +76,18 @@
     display: flex;
     a {
       position: relative;
-      width: 1%;
       display: block;
+      width: 1%;
       flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
       &.confirm-btn.default {
         color: #353535;
-      }
-      &.confirm-btn.primary {
-        color: #0BB20C;
         &:after {
           content: '';
           position: absolute;
-          left: 0;
+          right: 0;
           top: 0;
           width: 2px; /* no */
           height: 42px; /* no */
@@ -92,6 +95,9 @@
           transform-origin: 0 0;
           transform: scaleX(.5);
         }
+      }
+      &.confirm-btn.primary {
+        color: #0BB20C;
       }
     }
   }
