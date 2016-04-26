@@ -16,13 +16,7 @@ var flexible = {
 };
 
 //注释信息
-var banner = [
-    '/*! <%= pkg.title %> v<%= pkg.version %>',
-    'by YDCSS',
-    '(c) ' + $.util.date(Date.now(), 'UTC:yyyy'),
-    'Licensed <%= pkg.license %>',
-    $.util.date(Date.now(), 'isoDateTime') + ' */ \n'
-].join(' ');
+var banner = '/*! <%= pkg.title %> v<%= pkg.version %> by YDCSS (c) ' + $.util.date(Date.now(), 'UTC:yyyy') + ' Licensed <%= pkg.license %>' + ' */ \n';
 
 gulp.task('less', function () {
     var _stream = gulp.src(['src/less/{ydui,example}.less']);
