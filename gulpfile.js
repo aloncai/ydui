@@ -3,7 +3,8 @@ var gulp = require('gulp'),
         pattern: ['gulp-*', 'gulp.*', 'postcss-*', 'ydcss-*'],
         rename: {
             'ydcss-rem2px': 'rem2px',
-            'postcss-px2rem': 'px2rem'
+            'postcss-px2rem': 'px2rem',
+            'gulp-rev-append': 'rev'
         }
     });
 
@@ -94,9 +95,9 @@ gulp.task('example:html', function () {
     if (flexible.isUse) {
         _stream.pipe($.htmlReplace({
             'tb_flexible': flexible.url
-        })).pipe(gulp.dest('dist/example'));
+        })).pipe($.rev()).pipe(gulp.dest('dist/example'));
     } else {
-        _stream.pipe(gulp.dest('dist/example'));
+        _stream.pipe($.rev()).pipe(gulp.dest('dist/example'));
     }
 });
 
