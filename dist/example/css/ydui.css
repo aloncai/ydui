@@ -1848,14 +1848,7 @@ table {
   height: .5rem;
 }
 .u-checkbox {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
+  display: inline-block;
 }
 .u-checkbox > input {
   position: absolute;
@@ -1947,14 +1940,7 @@ table {
   /* no */
 }
 .u-radio {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
+  display: inline-block;
   margin-right: .2rem;
 }
 .u-radio > input[type="radio"] {
@@ -2035,27 +2021,21 @@ table {
   /* no */
   border-radius: 1px;
   /* no */
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: inline-block;
+  /* UC unsupport inline-flex; */
   height: .5rem;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
   font-size: .24rem;
   /* px */
   overflow: hidden;
 }
 .m-spinner a {
+  float: left;
   width: .5rem;
   font-weight: 800;
   height: .5rem;
   line-height: .5rem;
   text-align: center;
   color: #666;
-  display: block;
   background-color: #F8F8F8;
   border-color: #F8F8F8;
 }
@@ -2064,12 +2044,12 @@ table {
   border-color: #dfdfdf;
 }
 .m-spinner input {
+  float: left;
   width: .84rem;
   height: inherit;
   text-align: center;
   border: 1px solid #EAE8E8;
   /* no */
-  display: block;
   font-weight: 700;
   color: #666;
   border-top: none;
