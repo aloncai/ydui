@@ -1877,6 +1877,8 @@ table {
   position: relative;
   z-index: 0;
   top: 1px;
+  -webkit-transition: all .28s;
+  transition: all .28s;
 }
 .u-checkbox > label.checkbox-square:before {
   content: '\e612';
@@ -1972,6 +1974,8 @@ table {
   font-family: 'YDUI';
   color: #B7B7B7;
   margin-right: .08rem;
+  -webkit-transition: all .28s;
+  transition: all .28s;
 }
 .m-tabbar {
   width: 100%;
