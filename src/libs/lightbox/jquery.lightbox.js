@@ -10,11 +10,10 @@
  * Copyright (c) 2010-2016
  */
 !function (lightbox) {
-    if (typeof define === 'function' && define.amd) {
+    // RequireJS && SeaJS && GlightJS
+    if (typeof define === 'function') {
         define(['jquery'], lightbox);
-    } else if (typeof exports !== 'undefined') {
-        module.exports = lightbox;
-    } else {
+    }else {
         lightbox(jQuery);
     }
 }(function ($) {

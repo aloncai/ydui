@@ -1070,7 +1070,7 @@ table {
   }
 }
 .m-button {
-  padding: 0 .24rem;
+  padding: 0 0.24rem;
 }
 .btn {
   height: .7rem;
@@ -1139,7 +1139,7 @@ table {
   border-color: #dedede;
 }
 .m-celltitle {
-  padding: .15rem .24rem .1rem;
+  padding: 0.15rem 0.24rem 0.1rem;
   font-size: .3rem;
   /* px */
   color: #888;
@@ -1169,7 +1169,7 @@ table {
   display: flex;
   position: relative;
   z-index: 0;
-  padding-left: .24rem;
+  padding-left: 0.24rem;
   overflow: hidden;
 }
 .u-cellitem:not(:last-child):after {
@@ -1179,7 +1179,7 @@ table {
   /* no */
   background-color: #EAE9EC;
   position: absolute;
-  left: .24rem;
+  left: 0.24rem;
   bottom: 0;
 }
 .cellleft {
@@ -1208,7 +1208,7 @@ table {
   text-align: right;
   font-size: .28rem;
   /* px */
-  padding-right: .24rem;
+  padding-right: 0.24rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

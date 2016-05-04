@@ -1,5 +1,5 @@
 /**
- * @extends jQuery 2.1.1
+ * @extends jQuery-2.1.1
  * @fileOverview YDUI 移动端工具类
  * @author Surging
  * @email surging2@qq.com
@@ -8,11 +8,10 @@
  * Copyright (c) 2014-2016
  *
  */
-!function (win, $) {
+!function (win) {
     'use strict';
 
-    var ydui = win.YDUI = win.YDUI || {},
-        util = ydui.util = ydui.util || {};
+    var util = {};
 
     /**
      * 确认提示框
@@ -115,6 +114,7 @@
 
     /**
      * 加载中
+     * @param text 显示文字
      */
     util.showLoading = function (text) {
         var $str = $('' +
@@ -447,4 +447,11 @@
     win.isWeixin = util.isWeixin();
     win.isIOS = util.isIOS();
 
-}(window, jQuery);
+    // RequireJS && SeaJS && GlightJS
+    if (typeof define === 'function') {
+        define(['jquery'], util);
+    }else {
+        var ydui = win.YDUI = win.YDUI || {};
+        ydui.util = util;
+    }
+}(window);

@@ -10,11 +10,10 @@
  *
  */
 !function(citySelect){
-    if (typeof define === 'function' && define.amd) {
+    // RequireJS && SeaJS && GlightJS
+    if (typeof define === 'function') {
         define(['jquery'], citySelect);
-    } else if (typeof exports !== 'undefined') {
-        module.exports = citySelect;
-    } else {
+    }else {
         citySelect(jQuery);
     }
 }(function($){

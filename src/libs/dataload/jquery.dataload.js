@@ -9,11 +9,10 @@
  * Copyright (c) 2010-2016
  */
 !function (dataload) {
-    if (typeof define === 'function' && define.amd) {
+    // RequireJS && SeaJS && GlightJS
+    if (typeof define === 'function') {
         define(['jquery'], dataload);
-    } else if (typeof exports !== 'undefined') {
-        module.exports = dataload;
-    } else {
+    }else {
         dataload(jQuery);
     }
 }(function ($) {
