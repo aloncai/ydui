@@ -12,7 +12,7 @@
     // RequireJS && SeaJS && GlightJS
     if (typeof define === 'function') {
         define(['jquery'], dataload);
-    }else {
+    } else {
         dataload(jQuery);
     }
 }(function ($) {

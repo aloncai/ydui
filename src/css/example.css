@@ -116,7 +116,7 @@
 }
 @font-face {
   font-family: 'example-icons';
-  src: url('//at.alicdn.com/t/font_1461206132_6970646.ttf') format('truetype');
+  src: url('//at.alicdn.com/t/font_1462949116_7522671.ttf') format('truetype');
 }
 [class^="example-icons-"]:before {
   font-family: 'example-icons';
@@ -158,7 +158,7 @@
   content: '\e606';
   color: #6E95D3;
 }
-.example-icons-components:before {
+.example-icons-else:before {
   content: '\e60a';
   color: #6E95D3;
 }

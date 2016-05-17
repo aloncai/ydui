@@ -415,10 +415,7 @@ table {
   white-space: nowrap;
   box-sizing: border-box;
 }
-.m-confirm .confirm-ft a.confirm-btn.default {
-  color: #353535;
-}
-.m-confirm .confirm-ft a.confirm-btn.default:after {
+.m-confirm .confirm-ft a:not(:last-child):after {
   content: '';
   position: absolute;
   right: 0;
@@ -432,6 +429,9 @@ table {
   transform-origin: 0 0;
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
+}
+.m-confirm .confirm-ft a.confirm-btn.default {
+  color: #353535;
 }
 .m-confirm .confirm-ft a.confirm-btn.primary {
   color: #0BB20C;
@@ -1773,7 +1773,7 @@ table {
   -webkit-flex: 0 0 15%;
   -ms-flex: 0 0 15%;
   flex: 0 0 15%;
-  padding: 0 .24rem;
+  padding: 0 0.24rem;
   height: .9rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -2288,7 +2288,7 @@ table {
   line-height: .9rem;
   color: #FFF;
   z-index: 2;
-  padding: 0 .24rem;
+  padding: 0 0.24rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

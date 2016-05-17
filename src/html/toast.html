@@ -35,33 +35,56 @@
 <script src="../js/util.js"></script>
 <script>
     !function ($, util) {
-        //确认框
+        //普通确认框
         $('#J_Confirm1').on('click', function () {
-            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function () {
-                util.tipMes('你点了确定！', 'success', 1000);
+            util.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
+                util.tipMes('你点了确定', 'success', 1000);
             });
         });
+
+        //自定义按钮确认框
         $('#J_Confirm2').on('click', function () {
-            util.confirm('标题来的', '我有一个小毛驴我从来也不骑！', function () {
-                util.tipMes('你点了确定！', 'success', 1000);
-            }, ['自定义1', '自定义2']);
+            util.confirm('自定义按钮', '我有一个小毛驴我从来也不骑！', [
+                {
+                    txt: '取消',
+                    color: false, //false:黑色  true:绿色 或 使用颜色值
+                    callback: function () {
+                        util.tipMes('你点了取消', 'success', 1000);
+                    }
+                },
+                {
+                    txt: '犹豫一下',
+                    stay: true, //是否保留提示框
+                    color: '#CCC', //使用颜色值
+                    callback: function () {
+                        util.tipMes('别犹豫了', 'success', 1000);
+                    }
+                },
+                {
+                    txt: '确定',
+                    color: true,
+                    callback: function () {
+                        util.tipMes('你点了确定', 'success', 1000);
+                    }
+                }
+            ]);
         });
 
         //普通提示框
         $('#J_Alert').on('click', function () {
-            util.alert('弹出标题', '我有一个小毛驴我从来也不骑！', function () {
-                util.tipMes('你点了确定！', 'success', 1000);
-            });
+            util.alert('我有一个小毛驴我从来也不骑！');
         });
 
         //正确提示框
         $('#J_TipMesS').on('click', function () {
-            util.tipMes('鼠标不错哟！', 'success', 2000);
+            util.tipMes('鼠标不错哟！', 'success');
         });
 
         //错误提示框
         $('#J_TipMesE').on('click', function () {
-            util.tipMes('别乱点啊！', 'error', 2000);
+            util.tipMes('别乱点啊！', 'error', 1000, function () {
+                util.alert('给你一次重来的机会！');
+            });
         });
 
         //加载中提示框
@@ -71,22 +94,7 @@
                 util.hideLoading();//移除loading
             }, 2000);
         });
-//        //举个栗子
-//        $('#AAA').on('click', function () {
-//            //发送ajax前显示loading
-//            util.showLoading();
-//            $.ajax({
-//                url: '',
-//                dataType: '',
-//                success: function () {
-//                },
-//                complete: function () {
-//                    //ajax请求结束移除loading
-//                    util.hideLoading();
-//                }
-//            });
-//        });
-    }(jQuery, YDUI.util)
+    }(jQuery, YDUI.util);
 </script>
 </body>
 </html>

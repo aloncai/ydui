@@ -13,7 +13,7 @@
     // RequireJS && SeaJS && GlightJS
     if (typeof define === 'function') {
         define(['jquery'], lightbox);
-    }else {
+    } else {
         lightbox(jQuery);
     }
 }(function ($) {

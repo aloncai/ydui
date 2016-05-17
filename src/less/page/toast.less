@@ -47,7 +47,7 @@
     .confirm-hd, .confirm-bd {
       text-align: center;
     }
-    .confirm-bd{
+    .confirm-bd {
       padding: 20px 20px 0 20px; /* no */
     }
   }
@@ -82,19 +82,19 @@
       overflow: hidden;
       white-space: nowrap;
       box-sizing: border-box;
+      &:not(:last-child):after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 2px; /* no */
+        height: 42px; /* no */
+        background-color: #E7E7E9;
+        transform-origin: 0 0;
+        transform: scaleX(.5);
+      }
       &.confirm-btn.default {
         color: #353535;
-        &:after {
-          content: '';
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 2px; /* no */
-          height: 42px; /* no */
-          background-color: #E7E7E9;
-          transform-origin: 0 0;
-          transform: scaleX(.5);
-        }
       }
       &.confirm-btn.primary {
         color: #0BB20C;

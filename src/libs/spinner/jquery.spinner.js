@@ -12,7 +12,7 @@
     // RequireJS && SeaJS && GlightJS
     if (typeof define === 'function') {
         define(['jquery'], spinner);
-    }else {
+    } else {
         spinner(jQuery);
     }
 }(function ($) {
@@ -65,9 +65,9 @@
                     v = ~~v - ~~v % st.unit + st.unit;
                     if (v > st.max) v -= ~~st.unit;
                 }
-                if (v < st.min){
+                if (v < st.min) {
                     v = st.min;
-                    if(v < st.unit) v = st.unit;
+                    if (v < st.unit) v = st.unit;
                 }
                 $input.val(v);
                 typeof st.callback == 'function' && st.callback(v, $input);

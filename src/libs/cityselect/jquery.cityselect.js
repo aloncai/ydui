@@ -9,14 +9,14 @@
  * Copyright (c) 2014-2016
  *
  */
-!function(citySelect){
+!function (citySelect) {
     // RequireJS && SeaJS && GlightJS
     if (typeof define === 'function') {
         define(['jquery'], citySelect);
-    }else {
+    } else {
         citySelect(jQuery);
     }
-}(function($){
+}(function ($) {
     $.fn.citySelect = function (option) {
         return this.each(function () {
             var st = $.extend({
@@ -70,7 +70,7 @@
             };
 
             yd.loadProvance();
-            $city.length > 0  && $provance.on('change', yd.loadCity);
+            $city.length > 0 && $provance.on('change', yd.loadCity);
             $area.length > 0 && $city.on('change', yd.loadArea);
         });
     };
