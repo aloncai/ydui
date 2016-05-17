@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=e261c875d341f2ad1232db0b68a0ba1b"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=2664151da6fd84785d310b3344c37c43"/>
     <link rel="stylesheet" href="../css/example.css" />
     <!-- build:tb_flexible -->
     <script src="../js/yd_flexible.js"></script>
@@ -81,7 +81,7 @@
                             });
                 }
             },
-            localKey = util.localStorage(listView.key),
+            localKey = util.localStorage.get(listView.key),
             viewTypeIndex = localKey ? listView.viewtype.indexOf(localKey) : 0;
 
         listView.changeLayout();
@@ -102,7 +102,7 @@
                 var _tempHtml = '';
                 //从SessionStorage获取需要显示的列表数据
                 for (var i = 1; i <= n; i++) {
-                    var _d = JSON.parse(util.sessionStorage(that.storageListKey + i));
+                    var _d = JSON.parse(util.sessionStorage.get(that.storageListKey + i));
                     if (_d) {
                         _d.realpage = i;
                         _tempHtml += template('J_ListHtml', {list: _d});
@@ -131,11 +131,11 @@
             getStorage: function () {
                 var _storage = null;
 
-                var storageTemp = util.sessionStorage(backPosition.storageTagKey);
+                var storageTemp = util.sessionStorage.get(backPosition.storageTagKey);
                 if (storageTemp)_storage = JSON.parse(storageTemp);
 
                 //取出数据后立即将其删除！！！
-                util.removeSessionStorage(backPosition.storageTagKey);
+                util.sessionStorage.remove(backPosition.storageTagKey);
 
                 backPosition.storageVal = _storage;
 
@@ -166,7 +166,7 @@
                 }).lazyload();
 
                 //储存每页数据
-                util.sessionStorage(backPosition.storageListKey + retPage, JSON.stringify(ret));
+                util.sessionStorage.set(backPosition.storageListKey + retPage, JSON.stringify(ret));
             }
         }).delegate('.J_ListRedirect', 'click', function (e) {
             //原来的a链接 改用js触发跳转方式
@@ -174,7 +174,7 @@
 
             var $this = $(this);
             //储存当前坐标和页码
-            util.sessionStorage(backPosition.storageTagKey, JSON.stringify({
+            util.sessionStorage.set(backPosition.storageTagKey, JSON.stringify({
                 st: $this.offset().top,
                 page: $this.data('page')
             }));
@@ -187,7 +187,7 @@
             if (viewTypeIndex > listView.viewtype.length - 1) {
                 viewTypeIndex = 0;
             }
-            util.localStorage(listView.key, listView.viewtype[viewTypeIndex % listView.viewtype.length]);
+            util.localStorage.set(listView.key, listView.viewtype[viewTypeIndex % listView.viewtype.length]);
             listView.changeLayout();
             $(window).trigger('scroll');
         });

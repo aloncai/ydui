@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style" />
     <meta content="telephone=no" name="format-detection" />
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=e261c875d341f2ad1232db0b68a0ba1b" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=2664151da6fd84785d310b3344c37c43" />
     <link rel="stylesheet" href="../css/example.css" />
     <!-- build:tb_flexible -->
     <script src="../js/yd_flexible.js"></script>
@@ -38,9 +38,10 @@
 <script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script>
     !function ($) {
+
         $('#J_ShowActionSheet').on('click', function () {
-            var $mask = '<div class="mask-black" id="J_Mask"></div>';
-            $('#J_ActionSheet').append($mask).find('dl').addClass('actionsheet-toggle');
+            var mask = '<div class="mask-black" id="J_Mask"></div>';
+            $('#J_ActionSheet').append(mask).find('dl').addClass('actionsheet-toggle');
         });
         $('#J_ActionSheet').delegate('#J_Mask,#J_Cancel', 'click', function () {
             $('#J_Mask').remove();
