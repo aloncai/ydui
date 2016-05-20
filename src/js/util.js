@@ -3,7 +3,7 @@
  * @author Surging
  * @email surging2@qq.com
  * @version 0.1.1
- * @date 2015/11/25
+ * @date 2016/05/20
  * Copyright (c) 2014-2016
  *
  */
@@ -228,7 +228,6 @@
      */
     util.pageScroll = function () {
         var fn = function (e) {
-            e = e || window.event;
             e.preventDefault();
             e.stopPropagation();
         };
@@ -248,22 +247,18 @@
     }();
 
     /**
-     * 时间补零
-     * @param i
-     * @returns {*}
-     */
-    util.checkTime = function (i) {
-        return i < 10 ? '0' + i : i;
-    };
-
-    /**
      * 日期格式化
      * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
-        var that = this, t = {};
+        var t = {};
+
+        var checkTime = function (i) {
+            return i < 10 ? '0' + i : i;
+        };
+
         t.f = time % 1000;
         time = Math.floor(time / 1000);
         t.s = time % 60;
@@ -274,7 +269,7 @@
         t.d = Math.floor(time / 24);
 
         var ment = function (a) {
-            return '$1' + that.checkTime(a) + '$2';
+            return '$1' + checkTime(a) + '$2';
         };
 
         format = format.replace(/\{([^{]*?)%d(.*?)\}/g, ment(t.d));
@@ -439,12 +434,12 @@
             },
             /**
              * 设置 Cookie
-             * @param {String}  name
-             * @param {String}  val
-             * @param {Number} expires 单位（小时）
-             * @param {String}  domain
-             * @param {String}  path
-             * @param {Boolean} secure
+             * @param {String}  name 名称
+             * @param {String}  val 值
+             * @param {Number} expires 单位（秒）
+             * @param {String}  domain 域
+             * @param {String}  path 所在的目录
+             * @param {Boolean} secure 跨协议传递
              */
             set: function (name, val, expires, domain, path, secure) {
                 var text = String(encodeURIComponent(val)),
@@ -453,14 +448,14 @@
                 // 从当前时间开始，多少小时后过期
                 if (typeof date === 'number') {
                     date = new Date();
-                    date.setTime(date.getTime() + expires * 60 * 60 * 1000);
+                    date.setTime(date.getTime() + expires * 1000);
                 }
 
                 date instanceof Date && (text += '; expires=' + date.toUTCString());
 
                 !!domain && (text += '; domain=' + domain);
 
-                !!path && (text += '; path=' + path);
+                text += '; path=' + (path || '/');
 
                 secure && (text += '; secure');
 
