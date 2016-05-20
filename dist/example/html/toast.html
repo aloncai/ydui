@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=2664151da6fd84785d310b3344c37c43"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=65b74e5bc15df431894018f91770e791"/>
     <link rel="stylesheet" href="../css/example.css" />
     <!-- build:tb_flexible -->
     <script src="../js/yd_flexible.js"></script>
@@ -23,27 +23,28 @@
         </nav>
     </header>
     <div class="m-button">
-        <button type="button" class="btn btn-block btn-primary" id="J_Confirm1">Confirm</button>
-        <button type="button" class="btn btn-block btn-primary" id="J_Confirm2">Confirm->Custom</button>
-        <button type="button" class="btn btn-block btn-hollow" id="J_Alert">Alert</button>
-        <button type="button" class="btn btn-block btn-danger" id="J_TipMesS">TipMes->Success</button>
-        <button type="button" class="btn btn-block btn-danger" id="J_TipMesE">TipMes->Error</button>
-        <button type="button" class="btn btn-block btn-hollow" id="J_Loading">Loading</button>
+        <button type="button" class="btn btn-block btn-primary" id="confirm1">Confirm</button>
+        <button type="button" class="btn btn-block btn-primary" id="confirm2">Confirm->Custom</button>
+        <button type="button" class="btn btn-block btn-hollow" id="alert">Alert</button>
+        <button type="button" class="btn btn-block btn-danger" id="tipMesS">TipMes->Success</button>
+        <button type="button" class="btn btn-block btn-danger" id="tipMesE">TipMes->Error</button>
+        <button type="button" class="btn btn-block btn-hollow" id="loading">Loading</button>
     </div>
 </section>
-<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script src="../js/util.js"></script>
 <script>
-    !function ($, util) {
+    !function (win, util) {
+        var doc = win.document;
+        
         //普通确认框
-        $('#J_Confirm1').on('click', function () {
+        doc.querySelector('#confirm1').onclick = function () {
             util.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
                 util.tipMes('你点了确定', 'success', 1000);
             });
-        });
+        };
 
         //自定义按钮确认框
-        $('#J_Confirm2').on('click', function () {
+        doc.querySelector('#confirm2').onclick = function () {
             util.confirm('自定义按钮', '我有一个小毛驴我从来也不骑！', [
                 {
                     txt: '取消',
@@ -68,33 +69,35 @@
                     }
                 }
             ]);
-        });
+        };
 
         //普通提示框
-        $('#J_Alert').on('click', function () {
+        doc.querySelector('#alert').onclick = function () {
             util.alert('我有一个小毛驴我从来也不骑！');
-        });
+        };
 
         //正确提示框
-        $('#J_TipMesS').on('click', function () {
+        doc.querySelector('#tipMesS').onclick = function () {
             util.tipMes('鼠标不错哟！', 'success');
-        });
+        };
+
 
         //错误提示框
-        $('#J_TipMesE').on('click', function () {
+        doc.querySelector('#tipMesE').onclick = function () {
             util.tipMes('别乱点啊！', 'error', 1000, function () {
                 util.alert('给你一次重来的机会！');
             });
-        });
+        };
+
 
         //加载中提示框
-        $('#J_Loading').on('click', function () {
+        doc.querySelector('#loading').onclick = function () {
             util.showLoading('很快加载好了');
             setTimeout(function () {
                 util.hideLoading();//移除loading
             }, 2000);
-        });
-    }(jQuery, YDUI.util);
+        };
+    }(window, YDUI.util);
 </script>
 </body>
 </html>

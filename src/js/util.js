@@ -1,5 +1,4 @@
 /**
- * @extends jQuery-2.1.1
  * @fileOverview YDUI 移动端工具类
  * @author Surging
  * @email surging2@qq.com
@@ -11,7 +10,7 @@
 !function (win) {
     'use strict';
 
-    var util = {};
+    var util = {}, doc = win.document;
 
     /**
      * 确认提示框
@@ -52,40 +51,54 @@
             }];
         }
 
-        var $temp = $();
-        $.each(btnArr, function (k, val) {
-            var _style = '';
+        // 创建confirm主题DOM
+        var dom = doc.createElement('div'), _id = 'YDUI_CONFRIM';
+        dom.id = _id;
+        dom.innerHTML =
+            '<div class="mask-black"></div>' +
+            '<div class="m-confirm">' +
+            '    <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
+            '    <div class="confirm-bd">' + mes + '</div>' +
+            '</div>';
+
+        var old = doc.querySelector('#' + _id);
+        old && dom.parentNode.removeChild(dom);
+
+        // 遍历按钮数组
+        var temp = doc.createElement('div');
+        temp.className = 'confirm-ft';
+        btnArr.forEach(function (val, i) {
+            var btn = doc.createElement('a');
+            btn.href = 'javascript:;';
+            // 指定按钮颜色
             if (typeof val.color == 'boolean') {
-                _style = 'class="confirm-btn ' + (val.color ? 'primary' : 'default') + '"';
+                btn.className = 'confirm-btn ' + (val.color ? 'primary' : 'default');
             } else if (typeof val.color == 'string') {
-                _style = 'style="color: ' + val.color + '"';
+                btn.setAttribute('style', 'color: ' + val.color);
             }
-            var $btn = $('<a href="javascript:;" ' + _style + '>' + (val.txt || '') + '</a>');
-            $btn.on('click', function () {
-                if (!val.stay) {
-                    that.pageScroll.unlock();
-                    $('#J_YDConfirm').remove();
+            btn.innerHTML = val.txt || '';
+
+            // 给对应按钮添加点击事件
+            (function (p) {
+                btn.onclick = function () {
+                    // 是否保留弹窗
+                    if (!btnArr[p].stay) {
+                        // 释放页面滚动
+                        that.pageScroll.unlock();
+                        dom.parentNode.removeChild(dom);
+                    }
+                    btnArr[p].callback && btnArr[p].callback();
                 }
-                val.callback && val.callback();
-            });
-            $temp = $temp.add($btn);
+            })(i);
+            temp.appendChild(btn);
         });
 
-        var $str = $(
-            '<div id="J_YDConfirm">' +
-            '    <div class="mask-black"></div>' +
-            '    <div class="m-confirm">' +
-            '        <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
-            '        <div class="confirm-bd">' + mes + '</div>' +
-            '        <div class="confirm-ft" id="J_YDBtns"></div>' +
-            '    </div>' +
-            '</div>').remove();
+        dom.querySelector('.m-confirm').appendChild(temp);
 
-        $str.find('#J_YDBtns').append($temp);
-
+        // 禁止滚动屏幕【移动端】
         that.pageScroll.lock();
 
-        $body.append($str);
+        body.appendChild(dom);
     };
 
     /**
@@ -94,26 +107,29 @@
      * @param callback  回调函数Function 【可选】
      */
     util.alert = function (mes, callback) {
-        var $str = $(
+        var dom = doc.createElement('div'), _id = 'YDUI_ALERT';
+        dom.innerHTML =
             '<div>' +
             '    <div class="mask-black"></div>' +
             '    <div class="m-confirm m-alert">' +
             '        <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '        <div class="confirm-ft">' +
-            '            <a href="javascript:;" class="confirm-btn primary" id="J_AlertEnter">确定</a>' +
+            '            <a href="javascript:;" class="confirm-btn primary">确定</a>' +
             '        </div>' +
             '    </div>' +
-            '</div>').remove();
+            '</div>';
+        var old = doc.querySelector('#' + _id);
+        old && dom.parentNode.removeChild(dom);
 
         util.pageScroll.lock();
 
-        $body.append($str);
+        body.appendChild(dom);
 
-        $('#J_AlertEnter').on('click', function () {
-            $str.remove();
+        dom.querySelectorAll('a')[0].onclick = function () {
+            dom.parentNode.removeChild(dom);
             util.pageScroll.unlock();
             typeof callback === 'function' && callback();
-        });
+        };
     };
 
     /**
@@ -131,18 +147,23 @@
         }
 
         var ico = type == 'error' ? 'tipmes-error-ico' : 'tipmes-success-ico';
-        var $str = $(
+        var dom = doc.createElement('div'), _id = 'YDUI_TIPMES';
+        dom.id = _id;
+        dom.innerHTML =
             '<div>' +
             '    <div class="mask-white"></div>' +
             '    <div class="m-tipmes">' +
             '        <div class="' + ico + '"></div>' +
             '        <p class="tipmes-content">' + (mes || '') + '</p>' +
             '    </div>' +
-            '</div>').remove();
+            '</div>';
+
+        var old = doc.querySelector('#' + _id);
+        old && dom.parentNode.removeChild(dom);
 
         util.pageScroll.lock();
 
-        $body.append($str);
+        body.appendChild(dom);
 
         if (typeof timeout === 'function' && arguments.length >= 3) {
             callback = timeout;
@@ -152,7 +173,7 @@
         var inter = setTimeout(function () {
             clearTimeout(inter);
             util.pageScroll.unlock();
-            $str.remove();
+            dom.parentNode.removeChild(dom);
             typeof callback === 'function' && callback();
         }, (~~timeout || 2000) + 100);//100为动画时间
     };
@@ -162,30 +183,32 @@
      * @param text 显示文字String 【可选】
      */
     util.showLoading = function (text) {
-        var $str = $('' +
-        '<div id="J_ToastLoading">' +
-        '    <div class="mask-white"></div>' +
-        '    <div class="m-loading">' +
-        '        <div class="ld-loading">' +
-        '            <div class="m-loading-leaf m-loading-leaf-0"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-1"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-2"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-3"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-4"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-5"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-6"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-7"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-8"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-9"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-10"></div>' +
-        '            <div class="m-loading-leaf m-loading-leaf-11"></div>' +
-        '        </div>' +
-        '        <p class="ld-toast-content">' + (text || '数据加载中') + '</p>' +
-        '    </div>' +
-        '</div>').remove();
+        var dom = doc.createElement('div'), _id = 'YDUI_LOADING';
+        dom.id = _id;
+        dom.innerHTML =
+            '    <div class="mask-white"></div>' +
+            '    <div class="m-loading">' +
+            '        <div class="ld-loading">' +
+            '            <div class="m-loading-leaf m-loading-leaf-0"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-1"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-2"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-3"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-4"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-5"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-6"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-7"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-8"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-9"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-10"></div>' +
+            '            <div class="m-loading-leaf m-loading-leaf-11"></div>' +
+            '        </div>' +
+            '        <p class="ld-toast-content">' + (text || '数据加载中') + '</p>' +
+            '    </div>';
+        var old = doc.querySelector('#' + _id);
+        old && dom.parentNode.removeChild(dom);
 
         util.pageScroll.lock();
-        $body.append($str);
+        body.appendChild(dom);
     };
 
     /**
@@ -193,7 +216,9 @@
      */
     util.hideLoading = function () {
         util.pageScroll.unlock();
-        $('#J_ToastLoading').remove();
+
+        var dom = doc.querySelector('#YDUI_LOADING');
+        dom.parentNode.removeChild(dom);
     };
 
     /**
@@ -203,6 +228,7 @@
      */
     util.pageScroll = function () {
         var fn = function (e) {
+            e = e || window.event;
             e.preventDefault();
             e.stopPropagation();
         };
@@ -212,11 +238,11 @@
             lock: function () {
                 if (islock)return;
                 islock = true;
-                $(document).on('touchmove', fn);
+                doc.addEventListener('touchmove', fn);
             },
             unlock: function () {
                 islock = false;
-                $(document).unbind('touchmove', fn);
+                doc.removeEventListener('touchmove', fn);
             }
         };
     }();
@@ -408,7 +434,7 @@
              * @return {String}
              */
             get: function (name) {
-                var m = win.document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
+                var m = doc.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
                 return (m && m[1]) ? decodeURIComponent(m[1]) : '';
             },
             /**
@@ -438,7 +464,7 @@
 
                 secure && (text += '; secure');
 
-                win.document.cookie = name + '=' + text;
+                doc.cookie = name + '=' + text;
             }
         }
     }();
@@ -456,7 +482,7 @@
      * @return {Boolean}
      */
     util.isMobile = function () {
-        return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement;
+        return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement;
     };
 
     /**
@@ -475,7 +501,7 @@
         return getUA.indexOf('MicroMessenger') > -1;
     };
 
-    var $body = $('body');
+    var body = doc.querySelectorAll('body')[0];
     var getUA = util.getUA();
     win.isMobile = util.isMobile();
     win.isWeixin = util.isWeixin();
@@ -483,7 +509,7 @@
 
     // RequireJS && SeaJS && GlightJS
     if (typeof define === 'function') {
-        define(['jquery'], util);
+        define(util);
     } else {
         var ydui = win.YDUI = win.YDUI || {};
         ydui.util = util;

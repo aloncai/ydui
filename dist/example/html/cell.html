@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style" />
     <meta content="telephone=no" name="format-detection" />
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=2664151da6fd84785d310b3344c37c43" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=65b74e5bc15df431894018f91770e791" />
     <link rel="stylesheet" href="../css/example.css" />
     <!-- build:tb_flexible -->
     <script src="../js/yd_flexible.js"></script>
@@ -154,13 +154,8 @@
 <script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script src="../js/util.js"></script>
 <script>
-    /**
-     * 发送验证码相关
-     * @param $       jQuery
-     * @param util    工具类（必须）
-     */
     !function ($, util) {
-        // 时间控件加默认时间 ===================
+        // 时间控件加默认时间 ↓↓↓↓↓↓===================
         var now = new Date(),
                 _date = 1900 + now.getYear() + '-' + util.checkTime(now.getMonth() + 1) + '-' + util.checkTime(now.getDate()),
                 _time = util.checkTime(now.getHours()) + ':' + util.checkTime(now.getMinutes());
@@ -168,9 +163,9 @@
         $('input[type="datetime-local"]').val(_date + 'T' + _time);
         $('input[type="date"]').val(_date);
         $('input[type="time"]').val(_time);
-        // 时间控件加默认时间 ===================
+        // 时间控件加默认时间 ↑↑↑↑↑↑===================
 
-        // 发送验证码逻辑 ===================
+        // 发送验证码逻辑 ↓↓↓↓↓↓===================
         var verify = {
             // 定时器
             timer: null,
@@ -179,7 +174,7 @@
             // 禁用按钮样式
             disClass: 'btn-disabled',
             // 倒计时操作
-            interVal: function () {
+            countDown: function () {
                 var self = this, secs = 60;
                 self.getCodebtn.attr('disabled', true).addClass(self.disClass).text(secs + ' 秒后重新获取');
                 self.timer = setInterval(function () {
@@ -198,13 +193,13 @@
         };
 
         verify.getCodebtn.on('click', function () {
-            //$.ajax({}); 发送验证码ajax
-            //成功发送验证码后调用↓↓↓↓
+            // $.ajax({}); 发送验证码ajax
+            // 成功发送验证码后调用↓↓↓↓
             util.tipMes('已发送', 'success', 1500);
-            verify.interVal();
-            //成功发送验证码后调用↑↑↑↑
+            verify.countDown();
+            // 成功发送验证码后调用↑↑↑↑
         });
-        // 发送验证码逻辑 ===================
+        // 发送验证码逻辑 ↑↑↑↑↑↑===================
     }(jQuery, YDUI.util);
 </script>
 </body>
