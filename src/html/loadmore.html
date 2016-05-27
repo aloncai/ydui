@@ -78,9 +78,9 @@
             triggerdom: '#J_GetData',
             loadingdom: '#J_Loading',
             loadmoredom: '#J_LoadMore',
-            callback: function (ret, page) {
+            callback: function (ret, retPage) {
                 $('#J_TabContent').append(template('J_ListHtml', {list: ret})).find('img').lazyload();
-                console.log('Page is ' + page);
+                console.log('Page is ' + retPage);
             }
         });
     }(jQuery);

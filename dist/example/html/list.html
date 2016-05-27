@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=2664151da6fd84785d310b3344c37c43"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=973c931dc7340aaa04e5f16e93832dbc"/>
     <link rel="stylesheet" href="../css/example.css" />
     <!-- build:tb_flexible -->
     <script src="../js/yd_flexible.js"></script>
@@ -44,7 +44,7 @@
             <img src="http://static.ydcss.com/uploads/ydui/default.jpg" data-original="{{data.img}}"/>
         </div>
         <div class="m-listtitle">
-            <h3 class="title">{{data.title}}(page{{list.realpage}})</h3>
+            <h3 class="title">{{list.realpage}}-{{data.title}}(page{{list.realpage}})</h3>
             <p><span class="price"><em>¥</em>{{data.marketprice}}</span>
                 <del>¥{{data.productprice}}</del>
             </p>
@@ -58,128 +58,30 @@
 <script src="../libs/dataload/jquery.dataload.js"></script>
 <script src="../js/util.js"></script>
 <script>
-    /**
-     * 返回后，定位之前位置逻辑：
-     * ①加载数据后将每页数据存入SessionStorage
-     * ②链接跳转详情页，改为js触发跳转并将当前元素的offset().top和页码记录到SessionStorage
-     * ③返回列表页判断是否需要滚动至之前位置，是则滚动至指定位置
-     */
     !function ($, window, util) {
+        /**
+         * 三种排版方式
+         **/
         var listView = {
-                key: 'viewtype',//本地存储key(排版方式)
-                viewtype: ['larger', 'largest', 'list'],//排版方式
-                // 需要找三种图片的规则 http://img1.shikee.com/try/2016/02/29/12240320922862852966.jpg_295x295.jpg
-                imgwidth: ['_220x220.jpg', '_295x295.jpg', '_180x180.jpg'],
-                //切换排版方式
-                changeLayout: function () {
-                    $('#J_ChangeView').removeClass().addClass('nav-ico icon-sort' + listView.viewtype[viewTypeIndex]);
-                    $('#J_List').removeClass()
-                            .addClass('m-listbox ' + listView.viewtype[viewTypeIndex] + '-view')
-                            .find('img').each(function () {
-                                var $this = $(this);
-                                $this.attr('src', $this.data('original') + listView.imgwidth[viewTypeIndex]);
-                            });
-                }
-            },
-            localKey = util.localStorage.get(listView.key),
-            viewTypeIndex = localKey ? listView.viewtype.indexOf(localKey) : 0;
-
-        listView.changeLayout();
-
-        var page = 1;//起始页码
-        var backPosition = {
-            storageTagKey: 'LIST_STATUS',//储存当前坐标和页码的本地存储key
-            storageListKey: 'LIST_DATA',//储存列表数据的本地存储key
-            storageVal: null,//当前坐标和页码值
-            //从本地存储读取需要的数据并显示，然后滚动到之前位置
-            appendFormStorage: function () {
-                var that = this;
-                that.showMask();
-
-                var n = that.storageVal.page;
-                page = n + 1;//已经自动滚动并加载数据后，记录下次加载的正确页数
-
-                var _tempHtml = '';
-                //从SessionStorage获取需要显示的列表数据
-                for (var i = 1; i <= n; i++) {
-                    var _d = JSON.parse(util.sessionStorage.get(that.storageListKey + i));
-                    if (_d) {
-                        _d.realpage = i;
-                        _tempHtml += template('J_ListHtml', {list: _d});
-                    }
-                }
-                //填充HTML
-                $('#J_List').append(_tempHtml).find('img').each(function () {
-                    var $this = $(this);
-                    $this.attr('data-original', $this.data('original') + listView.imgwidth[viewTypeIndex]);
-                }).lazyload();
-
-                that.hideMask();
-            },
-            //显示遮罩层 弱化显示滚动过程
-            showMask: function () {
-                $('body').append('<div id="J_ListMask" class="maks-white-high"></div>');
-            },
-            //移除遮罩层
-            hideMask: function () {
-                var that = this;
-                var navHeight = parseInt($('html').css('font-size')) * 0.88;//nav的高度
-                $('body,html').animate({scrollTop: that.storageVal.st - navHeight}, 20, function () {
-                    $('#J_ListMask').remove();
-                });
-            },
-            getStorage: function () {
-                var _storage = null;
-
-                var storageTemp = util.sessionStorage.get(backPosition.storageTagKey);
-                if (storageTemp)_storage = JSON.parse(storageTemp);
-
-                //取出数据后立即将其删除！！！
-                util.sessionStorage.remove(backPosition.storageTagKey);
-
-                backPosition.storageVal = _storage;
-
-                return _storage;
+            key: 'viewtype',//本地存储key(排版方式)
+            viewtype: ['larger', 'largest', 'list'],//排版方式
+            // 需要找三种图片的规则 http://img1.shikee.com/try/2016/02/29/12240320922862852966.jpg_295x295.jpg
+            imgwidth: ['_220x220.jpg', '_295x295.jpg', '_180x180.jpg'],
+            //切换排版方式
+            changeLayout: function () {
+                $('#J_ChangeView').removeClass().addClass('nav-ico icon-sort' + listView.viewtype[viewTypeIndex]);
+                $('#J_List').removeClass()
+                        .addClass('m-listbox ' + listView.viewtype[viewTypeIndex] + '-view')
+                        .find('img').each(function () {
+                            var $this = $(this);
+                            $this.attr('src', $this.data('original') + listView.imgwidth[viewTypeIndex]);
+                        });
             }
         };
+        var localKey = util.localStorage.get(listView.key);
+        var viewTypeIndex = localKey ? listView.viewtype.indexOf(localKey) : 0;
 
-        //判断是否需要自动加载数据并滚动页面
-        !!backPosition.getStorage() && backPosition.appendFormStorage();
-
-        //调用插件实现滚动加载
-        $('#J_ListCon').dataload({
-            url: 'http://static.ydcss.com/uploads/ydui/list.js',//模拟的jsonp数据
-            page: page,
-            pageSize: 10,
-            dataType: 'jsonp',
-            pagestr: 'testpage',
-            jsonpCallback: 'callback',
-            loadtype: 'scroll',
-            data: {aaa: 'aaa'},
-            loadingdom: '#J_Loading',
-            callback: function (ret, retPage) {
-                ret.realpage = retPage;
-                //填充HTML
-                $('#J_List').append(template('J_ListHtml', {list: ret})).find('img').each(function () {
-                    var $this = $(this);
-                    $this.attr('data-original', $this.data('original') + listView.imgwidth[viewTypeIndex]);
-                }).lazyload();
-
-                //储存每页数据
-                util.sessionStorage.set(backPosition.storageListKey + retPage, JSON.stringify(ret));
-            }
-        }).delegate('.J_ListRedirect', 'click', function (e) {
-            //原来的a链接 改用js触发跳转方式
-            e.stopPropagation();
-
-            var $this = $(this);
-            //储存当前坐标和页码
-            util.sessionStorage.set(backPosition.storageTagKey, JSON.stringify({
-                st: $this.offset().top,
-                page: $this.data('page')
-            }));
-            location.href = $this.data('href');
-        });
+        listView.changeLayout();
 
         //切换排版方式
         $('#J_ChangeView').on('click', function () {
@@ -190,6 +92,100 @@
             util.localStorage.set(listView.key, listView.viewtype[viewTypeIndex % listView.viewtype.length]);
             listView.changeLayout();
             $(window).trigger('scroll');
+        });
+
+        /**
+         * 返回后，定位之前位置逻辑：
+         * ①加载数据后将每页数据存入SessionStorage
+         * ②跳转详情页方式，改为js触发跳转并记录当前页码
+         * ③返回列表页判断是否需要滚动到之前位置，是则加载对应数据，而后浏览器将会自动滚动
+         */
+        var page = 1;//起始页码
+        var backPosition = {
+            storagePageKey: 'LIST_PAGE',//储存当页码的本地存储key
+            storageListKey: 'LIST_DATA',//储存列表数据的本地存储key
+            loadPage: 0,//页码
+            /**
+             * 从本地存储取出相应数据
+             */
+            getHtml: function () {
+                var that = this;
+
+                //总需滚动的页码数
+                var num = that.loadPage;
+
+                //记录下次加载的正确页数
+                page = num + 1;
+
+                //从SessionStorage获取需要显示的列表数据，并形成HTML
+                var html = '';
+                for (var i = 1; i <= num; i++) {
+                    var _data = util.sessionStorage.get(that.storageListKey + i);
+                    if (_data) {
+                        _data.realpage = i;
+                        html += template('J_ListHtml', {list: _data});
+                    }
+                }
+                that.appendDOM(html);
+            },
+            /**
+             * 获取页码
+             */
+            getLoadPage: function () {
+                var page = util.sessionStorage.get(backPosition.storagePageKey);
+
+                //取出页码后立即将其删除！！！
+                util.sessionStorage.remove(backPosition.storagePageKey);
+
+                backPosition.loadPage = page;
+
+                return page;
+            },
+            /**
+             * 将HTML插入页面
+             * @param html
+             */
+            appendDOM: function (html) {
+                //无排版方式直接使用↓↓↓
+                //$('#J_List').append(html).find('img').lazyload();
+
+                $('#J_List').append(html).find('img').each(function () {
+                    var $this = $(this);
+                    $this.attr('data-original', $this.data('original') + listView.imgwidth[viewTypeIndex]);
+                }).lazyload();
+            }
+        };
+
+        //判断是否需要自动加载数据并滚动页面
+        !!backPosition.getLoadPage() && backPosition.getHtml();
+
+        //调用插件实现滚动加载
+        $('#J_ListCon').dataload({
+            url: 'http://static.ydcss.com/uploads/ydui/list.js',//模拟的jsonp数据
+            page: page,
+            pageSize: 10,
+            dataType: 'jsonp',
+            pagestr: 'testpage',//请求数据时，参数page字符串 默认：page
+            jsonpCallback: 'callback',//jsonp时需要
+            loadtype: 'scroll',//加载类型 scroll or click；click时需指定loadmoredom，触发加载数据的DOM
+            data: {aaa: 'aaa'},//需要传输的数据
+            loadingdom: '#J_Loading',//loading的DOM
+            callback: function (ret, retPage) {
+                ret.realpage = retPage;
+                //填充HTML
+                backPosition.appendDOM(template('J_ListHtml', {list: ret}));
+
+                //储存每页数据
+                util.sessionStorage.set(backPosition.storageListKey + retPage, ret);
+            }
+        }).delegate('.J_ListRedirect', 'click', function (e) {
+            //原来的a链接 改用js触发跳转
+            e.stopPropagation();
+
+            var $this = $(this);
+            //储存当前页码
+            util.sessionStorage.set(backPosition.storagePageKey, $this.data('page'));
+            location.href = $this.data('href');
         });
     }(jQuery, window, YDUI.util);
 </script>

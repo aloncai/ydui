@@ -1765,8 +1765,6 @@ table {
   align-items: center;
 }
 .m-nav nav > a {
-  background-color: #FFF;
-  border-color: #FFF;
   min-width: 15%;
   /* for low version android */
   -webkit-box-flex: 0;
@@ -1783,10 +1781,6 @@ table {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-}
-.m-nav nav > a:active {
-  background-color: #f5f5f5;
-  border-color: #f5f5f5;
 }
 .m-nav nav > a:first-child {
   -webkit-box-ordinal-group: 2;
