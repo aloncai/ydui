@@ -382,39 +382,41 @@
     };
 
     /**
+     * 序列化
+     * @param value
+     * @returns {string}
+     */
+    util.serialize = function (value) {
+        if (typeof value === 'string') return value;
+        return JSON.stringify(value);
+    };
+
+    /**
+     * 反序列化
+     * @param value
+     * @returns {*}
+     */
+    util.deserialize = function (value) {
+        if (typeof value !== 'string') return undefined;
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            return value || undefined;
+        }
+    };
+
+    /**
      * 本地存储
      */
     util.localStorage = function () {
-        var ls = win.localStorage;
-        return {
-            set: function (key, value) {
-                ls.setItem(key, value);
-            },
-            get: function (key) {
-                return ls.getItem(key);
-            },
-            remove: function (key) {
-                ls.removeItem(key);
-            }
-        };
+        return storage(win.localStorage);
     }();
 
     /**
      * Session存储
      */
     util.sessionStorage = function () {
-        var ls = win.sessionStorage;
-        return {
-            set: function (key, value) {
-                ls.setItem(key, value);
-            },
-            get: function (key) {
-                return ls.getItem(key);
-            },
-            remove: function (key) {
-                ls.removeItem(key);
-            }
-        };
+        return storage(win.sessionStorage);
     }();
 
     /**
@@ -495,6 +497,27 @@
     util.isWeixin = function () {
         return getUA.indexOf('MicroMessenger') > -1;
     };
+
+    /**
+     * HTML5存储
+     */
+    function storage(ls) {
+        var _util = util;
+        return {
+            set: function (key, value) {
+                ls.setItem(key, _util.serialize(value));
+            },
+            get: function (key) {
+                return _util.deserialize(ls.getItem(key));
+            },
+            remove: function (key) {
+                ls.removeItem(key);
+            },
+            clear: function () {
+                ls.clear();
+            }
+        };
+    }
 
     var body = doc.querySelectorAll('body')[0];
     var getUA = util.getUA();
