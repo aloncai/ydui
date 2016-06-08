@@ -156,9 +156,12 @@
 <script>
     !function ($, util) {
         // 时间控件加默认时间 ↓↓↓↓↓↓===================
+        var checkTime = function (i) {
+            return i < 10 ? '0' + i : i;
+        };
         var now = new Date(),
-                _date = 1900 + now.getYear() + '-' + util.checkTime(now.getMonth() + 1) + '-' + util.checkTime(now.getDate()),
-                _time = util.checkTime(now.getHours()) + ':' + util.checkTime(now.getMinutes());
+            _date = 1900 + now.getYear() + '-' + checkTime(now.getMonth() + 1) + '-' + checkTime(now.getDate()),
+            _time = checkTime(now.getHours()) + ':' + checkTime(now.getMinutes());
 
         $('input[type="datetime-local"]').val(_date + 'T' + _time);
         $('input[type="date"]').val(_date);

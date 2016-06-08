@@ -19,7 +19,11 @@
     }
   }
   > dd {
-    border-top: 1px solid @line-color; /* no */
+    position: relative;
+    &:after {
+      content: '';
+      .onepixel-line(@line-color);
+    }
     &:first-child {
       border-top: none;
     }

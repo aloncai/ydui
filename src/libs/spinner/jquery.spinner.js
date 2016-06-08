@@ -22,8 +22,7 @@
                 input: '.J_Input',
                 add: '.J_Add',
                 minus: '.J_Del',
-                min: 1,//最小值
-                unit: 1,
+                unit: 1,//等同于最小值
                 max: 100,//最大值 number or function  取值有两种：参数max 和 input's data-max；后者优先级大于前者
                 callback: null//修改时回调 function(value, ele){} [value：当前值 ele：当前文本框jq对象]
             }, option);
@@ -33,19 +32,32 @@
                 $minus = $(st.minus, this);
 
             $input.val(st.unit);
-            if (typeof st.max == 'function') st.max = ~~st.max();
-            if (typeof st.unit == 'function') st.unit = ~~st.unit();
-            st.max = $input.data('max') || st.max;
+
+            /**
+             * 获取倍数
+             * @returns {number}
+             */
+            function getUnit() {
+                return $.type(st.unit) == 'function' ? ~~st.unit() : st.unit;
+            }
+
+            /**
+             * 获取最大值
+             * @returns {number}
+             */
+            function getMax() {
+                return $input.data('max') || $.type(st.max) == 'function' ? ~~st.max() : st.max;
+            }
 
             $add.on('click', function () {
-                var v = $input.val(), temp = ~~v + st.unit;
-                if (temp > st.max)return;
+                var val = $input.val(), temp = ~~val + getUnit();
+                if (temp > getMax())return;
                 setValue(temp);
             });
 
             $minus.on('click', function () {
-                var v = $input.val(), temp = v - st.unit;
-                if (temp < st.min)return;
+                var val = $input.val(), unit = getUnit(), temp = val - unit;
+                if (temp < unit)return;
                 setValue(temp);
             });
 
@@ -58,19 +70,23 @@
                 }
             });
 
-            function setValue(v) {
-                if (!/^\d*$/.test(v)) v = st.min;
-                if (v > st.max)v = st.max;
-                if (v % st.unit > 0) {
-                    v = ~~v - ~~v % st.unit + st.unit;
-                    if (v > st.max) v -= ~~st.unit;
+            function setValue(val) {
+                var unit = getUnit();
+                var max = getMax();
+
+                if (!/^\d*$/.test(val)) val = unit;
+                if (val > max)val = max;
+
+                if (val % unit > 0) {
+                    val = ~~val - ~~val % unit + unit;
+                    if (val > max) val -= ~~unit;
                 }
-                if (v < st.min) {
-                    v = st.min;
-                    if (v < st.unit) v = st.unit;
+                if (val < unit) {
+                    val = unit;
+                    if (val < unit) val = unit;
                 }
-                $input.val(v);
-                typeof st.callback == 'function' && st.callback(v, $input);
+                $input.val(val);
+                typeof st.callback == 'function' && st.callback(val, $input);
             }
         });
     };

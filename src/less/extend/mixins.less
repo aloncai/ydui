@@ -2,10 +2,8 @@
 // -----------------------------------------------------------------------------
 .tap-color(@color, @opacity: .9) {
   background-color: @color;
-  border-color: @color;
   &:active {
     background-color: @color * @opacity;
-    border-color: @color * @opacity;
   }
 }
 // 遮罩层
@@ -47,4 +45,15 @@
   border-color: @color;
   border-width: @border-width @border-width 0 0; /* no */
   transform: rotate(@deg);
+}
+// 一像素边框
+// -----------------------------------------------------------------------------
+.onepixel-line(@color) {
+  height: 1px; /* no */
+  width: 100%;
+  background-color: @color;
+  transform: scaleY(.5);
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }

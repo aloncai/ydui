@@ -91,7 +91,6 @@
             }
             util.localStorage.set(listView.key, listView.viewtype[viewTypeIndex % listView.viewtype.length]);
             listView.changeLayout();
-            $(window).trigger('scroll');
         });
 
         /**

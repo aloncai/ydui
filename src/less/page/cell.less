@@ -2,12 +2,22 @@
   padding: .15rem @box-padding .1rem;
   font-size: .3rem; /* px */
   color: #888;
-  border-bottom: 1px solid @line-color; /* no */
+  position: relative;
+  z-index: 0;
+  &:after {
+    content: '';
+    .onepixel-line(@line-color);
+  }
 }
 .m-cell {
   background-color: #FFF;
   margin-bottom: .2rem;
-  border-bottom: 1px solid @line-high-color; /* no */
+  position: relative;
+  z-index: 0;
+  &:after {
+    content: '';
+    .onepixel-line(@line-high-color);
+  }
   a.u-cellitem,
   label.cellright {
     .tap-color(#FFF, .96);
@@ -21,12 +31,8 @@
   overflow: hidden;
   &:not(:last-child):after {
     content: '';
-    width: 100%;
-    height: 1px; /* no */
-    background-color: @line-color;
-    position: absolute;
-    left: @box-padding;
-    bottom: 0;
+    margin-left: @box-padding;
+    .onepixel-line(@line-color);
   }
 }
 .cellleft {

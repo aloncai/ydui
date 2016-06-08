@@ -8,10 +8,11 @@
   color: #FFF;
   text-align: center;
   border-radius: 3px; /* no */
-  border-width: 1px; /* no */
-  border-style: solid;
   display: inline-block;
   padding: 0 .2rem;
+  position: relative;
+  border: none;
+  box-sizing: border-box;
 }
 .btn-block {
   margin-top: .5rem;
@@ -36,5 +37,20 @@
 .btn-hollow {
   .tap-color(#F7F7F7, .9);
   color: #454545;
-  border-color: @line-high-color;
+  &:after {
+    content: ' ';
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    border: 1px solid @line-high-color;
+    transform: scale(.5);
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+}
+button.btn-hollow, input.btn-hollow {
+  border: 1px solid @line-high-color;
 }

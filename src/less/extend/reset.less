@@ -5,7 +5,7 @@ html, body {
   height: 100%;
 }
 body {
-  background-color: @body-color;
+  background-color: @body-bg;
   font-size: 12px; /* no */
   -webkit-font-smoothing: antialiased;
   font-family: arial, sans-serif;
@@ -57,6 +57,9 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
   margin: 0;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
 }
 textarea {
   outline: none;
