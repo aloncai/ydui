@@ -1,6 +1,7 @@
 !function (doc, win) {
     var docWidth = 750;// 设计图文档宽度
     // css值为：设计图尺寸/100  例：100px => 1rem;
+    // 为什么是100 由下面的 20 * 5得出
     var docEl = doc.documentElement,
         resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
     var recalc = (function refreshRem() {
