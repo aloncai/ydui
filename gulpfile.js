@@ -51,7 +51,7 @@ gulp.task('build:cssmin', ['less'], function () {
         .pipe($.cssBase64({
             extensionsAllowed: ['.ttf']
         }))
-        .pipe($.cleanCss())
+        .pipe($.cleanCss({keepSpecialComments: '*'}))
         .pipe($.header(banner, {pkg: pkg}))
         .pipe(gulp.dest('dist/build/css'));
 });
