@@ -10,6 +10,8 @@ var gulp = require('gulp'),
 
 var pkg = require('./package.json');
 
+var AUTOPREFIXER_BROWSERS = ["Android >= 4", "Explorer >= 10", "iOS >= 6"];
+
 //淘宝flexible配置
 var flexible = {
     url: 'http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/flexible.js',
@@ -17,7 +19,8 @@ var flexible = {
 };
 
 //注释信息
-var banner = '/*! <%= pkg.title %> v<%= pkg.version %> by YDCSS (c) ' + $.util.date(Date.now(), 'UTC:yyyy') + ' Licensed <%= pkg.license %>' + ' */ \n';
+var banner = '/*! <%= pkg.title %> v<%= pkg.version %> by YDCSS (c) ' +
+    $.util.date(Date.now(), 'UTC:yyyy') + ' Licensed <%= pkg.license %>' + ' */ \n';
 
 gulp.task('less', function () {
     var _stream = gulp.src(['src/less/{ydui,example}.less']);
@@ -26,7 +29,7 @@ gulp.task('less', function () {
             .pipe($.rem2px())//将已存在rem转成px
             .pipe($.postcss([$.px2rem({remUnit: 75})]))//将px转成flexible rem
             .pipe($.autoprefixer({
-                browsers: ['last 2 versions', 'Android >= 4.0'], cascade: false, remove: true
+                browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
             .pipe(gulp.dest('src/css'))
             .pipe($.livereload());
@@ -34,7 +37,7 @@ gulp.task('less', function () {
         return _stream.pipe($.plumber({errorHandler: $.notify.onError('Error: <%= error.message %>')}))
             .pipe($.less())
             .pipe($.autoprefixer({
-                browsers: ['last 2 versions', 'Android >= 4.0'], cascade: false, remove: true
+                browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
             .pipe(gulp.dest('src/css'))
             .pipe($.livereload());
@@ -73,7 +76,7 @@ gulp.task('example:css', function () {
             .pipe($.rem2px())//将已存在rem转成px
             .pipe($.postcss([$.px2rem({remUnit: 75})]))//将px转成flexible rem
             .pipe($.autoprefixer({
-                browsers: ['last 2 versions', 'Android >= 4.0'], cascade: false, remove: true
+                browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
             .pipe(gulp.dest('dist/example/css'));
     } else {
@@ -83,7 +86,7 @@ gulp.task('example:css', function () {
                 extensionsAllowed: ['.ttf']
             }))
             .pipe($.autoprefixer({
-                browsers: ['last 2 versions', 'Android >= 4.0'], cascade: false, remove: true
+                browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
             .pipe($.sourcemaps.write('./'))
             .pipe(gulp.dest('dist/example/css'));

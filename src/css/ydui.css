@@ -1295,7 +1295,6 @@ input.btn-hollow {
 .cellright input[type="radio"],
 .cellright input[type="checkbox"]:not(.u-checkbox-ios) {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   position: absolute;
   left: -9999em;
@@ -1656,7 +1655,6 @@ input.btn-hollow {
   border-radius: 2px;
   /* no */
   -webkit-appearance: button;
-  -moz-appearance: button;
   appearance: button;
   text-indent: 2px;
   /* no */
@@ -1927,7 +1925,6 @@ input.btn-hollow {
 }
 .u-checkbox-ios {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   position: relative;
   width: 52px;
