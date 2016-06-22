@@ -1874,7 +1874,10 @@ input.btn-hollow {
   transform: rotate(-135deg);
 }
 .nav-center {
-  height: 0.9rem;
+  -webkit-box-ordinal-group: 3;
+  -webkit-order: 2;
+  -ms-flex-order: 2;
+  order: 2;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1887,11 +1890,8 @@ input.btn-hollow {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  height: 0.9rem;
   width: 70%;
-  -webkit-box-ordinal-group: 3;
-  -webkit-order: 2;
-  -ms-flex-order: 2;
-  order: 2;
   margin-left: 15%;
   font-size: 0.4rem;
   /* px */

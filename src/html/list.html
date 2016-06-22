@@ -17,10 +17,10 @@
 <body>
 <section class="g-doc">
     <header class="m-nav">
-        <nav>
-            <a href="../index.html" class="back-ico"></a>
-            <div class="center">List</div>
-            <a href="javascript:;" class="nav-ico icon-sortlist" id="J_ChangeView"></a>
+        <nav class="nav-box">
+            <a href="../index.html" class="nav-item back-ico"></a>
+            <div class="nav-center">List</div>
+            <a href="javascript:;" class="nav-item nav-ico icon-sortlist" id="J_ChangeView"></a>
         </nav>
     </header>
     <aside class="example-tip">
@@ -69,7 +69,7 @@
             imgwidth: ['_220x220.jpg', '_295x295.jpg', '_180x180.jpg'],
             //切换排版方式
             changeLayout: function () {
-                $('#J_ChangeView').removeClass().addClass('nav-ico icon-sort' + listView.viewtype[viewTypeIndex]);
+                $('#J_ChangeView').removeClass().addClass('nav-item nav-ico icon-sort' + listView.viewtype[viewTypeIndex]);
                 $('#J_List').removeClass()
                         .addClass('m-listbox ' + listView.viewtype[viewTypeIndex] + '-view')
                         .find('img').each(function () {
