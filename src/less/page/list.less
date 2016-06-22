@@ -8,6 +8,7 @@
     display: none;
   }
 }
+
 .m-listbox .m-listitem {
   .m-listimg {
     overflow: hidden;
@@ -34,6 +35,7 @@
     }
   }
 }
+
 .m-listbox.list-view {
   padding: 0 .22rem;
   background-color: #FFF;
@@ -74,6 +76,7 @@
     }
   }
 }
+
 .m-listbox.larger-view {
   padding: 0 .06rem;
   overflow: hidden;
@@ -90,10 +93,7 @@
       padding: .1rem;
       font-size: .26rem; /* px */
       .title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        text-align: justify;
+        .text-overflow();
       }
       > p {
         margin-top: .04rem;
@@ -111,6 +111,7 @@
     }
   }
 }
+
 .m-listbox.largest-view {
   background-color: #FFF;
   .m-listitem {
@@ -147,6 +148,7 @@
     }
   }
 }
+
 .loading {
   margin: .2rem auto .4rem;
   display: none;
@@ -156,6 +158,7 @@
     margin: 0 auto;
   }
 }
+
 .loadmore-btn {
   display: none;
   padding: 0 .2rem .4rem .2rem;

@@ -1,12 +1,12 @@
 .m-celltitle {
-  padding: .15rem @box-padding .1rem;
+  padding: .15rem @box-sides-padding .1rem;
   font-size: .3rem; /* px */
+  text-align: left;
   color: #888;
   position: relative;
   z-index: 0;
   &:after {
-    content: '';
-    .onepixel-line(@line-color);
+    .bottom-line(@line-color);
   }
 }
 .m-cell {
@@ -15,8 +15,7 @@
   position: relative;
   z-index: 0;
   &:after {
-    content: '';
-    .onepixel-line(@line-high-color);
+    .bottom-line(@line-high-color);
   }
   a.u-cellitem,
   label.cellright {
@@ -27,12 +26,11 @@
   display: flex;
   position: relative;
   z-index: 0;
-  padding-left: @box-padding;
+  padding-left: @box-sides-padding;
   overflow: hidden;
   &:not(:last-child):after {
-    content: '';
-    margin-left: @box-padding;
-    .onepixel-line(@line-color);
+    margin-left: @box-sides-padding;
+    .bottom-line(@line-color);
   }
 }
 .cellleft {
@@ -50,7 +48,7 @@
   color: #525252;
   text-align: right;
   font-size: .28rem; /* px */
-  padding-right: @box-padding;
+  padding-right: @box-sides-padding;
   display: flex;
   align-items: center;
   justify-content: flex-end;

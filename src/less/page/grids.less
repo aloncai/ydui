@@ -1,65 +1,52 @@
 .m-grids {
   overflow: hidden;
   position: relative;
-  background-color: #FFF;
-  text-align: center;
-  font-size: .24rem; /* px */
-  align-items: center;
-  width: 100%;
-  &:before, &:after {
-    content: '';
-    background-color: @line-high-color;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
+  z-index: 0;
+  background-color: @grids-bg;
   &:before {
-    width: 100%;
-    height: 1px; /* no */
-    transform: scaleY(.5);
+    .bottom-line(@grids-line-high-color, 1);
   }
-  &:after {
-    height: 100%;
-    width: 1px; /* no */
+  &.grids-2 .grids-item {
+    width: 50%;
+  }
+  &.grids-3 .grids-item {
+    width: 33.333333%;
+  }
+  &.grids-4 .grids-item {
+    width: 25%;
+  }
+  &.grids-5 .grids-item {
+    width: 20%;
   }
 }
-.m-grids > li {
+
+.grids-item {
   width: 25%;
-  position: relative;
   float: left;
-  overflow: hidden;
-  .grids-item {
-    padding: .5rem 0;
-    display: block;
-    font-size: .28rem; /* px */
-    > i {
-      display: block;
-      font-size: .6rem;
-      color: #999;
-    }
-    > span {
-      display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    &:before, &:after {
-      content: '';
-      background-color: @line-color;
-      position: absolute;
-      bottom: 0;
-    }
-    &:before {
-      width: 100%;
-      height: 1px; /* no */
-      left: 0;
-      transform: scaleY(.5);
-    }
-    &:after {
-      height: 100%;
-      width: 1px; /* no */
-      right: 0;
-      transform: scaleX(.5);
-    }
+  position: relative;
+  z-index: 0;
+  padding: @grids-padding 0;
+  font-size: @grids-fontsize; /* px */
+  &:before {
+    .right-line(@grids-line-color);
   }
+  &:after {
+    .bottom-line(@grids-line-color);
+  }
+}
+
+.grids-icon {
+  height: .68rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    height: 70%;
+  }
+}
+
+.grids-txt {
+  .text-overflow(center);
+  color: @grids-color;
+  padding: 0 .2rem;
 }
