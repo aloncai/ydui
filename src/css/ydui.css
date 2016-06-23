@@ -185,6 +185,10 @@ table {
   font-family: 'YDUI';
   src: url('../iconfont/ydui.ttf#datauri') format('truetype');
 }
+@font-face {
+  font-family: 'fdsfsf';
+  src: url(../iconfont/iconfont.ttf#datauri) format('truetype');
+}
 .m-grids {
   overflow: hidden;
   position: relative;
