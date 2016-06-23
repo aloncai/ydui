@@ -1,7 +1,6 @@
 .m-grids {
   overflow: hidden;
   position: relative;
-  z-index: 0;
   background-color: @grids-bg;
   &:before {
     .bottom-line(@grids-line-high-color, 1);
@@ -24,8 +23,7 @@
   width: 25%;
   float: left;
   position: relative;
-  z-index: 0;
-  padding: @grids-padding 0;
+  padding: @grids-padding-horizontal 0;
   font-size: @grids-fontsize; /* px */
   &:before {
     .right-line(@grids-line-color);

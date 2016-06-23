@@ -185,14 +185,9 @@ table {
   font-family: 'YDUI';
   src: url('../iconfont/ydui.ttf#datauri') format('truetype');
 }
-@font-face {
-  font-family: 'fdsfsf';
-  src: url(../iconfont/iconfont.ttf#datauri) format('truetype');
-}
 .m-grids {
   overflow: hidden;
   position: relative;
-  z-index: 0;
   background-color: #FFF;
 }
 .m-grids:before {
@@ -224,7 +219,6 @@ table {
   width: 25%;
   float: left;
   position: relative;
-  z-index: 0;
   padding: 0.5rem 0;
   font-size: 0.28rem;
   /* px */
@@ -1098,42 +1092,49 @@ table {
   padding: 0 0.24rem;
 }
 .btn {
-  height: .7rem;
-  line-height: .7rem;
-  font-size: .26rem;
-  /* px */
-  color: #FFF;
   text-align: center;
-  border-radius: 3px;
-  /* no */
-  display: inline-block;
-  padding: 0 .2rem;
   position: relative;
   border: none;
-  box-sizing: border-box;
+  height: 0.7rem;
+  line-height: 0.7rem;
+  font-size: 0.26rem;
+  /* px */
+  display: inline-block;
+  padding: 0 .2rem;
+  border-radius: 3px;
+  /* no */
 }
 .btn-block {
-  margin-top: .5rem;
+  text-align: center;
+  position: relative;
+  border: none;
   width: 100%;
+  display: block;
   height: 1rem;
-  line-height: 1rem;
-  font-size: .36rem;
+  font-size: 0.36rem;
   /* px */
+  line-height: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 3px;
+  /* no */
 }
 .btn-primary {
   background-color: #04BE02;
+  color: #FFF;
 }
 .btn-primary:active {
   background-color: #04ab02;
 }
 .btn-danger {
   background-color: #EF4F4F;
+  color: #FFF;
 }
 .btn-danger:active {
   background-color: #d74747;
 }
 .btn-warning {
   background-color: #FFB400;
+  color: #FFF;
 }
 .btn-warning:active {
   background-color: #e6a200;
@@ -1159,16 +1160,15 @@ table {
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   border: 1px solid #C5C5C5;
-  -webkit-transform: scale(0.5);
-  transform: scale(0.5);
   border-radius: 6px;
-  box-sizing: border-box;
 }
-button.btn-hollow,
-input.btn-hollow {
+input.btn-hollow,
+button.btn-hollow {
   border: 1px solid #C5C5C5;
 }
 .m-celltitle {
