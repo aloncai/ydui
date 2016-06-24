@@ -4,28 +4,27 @@
   text-align: left;
   color: #888;
   position: relative;
-  z-index: 0;
   &:after {
     .bottom-line(@line-color);
   }
 }
+
 .m-cell {
   background-color: #FFF;
   margin-bottom: .2rem;
   position: relative;
-  z-index: 0;
   &:after {
     .bottom-line(@line-high-color);
   }
   a.u-cellitem,
-  label.cellright {
+  label.u-cellitem {
     .tap-color(#FFF, .96);
   }
 }
+
 .u-cellitem {
   display: flex;
   position: relative;
-  z-index: 0;
   padding-left: @body-padding-vertical;
   overflow: hidden;
   &:not(:last-child):after {
@@ -33,48 +32,39 @@
     .bottom-line(@line-color);
   }
 }
-.cellleft {
-  color: #333;
-  font-size: .3rem; /* px */
+
+.cell-left {
+  color: @cell-left-color;
+  font-size: @cell-left-fontsize; /* px */
   white-space: nowrap;
   line-height: 1;
   display: flex;
   align-items: center;
 }
-.cellright {
+
+.cell-right {
   flex: 1;
   width: 100%;
-  min-height: 1rem;
-  color: #525252;
+  min-height: @cell-height;
+  color: @cell-right-color;
   text-align: right;
-  font-size: .28rem; /* px */
+  font-size: @cell-right-fontsize; /* px */
   padding-right: @body-padding-vertical;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  .cell-input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    line-height: 1.25;
-    font-size: .3rem; /* px */
-    background: transparent;
-    color: #555;
-    display: flex;
-    flex: 1;
-    justify-content: flex-start;
-    text-align: left; /* fuck UC */
-  }
   input[type="datetime-local"],
   input[type="date"],
   input[type="time"] {
-    line-height: 1rem;
+    line-height: @cell-height;
   }
-  input[type="radio"], input[type="checkbox"]:not(.u-checkbox-ios) {
+  input[type="radio"],
+  input[type="checkbox"]:not(.u-checkbox-ios) {
     appearance: none;
     position: absolute;
     left: -9999em;
-    & + .cell-radio-ico:after, & + .cell-checkbox-ico:after {
+    & + .cell-radio-ico:after,
+    & + .cell-checkbox-ico:after {
       display: none;
       font-size: .4rem; /* px */
     }
@@ -93,33 +83,47 @@
       }
     }
   }
-  textarea {
-    width: 100%;
-    border: none;
-    display: block; /* for old android */
-    height: 1.5rem;
-    padding: .2rem 0;
-  }
-  .select {
-    flex: 1;
-    width: 100%;
-    border: none;
-    height: 1rem; /* fuck uc */
-    display: block;
-    color: #A9A9A9;
-    line-height: 1rem;
-    font-size: .3rem; /* px */
-    margin-left: -.08rem; /* 去除select默认缩进 */
-  }
 }
-.u-cellitem .cellico:before {
+
+.cell-textarea {
+  width: 100%;
+  border: none;
+  display: block; /* for old android */
+  height: 1.5rem;
+  padding: .2rem 0;
+}
+
+.cell-select {
+  flex: 1;
+  line-height: @cell-height;
+  border: none;
+  display: block;
+  color: @cell-select-color;
+  font-size: @cell-select-fontsize; /* px */
+  margin-left: -.08rem; /* 去除select默认缩进 */
+}
+
+.cell-input {
+  flex: 1;
+  height: @cell-height;
+  border: none;
+  line-height: 1.25;
+  font-size: @cell-input-fontsize; /* px */
+  background: transparent;
+  color: @cell-input-color;
+  display: flex;
+  justify-content: flex-start;
+  text-align: left; /* fuck UC */
+}
+
+.cell-icon:before {
   line-height: 1;
   color: #A6A5A5;
-  font-size: .42rem; /* px */
+  font-size: @cell-icon-fontsize; /* px */
   margin-right: .1rem;
 }
-.u-cellitem .cellarrow:after {
-  content: '';
+
+.cell-arrow:after {
   margin-left: .05rem;
-  .arrow(#C9C9C9, .2rem, 2px, 45deg);
+  .arrow(@cell-arrow-color, @cell-arrow-width, 2px, 45deg);
 }

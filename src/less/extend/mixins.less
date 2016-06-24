@@ -51,6 +51,7 @@
 //      -135deg - left
 // ------------------------------------------------------------------------
 .arrow(@color: #DDD, @width: .2rem, @border-width: 2px, @deg: 45deg) {
+  content: '';
   display: inline-block;
   width: @width;
   height: @width;
@@ -71,6 +72,7 @@
   height: 1px; /* no */
   width: 100%;
   background-color: @color;
+  border-top: 1px solid @color;
   transform: scaleY(.5);
 }
 
@@ -83,6 +85,7 @@
   height: 1px; /* no */
   width: 100%;
   background-color: @color;
+  border-bottom: 1px solid @color;
   transform: scaleY(.5);
 }
 
@@ -95,6 +98,7 @@
   height: 100%;
   width: 1px; /* no */
   background-color: @color;
+  border-left: 1px solid @color;
   transform: scaleX(.5);
 }
 
@@ -107,5 +111,6 @@
   height: 100%;
   width: 1px; /* no */
   background-color: @color;
+  border-right: 1px solid @color;
   transform: scaleX(.5);
 }
