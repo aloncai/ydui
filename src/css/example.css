@@ -116,11 +116,39 @@
 }
 @font-face {
   font-family: 'example-icons';
-  src: url('//at.alicdn.com/t/font_1462949116_7522671.ttf') format('truetype');
+  src: url('//at.alicdn.com/t/font_1466921637_321185.ttf') format('truetype');
 }
-[class^="example-icons-"]:before {
+[class^="example-icons-"]:before,
+[class*=" example-icons-"]:before {
   font-family: 'example-icons';
   font-size: .5rem;
+}
+.example-icons-home:before {
+  content: '\e615';
+}
+.example-icons-home-crt:before {
+  content: '\e614';
+}
+.example-icons-shopcart:before {
+  content: '\e613';
+}
+.example-icons-ucenter:before {
+  content: '\e611';
+}
+.example-icons-more:before {
+  content: '\e612';
+}
+.example-icons-phone:before {
+  content: '\e60e';
+}
+.example-icons-tel:before {
+  content: '\e616';
+}
+.example-icons-like:before {
+  content: '\e60d';
+}
+.example-icons-order:before {
+  content: '\e60f';
 }
 .example-icons-button:before {
   content: '\e602';
@@ -134,7 +162,7 @@
   content: '\e600';
   color: #FC746C;
 }
-.example-icons-tabs:before {
+.example-icons-tab:before {
   content: '\e607';
   color: #FF8D20;
 }

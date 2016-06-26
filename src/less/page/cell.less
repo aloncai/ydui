@@ -1,11 +1,11 @@
 .m-celltitle {
   padding: .15rem @body-padding-vertical .1rem;
-  font-size: .3rem; /* px */
+  font-size: @cell-title-fontsize; /* px */
   text-align: left;
-  color: #888;
+  color: @cell-title-color;
   position: relative;
   &:after {
-    .bottom-line(@line-color);
+	.bottom-line(@line-color);
   }
 }
 
@@ -14,11 +14,11 @@
   margin-bottom: .2rem;
   position: relative;
   &:after {
-    .bottom-line(@line-high-color);
+	.bottom-line(@line-high-color);
   }
   a.u-cellitem,
   label.u-cellitem {
-    .tap-color(#FFF, .96);
+	.tap-color(#FFF, .96);
   }
 }
 
@@ -28,8 +28,8 @@
   padding-left: @body-padding-vertical;
   overflow: hidden;
   &:not(:last-child):after {
-    margin-left: @body-padding-vertical;
-    .bottom-line(@line-color);
+	margin-left: @body-padding-vertical;
+	.bottom-line(@line-color);
   }
 }
 
@@ -56,32 +56,32 @@
   input[type="datetime-local"],
   input[type="date"],
   input[type="time"] {
-    line-height: @cell-height;
+	line-height: @cell-height;
   }
   input[type="radio"],
   input[type="checkbox"]:not(.u-checkbox-ios) {
-    appearance: none;
-    position: absolute;
-    left: -9999em;
-    & + .cell-radio-ico:after,
-    & + .cell-checkbox-ico:after {
-      display: none;
-      font-size: .4rem; /* px */
-    }
-    &:checked {
-      & + .cell-radio-ico:after {
-        color: #4CD864;
-        content: '\e617';
-        display: inline-block;
-        font-family: @iconfont;
-      }
-      & + .cell-checkbox-ico:after {
-        color: #4CD864;
-        content: '\e635';
-        display: inline-block;
-        font-family: @iconfont;
-      }
-    }
+	appearance: none;
+	position: absolute;
+	left: -9999em;
+	& + .cell-radio-ico:after,
+	& + .cell-checkbox-ico:after {
+	  display: none;
+	  font-size: .4rem; /* px */
+	}
+	&:checked {
+	  & + .cell-radio-ico:after {
+		color: #4CD864;
+		content: '\e617';
+		display: inline-block;
+		font-family: @iconfont;
+	  }
+	  & + .cell-checkbox-ico:after {
+		color: #4CD864;
+		content: '\e635';
+		display: inline-block;
+		font-family: @iconfont;
+	  }
+	}
   }
 }
 
@@ -119,7 +119,7 @@
 .cell-icon:before {
   line-height: 1;
   color: #A6A5A5;
-  font-size: @cell-icon-fontsize; /* px */
+  font-size: @cell-icon-fontsize !important; /* px */
   margin-right: .1rem;
 }
 

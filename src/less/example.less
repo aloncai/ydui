@@ -24,19 +24,19 @@
 .example-loading {
   margin-bottom: 20px; /* no */
   li {
-    a {
-      align-items: center;
-      justify-content: center;
-      display: flex;
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-    }
-    img {
-      width: .6rem;
-      height: .6rem;
-      display: inline-block;
-    }
+	a {
+	  align-items: center;
+	  justify-content: center;
+	  display: flex;
+	  overflow: hidden;
+	  width: 100%;
+	  height: 100%;
+	}
+	img {
+	  width: .6rem;
+	  height: .6rem;
+	  display: inline-block;
+	}
   }
 }
 
@@ -48,23 +48,23 @@
   line-height: 20px; /* no */
   font-family: @FONT-YAHEI;
   i {
-    margin-right: 3px; /* no */
+	margin-right: 3px; /* no */
   }
   a {
-    color: #5AA700;
+	color: #5AA700;
   }
 }
 
 .example-upload {
   overflow: hidden;
   li {
-    width: 1rem;
-    height: 1rem;
-    float: left;
-    margin-right: 0.2rem;
-    &:last-child {
-      margin-right: 0;
-    }
+	width: 1rem;
+	height: 1rem;
+	float: left;
+	margin-right: 0.2rem;
+	&:last-child {
+	  margin-right: 0;
+	}
   }
 }
 
@@ -89,12 +89,12 @@
 .example-upload {
   overflow: hidden;
   li {
-    float: left;
-    img {
-      width: 1rem;
-      height: 1rem;
-      margin-right: .2rem;
-    }
+	float: left;
+	img {
+	  width: 1rem;
+	  height: 1rem;
+	  margin-right: .2rem;
+	}
   }
 }
 
@@ -108,20 +108,56 @@
 
 .example-icons {
   [class^="icon-"]:before, [class*=" icon-"]:before {
-    font-size: .6rem; /* px */
-    color: #FF685D;
+	font-size: .6rem; /* px */
+	color: #FF685D;
   }
 }
 
 @example-icons: 'example-icons';
 @font-face {
   font-family: @example-icons;
-  src: url('//at.alicdn.com/t/font_1462949116_7522671.ttf') format('truetype');
+  src: url('//at.alicdn.com/t/font_1466921637_321185.ttf') format('truetype');
 }
 
-[class^="example-icons-"]:before {
+[class^="example-icons-"]:before, [class*=" example-icons-"]:before {
   font-family: @example-icons;
   font-size: .5rem;
+}
+
+.example-icons-home:before {
+  content: '\e615';
+}
+
+.example-icons-home-crt:before {
+  content: '\e614';
+}
+
+.example-icons-shopcart:before {
+  content: '\e613';
+}
+
+.example-icons-ucenter:before {
+  content: '\e611';
+}
+
+.example-icons-more:before {
+  content: '\e612';
+}
+
+.example-icons-phone:before {
+  content: '\e60e';
+}
+
+.example-icons-tel:before {
+  content: '\e616';
+}
+
+.example-icons-like:before {
+  content: '\e60d';
+}
+
+.example-icons-order:before {
+  content: '\e60f';
 }
 
 .example-icons-button:before {
@@ -139,7 +175,7 @@
   color: #FC746C;
 }
 
-.example-icons-tabs:before {
+.example-icons-tab:before {
   content: '\e607';
   color: #FF8D20;
 }

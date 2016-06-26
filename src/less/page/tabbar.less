@@ -1,32 +1,43 @@
-@tabbar-cur-color: #FF6157;
 .m-tabbar {
-  width: 100%;
-  height: 1rem;
-  border-top: 1px solid @line-high-color; /* no */
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: rgba(245, 245, 245, .96);
+  width: 100%;
   z-index: 49;
   display: flex;
   align-items: center;
+  background-color: rgba(245, 245, 245, .96);
+  &:after {
+	.top-line(@line-high-color);
+  }
 }
+
 .m-tabbar > a {
   text-align: center;
-  color: #5D656B;
-  flex: 1;
   display: block;
-  &.cur {
-    color: @tabbar-cur-color;
+  flex: 1;
+  color: @tabbar-color;
+  &.crt {
+	color: @tabbar-color-crt;
   }
-  > i {
-    display: block;
-    &:before {
-      font-size: .46rem; /* px */
-    }
+}
+
+.tabbar-icon {
+  height: .66rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
+  *:before {
+	font-size: .46rem !important;
   }
-  > span {
-    display: block;
-    font-size: .2rem; /* px */
+  img {
+	height: 65%;
   }
+}
+
+.tabbar-txt {
+  display: block;
+  font-size: @tabbar-fontsize; /* px */
+  padding-bottom: .05rem;
 }
