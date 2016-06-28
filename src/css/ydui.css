@@ -215,8 +215,8 @@ table {
   align-items: center;
 }
 @font-face {
-  font-family: 'YDUI-INLAY';
-  src: url('http://at.alicdn.com/t/font_1467045657_4930418.ttf') format('truetype');
+  font-family: 'YDUI-ICONS';
+  src: url('../iconfont/YDUI_INLAY.ttf#datauri') format('truetype');
 }
 .m-grids-2 {
   overflow: hidden;
@@ -1528,6 +1528,60 @@ input.btn-hollow {
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.checkbox-ios {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  width: 52px;
+  /* no */
+  height: 32px;
+  /* no */
+  border: 1px solid #DFDFDF;
+  /* no */
+  border-radius: 16px;
+  /* no */
+  background-color: #DFDFDF;
+}
+.checkbox-ios:before,
+.checkbox-ios:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  /* no */
+  border-radius: 15px;
+  /* no */
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.checkbox-ios:before {
+  width: 50px;
+  /* no */
+  background-color: #FDFDFD;
+}
+.checkbox-ios:after {
+  width: 30px;
+  /* no */
+  background-color: #FFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  /* no */
+}
+.checkbox-ios:checked {
+  border-color: #4CD864;
+  background-color: #4CD864;
+}
+.checkbox-ios:checked:before {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+.checkbox-ios:checked:after {
+  -webkit-transform: translateX(20px);
+  transform: translateX(20px);
+  /* no */
+}
 .m-list {
   overflow: hidden;
 }
@@ -2169,60 +2223,6 @@ input.btn-hollow {
 .u-checkbox > label.checkbox-circle:before {
   content: '\e604';
 }
-.u-checkbox-ios {
-  -webkit-appearance: none;
-  appearance: none;
-  position: relative;
-  width: 52px;
-  /* no */
-  height: 32px;
-  /* no */
-  border: 1px solid #DFDFDF;
-  /* no */
-  border-radius: 16px;
-  /* no */
-  background-color: #DFDFDF;
-}
-.u-checkbox-ios:before,
-.u-checkbox-ios:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 30px;
-  /* no */
-  border-radius: 15px;
-  /* no */
-  -webkit-transition: -webkit-transform .3s;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
-}
-.u-checkbox-ios:before {
-  width: 50px;
-  /* no */
-  background-color: #FDFDFD;
-}
-.u-checkbox-ios:after {
-  width: 30px;
-  /* no */
-  background-color: #FFF;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  /* no */
-}
-.u-checkbox-ios:checked {
-  border-color: #4CD864;
-  background-color: #4CD864;
-}
-.u-checkbox-ios:checked:before {
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-.u-checkbox-ios:checked:after {
-  -webkit-transform: translateX(20px);
-  transform: translateX(20px);
-  /* no */
-}
 .u-radio {
   display: inline-block;
   margin-right: .2rem;
@@ -2420,7 +2420,7 @@ input.btn-hollow {
 }
 @font-face {
   font-family: 'YDUI-ICONS';
-  src: url('http://at.alicdn.com/t/font_1461139240_0312312.ttf') format('truetype');
+  src: url('../iconfont/YDUI_ICONS.ttf') format('truetype');
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
