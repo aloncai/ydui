@@ -1435,29 +1435,29 @@ input.btn-hollow {
   line-height: 1rem;
 }
 .cell-right input[type="radio"],
-.cell-right input[type="checkbox"]:not(.u-checkbox-ios) {
+.cell-right input[type="checkbox"]:not(.checkbox-ios) {
   -webkit-appearance: none;
   appearance: none;
   position: absolute;
   left: -9999em;
 }
 .cell-right input[type="radio"] + .cell-radio-ico:after,
-.cell-right input[type="checkbox"]:not(.u-checkbox-ios) + .cell-radio-ico:after,
+.cell-right input[type="checkbox"]:not(.checkbox-ios) + .cell-radio-ico:after,
 .cell-right input[type="radio"] + .cell-checkbox-ico:after,
-.cell-right input[type="checkbox"]:not(.u-checkbox-ios) + .cell-checkbox-ico:after {
+.cell-right input[type="checkbox"]:not(.checkbox-ios) + .cell-checkbox-ico:after {
   display: none;
   font-size: .4rem;
   /* px */
 }
 .cell-right input[type="radio"]:checked + .cell-radio-ico:after,
-.cell-right input[type="checkbox"]:not(.u-checkbox-ios):checked + .cell-radio-ico:after {
+.cell-right input[type="checkbox"]:not(.checkbox-ios):checked + .cell-radio-ico:after {
   color: #4CD864;
   content: '\e600';
   display: inline-block;
   font-family: 'YDUI-INLAY';
 }
 .cell-right input[type="radio"]:checked + .cell-checkbox-ico:after,
-.cell-right input[type="checkbox"]:not(.u-checkbox-ios):checked + .cell-checkbox-ico:after {
+.cell-right input[type="checkbox"]:not(.checkbox-ios):checked + .cell-checkbox-ico:after {
   color: #4CD864;
   content: '\e601';
   display: inline-block;
@@ -2420,7 +2420,7 @@ input.btn-hollow {
 }
 @font-face {
   font-family: 'YDUI-ICONS';
-  src: url('../iconfont/YDUI_ICONS.ttf') format('truetype');
+  src: url('http://at.alicdn.com/t/font_1461139240_0312312.ttf') format('truetype');
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {

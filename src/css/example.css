@@ -116,7 +116,7 @@
 }
 @font-face {
   font-family: 'example-icons';
-  src: url('//at.alicdn.com/t/font_1466921637_321185.ttf') format('truetype');
+  src: url('http://at.alicdn.com/t/font_1466921637_321185.ttf') format('truetype');
 }
 [class^="example-icons-"]:before,
 [class*=" example-icons-"]:before {
