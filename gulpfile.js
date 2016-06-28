@@ -23,7 +23,7 @@ var banner = '/*! <%= pkg.title %> v<%= pkg.version %> by YDCSS (c) ' +
     $.util.date(Date.now(), 'UTC:yyyy') + ' Licensed <%= pkg.license %>' + ' */ \n';
 
 gulp.task('less', function () {
-    var _stream = gulp.src(['src/less/{ydui,example}.less']);
+    var _stream = gulp.src(['src/less/{ydui,demo}.less']);
     if (flexible.isUse) {
         return _stream.pipe($.less())
             .pipe($.rem2px())//将已存在rem转成px
@@ -66,8 +66,8 @@ gulp.task('build:uglify', function () {
         .pipe(gulp.dest('dist/build/js'));
 });
 
-gulp.task('example:css', function () {
-    var _stream = gulp.src(['src/less/{ydui,example}.less']);
+gulp.task('demo:css', function () {
+    var _stream = gulp.src(['src/less/{ydui,demo}.less']);
     if (flexible.isUse) {
         _stream.pipe($.less())
             .pipe($.cssBase64({
@@ -78,7 +78,7 @@ gulp.task('example:css', function () {
             .pipe($.autoprefixer({
                 browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
-            .pipe(gulp.dest('dist/example/css'));
+            .pipe(gulp.dest('dist/demo/css'));
     } else {
         _stream.pipe($.sourcemaps.init())
             .pipe($.less())
@@ -89,33 +89,33 @@ gulp.task('example:css', function () {
                 browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
             }))
             .pipe($.sourcemaps.write('./'))
-            .pipe(gulp.dest('dist/example/css'));
+            .pipe(gulp.dest('dist/demo/css'));
     }
 });
 
-gulp.task('example:html', function () {
+gulp.task('demo:html', function () {
     var _stream = gulp.src(['src/html/*.html', 'src/index.html', 'src/libs/**/*.html'], {base: 'src'});
     if (flexible.isUse) {
         _stream.pipe($.htmlReplace({
             'tb_flexible': flexible.url
-        })).pipe($.rev()).pipe(gulp.dest('dist/example'));
+        })).pipe($.rev()).pipe(gulp.dest('dist/demo'));
     } else {
-        _stream.pipe($.rev()).pipe(gulp.dest('dist/example'));
+        _stream.pipe($.rev()).pipe(gulp.dest('dist/demo'));
     }
 });
 
-gulp.task('example:uglify', function () {
+gulp.task('demo:uglify', function () {
     gulp.src(['src/js/*.js'])
         .pipe($.uglify())
-        .pipe(gulp.dest('dist/example/js'));
+        .pipe(gulp.dest('dist/demo/js'));
 });
 
-gulp.task('example:libs', function () {
+gulp.task('demo:libs', function () {
     gulp.src(['src/libs/**/*.js'])
         .pipe($.uglify())
-        .pipe(gulp.dest('dist/example/libs'));
+        .pipe(gulp.dest('dist/demo/libs'));
 });
 
-gulp.task('example', ['example:css', 'example:uglify', 'example:html', 'example:libs']);
+gulp.task('demo', ['demo:css', 'demo:uglify', 'demo:html', 'demo:libs']);
 
 gulp.task('default', ['build:cssmin', 'build:uglify']);
