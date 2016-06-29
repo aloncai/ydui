@@ -15,7 +15,7 @@ var AUTOPREFIXER_BROWSERS = ["Android >= 4", "Explorer >= 10", "iOS >= 6"];
 //淘宝flexible配置
 var flexible = {
     url: 'http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/flexible.js',
-    isUse: false//是否使用淘宝的flexible
+    isUse: true//是否使用淘宝的flexible
 };
 
 //注释信息
