@@ -1,4 +1,4 @@
-#### YDUI，一只注重审美，且性能高效的移动端&微信UI。  
+#### YDUI，一只注重审美，且性能高效的移动端&微信UI。   
 
 Home: <a href="http://www.ydui.org">http://www.ydui.org</a>
 
