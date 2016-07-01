@@ -10,7 +10,6 @@
   opacity: .98;
   z-index: 997;
   display: flex;
-  color: @navbar-color;
   background-color: @navbar-bg;
   &:after {
     .bottom-line(@navbar-border-color);
@@ -21,10 +20,13 @@
   height: @navbar-height;
   min-width: (100% - @navbar-center-width) / 2; /* for low version android */
   flex: 0 0 (100% - @navbar-center-width) / 2;
-  padding: 0 @body-padding-vertical;
+  padding: 0 @body-padding-vertical / 2;
   display: flex;
   align-items: center;
   font-size: @navbar-item-fontsize; /* px */
+  white-space: nowrap;
+  overflow: hidden;
+  color: @navbar-item-color;
   &:first-child {
     order: 1;
     margin-right: -(100% - @navbar-center-width) / 2;
@@ -33,8 +35,17 @@
     order: 3;
     justify-content: flex-end;
   }
-  &.back-ico:after {
-    .arrow(@navbar-color, .24rem, 2px, -135deg);
+  .back-ico:before, .next-ico:before {
+    display: block;
+    font-family: @iconfont-inlay;
+    font-size: @navbar-icon-fontsize;
+    color: @navbar-icon-color;
+  }
+  .back-ico:before {
+    content: '\e607';
+  }
+  .next-ico:before {
+    content: '\e608';
   }
 }
 
@@ -47,6 +58,7 @@
   width: @navbar-center-width;
   margin-left: (100% - @navbar-center-width) / 2;
   font-size: @navbar-center-fontsize; /* px */
+  color: @navbar-center-color;
   img {
     height: 60%;
   }

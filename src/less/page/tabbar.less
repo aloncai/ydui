@@ -6,9 +6,9 @@
   z-index: 49;
   display: flex;
   align-items: center;
-  background-color: rgba(245, 245, 245, .96);
+  background-color: @tabbar-bg;
   &:after {
-	.top-line(@line-high-color);
+    .top-line(@tabbar-border-color);
   }
 }
 
@@ -18,26 +18,26 @@
   flex: 1;
   color: @tabbar-color;
   &.crt {
-	color: @tabbar-color-crt;
+    color: @tabbar-color-crt;
   }
 }
 
 .tabbar-icon {
-  height: .66rem;
+  height: @tabbar-icon-fontsize * 1.44;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: inherit;
-  *:before {
-	font-size: .46rem !important;
+  *:before, *:after {
+    font-size: @tabbar-icon-fontsize !important;
+    display: block;
   }
   img {
-	height: 65%;
+    height: 65%;
   }
 }
 
 .tabbar-txt {
   display: block;
-  font-size: @tabbar-fontsize; /* px */
+  font-size: @tabbar-text-fontsize; /* px */
   padding-bottom: .05rem;
 }

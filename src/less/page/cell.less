@@ -5,7 +5,7 @@
   color: @cell-title-color;
   position: relative;
   &:after {
-	.bottom-line(@line-color);
+    .bottom-line(@line-color);
   }
 }
 
@@ -14,11 +14,11 @@
   margin-bottom: .2rem;
   position: relative;
   &:after {
-	.bottom-line(@line-high-color);
+    .bottom-line(@line-high-color);
   }
   a.u-cellitem,
   label.u-cellitem {
-	.tap-color(#FFF, .96);
+    .tap-color(#FFF, .96);
   }
 }
 
@@ -28,8 +28,8 @@
   padding-left: @body-padding-vertical;
   overflow: hidden;
   &:not(:last-child):after {
-	margin-left: @body-padding-vertical;
-	.bottom-line(@line-color);
+    margin-left: @body-padding-vertical;
+    .bottom-line(@line-color);
   }
 }
 
@@ -37,7 +37,6 @@
   color: @cell-left-color;
   font-size: @cell-left-fontsize; /* px */
   white-space: nowrap;
-  line-height: 1;
   display: flex;
   align-items: center;
 }
@@ -56,32 +55,32 @@
   input[type="datetime-local"],
   input[type="date"],
   input[type="time"] {
-	line-height: @cell-height;
+    line-height: @cell-height;
   }
   input[type="radio"],
   input[type="checkbox"]:not(.checkbox-ios) {
-	appearance: none;
-	position: absolute;
-	left: -9999em;
-	& + .cell-radio-ico:after,
-	& + .cell-checkbox-ico:after {
-	  display: none;
-	  font-size: .4rem; /* px */
-	}
-	&:checked {
-	  & + .cell-radio-ico:after {
-		color: #4CD864;
-		content: '\e600';
-		display: inline-block;
-		font-family: @iconfont-inlay;
-	  }
-	  & + .cell-checkbox-ico:after {
-		color: #4CD864;
-		content: '\e601';
-		display: inline-block;
-		font-family: @iconfont-inlay;
-	  }
-	}
+    appearance: none;
+    position: absolute;
+    left: -9999em;
+    & + .cell-radio-ico:after,
+    & + .cell-checkbox-ico:after {
+      display: none;
+      font-size: .4rem; /* px */
+    }
+    &:checked {
+      & + .cell-radio-ico:after {
+        color: #4CD864;
+        content: '\e600';
+        display: inline-block;
+        font-family: @iconfont-inlay;
+      }
+      & + .cell-checkbox-ico:after {
+        color: #4CD864;
+        content: '\e601';
+        display: inline-block;
+        font-family: @iconfont-inlay;
+      }
+    }
   }
 }
 
@@ -116,16 +115,26 @@
   text-align: left; /* fuck UC */
 }
 
-.cell-icon:before {
-  line-height: 1;
-  color: #A6A5A5;
-  font-size: @cell-icon-fontsize !important; /* px */
-  margin-right: .1rem;
+.cell-icon {
+  display: block;
+  &:before, &:after {
+    color: #A6A5A5;
+    font-size: @cell-icon-fontsize !important; /* px */
+    margin-right: .1rem;
+  }
+  img {
+    width: @cell-icon-fontsize;
+    margin-right: .1rem;
+  }
 }
 
 .cell-arrow:after {
   margin-left: .05rem;
-  .arrow(@cell-arrow-color, .2rem, 2px, 45deg);
+  display: block;
+  font-family: @iconfont-inlay;
+  font-size: @cell-arrow-fontsize;
+  color: @cell-arrow-color;
+  content: '\e608';
 }
 
 .checkbox-ios {
