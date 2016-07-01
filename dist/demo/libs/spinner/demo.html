@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Spinner</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../../css/ydui.css?rev=dc97b91fc490ecfcb43f9359afd1a10a"/>
+    <link rel="stylesheet" href="../../css/demo.css"/>
+    <!-- build:tb_flexible -->
+    <script src="../../js/yd_flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="../../html/plugins.html" class="back-ico"></a>
+            <div class="center">Spinner</div>
+        </nav>
+    </header>
+    <div style="background-color: #FFF;padding: .24rem;" class="demo-small-pitch">
+        <span class="m-spinner" id="J_Quantity1">
+            <a href="javascript:;" class="J_Del">-</a>
+            <input type="number" class="J_Input" value="1" data-max="30" placeholder=""/>
+            <a href="javascript:;" class="J_Add">+</a>
+        </span>
+        <span class="m-spinner" id="J_Quantity2">
+            <a href="javascript:;" class="J_Del">-</a>
+            <input type="text" class="J_Input" value="1" placeholder=""/>
+            <a href="javascript:;" class="J_Add">+</a>
+        </span>
+    </div>
+</section>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="jquery.spinner.js"></script>
+<script>
+    !function () {
+        //max 取值有两种：参数max 和 input's data-max；后者优先级大于前者
+        $('#J_Quantity1').spinner({
+            input: '.J_Input',
+            add: '.J_Add',
+            minus: '.J_Del',
+            unit: 5 //倍数 暂不支持小数
+        });
+
+        $('#J_Quantity2').spinner({
+            input: '.J_Input',
+            add: '.J_Add',
+            minus: '.J_Del',
+            //max: 11,
+            max: function () {
+                return 3 + 3 + 3;
+            },
+            callback: function (value, ele) {
+                ele.css('background', '#FF5E53');
+                console.log(value, ele);
+            }
+        });
+    }();
+</script>
+</body>
+</html>
