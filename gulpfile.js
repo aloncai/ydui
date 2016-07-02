@@ -94,7 +94,7 @@ gulp.task('demo:css', function () {
 });
 
 gulp.task('demo:html', function () {
-    var _stream = gulp.src(['src/html/*.html', 'src/index.html', 'src/libs/**/*.html'], {base: 'src'});
+    var _stream = gulp.src(['src/html/**/*.html', 'src/index.html', 'src/libs/**/*.html'], {base: 'src'});
     if (flexible.isUse) {
         _stream.pipe($.htmlReplace({
             'tb_flexible': flexible.url
