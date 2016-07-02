@@ -2327,6 +2327,9 @@ input.btn-hollow {
 .m-tabbar > a.crt {
   color: #FF6157;
 }
+.m-tabbar > a.crt .tabbar-icon {
+  color: inherit;
+}
 .tabbar-icon {
   height: 0.6624rem;
   display: -webkit-box;
@@ -2341,6 +2344,7 @@ input.btn-hollow {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  color: #5D656B;
 }
 .tabbar-icon *:before,
 .tabbar-icon *:after {
