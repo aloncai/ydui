@@ -73,9 +73,9 @@
   left: 0;
   height: 1px; /* no */
   width: 100%;
-  background-color: @color;
   border-top: 1px solid @color; /* no */
   transform: scaleY(.5);
+  transform-origin: 0 0;
 }
 
 .bottom-line(@color, @zindex: 0) {
@@ -86,9 +86,9 @@
   left: 0;
   height: 1px; /* no */
   width: 100%;
-  background-color: @color;
   border-bottom: 1px solid @color; /* no */
   transform: scaleY(.5);
+  transform-origin: 0 100%;
 }
 
 .left-line(@color, @zindex: 0) {
@@ -99,9 +99,9 @@
   left: 0;
   height: 100%;
   width: 1px; /* no */
-  background-color: @color;
   border-left: 1px solid @color; /* no */
   transform: scaleX(.5);
+  transform-origin: 0 0;
 }
 
 .right-line(@color, @zindex: 0) {
@@ -112,7 +112,7 @@
   right: 0;
   height: 100%;
   width: 1px; /* no */
-  background-color: @color;
   border-right: 1px solid @color; /* no */
   transform: scaleX(.5);
+  transform-origin: 100% 0;
 }
