@@ -5,21 +5,17 @@
   left: 0;
   width: 100%;
   z-index: 999;
-  background-color: #EFEFF4;
+  background-color: @actionsheet-bg;
   transform: translate(0, 100%);
   transition: transform .3s;
-  > dd, > dt {
-    a {
-      display: block;
-      height: 1rem;
-      line-height: 1rem;
-      background-color: #FFF;
-      font-size: .28rem; /* px */
-      color: #555;
-    }
-  }
-  > dd {
+  .actionsheet-item {
+    display: block;
     position: relative;
+    font-size: @actionsheet-item-fontsize; /* px */
+    color: @actionsheet-item-color;
+    height: @actionsheet-item-height;
+    line-height: @actionsheet-item-height;
+    background-color: @actionsheet-item-bg;
     &:after {
       .bottom-line(@line-color);
     }
@@ -27,8 +23,14 @@
       border-top: none;
     }
   }
-  > dt {
+  .actionsheet-action {
+    display: block;
     margin-top: .15rem;
+    font-size: @actionsheet-action-fontsize; /* px */
+    color: @actionsheet-action-color;
+    height: @actionsheet-action-height;
+    line-height: @actionsheet-action-height;
+    background-color: @actionsheet-action-bg;
   }
   &.actionsheet-toggle {
     transform: translate(0, 0);
