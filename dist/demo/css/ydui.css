@@ -1935,10 +1935,10 @@ input.btn-hollow {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  color: #5D656B;
+  color: #585858;
 }
 .m-tabbar > a.crt {
-  color: #FF6157;
+  color: #FF5E53;
 }
 .m-tabbar > a.crt .tabbar-icon {
   color: inherit;
@@ -1957,7 +1957,7 @@ input.btn-hollow {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  color: #5D656B;
+  color: #585858;
 }
 .tabbar-icon *:before,
 .tabbar-icon *:after {
@@ -2334,53 +2334,69 @@ input.btn-hollow {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background-color: #FFF;
+  position: relative;
+}
+.m-tab:after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  /* no */
+  width: 100%;
   border-bottom: 1px solid #D8D8D8;
   /* no */
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
 }
-.m-tab > li {
-  text-align: center;
-  position: relative;
+.m-tab .tab-item {
   width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  position: relative;
+  text-align: center;
+  color: #585858;
+  font-size: 0.28rem;
+  /* px */
+  line-height: 0.85rem;
+  display: block;
   background-color: #FFF;
 }
-.m-tab > li:active {
+.m-tab .tab-item:active {
   background-color: #e6e6e6;
 }
-.m-tab > li > a {
-  color: #585858;
-  font-size: .28rem;
-  /* px */
-  line-height: .85rem;
-  display: block;
+.m-tab .tab-item a {
+  display: inherit;
+  color: inherit;
 }
-.m-tab > li:not(:last-child):after {
+.m-tab .tab-item:not(:last-child):after {
   position: absolute;
-  top: .28rem;
+  top: 35%;
   right: 0;
   content: '';
   width: 1px;
   /* no */
-  height: .28rem;
+  height: 30%;
   background-color: #EAEAEA;
 }
-.m-tab > li.crt > a {
+.m-tab .tab-item.crt {
   color: #FF5E53;
 }
-.m-tab > li.crt:before {
+.m-tab .tab-item.crt:before {
   content: '';
   width: 70%;
-  left: 50%;
-  position: absolute;
-  bottom: -1px;
-  /* no */
   height: 2px;
   /* no */
+  position: absolute;
+  left: 50%;
+  bottom: 0;
   margin-left: -35%;
+  z-index: 2;
   background-color: #FF5E53;
 }
 .m-file {
