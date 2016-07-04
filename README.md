@@ -1,4 +1,4 @@
-#### YDUI，一只注重审美，且性能高效的移动端&微信UI。    
+#### YDUI，一只注重审美，且性能高效的移动端&微信UI。
 
 Home: <a href="http://www.ydui.org">http://www.ydui.org</a>
 
@@ -8,8 +8,10 @@ Customize：<a href="http://www.ydui.org/customize">http://www.ydui.org/customiz
 
 Blog: <a href="http://www.ydcss.com">http://www.ydcss.com</a>
 
+
 #### 请用微信扫码
 ![](http://static.ydcss.com/ydui/img/qrcode.png)
+
 
 #### 参考、使用的项目
 
@@ -19,5 +21,6 @@ Blog: <a href="http://www.ydcss.com">http://www.ydcss.com</a>
 * <a href="http://www.appelsiini.net/projects/lazyload" target="_blank">[lazyload]</a> (<a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">[MIT License]</a>)
 * <a href="https://github.com/aui/artTemplate" target="_blank">[artTemplate]</a> (<a href="https://github.com/aui/artTemplate" target="_blank">[MIT License]</a>)
 * <a href="https://github.com/daneden/animate.css" target="_blank">[animate.css]</a> (<a href="https://github.com/daneden/animate.css/blob/master/LICENSE" target="_blank">[MIT License]</a>)
+
 
 #### Developed with Open Source Licensed <a href="http://www.jetbrains.com/webstorm/" target="_blank">WebStorm</a>
