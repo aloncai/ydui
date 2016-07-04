@@ -8,6 +8,9 @@ Customize：<a href="http://www.ydui.org/customize">http://www.ydui.org/customiz
 
 Blog: <a href="http://www.ydcss.com">http://www.ydcss.com</a>
 
+#### 请用微信扫码
+![](http://static.ydcss.com/ydui/img/qrcode.png)
+
 #### 参考、使用的项目
 
 * <a href="https://github.com/weui/weui" target="_blank">[WEUI]</a> (<a href="https://github.com/weui/weui" target="_blank">[MIT License]</a>)
