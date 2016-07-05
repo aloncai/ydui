@@ -44,7 +44,7 @@
             $('#J_ActionSheet').append(mask).find('.m-actionsheet').addClass('actionsheet-toggle');
         });
 
-        $('body').on('click', '#J_Mask,#J_Cancel', function(){
+        $('#J_ActionSheet').on('click', '#J_Mask,#J_Cancel', function(){
             $('#J_Mask').remove();
             $('#J_ActionSheet').find('.m-actionsheet').removeClass('actionsheet-toggle');
         });

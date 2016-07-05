@@ -17,10 +17,7 @@
     line-height: @actionsheet-item-height;
     background-color: @actionsheet-item-bg;
     &:after {
-      .bottom-line(@line-color);
-    }
-    &:first-child {
-      border-top: none;
+      .bottom-line(@actionsheet-item-border-color, 2);
     }
   }
   .actionsheet-action {

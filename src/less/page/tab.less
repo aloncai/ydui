@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   &:after {
-    .bottom-line(@line-high-color);
+    .bottom-line(@tabbar-bottom-border-color);
   }
 }
 
@@ -27,7 +27,8 @@
     content: '';
     width: 1px; /* no */
     height: 30%;
-    background-color: @tabbar-break-color;
+    transform: scaleX(.5);
+    border: 1px solid @tabbar-break-color;
   }
   &.crt {
     color: @tabbar-color-crt;

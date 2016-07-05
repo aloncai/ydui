@@ -1809,7 +1809,7 @@ input.btn-hollow {
   height: 1px;
   /* no */
   width: 100%;
-  border-bottom: 1px solid #D8D8D8;
+  border-bottom: 1px solid #B2B2B2;
   /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
@@ -1910,7 +1910,7 @@ input.btn-hollow {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: rgba(245, 245, 245, 0.96);
+  background-color: rgba(255, 255, 255, 0.96);
 }
 .m-tabbar:after {
   content: '';
@@ -2110,7 +2110,7 @@ input.btn-hollow {
 .list-theme3 .list-item:before {
   content: '';
   position: absolute;
-  z-index: 0;
+  z-index: 2;
   bottom: 0;
   left: 0;
   height: 1px;
@@ -2126,7 +2126,7 @@ input.btn-hollow {
 .list-theme3 .list-item:nth-child(odd):after {
   content: '';
   position: absolute;
-  z-index: 0;
+  z-index: 2;
   top: 0;
   right: 0;
   height: 100%;
@@ -2299,7 +2299,7 @@ input.btn-hollow {
 .m-actionsheet .actionsheet-item:after {
   content: '';
   position: absolute;
-  z-index: 0;
+  z-index: 2;
   bottom: 0;
   left: 0;
   height: 1px;
@@ -2311,9 +2311,6 @@ input.btn-hollow {
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
-}
-.m-actionsheet .actionsheet-item:first-child {
-  border-top: none;
 }
 .m-actionsheet .actionsheet-action {
   display: block;
@@ -2382,7 +2379,9 @@ input.btn-hollow {
   width: 1px;
   /* no */
   height: 30%;
-  background-color: #EAEAEA;
+  -webkit-transform: scaleX(0.5);
+  transform: scaleX(0.5);
+  border: 1px solid #EAEAEA;
 }
 .tab-item.crt {
   color: #FF5E53;

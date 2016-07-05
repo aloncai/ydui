@@ -98,10 +98,10 @@
     position: relative;
     background-color: #FFF;
     &:before {
-      .bottom-line(@line-color);
+      .bottom-line(@line-color, 2);
     }
     &:nth-child(odd):after {
-      .right-line(@line-color);
+      .right-line(@line-color, 2);
     }
     .list-ft {
       padding-top: .1rem;
