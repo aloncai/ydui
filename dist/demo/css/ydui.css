@@ -2352,7 +2352,7 @@ input.btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.m-tab .tab-item {
+.tab-item {
   width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -2367,14 +2367,14 @@ input.btn-hollow {
   display: block;
   background-color: #FFF;
 }
-.m-tab .tab-item:active {
+.tab-item:active {
   background-color: #e6e6e6;
 }
-.m-tab .tab-item a {
+.tab-item a {
   display: inherit;
   color: inherit;
 }
-.m-tab .tab-item:not(:last-child):after {
+.tab-item:not(:last-child):after {
   position: absolute;
   top: 35%;
   right: 0;
@@ -2384,10 +2384,10 @@ input.btn-hollow {
   height: 30%;
   background-color: #EAEAEA;
 }
-.m-tab .tab-item.crt {
+.tab-item.crt {
   color: #FF5E53;
 }
-.m-tab .tab-item.crt:before {
+.tab-item.crt:before {
   content: '';
   width: 70%;
   height: 2px;
