@@ -1,47 +1,46 @@
-@tab-cur-color: #FF5E53;
-@scroll-tab-cur-color: #FF5E53;
 .m-tab {
   display: flex;
   position: relative;
   &:after {
     .bottom-line(@line-high-color);
   }
-  .tab-item {
-    width: 1%;
-    flex: 1;
-    position: relative;
-    text-align: center;
-    color: @tabbar-color;
-    font-size: @tabbar-fontsize; /* px */
-    line-height: @tabbar-height;
-    display: block;
-    .tap-color(@tab-bg);
-    a {
-      display: inherit;
-      color: inherit;
-    }
-    &:not(:last-child):after {
-      position: absolute;
-      top: 35%;
-      right: 0;
+}
+
+.tab-item {
+  width: 1%;
+  flex: 1;
+  position: relative;
+  text-align: center;
+  color: @tabbar-color;
+  font-size: @tabbar-fontsize; /* px */
+  line-height: @tabbar-height;
+  display: block;
+  .tap-color(@tab-bg);
+  a {
+    display: inherit;
+    color: inherit;
+  }
+  &:not(:last-child):after {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    content: '';
+    width: 1px; /* no */
+    height: 30%;
+    background-color: @tabbar-break-color;
+  }
+  &.crt {
+    color: @tabbar-color-crt;
+    &:before {
       content: '';
-      width: 1px; /* no */
-      height: 30%;
-      background-color: @tabbar-break-color;
-    }
-    &.crt {
-      color: @tabbar-color-crt;
-      &:before {
-        content: '';
-        width: 70%;
-        height: 2px; /* no */
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        margin-left: -35%;
-        z-index: 2;
-        background-color: @tabbar-color-crt;
-      }
+      width: 70%;
+      height: 2px; /* no */
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      margin-left: -35%;
+      z-index: 2;
+      background-color: @tabbar-color-crt;
     }
   }
 }
