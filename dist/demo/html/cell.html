@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cell</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css?rev=af981dafc359f7d9bab916e023949071" />
+    <link rel="stylesheet" href="../css/demo.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/ydui.flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav class="nav-box">
+            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <div class="nav-center">Cell</div>
+        </nav>
+    </header>
+    <div class="m-cell demo-small-pitch">
+        <div class="u-cellitem">
+            <div class="cell-left">手机号：</div>
+            <div class="cell-right"><input type="text" class="cell-input" placeholder="请输入手机号"/></div>
+        </div>
+        <div class="u-cellitem">
+            <div class="cell-left">配送方式</div>
+            <div class="cell-right">顺丰快递</div>
+        </div>
+    </div>
+
+    <div class="m-celltitle">带图标的</div>
+    <div class="m-cell">
+        <div class="u-cellitem">
+            <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
+            <div class="cell-right">
+                <input maxlength="11" autocomplete="off" class="cell-input" type="text" placeholder="请输入手机号码"/>
+                <button type="button" class="btn btn-warning" id="J_GetCode">获取短信验证码</button>
+            </div>
+        </div>
+        <a class="u-cellitem" href="javascript:;">
+            <div class="cell-left"><i class="cell-icon demo-icons-like"></i>我的收藏</div>
+            <div class="cell-right cell-arrow">77</div>
+        </a>
+        <a class="u-cellitem" href="tel:400-888-8888">
+            <div class="cell-left"><i class="cell-icon demo-icons-tel"></i>联系客服</div>
+            <div class="cell-right cell-arrow">400-888-8888</div>
+        </a>
+        <a class="u-cellitem" href="javascript:;">
+            <div class="cell-left"><i class="cell-icon demo-icons-order"></i>我的订单</div>
+            <div class="cell-right cell-arrow">查看全部订单</div>
+        </a>
+        <a class="u-cellitem" href="javascript:;">
+            <div class="cell-left"><span class="cell-icon"><img src="http://static.ydcss.com/app-icon144x144@2x.png" /></span>图标</div>
+            <div class="cell-right cell-arrow">图标是图片</div>
+        </a>
+    </div>
+
+    <div class="m-celltitle">时间们</div>
+    <div class="m-cell">
+        <div class="u-cellitem">
+            <div class="cell-left">时间：</div>
+            <div class="cell-right"><input class="cell-input" type="datetime-local" placeholder=""/></div>
+        </div>
+        <div class="u-cellitem">
+            <div class="cell-left">时间：</div>
+            <div class="cell-right"><input class="cell-input" type="date" placeholder=""/></div>
+        </div>
+        <div class="u-cellitem">
+            <div class="cell-left">时间：</div>
+            <div class="cell-right"><input class="cell-input" type="time" placeholder=""/></div>
+        </div>
+    </div>
+
+    <div class="m-celltitle">下拉框</div>
+    <div class="m-cell">
+        <div class="u-cellitem">
+            <div class="cell-right cell-arrow">
+                <select class="cell-select">
+                    <option value="">支付方式</option>
+                    <option value="1">支付宝</option>
+                    <option value="2">微信</option>
+                    <option value="3">财付通</option>
+                </select>
+            </div>
+        </div>
+        <div class="u-cellitem">
+            <div class="cell-left">性别：</div>
+            <div class="cell-right cell-arrow">
+                <select class="cell-select">
+                    <option value="">请选择性别</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                    <option value="3">未知</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-celltitle">多选</div>
+    <div class="m-cell">
+        <label class="u-cellitem" for="y1">
+            <span class="cell-left">多选一</span>
+            <span class="cell-right">
+                <input type="checkbox" id="y1"/>
+                <i class="cell-checkbox-ico"></i>
+            </span>
+        </label>
+        <label class="u-cellitem" for="y2">
+            <span class="cell-left">多选二</span>
+            <span class="cell-right">
+                <input type="checkbox" id="y2"/>
+                <i class="cell-checkbox-ico"></i>
+            </span>
+        </label>
+        <label class="u-cellitem" for="y3">
+            <span class="cell-left">多选三</span>
+            <span class="cell-right">
+                <input type="checkbox" id="y3"/>
+                <i class="cell-checkbox-ico"></i>
+            </span>
+        </label>
+        <div class="u-cellitem">
+            <div class="cell-left">开关</div>
+            <div class="cell-right">
+                <input checked type="checkbox" class="checkbox-ios"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-celltitle">单选</div>
+    <div class="m-cell">
+        <label class="u-cellitem" for="x1">
+            <span class="cell-left">单选一</span>
+            <span class="cell-right">
+                <input type="radio" name="xx" id="x1" checked/>
+                <i class="cell-radio-ico"></i>
+            </span>
+        </label>
+        <label class="u-cellitem" id="x2">
+            <span class="cell-left">单选二</span>
+            <span class="cell-right">
+                <input type="radio" name="xx"/>
+                <i class="cell-radio-ico"></i>
+            </span>
+        </label>
+    </div>
+
+    <div class="m-celltitle">文本域</div>
+    <div class="m-cell">
+        <div class="u-cellitem">
+            <div class="cell-right">
+                <textarea class="cell-textarea" placeholder="请输入您的银行卡卡号和密码"></textarea>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
+<script src="../js/ydui.js"></script>
+<script>
+    !function ($) {
+        // 时间控件加默认时间 ↓↓↓↓↓↓===================
+        var checkTime = function (i) {
+            return i < 10 ? '0' + i : i;
+        };
+        var now = new Date(),
+            _date = 1900 + now.getYear() + '-' + checkTime(now.getMonth() + 1) + '-' + checkTime(now.getDate()),
+            _time = checkTime(now.getHours()) + ':' + checkTime(now.getMinutes());
+
+        $('input[type="datetime-local"]').val(_date + 'T' + _time);
+        $('input[type="date"]').val(_date);
+        $('input[type="time"]').val(_time);
+        // 时间控件加默认时间 ↑↑↑↑↑↑===================
+
+        // 发送验证码逻辑 ↓↓↓↓↓↓===================
+        var dialog = YDUI.dialog;
+        var verify = {
+            // 定时器
+            timer: null,
+            // 获取验证码按钮
+            getCodebtn: $('#J_GetCode'),
+            // 禁用按钮样式
+            disClass: 'btn-disabled',
+            // 倒计时操作
+            countDown: function () {
+                var self = this, secs = 60;
+                self.getCodebtn.attr('disabled', true).addClass(self.disClass).text(secs + ' 秒后重新获取');
+                self.timer = setInterval(function () {
+                    secs--;
+                    self.getCodebtn.text(secs + ' 秒后重新获取');
+                    if (secs <= 0) {
+                        self.resetBtn();
+                        clearInterval(self.timer);
+                    }
+                }, 1000);
+            },
+            // 重置发送验证码按钮
+            resetBtn: function () {
+                this.getCodebtn.removeAttr('disabled').text('重新获取验证码').removeClass(this.disClass);
+            }
+        };
+
+        verify.getCodebtn.on('click', function () {
+            // $.ajax({}); 发送验证码ajax
+            // 成功发送验证码后调用↓↓↓↓
+            dialog.toast('已发送', 'success', 1500);
+            verify.countDown();
+            // 成功发送验证码后调用↑↑↑↑
+        });
+        // 发送验证码逻辑 ↑↑↑↑↑↑===================
+    }(jQuery);
+</script>
+</body>
+</html>

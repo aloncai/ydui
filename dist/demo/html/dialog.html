@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dialog</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css?rev=af981dafc359f7d9bab916e023949071"/>
+    <link rel="stylesheet" href="../css/demo.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/ydui.flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav class="nav-box">
+            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <div class="nav-center">Dialog</div>
+        </nav>
+    </header>
+    <div class="m-button">
+        <input type="button" class="btn-block btn-primary" id="confirm1" value="Confirm"/>
+        <input type="button" class="btn-block btn-primary" id="confirm2" value="Confirm->Custom"/>
+        <input type="button" class="btn-block btn-hollow" id="alert" value="Alert"/>
+        <input type="button" class="btn-block btn-danger" id="toastS" value="toast->Success"/>
+        <input type="button" class="btn-block btn-danger" id="toastE" value="toast->Error"/>
+        <input type="button" class="btn-block btn-hollow" id="loading" value="Loading"/>
+    </div>
+</section>
+<script src="../js/ydui.js"></script>
+<script>
+    !function (win) {
+        var dialog = YDUI.dialog;
+        var doc = win.document;
+        
+        //普通确认框
+        doc.querySelector('#confirm1').onclick = function () {
+            dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
+                dialog.toast('你点了确定', 'success', 1000);
+            });
+        };
+
+        //自定义按钮确认框
+        doc.querySelector('#confirm2').onclick = function () {
+            dialog.confirm('自定义按钮', '我有一个小毛驴我从来也不骑！', [
+                {
+                    txt: '取消',
+                    color: false, //false:黑色  true:绿色 或 使用颜色值
+                    callback: function () {
+                        dialog.toast('你点了取消', 'success', 1000);
+                    }
+                },
+                {
+                    txt: '犹豫一下',
+                    stay: true, //是否保留提示框
+                    color: '#CCC', //使用颜色值
+                    callback: function () {
+                        dialog.toast('别犹豫了', 'success', 1000);
+                    }
+                },
+                {
+                    txt: '确定',
+                    color: true,
+                    callback: function () {
+                        dialog.toast('你点了确定', 'success', 1000);
+                    }
+                }
+            ]);
+        };
+
+        //普通提示框
+        doc.querySelector('#alert').onclick = function () {
+            dialog.alert('我有一个小毛驴我从来也不骑！');
+        };
+
+        //正确提示框
+        doc.querySelector('#toastS').onclick = function () {
+            dialog.toast('鼠标不错哟！', 'success');
+        };
+
+
+        //错误提示框
+        doc.querySelector('#toastE').onclick = function () {
+            dialog.toast('别乱点啊！', 'error', 1000, function () {
+                dialog.alert('给你一次重来的机会！');
+            });
+        };
+
+
+        //加载中提示框
+        doc.querySelector('#loading').onclick = function () {
+            dialog.loading.show('很快加载好了');
+            setTimeout(function () {
+                dialog.loading.hide();//移除loading
+            }, 2000);
+        };
+    }(window);
+</script>
+</body>
+</html>
