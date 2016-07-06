@@ -44,9 +44,16 @@ gulp.task('less', function () {
     }
 });
 
+gulp.task('concat', function () {
+    gulp.src(['src/js/source/ydui.namespace.js', 'src/js/source/**/*.js'])
+        .pipe($.concat('ydui.js'))
+        .pipe(gulp.dest('src/js'));
+});
+
 gulp.task('watch', function () {
     $.livereload.listen();
-    gulp.watch('src/less/**', ['less']);
+    gulp.watch('src/less/**/*.less', ['less']);
+    gulp.watch('src/js/source/**/*.js', ['concat']);
 });
 
 gulp.task('build:cssmin', ['less'], function () {
@@ -60,7 +67,7 @@ gulp.task('build:cssmin', ['less'], function () {
 });
 
 gulp.task('build:uglify', function () {
-    gulp.src(['src/js/{util.js,yd_flexible.js}'])
+    gulp.src(['src/js/{ydui.js,ydui.flexible.js}'])
         .pipe($.uglify())
         .pipe($.header(banner, {pkg: pkg}))
         .pipe(gulp.dest('dist/build/js'));
@@ -105,17 +112,13 @@ gulp.task('demo:html', function () {
 });
 
 gulp.task('demo:uglify', function () {
-    gulp.src(['src/js/*.js'])
+    gulp.src(['src/js/{ydui.js,ydui.flexible.js}'])
         .pipe($.uglify())
         .pipe(gulp.dest('dist/demo/js'));
 });
 
-gulp.task('demo:libs', function () {
-    gulp.src(['src/libs/**/*.js'])
-        .pipe($.uglify())
-        .pipe(gulp.dest('dist/demo/libs'));
-});
+gulp.task('demo', ['demo:css', 'demo:uglify', 'demo:html']);
 
-gulp.task('demo', ['demo:css', 'demo:uglify', 'demo:html', 'demo:libs']);
+gulp.task('dev', ['less', 'concat', 'watch']);
 
 gulp.task('default', ['build:cssmin', 'build:uglify']);

@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="../css/ydui.css?rev=@@hash" />
     <link rel="stylesheet" href="../css/demo.css" />
     <!-- build:tb_flexible -->
-    <script src="../js/yd_flexible.js"></script>
+    <script src="../js/ydui.flexible.js"></script>
     <!-- endbuild -->
 </head>
 <body>
 <section class="g-doc">
     <header class="m-nav">
         <nav class="nav-box">
-            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <a href="index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center">Cell</div>
         </nav>
     </header>
@@ -160,9 +160,9 @@
     </div>
 </section>
 <script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
-<script src="../js/util.js"></script>
+<script src="../js/ydui.js"></script>
 <script>
-    !function ($, util) {
+    !function ($) {
         // 时间控件加默认时间 ↓↓↓↓↓↓===================
         var checkTime = function (i) {
             return i < 10 ? '0' + i : i;
@@ -177,6 +177,7 @@
         // 时间控件加默认时间 ↑↑↑↑↑↑===================
 
         // 发送验证码逻辑 ↓↓↓↓↓↓===================
+        var dialog = YDUI.dialog;
         var verify = {
             // 定时器
             timer: null,
@@ -206,12 +207,12 @@
         verify.getCodebtn.on('click', function () {
             // $.ajax({}); 发送验证码ajax
             // 成功发送验证码后调用↓↓↓↓
-            util.tipMes('已发送', 'success', 1500);
+            dialog.toast('已发送', 'success', 1500);
             verify.countDown();
             // 成功发送验证码后调用↑↑↑↑
         });
         // 发送验证码逻辑 ↑↑↑↑↑↑===================
-    }(jQuery, YDUI.util);
+    }(jQuery);
 </script>
 </body>
 </html>
