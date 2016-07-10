@@ -22,7 +22,5 @@
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
 
-    /* 解决:active这个高端洋气的CSS伪类不能使用问题 特别注意：有可能跟FastClick冲突 */
-    doc.addEventListener('touchstart', function () {
-    }, false);
+
 }(document, window);

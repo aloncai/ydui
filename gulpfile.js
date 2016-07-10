@@ -45,7 +45,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('concat', function () {
-    gulp.src(['src/js/source/ydui.namespace.js', 'src/js/source/**/*.js'])
+    gulp.src(['src/js/source/ydui.js', 'src/js/source/**/*.js'])
         .pipe($.concat('ydui.js'))
         .pipe(gulp.dest('src/js'));
 });
