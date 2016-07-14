@@ -2,12 +2,13 @@
  * YDUI 可伸缩布局方案
  * rem计算方式：设计图尺寸px / 100 = 实际rem  例: 100px = 1rem
  */
-!function (doc, win) {
+!function (win) {
 
     /* 设计图文档宽度 */
     var docWidth = 750;
 
-    var docEl = doc.documentElement, resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
+    var doc = win.document,
+        docEl = doc.documentElement, resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
 
     var recalc = (function refreshRem() {
         var clientWidth = docEl.getBoundingClientRect().width;
@@ -22,7 +23,4 @@
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
 
-    /* 解决:active这个高端洋气的CSS伪类不能使用问题 特别注意：有可能跟FastClick冲突 */
-    doc.addEventListener('touchstart', function () {
-    }, false);
-}(document, window);
+}(window);
