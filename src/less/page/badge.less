@@ -1,55 +1,61 @@
-.m-badge {
-  color: #333;
+.badge {
+  color: @badge-default-color;
   line-height: 1;
-  font-size: .24rem;
+  font-size: .24rem; /* px */
   position: relative;
   display: inline-block;
   padding: .1rem .16rem;
-  border-radius: 998rem;
-  background-color: #D0D0D0;
+  border-radius: 1rem;
+  background-color: @badge-default-bg;
   &:after {
     content: '';
     width: 200%;
     height: 200%;
-    border: 1px solid #D0D0D0;
+    border: 1px solid @badge-default-bg; /* no */
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 998rem;
+    border-radius: 1rem;
     transform-origin: 0 0;
     transform: scale(.5);
   }
 }
 
+.badge-radius {
+  border-radius: 2px; /* no */
+  &:after {
+    border-radius: 2px; /* no */
+  }
+}
+
 .badge-primary {
-  background-color: #04BE02;
+  background-color: @badge-primary-bg;
   color: #FFF;
-  &:after{
-    border-color: #04BE02;
+  &:after {
+    border-color: @badge-primary-bg;
   }
 }
 
 .badge-danger {
-  background-color: #EF4F4F;
+  background-color: @badge-danger-bg;
   color: #FFF;
-  &:after{
-    border-color: #EF4F4F;
+  &:after {
+    border-color: @badge-danger-bg;
   }
 }
 
 .badge-warning {
-  background-color: #FFB400;
+  background-color: @badge-warning-bg;
   color: #FFF;
   &:after {
-    border-color: #FFB400;
+    border-color: @badge-warning-bg;
   }
 }
 
 .badge-hollow {
-  background-color: #F7F7F7;
-  color: #454545;
-  position: relative;
+  background-color: @badge-hollow-bg;
+  color: @badge-hollow-color;
   &:after {
-    border-color: #454545;
+    border-color: @badge-hollow-color;
   }
 }

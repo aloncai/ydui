@@ -2398,29 +2398,39 @@ input.btn-hollow {
   z-index: 2;
   background-color: currentColor;
 }
-.m-badge {
+.badge {
   color: #333;
   line-height: 1;
   font-size: .24rem;
+  /* px */
   position: relative;
   display: inline-block;
   padding: .1rem .16rem;
-  border-radius: 998rem;
+  border-radius: 1rem;
   background-color: #D0D0D0;
 }
-.m-badge:after {
+.badge:after {
   content: '';
   width: 200%;
   height: 200%;
   border: 1px solid #D0D0D0;
+  /* no */
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 998rem;
+  border-radius: 1rem;
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scale(0.5);
   transform: scale(0.5);
+}
+.badge-radius {
+  border-radius: 2px;
+  /* no */
+}
+.badge-radius:after {
+  border-radius: 2px;
+  /* no */
 }
 .badge-primary {
   background-color: #04BE02;
@@ -2446,7 +2456,6 @@ input.btn-hollow {
 .badge-hollow {
   background-color: #F7F7F7;
   color: #454545;
-  position: relative;
 }
 .badge-hollow:after {
   border-color: #454545;

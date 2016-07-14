@@ -2396,7 +2396,69 @@ input.btn-hollow {
   bottom: 0;
   margin-left: -35%;
   z-index: 2;
-  background-color: #FF5E53;
+  background-color: currentColor;
+}
+.badge {
+  color: #333;
+  line-height: 1;
+  font-size: .24rem;
+  /* px */
+  position: relative;
+  display: inline-block;
+  padding: .1rem .16rem;
+  border-radius: 1rem;
+  background-color: #D0D0D0;
+}
+.badge:after {
+  content: '';
+  width: 200%;
+  height: 200%;
+  border: 1px solid #D0D0D0;
+  /* no */
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+}
+.badge-radius {
+  border-radius: 2px;
+  /* no */
+}
+.badge-radius:after {
+  border-radius: 2px;
+  /* no */
+}
+.badge-primary {
+  background-color: #04BE02;
+  color: #FFF;
+}
+.badge-primary:after {
+  border-color: #04BE02;
+}
+.badge-danger {
+  background-color: #EF4F4F;
+  color: #FFF;
+}
+.badge-danger:after {
+  border-color: #EF4F4F;
+}
+.badge-warning {
+  background-color: #FFB400;
+  color: #FFF;
+}
+.badge-warning:after {
+  border-color: #FFB400;
+}
+.badge-hollow {
+  background-color: #F7F7F7;
+  color: #454545;
+}
+.badge-hollow:after {
+  border-color: #454545;
 }
 .m-file {
   background-color: #FBFBFB;

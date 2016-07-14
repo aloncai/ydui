@@ -108,6 +108,9 @@
 .demo-small-pitch {
   margin-top: .2rem;
 }
+.demo-badege {
+  padding: 0 .24rem;
+}
 .demo-icons [class^="icon-"]:before,
 .demo-icons [class*=" icon-"]:before {
   font-size: .6rem;
