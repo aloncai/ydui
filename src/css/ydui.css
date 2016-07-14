@@ -2396,7 +2396,7 @@ input.btn-hollow {
   bottom: 0;
   margin-left: -35%;
   z-index: 2;
-  background-color: #FF5E53;
+  background-color: currentColor;
 }
 .m-file {
   background-color: #FBFBFB;
