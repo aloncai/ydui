@@ -34,9 +34,9 @@
 <script src="../js/ydui.js"></script>
 <script>
     !function (win) {
-        var dialog = YDUI.dialog;
+        var dialog = win.YDUI.dialog;
         var doc = win.document;
-        
+
         //普通确认框
         doc.querySelector('#confirm1').onclick = function () {
             dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
