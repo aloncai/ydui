@@ -23,11 +23,11 @@
         </nav>
     </header>
     <div class="m-cell demo-small-pitch">
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">手机号：</div>
-            <div class="cell-right"><input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号"/></div>
+            <div class="cell-right"><input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号" autocomplete="off" /></div>
         </div>
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">配送方式</div>
             <div class="cell-right">顺丰快递</div>
         </div>
@@ -35,42 +35,42 @@
 
     <div class="m-celltitle">带图标的</div>
     <div class="m-cell">
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
             <div class="cell-right">
-                <input maxlength="11" autocomplete="off" class="cell-input" type="text" placeholder="请输入手机号码"/>
+                <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
                 <button type="button" class="btn btn-warning" id="J_GetCode">获取短信验证码</button>
             </div>
         </div>
-        <a class="u-cellitem" href="javascript:;">
+        <a class="cell-item" href="javascript:;">
             <div class="cell-left"><i class="cell-icon demo-icons-like"></i>我的收藏</div>
-            <div class="cell-right cell-arrow">77</div>
+            <div class="cell-right"><span class="badge badge-danger">8</span></div>
         </a>
-        <a class="u-cellitem" href="tel:400-888-8888">
+        <a class="cell-item" href="tel:400-888-8888">
             <div class="cell-left"><i class="cell-icon demo-icons-tel"></i>联系客服</div>
             <div class="cell-right cell-arrow">400-888-8888</div>
         </a>
-        <a class="u-cellitem" href="javascript:;">
+        <a class="cell-item" href="javascript:;">
             <div class="cell-left"><i class="cell-icon demo-icons-order"></i>我的订单</div>
             <div class="cell-right cell-arrow">查看全部订单</div>
         </a>
-        <a class="u-cellitem" href="javascript:;">
+        <a class="cell-item" href="javascript:;">
             <div class="cell-left"><span class="cell-icon"><img src="http://static.ydcss.com/app-icon144x144@2x.png" /></span>图标</div>
-            <div class="cell-right cell-arrow">图标是图片</div>
+            <div class="cell-right cell-arrow">图标是image</div>
         </a>
     </div>
 
     <div class="m-celltitle">时间们</div>
     <div class="m-cell">
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">时间：</div>
             <div class="cell-right"><input class="cell-input" type="datetime-local" placeholder=""/></div>
         </div>
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">时间：</div>
             <div class="cell-right"><input class="cell-input" type="date" placeholder=""/></div>
         </div>
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">时间：</div>
             <div class="cell-right"><input class="cell-input" type="time" placeholder=""/></div>
         </div>
@@ -78,7 +78,7 @@
 
     <div class="m-celltitle">下拉框</div>
     <div class="m-cell">
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-right cell-arrow">
                 <select class="cell-select">
                     <option value="">支付方式</option>
@@ -88,7 +88,7 @@
                 </select>
             </div>
         </div>
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">性别：</div>
             <div class="cell-right cell-arrow">
                 <select class="cell-select">
@@ -103,28 +103,28 @@
 
     <div class="m-celltitle">多选</div>
     <div class="m-cell">
-        <label class="u-cellitem" for="y1">
+        <label class="cell-item" for="y1">
             <span class="cell-left">多选一</span>
             <span class="cell-right">
                 <input type="checkbox" id="y1"/>
-                <i class="cell-checkbox-ico"></i>
+                <i class="cell-checkbox-icon"></i>
             </span>
         </label>
-        <label class="u-cellitem" for="y2">
+        <label class="cell-item" for="y2">
             <span class="cell-left">多选二</span>
             <span class="cell-right">
                 <input type="checkbox" id="y2"/>
-                <i class="cell-checkbox-ico"></i>
+                <i class="cell-checkbox-icon"></i>
             </span>
         </label>
-        <label class="u-cellitem" for="y3">
+        <label class="cell-item" for="y3">
             <span class="cell-left">多选三</span>
             <span class="cell-right">
                 <input type="checkbox" id="y3"/>
-                <i class="cell-checkbox-ico"></i>
+                <i class="cell-checkbox-icon"></i>
             </span>
         </label>
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-left">开关</div>
             <div class="cell-right">
                 <input checked type="checkbox" class="checkbox-ios"/>
@@ -134,25 +134,25 @@
 
     <div class="m-celltitle">单选</div>
     <div class="m-cell">
-        <label class="u-cellitem" for="x1">
+        <label class="cell-item" for="x1">
             <span class="cell-left">单选一</span>
             <span class="cell-right">
                 <input type="radio" name="xx" id="x1" checked/>
-                <i class="cell-radio-ico"></i>
+                <i class="cell-radio-icon"></i>
             </span>
         </label>
-        <label class="u-cellitem" id="x2">
+        <label class="cell-item" id="x2">
             <span class="cell-left">单选二</span>
             <span class="cell-right">
                 <input type="radio" name="xx"/>
-                <i class="cell-radio-ico"></i>
+                <i class="cell-radio-icon"></i>
             </span>
         </label>
     </div>
 
     <div class="m-celltitle">文本域</div>
     <div class="m-cell">
-        <div class="u-cellitem">
+        <div class="cell-item">
             <div class="cell-right">
                 <textarea class="cell-textarea" placeholder="请输入您的银行卡卡号和密码"></textarea>
             </div>
