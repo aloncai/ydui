@@ -1,2 +1,2 @@
 /*! YDUI v1.0.0 by YDCSS (c) 2016 Licensed MIT */ 
-!function(n){var e=750,t=n.document,i=t.documentElement,a="orientationchange"in n?"orientationchange":"resize",d=function o(){var n=i.getBoundingClientRect().width;return i.style.fontSize=5*Math.max(Math.min(20*(n/e),11),8.55)+"px",o}();t.addEventListener&&(n.addEventListener(a,d,!1),t.addEventListener("DOMContentLoaded",d,!1))}(window);
+!function(n){var t=750,e=n.document,i=e.documentElement,a="orientationchange"in n?"orientationchange":"resize",d=function o(){var n=i.getBoundingClientRect().width;return i.style.fontSize=5*Math.max(Math.min(20*(n/t),11),8.55)+"px",o}();e.addEventListener&&(n.addEventListener(a,d,!1),e.addEventListener("DOMContentLoaded",d,!1),e.addEventListener("touchstart",function(){},!1))}(window);
