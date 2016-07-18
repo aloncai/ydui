@@ -114,7 +114,7 @@
 }
 @font-face {
   font-family: 'demo-icons';
-  src: url('http://at.alicdn.com/t/font_1466921637_321185.ttf') format('truetype');
+  src: url('//at.alicdn.com/t/font_1468809406_382368.ttf') format('truetype');
 }
 [class^="demo-icons-"]:before,
 [class*=" demo-icons-"]:before {
@@ -153,7 +153,7 @@
   color: #FF685E;
 }
 .demo-icons-dialog:before {
-  content: '\e608';
+  content: '\e603';
   color: #3CC51E;
 }
 .demo-icons-cell:before {
@@ -164,13 +164,9 @@
   content: '\e607';
   color: #FF8D20;
 }
-.demo-icons-upload:before {
-  content: '\e609';
-  color: #FF8B36;
-}
 .demo-icons-list:before {
   content: '\e605';
-  color: #8B78E2;
+  color: #8068EF;
 }
 .demo-icons-auctionsheet:before {
   content: '\e601';
@@ -180,19 +176,15 @@
   content: '\e604';
   color: #8B78E2;
 }
-.demo-icons-offcanvas:before {
-  content: '\e606';
-  color: #6E95D3;
-}
-.demo-icons-else:before {
-  content: '\e60a';
-  color: #6E95D3;
-}
-.demo-icons-plugins:before {
-  content: '\e60b';
-  color: #6E95D3;
-}
 .demo-icons-tabbar:before {
-  content: '\e60c';
+  content: '\e606';
+  color: #3CC51E;
+}
+.demo-icons-badge:before {
+  content: '\e608';
+  color: #EF4F4F;
+}
+.demo-icons-grids:before {
+  content: '\e609';
   color: #9B95D7;
 }

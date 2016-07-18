@@ -101,26 +101,26 @@
         </div>
     </div>
 
-    <div class="m-celltitle">多选</div>
+    <div class="m-celltitle">多选(checkbox改为radio样式通用)</div>
     <div class="m-cell">
         <label class="cell-item" for="y1">
             <span class="cell-left">多选一</span>
             <span class="cell-right">
-                <input type="checkbox" id="y1"/>
+                <input type="checkbox" name="checkbox" id="y1"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
         <label class="cell-item" for="y2">
             <span class="cell-left">多选二</span>
             <span class="cell-right">
-                <input type="checkbox" id="y2"/>
+                <input type="checkbox" name="checkbox" id="y2"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
         <label class="cell-item" for="y3">
             <span class="cell-left">多选三</span>
             <span class="cell-right">
-                <input type="checkbox" id="y3"/>
+                <input type="checkbox" name="checkbox" id="y3"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
@@ -132,19 +132,19 @@
         </div>
     </div>
 
-    <div class="m-celltitle">单选</div>
+    <div class="m-celltitle">单选(radio改为checkbox样式通用)</div>
     <div class="m-cell">
         <label class="cell-item" for="x1">
             <span class="cell-left">单选一</span>
             <span class="cell-right">
-                <input type="radio" name="xx" id="x1" checked/>
+                <input type="radio" name="radio" id="x1" checked/>
                 <i class="cell-radio-icon"></i>
             </span>
         </label>
-        <label class="cell-item" id="x2">
+        <label class="cell-item" for="x2">
             <span class="cell-left">单选二</span>
             <span class="cell-right">
-                <input type="radio" name="xx"/>
+                <input type="radio" name="radio" id="x2"/>
                 <i class="cell-radio-icon"></i>
             </span>
         </label>
@@ -176,42 +176,20 @@
         $('input[type="time"]').val(_time);
         // 时间控件加默认时间 ↑↑↑↑↑↑===================
 
-        // 发送验证码逻辑 ↓↓↓↓↓↓===================
-        var dialog = YDUI.dialog;
-        var verify = {
-            // 定时器
-            timer: null,
-            // 获取验证码按钮
-            getCodebtn: $('#J_GetCode'),
-            // 禁用按钮样式
-            disClass: 'btn-disabled',
-            // 倒计时操作
-            countDown: function () {
-                var self = this, secs = 60;
-                self.getCodebtn.attr('disabled', true).addClass(self.disClass).text(secs + ' 秒后重新获取');
-                self.timer = setInterval(function () {
-                    secs--;
-                    self.getCodebtn.text(secs + ' 秒后重新获取');
-                    if (secs <= 0) {
-                        self.resetBtn();
-                        clearInterval(self.timer);
-                    }
-                }, 1000);
-            },
-            // 重置发送验证码按钮
-            resetBtn: function () {
-                this.getCodebtn.removeAttr('disabled').text('重新获取验证码').removeClass(this.disClass);
-            }
-        };
+        var sendCode =  YDUI.SendCode.init({
+            btn: '#J_GetCode',
+            times: 5,
+            disClass: 'btn-disabled'
+        });
 
-        verify.getCodebtn.on('click', function () {
+        $('#J_GetCode').on('click', function () {
             // $.ajax({}); 发送验证码ajax
             // 成功发送验证码后调用↓↓↓↓
-            dialog.toast('已发送', 'success', 1500);
-            verify.countDown();
+            YDUI.dialog.toast('已发送', 'success', 1500);
+            sendCode.start();
             // 成功发送验证码后调用↑↑↑↑
         });
-        // 发送验证码逻辑 ↑↑↑↑↑↑===================
+
     }(jQuery);
 </script>
 </body>

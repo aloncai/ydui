@@ -1329,6 +1329,7 @@ input[type="submit"].btn-hollow {
 }
 .cell-arrow:after {
   margin-left: .05rem;
+  margin-right: -0.08rem;
   display: block;
   font-family: 'YDUI-INLAY';
   font-size: 0.34rem;
