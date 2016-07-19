@@ -1132,6 +1132,60 @@ input[type="submit"].btn-hollow {
     opacity: .25;
   }
 }
+.checkbox-ios {
+  -webkit-appearance: none;
+  position: relative;
+  width: 52px;
+  /* no */
+  height: 32px;
+  /* no */
+  border: 1px solid #DFDFDF;
+  /* no */
+  border-radius: 16px;
+  /* no */
+  background-color: #DFDFDF;
+  z-index: 2;
+}
+.checkbox-ios:before,
+.checkbox-ios:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  /* no */
+  border-radius: 15px;
+  /* no */
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.checkbox-ios:before {
+  width: 50px;
+  /* no */
+  background-color: #FDFDFD;
+}
+.checkbox-ios:after {
+  width: 30px;
+  /* no */
+  background-color: #FFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  /* no */
+}
+.checkbox-ios:checked {
+  border-color: #4CD864;
+  background-color: #4CD864;
+}
+.checkbox-ios:checked:before {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+.checkbox-ios:checked:after {
+  -webkit-transform: translateX(20px);
+  transform: translateX(20px);
+  /* no */
+}
 .m-celltitle {
   padding: 0.15rem 0.24rem 0.1rem;
   font-size: 0.3rem;
