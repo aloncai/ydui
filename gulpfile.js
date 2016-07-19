@@ -113,7 +113,6 @@ gulp.task('demo:html', function () {
 
 gulp.task('demo:uglify', function () {
     gulp.src(['src/js/{ydui.js,ydui.flexible.js}'])
-        .pipe($.uglify())
         .pipe(gulp.dest('dist/demo/js'));
 });
 
