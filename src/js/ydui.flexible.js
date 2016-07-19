@@ -19,6 +19,12 @@
         return refreshRem;
     })();
 
+    /* IOS8以上给html添加hairline样式，以便特殊处理 */
+    if (/iP(hone|od|ad)/.test(win.navigator.userAgent)) {
+        if (parseInt(win.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
+            doc.documentElement.classList.add('hairline');
+    }
+
     if (!doc.addEventListener) return;
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);

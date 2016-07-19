@@ -140,15 +140,15 @@
             return;
         }
 
-        var ico = type == 'error' ? 'tipmes-error-ico' : 'tipmes-success-ico';
+        var ico = type == 'error' ? 'toast-error-ico' : 'toast-success-ico';
         var dom = doc.createElement('div'), _id = 'YDUI_TIPMES';
         dom.id = _id;
         dom.innerHTML =
             '<div>' +
             '    <div class="mask-white"></div>' +
-            '    <div class="m-tipmes">' +
+            '    <div class="m-toast">' +
             '        <div class="' + ico + '"></div>' +
-            '        <p class="tipmes-content">' + (mes || '') + '</p>' +
+            '        <p class="toast-content">' + (mes || '') + '</p>' +
             '    </div>' +
             '</div>';
 
@@ -187,21 +187,21 @@
                 dom.innerHTML =
                     '    <div class="mask-white"></div>' +
                     '    <div class="m-loading">' +
-                    '        <div class="ld-loading">' +
-                    '            <div class="m-loading-leaf m-loading-leaf-0"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-1"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-2"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-3"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-4"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-5"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-6"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-7"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-8"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-9"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-10"></div>' +
-                    '            <div class="m-loading-leaf m-loading-leaf-11"></div>' +
+                    '        <div class="loading-hd">' +
+                    '            <div class="loading-leaf loading-leaf-0"></div>' +
+                    '            <div class="loading-leaf loading-leaf-1"></div>' +
+                    '            <div class="loading-leaf loading-leaf-2"></div>' +
+                    '            <div class="loading-leaf loading-leaf-3"></div>' +
+                    '            <div class="loading-leaf loading-leaf-4"></div>' +
+                    '            <div class="loading-leaf loading-leaf-5"></div>' +
+                    '            <div class="loading-leaf loading-leaf-6"></div>' +
+                    '            <div class="loading-leaf loading-leaf-7"></div>' +
+                    '            <div class="loading-leaf loading-leaf-8"></div>' +
+                    '            <div class="loading-leaf loading-leaf-9"></div>' +
+                    '            <div class="loading-leaf loading-leaf-10"></div>' +
+                    '            <div class="loading-leaf loading-leaf-11"></div>' +
                     '        </div>' +
-                    '        <p class="ld-toast-content">' + (text || '数据加载中') + '</p>' +
+                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
                     '    </div>';
                 var old = doc.querySelector('#' + _id);
                 old && dom.parentNode.removeChild(dom);

@@ -39,7 +39,7 @@
             <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
             <div class="cell-right">
                 <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
-                <button type="button" class="btn btn-warning" id="J_GetCode">获取短信验证码</button>
+                <a href="javascript:;" class="btn btn-warning" id="getCode">获取短信验证码</a>
             </div>
         </div>
         <a class="cell-item" href="javascript:;">
@@ -64,15 +64,15 @@
     <div class="m-cell">
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="datetime-local" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="datetime-local" value="2016-07-19T08:08" placeholder=""/></div>
         </div>
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="date" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="date" value="2016-07-19" placeholder=""/></div>
         </div>
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="time" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="time" value="08:08" placeholder=""/></div>
         </div>
     </div>
 
@@ -159,38 +159,27 @@
         </div>
     </div>
 </section>
-<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function ($) {
-        // 时间控件加默认时间 ↓↓↓↓↓↓===================
-        var checkTime = function (i) {
-            return i < 10 ? '0' + i : i;
-        };
-        var now = new Date(),
-            _date = 1900 + now.getYear() + '-' + checkTime(now.getMonth() + 1) + '-' + checkTime(now.getDate()),
-            _time = checkTime(now.getHours()) + ':' + checkTime(now.getMinutes());
+    !function (win) {
 
-        $('input[type="datetime-local"]').val(_date + 'T' + _time);
-        $('input[type="date"]').val(_date);
-        $('input[type="time"]').val(_time);
-        // 时间控件加默认时间 ↑↑↑↑↑↑===================
+        var ydui = win.YDUI;
 
-        var sendCode =  YDUI.SendCode.init({
-            btn: '#J_GetCode',
-            times: 5,
-            disClass: 'btn-disabled'
+        var sendCode = new ydui.SendCode({
+            btn: '#getCode',// 提交按钮【必填】
+            disClass: 'btn-disabled', // 禁用按钮样式【必填】
+            times: 15, // 倒计时时长 [可选，默认60秒]
+            runStr: '{%ss} 秒后重新获取',// 倒计时显示文本 [可选]
+            resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选]
         });
 
-        $('#J_GetCode').on('click', function () {
-            // $.ajax({}); 发送验证码ajax
-            // 成功发送验证码后调用↓↓↓↓
-            YDUI.dialog.toast('已发送', 'success', 1500);
+        win.document.querySelector('#getCode').onclick = function () {
+            // ajax 成功发送验证码后调用
+            ydui.dialog.toast('已发送', 'success', 1500);
             sendCode.start();
-            // 成功发送验证码后调用↑↑↑↑
-        });
+        };
 
-    }(jQuery);
+    }(window);
 </script>
 </body>
 </html>

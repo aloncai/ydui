@@ -299,6 +299,10 @@ input[type="button"].btn-hollow,
 input[type="submit"].btn-hollow {
   border: 1px solid #B2B2B2;
 }
+.hairline input[type="button"].btn-hollow,
+.hairline input[type="submit"].btn-hollow {
+  border: 0.5px solid #B2B2B2;
+}
 @-webkit-keyframes zoomIn {
   from {
     opacity: 0;
@@ -332,19 +336,23 @@ input[type="submit"].btn-hollow {
     opacity: 0;
     -webkit-transform: translate3d(0, -3000px, 0);
     transform: translate3d(0, -3000px, 0);
+    /* no */
   }
   60% {
     opacity: 1;
     -webkit-transform: translate3d(0, 25px, 0);
     transform: translate3d(0, 25px, 0);
+    /* no */
   }
   75% {
-    -webkit-transform: translate3d(0, -10px, 0);
-    transform: translate3d(0, -10px, 0);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+    /* no */
   }
   90% {
     -webkit-transform: translate3d(0, 5px, 0);
     transform: translate3d(0, 5px, 0);
+    /* no */
   }
   to {
     -webkit-transform: none;
@@ -364,19 +372,23 @@ input[type="submit"].btn-hollow {
     opacity: 0;
     -webkit-transform: translate3d(0, -3000px, 0);
     transform: translate3d(0, -3000px, 0);
+    /* no */
   }
   60% {
     opacity: 1;
     -webkit-transform: translate3d(0, 25px, 0);
     transform: translate3d(0, 25px, 0);
+    /* no */
   }
   75% {
-    -webkit-transform: translate3d(0, -10px, 0);
-    transform: translate3d(0, -10px, 0);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+    /* no */
   }
   90% {
     -webkit-transform: translate3d(0, 5px, 0);
     transform: translate3d(0, 5px, 0);
+    /* no */
   }
   to {
     -webkit-transform: none;
@@ -393,6 +405,8 @@ input[type="submit"].btn-hollow {
   border-radius: 3px;
   /* no */
   margin-left: -42.5%;
+  font-size: 15px;
+  /* no */
   -webkit-animation: bounceInDown .3s ease forwards;
   animation: bounceInDown .3s ease forwards;
 }
@@ -402,26 +416,27 @@ input[type="submit"].btn-hollow {
 }
 .m-alert .confirm-bd {
   text-align: center;
-}
-.m-alert .confirm-bd {
   padding: 20px 20px 0 20px;
+  /* no */
+}
+.m-alert .confirm-ft {
+  margin-top: 14px;
   /* no */
 }
 .confirm-hd {
   text-align: left;
-  padding: 15px 20px 10px;
+  padding: 15px 20px 5px;
   /* no */
 }
 .confirm-hd .confirm-title {
   font-weight: 400;
-  font-size: 17px;
-  /* no */
+  color: #444;
 }
 .confirm-bd {
   text-align: left;
   padding: 0 20px;
   /* no */
-  font-size: 15px;
+  font-size: 14px;
   /* no */
   color: #888;
   line-height: 20px;
@@ -429,18 +444,14 @@ input[type="submit"].btn-hollow {
 }
 .confirm-ft {
   position: relative;
-  line-height: 42px;
+  line-height: 40px;
   /* no */
-  margin-top: 15px;
+  margin-top: 14px;
   /* no */
-  font-size: 17px;
-  /* no */
-  overflow: hidden;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  text-align: center;
 }
 .confirm-ft:after {
   content: '';
@@ -457,19 +468,15 @@ input[type="submit"].btn-hollow {
   transform-origin: 0 0;
 }
 .confirm-ft > a {
-  word-wrap: normal;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: center;
   position: relative;
+  text-align: center;
   display: block;
-  width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   padding: 0 2px;
+  /* no */
 }
 .confirm-ft > a:not(:last-child):after {
   content: '';
@@ -497,7 +504,7 @@ input[type="submit"].btn-hollow {
     margin-left: -20%;
   }
 }
-.m-tipmes {
+.m-toast {
   position: fixed;
   width: 140px;
   /* no */
@@ -514,7 +521,7 @@ input[type="submit"].btn-hollow {
   -webkit-animation: zoomIn 0.06s ease-in forwards;
   animation: zoomIn 0.06s ease-in forwards;
 }
-.tipmes-content {
+.toast-content {
   font-size: 14px;
   /* no */
   padding: 0 10px 15px;
@@ -522,20 +529,20 @@ input[type="submit"].btn-hollow {
   line-height: 22px;
   /* no */
 }
-.tipmes-success-ico,
-.tipmes-error-ico {
+.toast-success-ico,
+.toast-error-ico {
   margin: 22px 0 0;
   /* no */
   display: block;
   margin-bottom: 10px;
   /* no */
 }
-.tipmes-success-ico:after,
-.tipmes-error-ico:after {
+.toast-success-ico:after,
+.toast-error-ico:after {
   display: inline-block;
   content: '';
 }
-.tipmes-success-ico:after {
+.toast-success-ico:after {
   width: 50px;
   /* no */
   height: 41px;
@@ -544,7 +551,7 @@ input[type="submit"].btn-hollow {
   background-size: 50px 41px;
   /* no */
 }
-.tipmes-error-ico:after {
+.toast-error-ico:after {
   width: 40px;
   /* no */
   height: 40px;
@@ -553,6 +560,7 @@ input[type="submit"].btn-hollow {
   background-size: 40px 40px;
   /* no */
 }
+/* copy for weui. */
 .m-loading {
   position: fixed;
   z-index: 9999;
@@ -565,12 +573,12 @@ input[type="submit"].btn-hollow {
   border-radius: 5px;
   /* no */
   color: #FFF;
-  background: rgba(40, 40, 40, 0.75);
+  background-color: rgba(40, 40, 40, 0.75);
   text-align: center;
   -webkit-animation: zoomIn .1s ease forwards;
   animation: zoomIn .1s ease forwards;
 }
-.m-loading .ld-loading {
+.m-loading .loading-hd {
   position: absolute;
   width: 0;
   z-index: 99999;
@@ -578,7 +586,7 @@ input[type="submit"].btn-hollow {
   top: 43px;
   /* no */
 }
-.m-loading .ld-toast-content {
+.m-loading .loading-txt {
   margin: 75px 5px 15px;
   /* no */
   font-size: 14px;
@@ -586,13 +594,13 @@ input[type="submit"].btn-hollow {
   line-height: 20px;
   /* no */
 }
-.m-loading-leaf {
+.loading-leaf {
   position: absolute;
   top: -1px;
   /* no */
   opacity: .25;
 }
-.m-loading-leaf:before {
+.loading-leaf:before {
   content: '';
   position: absolute;
   width: 10px;
@@ -608,110 +616,110 @@ input[type="submit"].btn-hollow {
   transform-origin: left 50% 0px;
   /* no */
 }
-.m-loading-leaf-0 {
+.loading-leaf-0 {
   -webkit-animation: opacity-60-25-0-12 1.25s linear infinite;
   animation: opacity-60-25-0-12 1.25s linear infinite;
 }
-.m-loading-leaf-0:before {
+.loading-leaf-0:before {
   -webkit-transform: rotate(0deg) translate(10px, 0px);
   transform: rotate(0deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-1 {
+.loading-leaf-1 {
   -webkit-animation: opacity-60-25-1-12 1.25s linear infinite;
   animation: opacity-60-25-1-12 1.25s linear infinite;
 }
-.m-loading-leaf-1:before {
+.loading-leaf-1:before {
   -webkit-transform: rotate(30deg) translate(10px, 0px);
   transform: rotate(30deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-2 {
+.loading-leaf-2 {
   -webkit-animation: opacity-60-25-2-12 1.25s linear infinite;
   animation: opacity-60-25-2-12 1.25s linear infinite;
 }
-.m-loading-leaf-2:before {
+.loading-leaf-2:before {
   -webkit-transform: rotate(60deg) translate(10px, 0px);
   transform: rotate(60deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-3 {
+.loading-leaf-3 {
   -webkit-animation: opacity-60-25-3-12 1.25s linear infinite;
   animation: opacity-60-25-3-12 1.25s linear infinite;
 }
-.m-loading-leaf-3:before {
+.loading-leaf-3:before {
   -webkit-transform: rotate(90deg) translate(10px, 0px);
   transform: rotate(90deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-4 {
+.loading-leaf-4 {
   -webkit-animation: opacity-60-25-4-12 1.25s linear infinite;
   animation: opacity-60-25-4-12 1.25s linear infinite;
 }
-.m-loading-leaf-4:before {
+.loading-leaf-4:before {
   -webkit-transform: rotate(120deg) translate(10px, 0px);
   transform: rotate(120deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-5 {
+.loading-leaf-5 {
   -webkit-animation: opacity-60-25-5-12 1.25s linear infinite;
   animation: opacity-60-25-5-12 1.25s linear infinite;
 }
-.m-loading-leaf-5:before {
+.loading-leaf-5:before {
   -webkit-transform: rotate(150deg) translate(10px, 0px);
   transform: rotate(150deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-6 {
+.loading-leaf-6 {
   -webkit-animation: opacity-60-25-6-12 1.25s linear infinite;
   animation: opacity-60-25-6-12 1.25s linear infinite;
 }
-.m-loading-leaf-6:before {
+.loading-leaf-6:before {
   -webkit-transform: rotate(180deg) translate(10px, 0px);
   transform: rotate(180deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-7 {
+.loading-leaf-7 {
   -webkit-animation: opacity-60-25-7-12 1.25s linear infinite;
   animation: opacity-60-25-7-12 1.25s linear infinite;
 }
-.m-loading-leaf-7:before {
+.loading-leaf-7:before {
   -webkit-transform: rotate(210deg) translate(10px, 0px);
   transform: rotate(210deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-8 {
+.loading-leaf-8 {
   -webkit-animation: opacity-60-25-8-12 1.25s linear infinite;
   animation: opacity-60-25-8-12 1.25s linear infinite;
 }
-.m-loading-leaf-8:before {
+.loading-leaf-8:before {
   -webkit-transform: rotate(240deg) translate(10px, 0px);
   transform: rotate(240deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-9 {
+.loading-leaf-9 {
   -webkit-animation: opacity-60-25-9-12 1.25s linear infinite;
   animation: opacity-60-25-9-12 1.25s linear infinite;
 }
-.m-loading-leaf-9:before {
+.loading-leaf-9:before {
   -webkit-transform: rotate(270deg) translate(10px, 0px);
   transform: rotate(270deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-10 {
+.loading-leaf-10 {
   -webkit-animation: opacity-60-25-10-12 1.25s linear infinite;
   animation: opacity-60-25-10-12 1.25s linear infinite;
 }
-.m-loading-leaf-10:before {
+.loading-leaf-10:before {
   -webkit-transform: rotate(300deg) translate(10px, 0px);
   transform: rotate(300deg) translate(10px, 0px);
   /* no */
 }
-.m-loading-leaf-11 {
+.loading-leaf-11 {
   -webkit-animation: opacity-60-25-11-12 1.25s linear infinite;
   animation: opacity-60-25-11-12 1.25s linear infinite;
 }
-.m-loading-leaf-11:before {
+.loading-leaf-11:before {
   -webkit-transform: rotate(330deg) translate(10px, 0px);
   transform: rotate(330deg) translate(10px, 0px);
   /* no */
@@ -1329,6 +1337,7 @@ input[type="submit"].btn-hollow {
 }
 .cell-arrow:after {
   margin-left: .05rem;
+  margin-right: -0.08rem;
   display: block;
   font-family: 'YDUI-INLAY';
   font-size: 0.34rem;

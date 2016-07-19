@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style" />
     <meta content="telephone=no" name="format-detection" />
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=8df367b8a5b193980597ec172a42316a" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=155c08f8b39bf36a85667141ae6436d2" />
     <link rel="stylesheet" href="../css/demo.css" />
     <!-- build:tb_flexible -->
     <script src="../js/ydui.flexible.js"></script>
@@ -39,7 +39,7 @@
             <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
             <div class="cell-right">
                 <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
-                <button type="button" class="btn btn-warning" id="J_GetCode">获取短信验证码</button>
+                <a href="javascript:;" class="btn btn-warning" id="getCode">获取短信验证码</a>
             </div>
         </div>
         <a class="cell-item" href="javascript:;">
@@ -64,15 +64,15 @@
     <div class="m-cell">
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="datetime-local" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="datetime-local" value="2016-07-19T08:08" placeholder=""/></div>
         </div>
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="date" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="date" value="2016-07-19" placeholder=""/></div>
         </div>
         <div class="cell-item">
             <div class="cell-left">时间：</div>
-            <div class="cell-right"><input class="cell-input" type="time" placeholder=""/></div>
+            <div class="cell-right"><input class="cell-input" type="time" value="08:08" placeholder=""/></div>
         </div>
     </div>
 
@@ -101,26 +101,26 @@
         </div>
     </div>
 
-    <div class="m-celltitle">多选</div>
+    <div class="m-celltitle">多选(checkbox改为radio样式通用)</div>
     <div class="m-cell">
         <label class="cell-item" for="y1">
             <span class="cell-left">多选一</span>
             <span class="cell-right">
-                <input type="checkbox" id="y1"/>
+                <input type="checkbox" name="checkbox" id="y1"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
         <label class="cell-item" for="y2">
             <span class="cell-left">多选二</span>
             <span class="cell-right">
-                <input type="checkbox" id="y2"/>
+                <input type="checkbox" name="checkbox" id="y2"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
         <label class="cell-item" for="y3">
             <span class="cell-left">多选三</span>
             <span class="cell-right">
-                <input type="checkbox" id="y3"/>
+                <input type="checkbox" name="checkbox" id="y3"/>
                 <i class="cell-checkbox-icon"></i>
             </span>
         </label>
@@ -132,19 +132,19 @@
         </div>
     </div>
 
-    <div class="m-celltitle">单选</div>
+    <div class="m-celltitle">单选(radio改为checkbox样式通用)</div>
     <div class="m-cell">
         <label class="cell-item" for="x1">
             <span class="cell-left">单选一</span>
             <span class="cell-right">
-                <input type="radio" name="xx" id="x1" checked/>
+                <input type="radio" name="radio" id="x1" checked/>
                 <i class="cell-radio-icon"></i>
             </span>
         </label>
-        <label class="cell-item" id="x2">
+        <label class="cell-item" for="x2">
             <span class="cell-left">单选二</span>
             <span class="cell-right">
-                <input type="radio" name="xx"/>
+                <input type="radio" name="radio" id="x2"/>
                 <i class="cell-radio-icon"></i>
             </span>
         </label>
@@ -159,60 +159,27 @@
         </div>
     </div>
 </section>
-<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function ($) {
-        // 时间控件加默认时间 ↓↓↓↓↓↓===================
-        var checkTime = function (i) {
-            return i < 10 ? '0' + i : i;
-        };
-        var now = new Date(),
-            _date = 1900 + now.getYear() + '-' + checkTime(now.getMonth() + 1) + '-' + checkTime(now.getDate()),
-            _time = checkTime(now.getHours()) + ':' + checkTime(now.getMinutes());
+    !function (win) {
 
-        $('input[type="datetime-local"]').val(_date + 'T' + _time);
-        $('input[type="date"]').val(_date);
-        $('input[type="time"]').val(_time);
-        // 时间控件加默认时间 ↑↑↑↑↑↑===================
+        var ydui = win.YDUI;
 
-        // 发送验证码逻辑 ↓↓↓↓↓↓===================
-        var dialog = YDUI.dialog;
-        var verify = {
-            // 定时器
-            timer: null,
-            // 获取验证码按钮
-            getCodebtn: $('#J_GetCode'),
-            // 禁用按钮样式
-            disClass: 'btn-disabled',
-            // 倒计时操作
-            countDown: function () {
-                var self = this, secs = 60;
-                self.getCodebtn.attr('disabled', true).addClass(self.disClass).text(secs + ' 秒后重新获取');
-                self.timer = setInterval(function () {
-                    secs--;
-                    self.getCodebtn.text(secs + ' 秒后重新获取');
-                    if (secs <= 0) {
-                        self.resetBtn();
-                        clearInterval(self.timer);
-                    }
-                }, 1000);
-            },
-            // 重置发送验证码按钮
-            resetBtn: function () {
-                this.getCodebtn.removeAttr('disabled').text('重新获取验证码').removeClass(this.disClass);
-            }
-        };
-
-        verify.getCodebtn.on('click', function () {
-            // $.ajax({}); 发送验证码ajax
-            // 成功发送验证码后调用↓↓↓↓
-            dialog.toast('已发送', 'success', 1500);
-            verify.countDown();
-            // 成功发送验证码后调用↑↑↑↑
+        var sendCode = new ydui.SendCode({
+            btn: '#getCode',// 提交按钮【必填】
+            disClass: 'btn-disabled', // 禁用按钮样式【必填】
+            times: 15, // 倒计时时长 [可选，默认60秒]
+            runStr: '{%ss} 秒后重新获取',// 倒计时显示文本 [可选]
+            resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选]
         });
-        // 发送验证码逻辑 ↑↑↑↑↑↑===================
-    }(jQuery);
+
+        win.document.querySelector('#getCode').onclick = function () {
+            // ajax 成功发送验证码后调用
+            ydui.dialog.toast('已发送', 'success', 1500);
+            sendCode.start();
+        };
+
+    }(window);
 </script>
 </body>
 </html>

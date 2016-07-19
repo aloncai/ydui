@@ -7,9 +7,7 @@
     win.addEventListener('load', function () {
         /* 直接绑定FastClick */
         if (typeof FastClick == 'function') {
-            var a = FastClick.attach(document.body);
-            console.log(a);
-
+            FastClick.attach(document.body);
         }
     }, false);
 

@@ -16,17 +16,17 @@
   }
   0% {
     opacity: 0;
-    transform: translate3d(0, -3000px, 0);
+    transform: translate3d(0, -3000px, 0); /* no */
   }
   60% {
     opacity: 1;
-    transform: translate3d(0, 25px, 0);
+    transform: translate3d(0, 25px, 0); /* no */
   }
   75% {
-    transform: translate3d(0, -10px, 0);
+    transform: translate3d(0, -15px, 0); /* no */
   }
   90% {
-    transform: translate3d(0, 5px, 0);
+    transform: translate3d(0, 5px, 0); /* no */
   }
   to {
     transform: none;
@@ -42,6 +42,7 @@
   background-color: #FAFAFA;
   border-radius: 3px; /* no */
   margin-left: -42.5%;
+  font-size: 15px;/* no */
   animation: bounceInDown .3s ease forwards;
 }
 
@@ -49,47 +50,44 @@
   animation: zoomIn .25s ease forwards;
   .confirm-bd {
     text-align: center;
-  }
-  .confirm-bd {
     padding: 20px 20px 0 20px; /* no */
+  }
+  .confirm-ft {
+    margin-top: 14px; /* no */
   }
 }
 
 .confirm-hd {
   text-align: left;
-  padding: 15px 20px 10px; /* no */
+  padding: 15px 20px 5px; /* no */
   .confirm-title {
     font-weight: 400;
-    font-size: 17px; /* no */
+    color: #444;
   }
 }
 
 .confirm-bd {
   text-align: left;
   padding: 0 20px; /* no */
-  font-size: 15px; /* no */
+  font-size: 14px; /* no */
   color: #888;
   line-height: 20px; /* no */
 }
 
 .confirm-ft {
   position: relative;
-  line-height: 42px; /* no */
-  margin-top: 15px; /* no */
-  font-size: 17px; /* no */
-  overflow: hidden;
+  line-height: 40px; /* no */
+  margin-top: 14px; /* no */
   display: flex;
-  text-align: center;
   &:after {
     .top-line(@line-color);
   }
   > a {
-    .text-overflow(center);
     position: relative;
+    text-align: center;
     display: block;
-    width: 1%;
     flex: 1;
-    padding: 0 2px;
+    padding: 0 2px; /* no */
     &:not(:last-child):after {
       .right-line(@line-color);
     }
@@ -109,7 +107,7 @@
   }
 }
 
-.m-tipmes {
+.m-toast {
   position: fixed;
   width: 140px; /* no */
   top: 25%;
@@ -123,14 +121,14 @@
   animation: zoomIn .06s ease-in forwards;
 }
 
-.tipmes-content {
+.toast-content {
   font-size: 14px; /* no */
   padding: 0 10px 15px; /* no */
   line-height: 22px; /* no */
 }
 
-.tipmes-success-ico,
-.tipmes-error-ico {
+.toast-success-ico,
+.toast-error-ico {
   margin: 22px 0 0; /* no */
   display: block;
   margin-bottom: 10px; /* no */
@@ -140,20 +138,21 @@
   }
 }
 
-.tipmes-success-ico:after {
+.toast-success-ico:after {
   width: 50px; /* no */
   height: 41px; /* no */
   background: url(@ico-success) no-repeat;
   background-size: 50px 41px; /* no */
 }
 
-.tipmes-error-ico:after {
+.toast-error-ico:after {
   width: 40px; /* no */
   height: 40px; /* no */
   background: url(@ico-error) no-repeat;
   background-size: 40px 40px; /* no */
 }
 
+/* copy for weui. */
 .m-loading {
   position: fixed;
   z-index: 9999;
@@ -163,24 +162,24 @@
   margin-left: -60px; /* no */
   border-radius: 5px; /* no */
   color: #FFF;
-  background: rgba(40, 40, 40, .75);
+  background-color: rgba(40, 40, 40, .75);
   text-align: center;
   animation: zoomIn .1s ease forwards;
-  .ld-loading {
+  .loading-hd {
     position: absolute;
     width: 0;
     z-index: 99999;
     left: 50%;
     top: 43px; /* no */
   }
-  .ld-toast-content {
+  .loading-txt {
     margin: 75px 5px 15px; /* no */
     font-size: 14px; /* no */
     line-height: 20px; /* no */
   }
 }
 
-.m-loading-leaf {
+.loading-leaf {
   position: absolute;
   top: -1px; /* no */
   opacity: .25;
