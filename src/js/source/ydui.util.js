@@ -226,38 +226,6 @@
     }();
 
     /**
-     * 获取浏览器UA
-     * @return {String}
-     */
-    util.getUA = function () {
-        return win.navigator && win.navigator.userAgent || '';
-    };
-
-    /**
-     * 是否移动终端
-     * @return {Boolean}
-     */
-    util.isMobile = function () {
-        return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement;
-    };
-
-    /**
-     * 是否IOS终端
-     * @returns {boolean}
-     */
-    util.isIOS = function () {
-        return !!getUA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-    };
-
-    /**
-     * 是否微信端
-     * @returns {boolean}
-     */
-    util.isWeixin = function () {
-        return getUA.indexOf('MicroMessenger') > -1;
-    };
-
-    /**
      * HTML5存储
      */
     function storage(ls) {
@@ -278,8 +246,4 @@
         };
     }
 
-    var getUA = util.getUA();
-    $.isMobile = util.isMobile();
-    $.isWeixin = util.isWeixin();
-    $.isIOS = util.isIOS();
 }(window, YDUI);

@@ -1,6 +1,6 @@
 !function (win, $) {
 
-    var doc = win.document, SPACE = ' ';
+    var doc = win.document;
 
     function SendCode(options) {
         /**
@@ -42,7 +42,7 @@
         var self = this, secs = this.times;
         self.btn.innerHTML = self.getStr(secs);
         self.btn.style.cssText = 'pointer-events: none';
-        self.addClass(self.btn, self.disClass);
+        $.util.addClass(self.btn, self.disClass);
 
         self.timer = setInterval(function () {
             secs--;
@@ -70,34 +70,7 @@
         var self = this;
         self.btn.innerHTML = self.resetStr;
         self.btn.style.cssText = 'pointer-events: auto';
-        self.removeClass(self.btn, self.disClass);
-    };
-
-    /**
-     * 添加样式
-     * @param el
-     * @param cls
-     */
-    SendCode.prototype.addClass = function (el, cls) {
-        var className = el && el.className;
-        if (el) {
-            className = (SPACE + className + SPACE);
-            !~className.indexOf(SPACE + cls + SPACE) && (el.className = (className + cls).trim());
-        }
-    };
-
-    /**
-     * 移除样式
-     * @param el
-     * @param cls
-     */
-    SendCode.prototype.removeClass = function (el, cls) {
-        var className = el && el.className;
-
-        if (className) {
-            className = (SPACE + className + SPACE).replace(SPACE + cls + SPACE, SPACE);
-            el.className = className.trim();
-        }
+        $.util.removeClass(self.btn, self.disClass);
     };
 
     $.SendCode = SendCode;

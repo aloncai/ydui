@@ -4,6 +4,8 @@
 !function (win, $) {
     var doc = win.document;
 
+    //TODO 锁定时间
+
     /**
      * 页面滚动方法
      * @type {{lock, unlock}}

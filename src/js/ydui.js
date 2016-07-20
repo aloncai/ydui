@@ -1,13 +1,64 @@
 /**
  * ydui
  */
-!function (win) {
-    var ydui = {};
+!function (win, $) {
+    var ydui = {},
+        doc = win.document;
+
+    var getUA = function () {
+        return win.navigator && win.navigator.userAgent || '';
+    };
+
+    ydui.util = {
+        /**
+         * 是否移动终端
+         * @return {Boolean}
+         */
+        isMobile: function () {
+            return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement;
+        },
+        /**
+         * 是否IOS终端
+         * @returns {boolean}
+         */
+        isIOS: function () {
+            return !!getUA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        },
+        /**
+         * 是否微信端
+         * @returns {boolean}
+         */
+        isWeixin: function () {
+            return getUA.indexOf('MicroMessenger') > -1;
+        },
+        /**
+         * 格式化参数
+         * @param string
+         */
+        parseOptions: function (string) {
+            if ($.isPlainObject(string)) {
+                return string;
+            }
+
+            var start = (string ? string.indexOf('{') : -1),
+                options = {};
+
+            if (start != -1) {
+                try {
+                    options = (new Function('',
+                        'var json = ' + string.substr(start) +
+                        '; return JSON.parse(JSON.stringify(json));'))();
+                } catch (e) {
+                }
+            }
+            return options;
+        }
+    };
 
     win.addEventListener('load', function () {
         /* 直接绑定FastClick */
         if (typeof FastClick == 'function') {
-            FastClick.attach(document.body);
+            FastClick.attach(doc.body);
         }
     }, false);
 
@@ -17,7 +68,73 @@
         win.YDUI = ydui;
     }
 
-}(window);
+}(window, jQuery);
+!function (win, $) {
+
+    var $doc = $(win.document),
+        $body = $('body');
+
+    function ActionSheet(option) {
+        this.$element = $(option.target);
+        this.closeElement = option.closeElement;
+        this.$mask = $('<div class="mask-black"></div>');
+        this.toggleClass = 'actionsheet-toggle';
+    }
+
+    ActionSheet.prototype.open = function () {
+        var _this = this;
+        $body.append(_this.$mask);
+        _this.$mask.on('click', function () {
+            _this.close();
+        });
+        if (_this.closeElement) {
+            $doc.on('click.ydui.actionsheet', _this.closeElement, function () {
+                _this.close();
+            });
+        }
+        _this.$element.addClass(_this.toggleClass).trigger('open.ydui.actionsheet');
+    };
+
+    ActionSheet.prototype.close = function () {
+        var _this = this;
+        _this.$mask.remove();
+        _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
+        $doc.off('click.ydui.actionsheet', _this.closeElement);
+    };
+
+    function Plugin(option, closeElement) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+            var $this = $(this),
+                actionsheet = $this.data('ydui.actionsheet');
+
+            if (!actionsheet) {
+                $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(option)));
+                if (!option || typeof option == 'object') {
+                    actionsheet.open();
+                }
+            }
+
+            if (typeof option == 'string') {
+                actionsheet[option] && actionsheet[option].apply(actionsheet, args);
+            }
+        });
+    }
+
+    $doc.on('click', '[data-ydui-actionsheet]', function (e) {
+        e.preventDefault();
+
+        var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
+            $target = $(options.target),
+            option = $target.data('ydui.actionsheet') ? 'open' : options;
+
+        Plugin.call($target, option);
+    });
+
+    $.fn.actionSheet = Plugin;
+
+}(window, jQuery);
 /**
  * dialog
  */
@@ -868,6 +985,8 @@
 !function (win, $) {
     var doc = win.document;
 
+    //TODO 锁定时间
+
     /**
      * 页面滚动方法
      * @type {{lock, unlock}}
@@ -896,7 +1015,7 @@
 }(window, YDUI);
 !function (win, $) {
 
-    var doc = win.document, SPACE = ' ';
+    var doc = win.document;
 
     function SendCode(options) {
         /**
@@ -938,7 +1057,7 @@
         var self = this, secs = this.times;
         self.btn.innerHTML = self.getStr(secs);
         self.btn.style.cssText = 'pointer-events: none';
-        self.addClass(self.btn, self.disClass);
+        $.util.addClass(self.btn, self.disClass);
 
         self.timer = setInterval(function () {
             secs--;
@@ -966,34 +1085,7 @@
         var self = this;
         self.btn.innerHTML = self.resetStr;
         self.btn.style.cssText = 'pointer-events: auto';
-        self.removeClass(self.btn, self.disClass);
-    };
-
-    /**
-     * 添加样式
-     * @param el
-     * @param cls
-     */
-    SendCode.prototype.addClass = function (el, cls) {
-        var className = el && el.className;
-        if (el) {
-            className = (SPACE + className + SPACE);
-            !~className.indexOf(SPACE + cls + SPACE) && (el.className = (className + cls).trim());
-        }
-    };
-
-    /**
-     * 移除样式
-     * @param el
-     * @param cls
-     */
-    SendCode.prototype.removeClass = function (el, cls) {
-        var className = el && el.className;
-
-        if (className) {
-            className = (SPACE + className + SPACE).replace(SPACE + cls + SPACE, SPACE);
-            el.className = className.trim();
-        }
+        $.util.removeClass(self.btn, self.disClass);
     };
 
     $.SendCode = SendCode;
@@ -1227,38 +1319,6 @@
     }();
 
     /**
-     * 获取浏览器UA
-     * @return {String}
-     */
-    util.getUA = function () {
-        return win.navigator && win.navigator.userAgent || '';
-    };
-
-    /**
-     * 是否移动终端
-     * @return {Boolean}
-     */
-    util.isMobile = function () {
-        return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement;
-    };
-
-    /**
-     * 是否IOS终端
-     * @returns {boolean}
-     */
-    util.isIOS = function () {
-        return !!getUA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-    };
-
-    /**
-     * 是否微信端
-     * @returns {boolean}
-     */
-    util.isWeixin = function () {
-        return getUA.indexOf('MicroMessenger') > -1;
-    };
-
-    /**
      * HTML5存储
      */
     function storage(ls) {
@@ -1279,8 +1339,4 @@
         };
     }
 
-    var getUA = util.getUA();
-    $.isMobile = util.isMobile();
-    $.isWeixin = util.isWeixin();
-    $.isIOS = util.isIOS();
 }(window, YDUI);
