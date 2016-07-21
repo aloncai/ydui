@@ -23,7 +23,7 @@
         </nav>
     </header>
     <div class="m-button">
-        <input type="button" class="btn-block btn-primary" id="confirm1" value="Confirm"/>
+        <input type="button" class="btn-block btn-primary" id="J_Confirm1" value="Confirm"/>
         <input type="button" class="btn-block btn-primary" id="confirm2" value="Confirm->Custom"/>
         <input type="button" class="btn-block btn-hollow" id="alert" value="Alert"/>
         <input type="button" class="btn-block btn-danger" id="toastS" value="toast->Success"/>
@@ -31,18 +31,19 @@
         <input type="button" class="btn-block btn-hollow" id="loading" value="Loading"/>
     </div>
 </section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function (win) {
+    !function (win, $) {
         var dialog = win.YDUI.dialog;
         var doc = win.document;
 
         //普通确认框
-        doc.querySelector('#confirm1').onclick = function () {
+        $('#J_Confirm1').on('click', function () {
             dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
                 dialog.toast('你点了确定', 'success', 1000);
             });
-        };
+        });
 
         //自定义按钮确认框
         doc.querySelector('#confirm2').onclick = function () {
@@ -96,7 +97,7 @@
                 dialog.loading.hide();//移除loading
             }, 2000);
         };
-    }(window);
+    }(window, jQuery);
 </script>
 </body>
 </html>

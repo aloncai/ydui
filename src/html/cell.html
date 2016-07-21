@@ -159,27 +159,38 @@
         </div>
     </div>
 </section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function (win) {
+    /**
+     * 发送验证码
+     * 重要：SendCode 不支持Data API方式调用（倒计时运行存在前置条件）
+     */
+    !function (win, $) {
 
         var ydui = win.YDUI;
 
         var sendCode = new ydui.SendCode({
             btn: '#getCode',// 提交按钮【必填】
             disClass: 'btn-disabled', // 禁用按钮样式【必填】
-            times: 15, // 倒计时时长 [可选，默认60秒]
-            runStr: '{%ss} 秒后重新获取',// 倒计时显示文本 [可选]
-            resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选]
+            secs: 30, // 倒计时时长 [可选，默认：60秒]
+            runStr: '{%s}秒后重新获取',// 倒计时显示文本 [可选，默认：58秒后重新获取]
+            resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选，默认：重新获取验证码]
         });
 
-        win.document.querySelector('#getCode').onclick = function () {
+        $('#getCode').on('click', function () {
             // ajax 成功发送验证码后调用
+            //$.ajax({
+            //    success: function (ret) {
+            //        ydui.dialog.toast('已发送', 'success', 1500);
+            //        sendCode.start();
+            //    }
+            //});
             ydui.dialog.toast('已发送', 'success', 1500);
             sendCode.start();
-        };
+        });
 
-    }(window);
+    }(window, jQuery);
 </script>
 </body>
 </html>
