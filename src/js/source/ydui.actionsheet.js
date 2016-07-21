@@ -1,19 +1,19 @@
 !function (win, $) {
 
     var $doc = $(win.document),
-        $body = $('body');
+        $body = $('body'),
+        $mask = $('<div class="mask-black"></div>');
 
-    function ActionSheet(option) {
-        this.$element = $(option.target);
-        this.closeElement = option.closeElement;
-        this.$mask = $('<div class="mask-black"></div>');
+    function ActionSheet(element, closeElement) {
+        this.$element = $(element);
+        this.closeElement = closeElement;
         this.toggleClass = 'actionsheet-toggle';
     }
 
     ActionSheet.prototype.open = function () {
         var _this = this;
-        $body.append(_this.$mask);
-        _this.$mask.on('click', function () {
+        $body.append($mask);
+        $mask.on('click.ydui.actionsheet.mask', function () {
             _this.close();
         });
         if (_this.closeElement) {
@@ -26,7 +26,7 @@
 
     ActionSheet.prototype.close = function () {
         var _this = this;
-        _this.$mask.remove();
+        $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
         $doc.off('click.ydui.actionsheet', _this.closeElement);
     };
@@ -39,7 +39,7 @@
                 actionsheet = $this.data('ydui.actionsheet');
 
             if (!actionsheet) {
-                $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(option)));
+                $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
                 if (!option || typeof option == 'object') {
                     actionsheet.open();
                 }

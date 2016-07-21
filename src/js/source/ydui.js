@@ -3,34 +3,25 @@
  */
 !function (win, $) {
     var ydui = {},
-        doc = win.document;
-
-    var getUA = function () {
-        return win.navigator && win.navigator.userAgent || '';
-    };
+        doc = win.document,
+        ua = win.navigator && win.navigator.userAgent || '';
 
     ydui.util = {
         /**
          * 是否移动终端
          * @return {Boolean}
          */
-        isMobile: function () {
-            return !!getUA.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement;
-        },
+        isMobile: !!ua.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement,
         /**
          * 是否IOS终端
          * @returns {boolean}
          */
-        isIOS: function () {
-            return !!getUA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        },
+        isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
         /**
          * 是否微信端
          * @returns {boolean}
          */
-        isWeixin: function () {
-            return getUA.indexOf('MicroMessenger') > -1;
-        },
+        isWeixin: ua.indexOf('MicroMessenger') > -1,
         /**
          * 格式化参数
          * @param string
