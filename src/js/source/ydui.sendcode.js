@@ -1,6 +1,7 @@
-!function (win, $, YDUI) {
-
-    var $doc = $(win.document);
+/**
+ * 发生验证码倒计时
+ */
+!function (win, $) {
 
     function SendCode(element, options) {
         /**
@@ -90,12 +91,6 @@
             }
         });
     }
-    //
-    //$doc.on('click.ydui.sendcode', '[data-ydui-sendcode]', function (e) {
-    //    e.preventDefault();
-    //
-    //    Plugin.call($(this), 'start');
-    //});
 
     // 给Data API方式调用的添加默认参数
     $(win).on('load', function () {
@@ -107,4 +102,4 @@
 
     $.fn.sendCode = Plugin;
 
-}(window, jQuery, YDUI);
+}(window, jQuery);
