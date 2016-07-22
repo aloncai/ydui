@@ -1,10 +1,9 @@
 /**
  * dialog
  */
-!function (win, $) {
-    var dialog = $.dialog = $.dialog || {},
-        doc = win.document,
-        body = doc.querySelectorAll('body')[0];
+!function (win, $, ydui) {
+    var dialog = ydui.dialog = ydui.dialog || {},
+        $body = $(win.document.body);
 
     /**
      * 确认提示框
@@ -14,18 +13,18 @@
      * @constructor
      */
     dialog.confirm = function (title, mes, opts) {
-        var that = $, al = arguments.length;
-        if (al < 2) {
+        var args = arguments.length;
+        if (args < 2) {
             console.error('From YDUI\'s confirm: Please set two or three parameters!!!');
             return;
         }
 
-        if (typeof arguments[1] != 'function' && al == 2 && !arguments[1] instanceof Array) {
+        if (typeof arguments[1] != 'function' && args == 2 && !arguments[1] instanceof Array) {
             console.error('From YDUI\'s confirm: The second parameter must be a function or array!!!');
             return;
         }
 
-        if (al == 2) {
+        if (args == 2) {
             opts = mes;
             mes = title;
             title = '提示';
@@ -45,54 +44,47 @@
             }];
         }
 
-        // 创建confirm主体DOM
-        var dom = doc.createElement('div'), _id = 'YDUI_CONFRIM';
-        dom.id = _id;
-        dom.innerHTML =
-            '<div class="mask-black"></div>' +
-            '<div class="m-confirm">' +
-            '    <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
-            '    <div class="confirm-bd">' + mes + '</div>' +
-            '</div>';
-
-        var old = doc.querySelector('#' + _id);
-        old && dom.parentNode.removeChild(dom);
+        var $dom = $('' +
+        '<div id="YDUI_CONFRIM">' +
+        '   <div class="mask-black"></div>' +
+        '   <div class="m-confirm">' +
+        '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
+        '       <div class="confirm-bd">' + mes + '</div>' +
+        '   </div>' +
+        '</div>').remove();
 
         // 遍历按钮数组
-        var temp = doc.createElement('div');
-        temp.className = 'confirm-ft';
-        btnArr.forEach(function (val, i) {
-            var btn = doc.createElement('a');
-            btn.href = 'javascript:;';
+        var $btnBox = $('<div class="confirm-ft"></div>');
+        $.each(btnArr, function (i, val) {
+            var $btn;
             // 指定按钮颜色
             if (typeof val.color == 'boolean') {
-                btn.className = 'confirm-btn ' + (val.color ? 'primary' : 'default');
+                $btn = $('<a href="javascript:;" class="' + 'confirm-btn ' + (val.color ? 'primary' : 'default') + '">' + (val.txt || '') + '</a>');
             } else if (typeof val.color == 'string') {
-                btn.setAttribute('style', 'color: ' + val.color);
+                $btn = $('<a href="javascript:;" style="color: ' + val.color + '">' + (val.txt || '') + '</a>');
             }
-            btn.innerHTML = val.txt || '';
 
             // 给对应按钮添加点击事件
             (function (p) {
-                btn.onclick = function () {
+                $btn.on('click', function () {
                     // 是否保留弹窗
                     if (!btnArr[p].stay) {
                         // 释放页面滚动
-                        that.pageScroll.unlock();
-                        dom.parentNode.removeChild(dom);
+                        ydui.pageScroll.unlock();
+                        $dom.remove();
                     }
                     btnArr[p].callback && btnArr[p].callback();
-                }
+                });
             })(i);
-            temp.appendChild(btn);
+            $btnBox.append($btn);
         });
 
-        dom.querySelector('.m-confirm').appendChild(temp);
+        $dom.find('.m-confirm').append($btnBox);
 
         // 禁止滚动屏幕【移动端】
-        that.pageScroll.lock();
+        ydui.pageScroll.lock();
 
-        body.appendChild(dom);
+        $body.append($dom);
     };
 
     /**
@@ -101,29 +93,28 @@
      * @param callback  回调函数Function 【可选】
      */
     dialog.alert = function (mes, callback) {
-        var dom = doc.createElement('div'), _id = 'YDUI_ALERT';
-        dom.innerHTML =
-            '<div>' +
-            '    <div class="mask-black"></div>' +
-            '    <div class="m-confirm m-alert">' +
-            '        <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
-            '        <div class="confirm-ft">' +
-            '            <a href="javascript:;" class="confirm-btn primary">确定</a>' +
-            '        </div>' +
-            '    </div>' +
-            '</div>';
-        var old = doc.querySelector('#' + _id);
-        old && dom.parentNode.removeChild(dom);
+        var $dom = $('' +
+        '<div id="YDUI_ALERT">' +
+        '   <div>' +
+        '       <div class="mask-black"></div>' +
+        '       <div class="m-confirm m-alert">' +
+        '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
+        '           <div class="confirm-ft">' +
+        '               <a href="javascript:;" class="confirm-btn primary">确定</a>' +
+        '           </div>' +
+        '       </div>' +
+        '   </div>' +
+        '</div>').remove();
 
-        $.pageScroll.lock();
+        ydui.pageScroll.lock();
 
-        body.appendChild(dom);
+        $body.append($dom);
 
-        dom.querySelectorAll('a')[0].onclick = function () {
-            dom.parentNode.removeChild(dom);
-            $.pageScroll.unlock();
+        $dom.find('a').on('click', function () {
+            $dom.remove();
+            ydui.pageScroll.unlock();
             typeof callback === 'function' && callback();
-        };
+        });
     };
 
     /**
@@ -134,30 +125,24 @@
      * @param callback  回调函数Function 【可选】
      */
     dialog.toast = function (mes, type, timeout, callback) {
-        var al = arguments.length;
-        if (al < 2) {
-            console.error('From YDUI\'s tipMes: Please set two or more parameters!!!');
+        var args = arguments.length;
+        if (args < 2) {
+            console.error('From YDUI\'s toast: Please set two or more parameters!!!');
             return;
         }
 
-        var ico = type == 'error' ? 'toast-error-ico' : 'toast-success-ico';
-        var dom = doc.createElement('div'), _id = 'YDUI_TIPMES';
-        dom.id = _id;
-        dom.innerHTML =
-            '<div>' +
-            '    <div class="mask-white"></div>' +
-            '    <div class="m-toast">' +
-            '        <div class="' + ico + '"></div>' +
-            '        <p class="toast-content">' + (mes || '') + '</p>' +
-            '    </div>' +
-            '</div>';
+        var $dom = $('' +
+        '<div id="YDUI_TOAST">' +
+        '   <div class="mask-white"></div>' +
+        '   <div class="m-toast">' +
+        '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
+        '       <p class="toast-content">' + (mes || '') + '</p>' +
+        '   </div>' +
+        '</div>').remove();
 
-        var old = doc.querySelector('#' + _id);
-        old && dom.parentNode.removeChild(dom);
+        ydui.pageScroll.lock();
 
-        $.pageScroll.lock();
-
-        body.appendChild(dom);
+        $body.append($dom);
 
         if (typeof timeout === 'function' && arguments.length >= 3) {
             callback = timeout;
@@ -166,8 +151,8 @@
 
         var inter = setTimeout(function () {
             clearTimeout(inter);
-            $.pageScroll.unlock();
-            dom.parentNode.removeChild(dom);
+            ydui.pageScroll.unlock();
+            $dom.remove();
             typeof callback === 'function' && callback();
         }, (~~timeout || 2000) + 100);//100为动画时间
     };
@@ -181,43 +166,39 @@
              * 加载中 - 显示
              * @param text 显示文字String 【可选】
              */
-            show: function (text) {
-                var dom = doc.createElement('div'), _id = 'YDUI_LOADING';
-                dom.id = _id;
-                dom.innerHTML =
-                    '    <div class="mask-white"></div>' +
-                    '    <div class="m-loading">' +
-                    '        <div class="loading-hd">' +
-                    '            <div class="loading-leaf loading-leaf-0"></div>' +
-                    '            <div class="loading-leaf loading-leaf-1"></div>' +
-                    '            <div class="loading-leaf loading-leaf-2"></div>' +
-                    '            <div class="loading-leaf loading-leaf-3"></div>' +
-                    '            <div class="loading-leaf loading-leaf-4"></div>' +
-                    '            <div class="loading-leaf loading-leaf-5"></div>' +
-                    '            <div class="loading-leaf loading-leaf-6"></div>' +
-                    '            <div class="loading-leaf loading-leaf-7"></div>' +
-                    '            <div class="loading-leaf loading-leaf-8"></div>' +
-                    '            <div class="loading-leaf loading-leaf-9"></div>' +
-                    '            <div class="loading-leaf loading-leaf-10"></div>' +
-                    '            <div class="loading-leaf loading-leaf-11"></div>' +
-                    '        </div>' +
-                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
-                    '    </div>';
-                var old = doc.querySelector('#' + _id);
-                old && dom.parentNode.removeChild(dom);
+            open: function (text) {
+                var $dom = $('' +
+                '<div id="YDUI_LOADING">' +
+                '    <div class="mask-white"></div>' +
+                '    <div class="m-loading">' +
+                '        <div class="loading-hd">' +
+                '            <div class="loading-leaf loading-leaf-0"></div>' +
+                '            <div class="loading-leaf loading-leaf-1"></div>' +
+                '            <div class="loading-leaf loading-leaf-2"></div>' +
+                '            <div class="loading-leaf loading-leaf-3"></div>' +
+                '            <div class="loading-leaf loading-leaf-4"></div>' +
+                '            <div class="loading-leaf loading-leaf-5"></div>' +
+                '            <div class="loading-leaf loading-leaf-6"></div>' +
+                '            <div class="loading-leaf loading-leaf-7"></div>' +
+                '            <div class="loading-leaf loading-leaf-8"></div>' +
+                '            <div class="loading-leaf loading-leaf-9"></div>' +
+                '            <div class="loading-leaf loading-leaf-10"></div>' +
+                '            <div class="loading-leaf loading-leaf-11"></div>' +
+                '        </div>' +
+                '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
+                '    </div>' +
+                '</div>').remove();
 
-                $.pageScroll.lock();
-                body.appendChild(dom);
+                ydui.pageScroll.lock();
+                $body.append($dom);
             },
             /**
              * 加载中 - 隐藏
              */
-            hide: function () {
-                $.pageScroll.unlock();
-
-                var dom = doc.querySelector('#YDUI_LOADING');
-                dom.parentNode.removeChild(dom);
+            close: function () {
+                ydui.pageScroll.unlock();
+                $('#YDUI_LOADING').remove();
             }
         };
     }();
-}(window, YDUI);
+}(window, jQuery, YDUI);

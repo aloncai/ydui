@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   &:after {
-    .bottom-line(@tabbar-bottom-border-color);
+    .bottom-line(@tab-bottom-border-color);
   }
 }
 
@@ -11,9 +11,9 @@
   flex: 1;
   position: relative;
   text-align: center;
-  color: @tabbar-color;
-  font-size: @tabbar-fontsize; /* px */
-  line-height: @tabbar-height;
+  color: @tab-color;
+  font-size: @tab-fontsize; /* px */
+  line-height: @tab-height;
   display: block;
   .tap-color(@tab-bg);
   a {
@@ -28,10 +28,10 @@
     width: 1px; /* no */
     height: 30%;
     transform: scaleX(.5);
-    border: 1px solid @tabbar-break-color;
+    border: 1px solid @tab-break-color;
   }
   &.crt {
-    color: @tabbar-color-crt;
+    color: @tab-color-crt;
     &:before {
       content: '';
       width: 70%;

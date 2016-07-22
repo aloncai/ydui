@@ -6,7 +6,7 @@
   z-index: 49;
   display: flex;
   align-items: center;
-  padding: .05rem 0;
+  padding: .104rem 0 .07rem;
   background-color: @tabbar-bg;
   &:after {
     .top-line(@tabbar-border-color);
@@ -33,11 +33,24 @@
   top: -.02rem;
   left: 100%;
   z-index: 999;
-  margin-left: -.1rem;
+  margin-left: -.15rem;
+}
+
+.tabbar-dot {
+  display: block;
+  width: 10px; /* no */
+  height: 10px; /* no */
+  background-color: #EF4F4F;
+  border-radius: 50%;
+  position: absolute;
+  top: .02rem;
+  left: 100%;
+  z-index: 999;
+  margin-left: -.11rem;
 }
 
 .tabbar-icon {
-  height: @tabbar-icon-fontsize * 1.24;
+  height: @tabbar-icon-fontsize * 1.08;
   color: @tabbar-icon-color;
   display: flex;
   align-items: center;
@@ -54,5 +67,4 @@
 .tabbar-txt {
   display: inline-block;
   font-size: @tabbar-text-fontsize; /* px */
-  padding-top: .02rem;
 }

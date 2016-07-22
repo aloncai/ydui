@@ -39,7 +39,7 @@
             <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
             <div class="cell-right">
                 <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
-                <a href="javascript:;" class="btn btn-warning" id="getCode">获取短信验证码</a>
+                <a href="javascript:;" class="btn btn-warning">获取短信验证码</a>
             </div>
         </div>
         <a class="cell-item" href="javascript:;">
@@ -79,25 +79,25 @@
     <div class="m-celltitle">下拉框</div>
     <div class="m-cell">
         <div class="cell-item">
-            <div class="cell-right cell-arrow">
+            <label class="cell-right cell-arrow">
                 <select class="cell-select">
                     <option value="">支付方式</option>
                     <option value="1">支付宝</option>
                     <option value="2">微信</option>
                     <option value="3">财付通</option>
                 </select>
-            </div>
+            </label>
         </div>
         <div class="cell-item">
             <div class="cell-left">性别：</div>
-            <div class="cell-right cell-arrow">
+            <label class="cell-right cell-arrow">
                 <select class="cell-select">
                     <option value="">请选择性别</option>
                     <option value="1">男</option>
                     <option value="2">女</option>
                     <option value="3">未知</option>
                 </select>
-            </div>
+            </label>
         </div>
     </div>
 
@@ -126,9 +126,9 @@
         </label>
         <div class="cell-item">
             <div class="cell-left">开关</div>
-            <div class="cell-right">
+            <label class="cell-right">
                 <input checked type="checkbox" class="checkbox-ios"/>
-            </div>
+            </label>
         </div>
     </div>
 
@@ -159,38 +159,5 @@
         </div>
     </div>
 </section>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="../js/ydui.js"></script>
-<script>
-    /**
-     * 发送验证码
-     * 重要：SendCode 不支持Data API方式调用（倒计时运行存在前置条件）
-     */
-    !function (win, $) {
-
-        var ydui = win.YDUI;
-
-        var sendCode = new ydui.SendCode({
-            btn: '#getCode',// 提交按钮【必填】
-            disClass: 'btn-disabled', // 禁用按钮样式【必填】
-            secs: 30, // 倒计时时长 [可选，默认：60秒]
-            runStr: '{%s}秒后重新获取',// 倒计时显示文本 [可选，默认：58秒后重新获取]
-            resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选，默认：重新获取验证码]
-        });
-
-        $('#getCode').on('click', function () {
-            // ajax 成功发送验证码后调用
-            //$.ajax({
-            //    success: function (ret) {
-            //        ydui.dialog.toast('已发送', 'success', 1500);
-            //        sendCode.start();
-            //    }
-            //});
-            ydui.dialog.toast('已发送', 'success', 1500);
-            sendCode.start();
-        });
-
-    }(window, jQuery);
-</script>
 </body>
 </html>

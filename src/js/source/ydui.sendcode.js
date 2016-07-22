@@ -1,14 +1,14 @@
-/**
- * 发送验证码倒计时插件
- */
 !function (win, $, YDUI) {
 
-    function SendCode(options) {
+    var $doc = $(win.document);
+
+    function SendCode(element, options) {
         /**
          * 点击按钮
          * @type {Element}
          */
-        this.$btn = $(options.btn);
+        this.$btn = $(element);
+        this.run = options.run || false;
         /**
          * 倒计时时长（秒）
          * @type {number|*}
@@ -72,6 +72,39 @@
         _this.$btn.html(_this.resetStr).css('pointer-events', 'auto').removeClass(_this.disClass);
     };
 
-    YDUI.SendCode = SendCode;
+    function Plugin(option) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+            var $this = $(this),
+                sendcode = $this.data('ydui.sendcode');
+
+            if (!sendcode) {
+                $this.data('ydui.sendcode', (sendcode = new SendCode(this, option)));
+                if (typeof option == 'object' && option.run) {
+                    sendcode.start();
+                }
+            }
+            if (typeof option == 'string') {
+                sendcode[option] && sendcode[option].apply(sendcode, args);
+            }
+        });
+    }
+    //
+    //$doc.on('click.ydui.sendcode', '[data-ydui-sendcode]', function (e) {
+    //    e.preventDefault();
+    //
+    //    Plugin.call($(this), 'start');
+    //});
+
+    // 给Data API方式调用的添加默认参数
+    $(win).on('load', function () {
+        $('[data-ydui-sendcode]').each(function () {
+            var $this = $(this);
+            Plugin.call($this, win.YDUI.util.parseOptions($this.data('ydui-sendcode')));
+        });
+    });
+
+    $.fn.sendCode = Plugin;
 
 }(window, jQuery, YDUI);

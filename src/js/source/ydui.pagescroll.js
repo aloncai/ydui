@@ -1,17 +1,15 @@
 /**
  * pageScroll
  */
-!function (win, $) {
+!function (win, ydui) {
     var doc = win.document;
-
-    //TODO 锁定时间
 
     /**
      * 页面滚动方法
      * @type {{lock, unlock}}
      * lock：禁止页面滚动, unlock：释放页面滚动
      */
-    $.pageScroll = function () {
+    ydui.pageScroll = function () {
         var fn = function (e) {
             e.preventDefault();
             e.stopPropagation();

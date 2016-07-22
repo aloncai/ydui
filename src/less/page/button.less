@@ -10,6 +10,7 @@
 
 .btn {
   .btn-variant();
+  height: @btn-height;
   line-height: @btn-height;
   font-size: @btn-fontsize; /* px */
   display: inline-block;
@@ -22,6 +23,7 @@
   width: 100%;
   display: block;
   font-size: @btn-block-fontsize; /* px */
+  height: @btn-block-height;
   line-height: @btn-block-height;
   margin-top: @btn-block-margin-top;
   border-radius: @btn-block-radius; /* no */
@@ -59,19 +61,19 @@
     left: 0;
     transform: scale(.5);
     transform-origin: 0 0;
-    border: 1px solid @line-high-color;
-    border-radius: @btn-block-radius * 2;
+    border: 1px solid @line-high-color; /* no */
+    border-radius: @btn-block-radius * 2; /* no */
   }
 }
 
 input[type="button"].btn-hollow,
 input[type="submit"].btn-hollow {
-  border: 1px solid @line-high-color;
+  border: 1px solid @line-high-color; /* no */
 }
 
 .hairline {
   input[type="button"].btn-hollow,
   input[type="submit"].btn-hollow {
-    border: .5px solid @line-high-color;
+    border: .5px solid @line-high-color; /* no */
   }
 }

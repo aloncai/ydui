@@ -37,12 +37,22 @@
 }
 
 .demo-tip {
-  background-color: #EFEFEF;
   color: #FF756B;
   font-size: .24rem; /* px */
-  padding: .2rem .24rem;
-  line-height: 20px; /* no */
+  padding: .2rem .24rem .4rem;
+  line-height: 18px; /* no */
   font-family: @FONT-YAHEI;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: .2rem;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px dashed #B2B2B2; /* no */
+    transform: scaleY(.5);
+    transform-origin: 0 100%;
+  }
   i {
     margin-right: 3px; /* no */
   }
@@ -114,9 +124,10 @@
 }
 
 @demo-icons: 'demo-icons';
+
 @font-face {
   font-family: @demo-icons;
-  src: url('http://at.alicdn.com/t/font_1468809406_382368.ttf') format('truetype');
+  src: url('http://at.alicdn.com/t/font_1469173340_9427857.ttf') format('truetype');
 }
 
 [class^="demo-icons-"]:before, [class*=" demo-icons-"]:before {
@@ -124,24 +135,20 @@
   font-size: .5rem;
 }
 
-.demo-icons-home:before {
-  content: '\e615';
+.demo-icons-weixin:before {
+  content: '\e60b';
 }
 
-.demo-icons-home-crt:before {
-  content: '\e614';
+.demo-icons-me:before {
+  content: '\e610';
 }
 
-.demo-icons-shopcart:before {
-  content: '\e613';
+.demo-icons-contact:before {
+  content: '\e60c';
 }
 
-.demo-icons-ucenter:before {
+.demo-icons-discover:before {
   content: '\e611';
-}
-
-.demo-icons-more:before {
-  content: '\e612';
 }
 
 .demo-icons-phone:before {
@@ -165,6 +172,11 @@
   color: #FF685E;
 }
 
+.demo-icons-sendcode:before {
+  content: '\e60a';
+  color: #8B78E2;
+}
+
 .demo-icons-dialog:before {
   content: '\e603';
   color: #3CC51E;
@@ -182,7 +194,7 @@
 
 .demo-icons-list:before {
   content: '\e605';
-  color: #8068EF;
+  color: #FF8D20;
 }
 
 .demo-icons-auctionsheet:before {
@@ -207,5 +219,5 @@
 
 .demo-icons-grids:before {
   content: '\e609';
-  color: #9B95D7;
+  color: #8B78E2;
 }

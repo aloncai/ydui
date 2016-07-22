@@ -16,16 +16,25 @@
 </head>
 <body>
 <section class="g-doc">
+
     <header class="m-nav">
         <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center">ActionSheet</div>
         </nav>
     </header>
+
+    <aside class="demo-tip">
+        <p>Data API 和 Javascript API方式都包含以下两个自定义事件：</p>
+        <p>1. [open.ydui.actionsheet]：打开ActionSheet时立即触发</p>
+        <p>2. [close.ydui.actionsheet]：关闭ActionSheet时立即触发</p>
+    </aside>
+
     <div class="m-button">
         <button type="button" class="btn-block btn-primary" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">ActionSheet(Data API调用)</button>
         <button type="button" class="btn-block btn-warning" id="J_ShowActionSheet">ActionSheet(Javascript API调用)</button>
     </div>
+
     <div class="m-actionsheet" id="actionSheet">
         <a href="#" class="actionsheet-item">示例菜单 - Data API</a>
         <a href="#" class="actionsheet-item">示例菜单 - Data API</a>
@@ -33,6 +42,7 @@
         <a href="#" class="actionsheet-item">示例菜单 - Data API</a>
         <a href="javascript:;" class="actionsheet-action" id="cancel">取消</a>
     </div>
+
     <div class="m-actionsheet" id="J_ActionSheet">
         <a href="#" class="actionsheet-item">示例菜单 - Javascript API</a>
         <a href="#" class="actionsheet-item">示例菜单 - Javascript API</a>
@@ -40,6 +50,7 @@
         <a href="#" class="actionsheet-item">示例菜单 - Javascript API</a>
         <a href="javascript:;" class="actionsheet-action" id="J_Cancel">取消</a>
     </div>
+
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
@@ -59,9 +70,6 @@
         });
 
         // 自定义事件
-        // open.ydui.actionsheet：打开ActionSheet时立即触发
-        // close.ydui.actionsheet：关闭ActionSheet时立即触发
-        // Data API和Javascript API方式都支持这两个自定义事件
         $myAs.on('open.ydui.actionsheet', function () {
             console.log('打开了');
         }).on('close.ydui.actionsheet', function () {

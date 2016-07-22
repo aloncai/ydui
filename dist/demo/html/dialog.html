@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=618b05be2effe2a066f7d0fcfae2f5c0"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=21cf1abfd845a23825e69ff47a4fbf41"/>
     <link rel="stylesheet" href="../css/demo.css" />
     <!-- build:tb_flexible -->
     <script src="../js/ydui.flexible.js"></script>
@@ -23,29 +23,29 @@
         </nav>
     </header>
     <div class="m-button">
-        <input type="button" class="btn-block btn-primary" id="confirm1" value="Confirm"/>
-        <input type="button" class="btn-block btn-primary" id="confirm2" value="Confirm->Custom"/>
-        <input type="button" class="btn-block btn-hollow" id="alert" value="Alert"/>
-        <input type="button" class="btn-block btn-danger" id="toastS" value="toast->Success"/>
-        <input type="button" class="btn-block btn-danger" id="toastE" value="toast->Error"/>
-        <input type="button" class="btn-block btn-hollow" id="loading" value="Loading"/>
+        <input type="button" class="btn-block btn-primary" id="J_Confirm1" value="Confirm"/>
+        <input type="button" class="btn-block btn-primary" id="J_confirm2" value="Confirm->Custom"/>
+        <input type="button" class="btn-block btn-hollow" id="J_Alert" value="Alert"/>
+        <input type="button" class="btn-block btn-danger" id="J_ToastS" value="toast->Success"/>
+        <input type="button" class="btn-block btn-danger" id="J_ToastE" value="toast->Error"/>
+        <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
     </div>
 </section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function (win) {
+    !function (win, $) {
         var dialog = win.YDUI.dialog;
-        var doc = win.document;
 
         //普通确认框
-        doc.querySelector('#confirm1').onclick = function () {
+        $('#J_Confirm1').on('click', function () {
             dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
                 dialog.toast('你点了确定', 'success', 1000);
             });
-        };
+        });
 
         //自定义按钮确认框
-        doc.querySelector('#confirm2').onclick = function () {
+        $('#J_confirm2').on('click', function () {
             dialog.confirm('自定义按钮', '我有一个小毛驴我从来也不骑！', [
                 {
                     txt: '取消',
@@ -70,33 +70,33 @@
                     }
                 }
             ]);
-        };
+        });
 
         //普通提示框
-        doc.querySelector('#alert').onclick = function () {
+        $('#J_Alert').on('click', function () {
             dialog.alert('我有一个小毛驴我从来也不骑！');
-        };
+        });
 
         //正确提示框
-        doc.querySelector('#toastS').onclick = function () {
+        $('#J_ToastS').on('click', function () {
             dialog.toast('鼠标不错哟！', 'success');
-        };
+        });
 
         //错误提示框
-        doc.querySelector('#toastE').onclick = function () {
+        $('#J_ToastE').on('click', function () {
             dialog.toast('别乱点啊！', 'error', 1000, function () {
                 dialog.alert('给你一次重来的机会！');
             });
-        };
+        });
 
         //加载中提示框
-        doc.querySelector('#loading').onclick = function () {
-            dialog.loading.show('很快加载好了');
+        $('#J_Loading').on('click', function () {
+            dialog.loading.open('很快加载好了');
             setTimeout(function () {
-                dialog.loading.hide();//移除loading
+                dialog.loading.close();//移除loading
             }, 2000);
-        };
-    }(window);
+        });
+    }(window, jQuery);
 </script>
 </body>
 </html>

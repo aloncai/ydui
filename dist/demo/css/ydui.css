@@ -225,6 +225,7 @@ table {
   text-align: center;
   position: relative;
   border: none;
+  height: 0.7rem;
   line-height: 0.7rem;
   font-size: 0.26rem;
   /* px */
@@ -241,6 +242,7 @@ table {
   display: block;
   font-size: 0.36rem;
   /* px */
+  height: 1rem;
   line-height: 1rem;
   margin-top: 0.5rem;
   border-radius: 3px;
@@ -293,35 +295,19 @@ table {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   border: 1px solid #B2B2B2;
+  /* no */
   border-radius: 6px;
+  /* no */
 }
 input[type="button"].btn-hollow,
 input[type="submit"].btn-hollow {
   border: 1px solid #B2B2B2;
+  /* no */
 }
 .hairline input[type="button"].btn-hollow,
 .hairline input[type="submit"].btn-hollow {
   border: 0.5px solid #B2B2B2;
-}
-@-webkit-keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
+  /* no */
 }
 @-webkit-keyframes bounceInDown {
   from,
@@ -502,6 +488,26 @@ input[type="submit"].btn-hollow {
   .m-confirm {
     width: 40%;
     margin-left: -20%;
+  }
+}
+@-webkit-keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
   }
 }
 .m-toast {
@@ -1291,7 +1297,7 @@ input[type="submit"].btn-hollow {
   flex: 1;
   height: 1rem;
   border: none;
-  line-height: 1.35;
+  line-height: 1.15;
   font-size: 0.3rem;
   /* px */
   background: transparent;
@@ -1896,7 +1902,7 @@ input[type="submit"].btn-hollow {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: .05rem 0;
+  padding: .104rem 0 .07rem;
   background-color: rgba(255, 255, 255, 0.96);
 }
 .m-tabbar:after {
@@ -1935,10 +1941,10 @@ input[type="submit"].btn-hollow {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  color: #585858;
+  color: #979797;
 }
 .tabbar-item.crt {
-  color: #FF5E53;
+  color: #09BB07;
 }
 .tabbar-item.crt .tabbar-icon {
   color: inherit;
@@ -1948,11 +1954,25 @@ input[type="submit"].btn-hollow {
   top: -0.02rem;
   left: 100%;
   z-index: 999;
-  margin-left: -0.1rem;
+  margin-left: -0.15rem;
+}
+.tabbar-dot {
+  display: block;
+  width: 10px;
+  /* no */
+  height: 10px;
+  /* no */
+  background-color: #EF4F4F;
+  border-radius: 50%;
+  position: absolute;
+  top: .02rem;
+  left: 100%;
+  z-index: 999;
+  margin-left: -0.11rem;
 }
 .tabbar-icon {
-  height: 0.5952rem;
-  color: #585858;
+  height: 0.5832rem;
+  color: #979797;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1965,7 +1985,7 @@ input[type="submit"].btn-hollow {
 }
 .tabbar-icon *:before,
 .tabbar-icon *:after {
-  font-size: 0.48rem !important;
+  font-size: 0.54rem !important;
   display: block;
 }
 .tabbar-icon img {
@@ -1973,9 +1993,8 @@ input[type="submit"].btn-hollow {
 }
 .tabbar-txt {
   display: inline-block;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
   /* px */
-  padding-top: .02rem;
 }
 .m-list {
   overflow: hidden;
@@ -2280,7 +2299,7 @@ input[type="submit"].btn-hollow {
   transition: transform .3s;
   transition: transform .3s, -webkit-transform .3s;
 }
-.m-actionsheet .actionsheet-item {
+.actionsheet-item {
   display: block;
   position: relative;
   font-size: 0.28rem;
@@ -2290,7 +2309,7 @@ input[type="submit"].btn-hollow {
   line-height: 1rem;
   background-color: #FFF;
 }
-.m-actionsheet .actionsheet-item:after {
+.actionsheet-item:after {
   content: '';
   position: absolute;
   z-index: 2;
@@ -2304,7 +2323,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.m-actionsheet .actionsheet-action {
+.actionsheet-action {
   display: block;
   margin-top: .15rem;
   font-size: 0.28rem;
@@ -2314,7 +2333,7 @@ input[type="submit"].btn-hollow {
   line-height: 1rem;
   background-color: #FFF;
 }
-.m-actionsheet.actionsheet-toggle {
+.actionsheet-toggle {
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
@@ -2390,14 +2409,15 @@ input[type="submit"].btn-hollow {
 }
 .badge {
   color: #333;
-  line-height: 1;
   font-size: 12px;
   /* no */
   position: relative;
   display: inline-block;
-  padding: .06rem .12rem;
+  border-radius: 1000px;
   /* no */
-  border-radius: 1rem;
+  line-height: 1;
+  padding: 3px 6px;
+  /* no */
   white-space: nowrap;
   background-color: #D0D0D0;
 }
