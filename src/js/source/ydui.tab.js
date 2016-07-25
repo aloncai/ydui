@@ -1,39 +1,45 @@
 !function (win, $) {
 
-    var doc = win.document;
-
     function Tab(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, Tab.DEFAULTS, options || {});
-        this.init();
+        this.bindEvent();
     }
 
     Tab.DEFAULTS = {
         nav: '.tab-nav-item',
         content: '.tab-panel-item',
-        crtClass: 'tab-active'
+        activeClass: 'tab-active'
     };
 
-    Tab.prototype.init = function () {
+    Tab.prototype.bindEvent = function () {
         var _this = this;
 
         _this.$element.on('click.ydui.tab', _this.options.nav, function (e) {
             e.preventDefault();
-            _this.show(this);
+            _this.show($(this));
         });
     };
 
-    Tab.prototype.show = function (curNav) {
-        var _this = this;
-        var crtClass = _this.options.crtClass;
-        var $nav = _this.$element.find(_this.options.nav);
-        var $content = _this.$element.find(_this.options.content);
-console.log($(curNav));
-        $nav.removeClass(crtClass);
-        $(curNav).addClass(crtClass);
+    Tab.prototype.show = function ($nav) {
 
-        $content.removeClass(crtClass);
-        $content.eq($nav.filter('.' + crtClass).index()).addClass(crtClass);
+        var _this = this;
+
+        var activeIndex = $(_this.options.nav).index($nav);
+
+        _this.active($nav, _this.$element.find('.tab-nav'));
+        _this.active($(_this.options.content).eq(activeIndex), _this.$element.find('.tab-panel'));
+    };
+
+    Tab.prototype.active = function ($element, $container, callback) {
+        var _this = this;
+        var activeClass = _this.options.activeClass;
+
+        var $avtive = $container.find('.tab-active');
+
+        $avtive.removeClass(activeClass);
+        $element.addClass(activeClass);
+
     };
 
     function Plugin(option) {
@@ -44,10 +50,7 @@ console.log($(curNav));
                 tab = $this.data('ydui.tab');
 
             if (!tab) {
-                $this.data('ydui.tab', (tab = new Tab(this, option)));
-                //if (typeof option == 'object') {
-                //    tab.show();
-                //}
+                $this.data('ydui.tab', (tab = new Tab($(this), option)));
             }
 
             if (typeof option == 'string') {
@@ -56,9 +59,11 @@ console.log($(curNav));
         });
     }
 
-    $(doc).on('click.ydui.tab', '[data-ydui-tab] .tab-nav-item', function (e) {
-        e.preventDefault();
-        Plugin.call($(this), 'show');
+    $(win).on('load', function () {
+        $('[data-ydui-tab]').each(function () {
+            var $this = $(this);
+            $this.tab();
+        });
     });
 
     $.fn.tab = Plugin;

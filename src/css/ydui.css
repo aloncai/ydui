@@ -2343,11 +2343,12 @@ input[type="submit"].btn-hollow {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  z-index: 0;
 }
 .tab-nav:after {
   content: '';
   position: absolute;
-  z-index: 0;
+  z-index: 3;
   bottom: 0;
   left: 0;
   width: 100%;

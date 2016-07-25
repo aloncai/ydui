@@ -24,34 +24,28 @@
     </header>
     <div class="m-tab demo-small-pitch" data-ydui-tab>
         <ul class="tab-nav">
-            <li class="tab-nav-item tab-active"><a href="javascript:;">综合</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">保健品</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">护理</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">辅食零食</a></li>
+            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项四</a></li>
         </ul>
         <div class="tab-panel">
-            <div class="tab-panel-item tab-active">11111</div>
-            <div class="tab-panel-item">
-                发到手机了开发大数据方式可浪费的时间可浪费的时间考虑非技术来开发都是<br/>
-            </div>
-            <div class="tab-panel-item">33333</div>
-            <div class="tab-panel-item">44444</div>
+            <div class="tab-panel-item tab-active">Data API调用</div>
+            <div class="tab-panel-item">土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</div>
+            <div class="tab-panel-item">我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</div>
+            <div class="tab-panel-item">时间是一切财富中最宝贵的财富。</div>
         </div>
     </div>
-    <div id="J_Tab2" class="m-tab demo-pitch">
+    <div id="J_Tab" class="m-tab demo-pitch">
         <ul class="tab-nav">
-            <li class="tab-nav-item tab-active"><a href="javascript:;">综合</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">保健品</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">护理</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">辅食零食</a></li>
+            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
         </ul>
         <div class="tab-panel">
-            <div class="tab-panel-item tab-active">11111</div>
-            <div class="tab-panel-item">
-                发到手机了开发大数据方式可浪费的时间可浪费的时间考虑非技术来开发都是<br/>
-            </div>
-            <div class="tab-panel-item">33333</div>
-            <div class="tab-panel-item">44444</div>
+            <div class="tab-panel-item tab-active">Javascript API调用</div>
+            <div class="tab-panel-item">真理惟一可靠的标准就是永远自相符合。</div>
+            <div class="tab-panel-item">真正的科学家应当是个幻想家；谁不是幻想家，谁就只能把自己称为实践家。</div>
         </div>
     </div>
 </section>
@@ -59,10 +53,14 @@
 <script src="../js/ydui.js"></script>
 <script>
     !function ($) {
-        $('#J_Tab2').tab({
+        $('#J_Tab').tab({
             nav: '.tab-nav-item',
             content: '.tab-panel-item',
             crtClass: 'tab-active'
+        });
+
+        $('.tab-nav-item').on('opened.ydui.tab', function(e){
+            console.log('aaa', e.index);
         });
     }(jQuery);
 </script>
