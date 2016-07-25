@@ -1,4 +1,8 @@
 .m-tab {
+
+}
+
+.tab-nav{
   display: flex;
   position: relative;
   &:after {
@@ -6,7 +10,7 @@
   }
 }
 
-.tab-item {
+.tab-nav-item {
   width: 1%;
   flex: 1;
   position: relative;
@@ -15,7 +19,7 @@
   font-size: @tab-fontsize; /* px */
   line-height: @tab-height;
   display: block;
-  .tap-color(@tab-bg);
+  .tap-color(@tab-bg, .97);
   a {
     display: inherit;
     color: inherit;
@@ -30,7 +34,7 @@
     transform: scaleX(.5);
     border: 1px solid @tab-break-color;
   }
-  &.crt {
+  &.tab-active {
     color: @tab-color-crt;
     &:before {
       content: '';
@@ -45,3 +49,26 @@
     }
   }
 }
+
+.tab-panel {
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+  .tab-panel-item {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    padding: @body-padding-vertical;
+
+    transform: translateX(-100%);
+    &.tab-active {
+      position: relative;
+      transition: transform .3s;
+      transform: translateX(0%);
+      & ~ .tab-panel-item {
+        transform: translateX(100%);
+      }
+    }
+  }
+}
+

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Tab</title>
-    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <meta content="telephone=no" name="format-detection" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=@@hash" />
-    <link rel="stylesheet" href="../css/demo.css" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=@@hash"/>
+    <link rel="stylesheet" href="../css/demo.css"/>
     <!-- build:tb_flexible -->
     <script src="../js/ydui.flexible.js"></script>
     <!-- endbuild -->
@@ -22,12 +22,49 @@
             <div class="nav-center">Tab</div>
         </nav>
     </header>
-    <ul class="m-tab demo-small-pitch">
-        <li class="tab-item crt"><a href="javascript:;">综合</a></li>
-        <li class="tab-item"><a href="javascript:;">保健品</a></li>
-        <li class="tab-item"><a href="javascript:;">护理</a></li>
-        <li class="tab-item"><a href="javascript:;">辅食零食</a></li>
-    </ul>
+    <div class="m-tab demo-small-pitch" data-ydui-tab>
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">综合</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">保健品</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">护理</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">辅食零食</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">11111</div>
+            <div class="tab-panel-item">
+                发到手机了开发大数据方式可浪费的时间可浪费的时间考虑非技术来开发都是<br/>
+            </div>
+            <div class="tab-panel-item">33333</div>
+            <div class="tab-panel-item">44444</div>
+        </div>
+    </div>
+    <div id="J_Tab2" class="m-tab demo-pitch">
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">综合</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">保健品</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">护理</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">辅食零食</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">11111</div>
+            <div class="tab-panel-item">
+                发到手机了开发大数据方式可浪费的时间可浪费的时间考虑非技术来开发都是<br/>
+            </div>
+            <div class="tab-panel-item">33333</div>
+            <div class="tab-panel-item">44444</div>
+        </div>
+    </div>
 </section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/ydui.js"></script>
+<script>
+    !function ($) {
+        $('#J_Tab2').tab({
+            nav: '.tab-nav-item',
+            content: '.tab-panel-item',
+            crtClass: 'tab-active'
+        });
+    }(jQuery);
+</script>
 </body>
 </html>
