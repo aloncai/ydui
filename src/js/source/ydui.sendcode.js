@@ -82,11 +82,11 @@
 
             if (!sendcode) {
                 $this.data('ydui.sendcode', (sendcode = new SendCode(this, option)));
-                if (typeof option == 'object' && option.run) {
+                if ($.type(option) == 'object' && option.run) {
                     sendcode.start();
                 }
             }
-            if (typeof option == 'string') {
+            if ($.type(option) == 'string') {
                 sendcode[option] && sendcode[option].apply(sendcode, args);
             }
         });

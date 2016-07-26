@@ -65,12 +65,12 @@
 
             if (!actionsheet) {
                 $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
-                if (typeof option == 'object') {
+                if ($.type(option) == 'object') {
                     actionsheet.open();
                 }
             }
 
-            if (typeof option == 'string') {
+            if ($.type(option) == 'string') {
                 actionsheet[option] && actionsheet[option].apply(actionsheet, args);
             }
         });

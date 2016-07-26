@@ -19,7 +19,7 @@
             return;
         }
 
-        if (typeof arguments[1] != 'function' && args == 2 && !arguments[1] instanceof Array) {
+        if ($.type(arguments[1]) != 'function' && args == 2 && !arguments[1] instanceof Array) {
             console.error('From YDUI\'s confirm: The second parameter must be a function or array!!!');
             return;
         }
@@ -31,7 +31,7 @@
         }
 
         var btnArr = opts;
-        if (typeof opts === 'function') {
+        if ($.type(opts) === 'function') {
             btnArr = [{
                 txt: '取消',
                 color: false
@@ -58,9 +58,9 @@
         $.each(btnArr, function (i, val) {
             var $btn;
             // 指定按钮颜色
-            if (typeof val.color == 'boolean') {
+            if ($.type(val.color) == 'boolean') {
                 $btn = $('<a href="javascript:;" class="' + 'confirm-btn ' + (val.color ? 'primary' : 'default') + '">' + (val.txt || '') + '</a>');
-            } else if (typeof val.color == 'string') {
+            } else if ($.type(val.color) == 'string') {
                 $btn = $('<a href="javascript:;" style="color: ' + val.color + '">' + (val.txt || '') + '</a>');
             }
 
@@ -113,7 +113,7 @@
         $dom.find('a').on('click', function () {
             $dom.remove();
             ydui.pageScroll.unlock();
-            typeof callback === 'function' && callback();
+            $.type(callback) === 'function' && callback();
         });
     };
 
@@ -144,7 +144,7 @@
 
         $body.append($dom);
 
-        if (typeof timeout === 'function' && arguments.length >= 3) {
+        if ($.type(timeout) === 'function' && arguments.length >= 3) {
             callback = timeout;
             timeout = 2000;
         }
@@ -153,7 +153,7 @@
             clearTimeout(inter);
             ydui.pageScroll.unlock();
             $dom.remove();
-            typeof callback === 'function' && callback();
+            $.type(callback) === 'function' && callback();
         }, (~~timeout || 2000) + 100);//100为动画时间
     };
 

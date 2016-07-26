@@ -46,12 +46,24 @@
         }
     };
 
-    win.addEventListener('load', function () {
+    $(win).on('load', function () {
         /* 直接绑定FastClick */
-        if (typeof FastClick == 'function') {
+        if ($.type(FastClick) == 'function') {
             FastClick.attach(doc.body);
         }
-    }, false);
+    });
+
+    // http://blog.alexmaccaw.com/css-transitions
+    $.fn.emulateTransitionEnd = function (duration) {
+        var called = false, $el = this;
+        $(this).one('webkitTransitionEnd', function () {
+            called = true;
+        });
+        var callback = function () {
+            if (!called) $($el).trigger('webkitTransitionEnd');
+        };
+        setTimeout(callback, duration);
+    };
 
     if (typeof define === 'function') {
         define(ydui);

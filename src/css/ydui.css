@@ -2374,6 +2374,12 @@ input[type="submit"].btn-hollow {
   display: block;
   background-color: #FFF;
 }
+.tab-nav-item.tab-active {
+  background-color: #FFF;
+}
+.tab-nav-item.tab-active:active {
+  background-color: #ffffff;
+}
 .tab-nav-item:active {
   background-color: #f7f7f7;
 }
@@ -2413,7 +2419,7 @@ input[type="submit"].btn-hollow {
   overflow: hidden;
   background-color: #fff;
 }
-.tab-panel .tab-panel-item {
+.tab-panel-item {
   width: 100%;
   position: absolute;
   top: 0;
@@ -2421,7 +2427,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-.tab-panel .tab-panel-item.tab-active {
+.tab-panel-item.tab-active {
   position: relative;
   -webkit-transition: -webkit-transform .3s;
   transition: -webkit-transform .3s;
@@ -2430,7 +2436,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform: translateX(0%);
   transform: translateX(0%);
 }
-.tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+.tab-panel-item.tab-active ~ .tab-panel-item {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
 }

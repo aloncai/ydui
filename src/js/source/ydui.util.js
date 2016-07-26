@@ -56,7 +56,7 @@
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
-                typeof callback == 'function' && callback('');
+                $.type(callback) == 'function' && callback('');
             }
         }, speed);
     };
@@ -123,7 +123,7 @@
         reader.readAsDataURL(file);
         reader.onload = function () {
             dataimg = this.result;
-            typeof callback === 'function' && callback(dataimg);
+            $.type(callback) === 'function' && callback(dataimg);
         };
     };
 
@@ -146,7 +146,7 @@
      * @returns {string}
      */
     util.serialize = function (value) {
-        if (typeof value === 'string') return value;
+        if ($.type(value) === 'string') return value;
         return JSON.stringify(value);
     };
 
@@ -156,7 +156,7 @@
      * @returns {*}
      */
     util.deserialize = function (value) {
-        if (typeof value !== 'string') return undefined;
+        if ($.type(value) !== 'string') return undefined;
         try {
             return JSON.parse(value);
         } catch (e) {
@@ -207,7 +207,7 @@
                     date = expires;
 
                 // 从当前时间开始，多少小时后过期
-                if (typeof date === 'number') {
+                if ($.type(date) === 'number') {
                     date = new Date();
                     date.setTime(date.getTime() + expires * 1000);
                 }
