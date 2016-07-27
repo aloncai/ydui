@@ -77,7 +77,6 @@
     var doc = win.document,
         $doc = $(doc),
         $body = $(doc.body),
-        $html = $('html'),
         $mask = $('<div class="mask-black"></div>');
 
     function ActionSheet(element, closeElement) {
@@ -127,7 +126,6 @@
         $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
         $doc.off('click.ydui.actionsheet', _this.closeElement);
-        $html.off('.ydui.actionsheet');
     };
 
     function Plugin(option) {
@@ -150,7 +148,7 @@
         });
     }
 
-    $doc.on('click.ydui.actionsheet', '[data-ydui-actionsheet]', function (e) {
+    $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
         var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
