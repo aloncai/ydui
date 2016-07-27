@@ -56,22 +56,20 @@
 .tab-panel {
   position: relative;
   overflow: hidden;
-  background-color: #fff;
-}
-
-.tab-panel-item {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  padding: @body-padding-vertical;
-  transform: translateX(-100%);
-  &.tab-active {
-    position: relative;
-    transition: transform .3s;
-    transform: translateX(0%);
-    & ~ .tab-panel-item {
-      transform: translateX(100%);
+  background-color: #FFF;
+  .tab-panel-item {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    padding: @body-padding-vertical;
+    transform: translateX(-100%);
+    &.tab-active {
+      position: relative;
+      transition: transform .15s;
+      transform: translateX(0);
+      & ~ .tab-panel-item {
+        transform: translateX(100%);
+      }
     }
   }
 }
-

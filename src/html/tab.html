@@ -26,7 +26,7 @@
     <aside class="demo-tip">
         <p>Data API 和 Javascript API方式都包含以下两个自定义事件：</p>
         <p>1. [open.ydui.tab]：打开一个选项卡时立即触发</p>
-        <p>2. [opened.ydui.tab]：选项卡打开完成时触发（CSS 动画执行完成）</p>
+        <p>2. [opened.ydui.tab]：选项卡打开完成后触发（CSS 动画执行完成）</p>
     </aside>
 
     <div class="m-tab demo-small-pitch" data-ydui-tab>
@@ -61,6 +61,9 @@
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
+    /**
+     * Javascript API调用Tab
+     */
     !function ($) {
         var $tab = $('#J_Tab');
 
@@ -70,9 +73,11 @@
             activeClass: 'tab-active'
         });
 
+        /*
         $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
             console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
         });
+        */
 
         $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
             console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());

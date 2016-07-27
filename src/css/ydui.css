@@ -2417,9 +2417,9 @@ input[type="submit"].btn-hollow {
 .tab-panel {
   position: relative;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #FFF;
 }
-.tab-panel-item {
+.tab-panel .tab-panel-item {
   width: 100%;
   position: absolute;
   top: 0;
@@ -2427,16 +2427,16 @@ input[type="submit"].btn-hollow {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 }
-.tab-panel-item.tab-active {
+.tab-panel .tab-panel-item.tab-active {
   position: relative;
-  -webkit-transition: -webkit-transform .3s;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
-  -webkit-transform: translateX(0%);
-  transform: translateX(0%);
+  -webkit-transition: -webkit-transform .15s;
+  transition: -webkit-transform .15s;
+  transition: transform .15s;
+  transition: transform .15s, -webkit-transform .15s;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
-.tab-panel-item.tab-active ~ .tab-panel-item {
+.tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
 }

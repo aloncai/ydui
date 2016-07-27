@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Tab</title>
-    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <meta content="telephone=no" name="format-detection" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=21cf1abfd845a23825e69ff47a4fbf41" />
-    <link rel="stylesheet" href="../css/demo.css" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=0273c45048e0564bafe4e3875662a1c9"/>
+    <link rel="stylesheet" href="../css/demo.css"/>
     <!-- build:tb_flexible -->
     <script src="../js/ydui.flexible.js"></script>
     <!-- endbuild -->
@@ -22,12 +22,67 @@
             <div class="nav-center">Tab</div>
         </nav>
     </header>
-    <ul class="m-tab demo-small-pitch">
-        <li class="tab-item crt"><a href="javascript:;">综合</a></li>
-        <li class="tab-item"><a href="javascript:;">保健品</a></li>
-        <li class="tab-item"><a href="javascript:;">护理</a></li>
-        <li class="tab-item"><a href="javascript:;">辅食零食</a></li>
-    </ul>
+
+    <aside class="demo-tip">
+        <p>Data API 和 Javascript API方式都包含以下两个自定义事件：</p>
+        <p>1. [open.ydui.tab]：打开一个选项卡时立即触发</p>
+        <p>2. [opened.ydui.tab]：选项卡打开完成后触发（CSS 动画执行完成）</p>
+    </aside>
+
+    <div class="m-tab demo-small-pitch" data-ydui-tab>
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项四</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">Data API调用</div>
+            <div class="tab-panel-item">土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</div>
+            <div class="tab-panel-item">我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</div>
+            <div class="tab-panel-item">时间是一切财富中最宝贵的财富。</div>
+        </div>
+    </div>
+
+    <div id="J_Tab" class="m-tab demo-pitch">
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">Javascript API调用</div>
+            <div class="tab-panel-item">真理惟一可靠的标准就是永远自相符合。</div>
+            <div class="tab-panel-item">真正的科学家应当是个幻想家；谁不是幻想家，谁就只能把自己称为实践家。</div>
+        </div>
+    </div>
+
 </section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/ydui.js"></script>
+<script>
+    /**
+     * Javascript API调用Tab
+     */
+    !function ($) {
+        var $tab = $('#J_Tab');
+
+        $tab.tab({
+            nav: '.tab-nav-item',
+            panel: '.tab-panel-item',
+            activeClass: 'tab-active'
+        });
+
+        /*
+        $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
+            console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
+        });
+        */
+
+        $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
+            console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());
+        });
+    }(jQuery);
+</script>
 </body>
 </html>

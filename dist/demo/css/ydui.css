@@ -2337,17 +2337,18 @@ input[type="submit"].btn-hollow {
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
-.m-tab {
+.tab-nav {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  z-index: 0;
 }
-.m-tab:after {
+.tab-nav:after {
   content: '';
   position: absolute;
-  z-index: 0;
+  z-index: 3;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -2358,7 +2359,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.tab-item {
+.tab-nav-item {
   width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -2373,14 +2374,20 @@ input[type="submit"].btn-hollow {
   display: block;
   background-color: #FFF;
 }
-.tab-item:active {
-  background-color: #e6e6e6;
+.tab-nav-item.tab-active {
+  background-color: #FFF;
 }
-.tab-item a {
+.tab-nav-item.tab-active:active {
+  background-color: #ffffff;
+}
+.tab-nav-item:active {
+  background-color: #f7f7f7;
+}
+.tab-nav-item a {
   display: inherit;
   color: inherit;
 }
-.tab-item:not(:last-child):after {
+.tab-nav-item:not(:last-child):after {
   position: absolute;
   top: 35%;
   right: 0;
@@ -2392,10 +2399,10 @@ input[type="submit"].btn-hollow {
   transform: scaleX(0.5);
   border: 1px solid #EAEAEA;
 }
-.tab-item.crt {
+.tab-nav-item.tab-active {
   color: #FF5E53;
 }
-.tab-item.crt:before {
+.tab-nav-item.tab-active:before {
   content: '';
   width: 70%;
   height: 2px;
@@ -2406,6 +2413,32 @@ input[type="submit"].btn-hollow {
   margin-left: -35%;
   z-index: 2;
   background-color: currentColor;
+}
+.tab-panel {
+  position: relative;
+  overflow: hidden;
+  background-color: #FFF;
+}
+.tab-panel .tab-panel-item {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  padding: 0.24rem;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+.tab-panel .tab-panel-item.tab-active {
+  position: relative;
+  -webkit-transition: -webkit-transform .15s;
+  transition: -webkit-transform .15s;
+  transition: transform .15s;
+  transition: transform .15s, -webkit-transform .15s;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+.tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
 }
 .badge {
   color: #333;
