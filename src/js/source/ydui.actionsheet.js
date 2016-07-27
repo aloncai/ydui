@@ -51,7 +51,7 @@
         var _this = this;
         $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
-        $doc.off('click.ydui.actionsheet', _this.closeElement);
+        //$doc.off('click.ydui.actionsheet', _this.closeElement);
     };
 
     function Plugin(option) {
@@ -74,7 +74,7 @@
         });
     }
 
-    $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
+    $doc.on('click.ydui.actionsheet.dataapi', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
         var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
