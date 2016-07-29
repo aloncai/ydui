@@ -2505,3 +2505,13 @@ input[type="submit"].btn-hollow {
 .badge-hollow:after {
   border-color: #454545;
 }
+.progress-bar {
+  position: relative;
+}
+.progressbar-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

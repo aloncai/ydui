@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dialog</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
+    <link rel="stylesheet" href="../css/ydui.css?rev=@@hash"/>
+    <link rel="stylesheet" href="../css/demo.css" />
+    <!-- build:tb_flexible -->
+    <script src="../js/ydui.flexible.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav class="nav-box">
+            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <div class="nav-center">Dialog</div>
+        </nav>
+    </header>
+    <div class="g-doc demo-small-pitch">
+        <div style="width: 4rem; height: 4rem;" class="progress-bar" id="J_Progress1">
+            <div class="progressbar-content">40%</div>
+        </div>
+
+        <div style="width: 2rem; height: 2rem;" class="progress-bar" id="J_Progress2" data-ydui-progressbar="{progress: .1}">
+            <div class="progressbar-content">10%</div>
+        </div>
+        <div class="m-button">
+            <a href="javascript:;" id="J_Set" class="btn-block btn-danger">手动设置为50%</a>
+        </div>
+    </div>
+</section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/ydui.js"></script>
+<script>
+    !function($){
+        $('#J_Progress1').progressBar({
+            strokeWidth: 4,//底【边框】
+            strokeColor: '#BFBFBF',//底【颜色】
+            trailWidth: 4,
+            trailColor: '#646464',
+            fill: 'red',
+            progress: .4
+        });
+
+        $('#J_Set').on('click', function () {
+            $('#J_Progress1,#J_Progress2').progressBar('set', .5);
+        });
+    }(jQuery);
+</script>
+</body>
+</html>

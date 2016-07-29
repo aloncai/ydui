@@ -63,7 +63,7 @@
 
             if (!actionsheet) {
                 $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
-                if ($.type(option) == 'object') {
+                if (!option || $.type(option) == 'object') {
                     actionsheet.open();
                 }
             }
