@@ -2507,6 +2507,7 @@ input[type="submit"].btn-hollow {
 }
 .progress-bar {
   position: relative;
+  color: #333;
 }
 .progressbar-content {
   position: absolute;
@@ -2514,4 +2515,8 @@ input[type="submit"].btn-hollow {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+path {
+  -webkit-transition: all .8s linear;
+  transition: all .8s linear;
 }

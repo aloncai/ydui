@@ -1,5 +1,6 @@
 /**
  * 发生验证码倒计时
+ * Dependency：[ydui.util.js]
  */
 !function (win, $) {
 

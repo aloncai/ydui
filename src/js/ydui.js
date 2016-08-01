@@ -72,6 +72,10 @@
     }
 
 }(window, jQuery);
+/**
+ * ActionSheet
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     var doc = win.document,
@@ -163,6 +167,7 @@
 }(window, jQuery);
 /**
  * dialog
+ * Dependency： ydui.pageScroll.js
  */
 !function (win, $, ydui) {
     var dialog = ydui.dialog = ydui.dialog || {},
@@ -987,6 +992,71 @@
     window.FastClick = FastClick;
 }();
 /**
+ * 判断元素是否处于可视窗口
+ */
+!function ($, win) {
+
+    var $doc = $(win.document);
+
+    function InView(element, callback) {
+        this.$element = $(element);
+        this.bindEvent(callback);
+    }
+
+    /**
+     * 绑定事件
+     * @param callback
+     */
+    InView.prototype.bindEvent = function (callback) {
+        var _this = this;
+        var fnCheckInView = _this.checkInView;
+
+        callback.call(_this, fnCheckInView(_this.$element));
+
+        $(win).on('scroll resize', function () {
+            callback.call(_this, fnCheckInView(_this.$element));
+        });
+    };
+
+    /**
+     * 判断是否显示在窗口中
+     * @param $element
+     * @returns {number}【0未显示， 1露头， 2局部， 3包含， 4露尾】
+     */
+    InView.prototype.checkInView = function ($element) {
+
+        var scrollTop = $doc.scrollTop(),
+            scrollBottom = $doc.scrollTop() + $(win).height(),
+            offset = $element.offset(),
+            top = offset.top,
+            bottom = top + $element.height();
+
+        var status = 0;
+        if (top >= scrollTop && top <= scrollBottom && bottom <= scrollBottom) {
+            status = 3;
+        } else {
+            if (top >= scrollTop && top < scrollBottom) {
+                status = 1;
+            } else if (bottom > scrollTop && bottom <= scrollBottom) {
+                status = 4;
+            } else if (top < scrollTop && bottom > scrollBottom) {
+                status = 2;
+            } else {
+                status = 0;
+            }
+        }
+        return status;
+    };
+
+    $.fn.inView = function (callback) {
+        return this.each(function () {
+            new InView(this, callback);
+        });
+    };
+
+}(jQuery, window);
+
+/**
  * pageScroll
  */
 !function (win, ydui) {
@@ -1018,11 +1088,53 @@
     }();
 
 }(window, YDUI);
+/**
+ * ProgressBar
+ * Dependency：[ydui.inview.js,ydui.util.js]
+ * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
+ */
 !function (win, $) {
 
     var doc = win.document;
 
-    var pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
+    function Circle(element, options) {
+        this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
+        ProgressBar.apply(this, arguments);
+    }
+
+    Circle.prototype = new ProgressBar();
+    Circle.prototype.getPathString = function (widthOfWider) {
+        var _this = this,
+            r = 50 - widthOfWider / 2;
+        return _this.render(_this.pathTemplate, {
+            radius: r,
+            '2radius': r * 2
+        });
+    };
+    Circle.prototype.initSvg = function (svg) {
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.style.display = 'block';
+        svg.style.width = '100%';
+    };
+
+    function Line(element, options) {
+        this.pathTemplate = 'M 0,{center} L 100,{center}';
+        ProgressBar.apply(this, arguments);
+    }
+
+    Line.prototype = new ProgressBar();
+    Line.prototype.getPathString = function (widthOfWider) {
+        var _this = this;
+        return _this.render(_this.pathTemplate, {
+            center: widthOfWider / 2
+        });
+    };
+    Line.prototype.initSvg = function (svg, options) {
+        svg.setAttribute('viewBox', '0 0 100 ' + options.strokeWidth);
+        svg.setAttribute('preserveAspectRatio', 'none');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+    };
 
     function ProgressBar(element, options) {
         this.$element = $(element);
@@ -1032,28 +1144,46 @@
     ProgressBar.DEFAULTS = {
         strokeWidth: 4,
         strokeColor: '#BFBFBF',
-        trailWidth: 4,//底【边框】
-        trailColor: '#646464',//底【颜色】
+        trailWidth: 4,
+        trailColor: '#646464',
         fill: null,
-        progress: 1
+        progress: .5
     };
 
     ProgressBar.prototype.set = function (progress) {
+
         var _this = this,
-            svgView = _this.createSvgView();
+            length = _this.trailPath.getTotalLength();
 
         if (!progress) progress = _this.options.progress;
         if (progress > 1)progress = 1;
+
+        _this.trailPath.style.strokeDashoffset = length - progress * length;
+
+    };
+
+    ProgressBar.prototype.show = function () {
+        var _this = this,
+            progress = _this.options.progress,
+            svgView = _this.createSvgView(),
+            $element = _this.$element;
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
 
         path.style.strokeDasharray = length + ' ' + length;
-        path.style.strokeDashoffset = length - progress * length;
 
-        _this.$element.find('svg').remove();
+        $element.append(svgView.svg);
 
-        _this.$element.append(svgView.svg);
+        $element.inView(function (s) {
+            if ($element.data('loaded') == 1)return;
+            if (s > 0) {
+                $element.data('loaded', 1);
+                _this.trailPath.style.strokeDashoffset = length - progress * length;
+            }
+        });
+
+        return this;
     };
 
     ProgressBar.prototype.createSvgView = function () {
@@ -1061,9 +1191,7 @@
             options = _this.options;
 
         var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 100 100');
-        svg.style.display = 'block';
-        svg.style.width = '100%';
+        _this.initSvg(svg, options);
 
         var path = _this.createPath(options);
         svg.appendChild(path);
@@ -1071,8 +1199,12 @@
         var trailPath = null;
         if (options.trailColor || options.trailWidth) {
             trailPath = _this.createTrailPath(options);
+            trailPath.style.strokeDashoffset = trailPath.getTotalLength();
             svg.appendChild(trailPath);
         }
+
+        _this.svg = svg;
+        _this.trailPath = trailPath;
 
         return {
             svg: svg,
@@ -1086,7 +1218,7 @@
 
         var pathString = _this.getPathString(options.trailWidth);
 
-        return _this.createPathElement(pathString, options.trailColor, options.trailWidth, options.fill);
+        return _this.createPathElement(pathString, options.trailColor, options.trailWidth);
     };
 
     ProgressBar.prototype.createPath = function (options) {
@@ -1099,15 +1231,6 @@
 
         var pathString = _this.getPathString(width);
         return _this.createPathElement(pathString, options.strokeColor, options.strokeWidth, options.fill);
-    };
-
-    ProgressBar.prototype.getPathString = function (widthOfWider) {
-        var _this = this,
-            r = 50 - widthOfWider / 2;
-        return _this.render(pathTemplate, {
-            radius: r,
-            '2radius': r * 2
-        });
     };
 
     ProgressBar.prototype.createPathElement = function (pathString, color, width, fill) {
@@ -1142,7 +1265,7 @@
         return rendered;
     };
 
-    function Plugin(option) {
+    function Plugin(option, type) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -1150,9 +1273,13 @@
                 progressbar = $this.data('ydui.progressbar');
 
             if (!progressbar) {
-                $this.data('ydui.progressbar', (progressbar = new ProgressBar(this, option)));
+                if (type == 'line') {
+                    $this.data('ydui.progressbar', (progressbar = new Line(this, option)));
+                } else {
+                    $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
+                }
                 if (!option || $.type(option) == 'object') {
-                    progressbar.set();
+                    progressbar.show().set();
                 }
             }
 
@@ -1162,11 +1289,22 @@
         });
     }
 
+    var util = win.YDUI.util;
 
-    $('[data-ydui-progressbar]').each(function () {
-        var options = win.YDUI.util.parseOptions($(this).data('ydui-progressbar'));
+    $('[data-ydui-progressbar-cricle]').each(function () {
+        var $this = $(this);
 
-        Plugin.call($(this), options);
+        var options = util.parseOptions($this.data('ydui-progressbar-cricle'));
+
+        Plugin.call($this, options, 'cricle');
+    });
+
+    $('[data-ydui-progressbar-line]').each(function () {
+        var $this = $(this);
+
+        var options = util.parseOptions($this.data('ydui-progressbar-line'));
+
+        Plugin.call($this, options, 'line');
     });
 
     $.fn.progressBar = Plugin;
@@ -1174,6 +1312,7 @@
 }(window, jQuery);
 /**
  * 发生验证码倒计时
+ * Dependency：[ydui.util.js]
  */
 !function (win, $) {
 
@@ -1277,6 +1416,10 @@
     $.fn.sendCode = Plugin;
 
 }(window, jQuery);
+/**
+ * Tab
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     function Tab(element, options) {

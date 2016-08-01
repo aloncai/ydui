@@ -23,15 +23,25 @@
         </nav>
     </header>
     <div class="g-doc demo-small-pitch">
-        <div style="width: 4rem; height: 4rem;" class="progress-bar" id="J_Progress1">
-            <div class="progressbar-content">40%</div>
+        <div class="demo-progressbar demo-small-pitch">
+            <div class="demo-progressbar-item">
+                <div style="width: 2rem; height: 2rem;" class="progress-bar" id="J_Progress1">
+                    <div class="progressbar-content">40%</div>
+                </div>
+            </div>
+            <div class="demo-progressbar-item">
+                <div style="width: 2rem; height: 2rem;" class="progress-bar" data-ydui-progressbar-cricle="{progress: .1}" id="J_Progress2">
+                    <div class="progressbar-content">10%</div>
+                </div>
+            </div>
         </div>
-
-        <div style="width: 2rem; height: 2rem;" class="progress-bar" id="J_Progress2" data-ydui-progressbar="{progress: .1}">
-            <div class="progressbar-content">10%</div>
+        <div class="demo-progressbar demo-small-pitch">
+            <div class="demo-progressbar-item">
+                <div style="height: .2rem;width: 100%;" data-ydui-progressbar-line="{progress: .4}" id="J_Progress3"></div>
+            </div>
         </div>
         <div class="m-button">
-            <a href="javascript:;" id="J_Set" class="btn-block btn-danger">手动设置为50%</a>
+            <a href="javascript:;" id="J_Set" class="btn-block btn-danger">手动设置为80%</a>
         </div>
     </div>
 </section>
@@ -40,17 +50,18 @@
 <script>
     !function($){
         $('#J_Progress1').progressBar({
-            strokeWidth: 4,//底【边框】
-            strokeColor: '#BFBFBF',//底【颜色】
-            trailWidth: 4,
+            strokeWidth: 2,
+            strokeColor: '#BFBFBF',
+            trailWidth: 5,
             trailColor: '#646464',
-            fill: 'red',
+            fill: '#EF4F4F',
             progress: .4
         });
 
         $('#J_Set').on('click', function () {
-            $('#J_Progress1,#J_Progress2').progressBar('set', .5);
+            $('#J_Progress1,#J_Progress2,#J_Progress3').progressBar('set', .8);
         });
+
     }(jQuery);
 </script>
 </body>

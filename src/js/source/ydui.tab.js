@@ -1,3 +1,7 @@
+/**
+ * Tab
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     function Tab(element, options) {

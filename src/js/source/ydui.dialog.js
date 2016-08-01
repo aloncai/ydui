@@ -1,5 +1,6 @@
 /**
  * dialog
+ * Dependency： ydui.pageScroll.js
  */
 !function (win, $, ydui) {
     var dialog = ydui.dialog = ydui.dialog || {},

@@ -1,3 +1,7 @@
+/**
+ * ActionSheet
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     var doc = win.document,
