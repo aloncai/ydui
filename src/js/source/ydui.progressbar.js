@@ -5,7 +5,8 @@
  */
 !function (win, $) {
 
-    var doc = win.document;
+    var doc = win.document,
+        util = win.YDUI.util;
 
     function Circle(element, options) {
         this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
@@ -13,6 +14,7 @@
     }
 
     Circle.prototype = new ProgressBar();
+
     Circle.prototype.getPathString = function (widthOfWider) {
         var _this = this,
             r = 50 - widthOfWider / 2;
@@ -21,6 +23,7 @@
             '2radius': r * 2
         });
     };
+
     Circle.prototype.initSvg = function (svg) {
         svg.setAttribute('viewBox', '0 0 100 100');
         svg.style.display = 'block';
@@ -33,12 +36,14 @@
     }
 
     Line.prototype = new ProgressBar();
+
     Line.prototype.getPathString = function (widthOfWider) {
         var _this = this;
         return _this.render(_this.pathTemplate, {
             center: widthOfWider / 2
         });
     };
+
     Line.prototype.initSvg = function (svg, options) {
         svg.setAttribute('viewBox', '0 0 100 ' + options.strokeWidth);
         svg.setAttribute('preserveAspectRatio', 'none');
@@ -53,7 +58,7 @@
 
     ProgressBar.DEFAULTS = {
         strokeWidth: 4,
-        strokeColor: '#BFBFBF',
+        strokeColor: '#E5E5E5',
         trailWidth: 4,
         trailColor: '#646464',
         fill: null,
@@ -198,8 +203,6 @@
             }
         });
     }
-
-    var util = win.YDUI.util;
 
     $('[data-ydui-progressbar-cricle]').each(function () {
         var $this = $(this);

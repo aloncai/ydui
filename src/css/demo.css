@@ -157,7 +157,7 @@
 }
 @font-face {
   font-family: 'demo-icons';
-  src: url('http://at.alicdn.com/t/font_1469173340_9427857.ttf') format('truetype');
+  src: url('//at.alicdn.com/t/font_1470107758_2550695.ttf') format('truetype');
 }
 [class^="demo-icons-"]:before,
 [class*=" demo-icons-"]:before {
@@ -215,6 +215,10 @@
 .demo-icons-auctionsheet:before {
   content: '\e601';
   color: #3CCD1C;
+}
+.demo-icons-progressbar:before {
+  content: '\e612';
+  color: #FF8D20;
 }
 .demo-icons-icons:before {
   content: '\e604';
