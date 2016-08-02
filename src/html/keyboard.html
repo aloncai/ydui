@@ -24,37 +24,28 @@
         </nav>
     </header>
 
-    <input id="J_Input" type="text" readonly placeholder=""/>
-    <div style="height: 26rem;width: 100%;"></div>
+    <div class="m-cell demo-small-pitch">
+        <div class="cell-item">
+            <div class="cell-left">请输入密码：</div>
+            <div class="cell-right">
+                <input id="J_Input" type="text" class="cell-input" placeholder=""/>
+            </div>
+        </div>
+    </div>
 
-<div class="mask-white"></div>
-<div class="m-keyboard" id="J_KeyBoard">
-    <div class="keyboard-title">YDUI安全键盘</div>
-    <ul class="keyboard-numbers">
-        <li>
-            <a href="javascript:;">1</a>
-            <a href="javascript:;">2</a>
-            <a href="javascript:;">3</a>
-        </li>
-        <li>
-            <a href="javascript:;">4</a>
-            <a href="javascript:;">5</a>
-            <a href="javascript:;">6</a>
-        </li>
-        <li>
-            <a href="javascript:;">7</a>
-            <a href="javascript:;">8</a>
-            <a href="javascript:;">9</a>
-        </li>
-        <li>
-            <a href="javascript:;"></a>
-            <a href="javascript:;">0</a>
-            <a href="javascript:;"><i class="backspace"></i></a>
-        </li>
-    </ul>
-</div>
+    <div class="m-keyboard" id="J_KeyBoard">
+        <div class="keyboard-title">YDUI安全键盘</div>
+        <ul class="keyboard-numbers"></ul>
+    </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
+<script>
+    !function(){
+        $('#J_KeyBoard').keyBoard({
+            target: '#J_Input'
+        });
+    }();
+</script>
 </body>
 </html>
