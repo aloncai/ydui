@@ -1,77 +1,121 @@
-!function ($) {
+!function ($, win) {
+    var $body = $(win.document.body),
+        $mask = $('<div class="mask-black"></div>');
+
     function KeyBoard(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
-
-        this.init();
-        this.bindEvent();
+        this.initElement();
     }
 
     KeyBoard.DEFAULTS = {
-        target: ''
+        disorder: false,
+        title: '安全键盘'
     };
 
-    var $mask = $('<div class="mask-white"></div>');
+    KeyBoard.prototype.initElement = function () {
+        var _this = this;
+
+        _this.$element
+            .prepend('<ul id="J_Hei" class="keyboard-password"><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li></ul>')
+            .prepend('<div class="keyboard-error"></div>')
+            .prepend('<div class="keyboard-head"><strong>输入数字密码</strong></div>')
+            .append('<div class="keyboard-title">' + _this.options.title + '</div>')
+            .append('<ul class="keyboard-numbers"></ul>');
+    };
+
+    KeyBoard.prototype.open = function (options) {
+        var _this = this,
+            $element = _this.$element;
+
+        $body.append($mask);
+
+        if (options) {
+            _this.options = $.extend({}, KeyBoard.DEFAULTS, options);
+        }
+
+        $element.addClass('keyboard-show');
+
+        var $numsBox = $element.find('.keyboard-numbers');
+
+        if (_this.options.disorder || $numsBox.data('fuck') != 1) {
+            var html = _this.createNumsHtml();
+            $numsBox.data('fuck', 1).html(html);
+        }
+
+        _this.bindEvent();
+    };
+
+    KeyBoard.prototype.hide = function () {
+        var _this = this;
+        $mask.remove();
+        _this.$element.removeClass('keyboard-show');
+        _this.unbindEvent();
+    };
 
     KeyBoard.prototype.bindEvent = function () {
-        var _this = this;
-        _this.$target.on('click', function () {
-            _this.show();
-        });
-
-        _this.$element.on('click', 'a', function () {
-            var c = _this.$target.val();
-            _this.$target.val(c + $(this).html());
-        });
-
-    };
-
-    KeyBoard.prototype.init = function () {
-        var _this = this;
-        _this.$target = $(this.options.target).attr('readonly', true);
-
-        _this.nums = this.createNums();
-        _this.titleHtml = '<div class="keyboard-title">' + _this.options.title + '</div>';
-    };
-
-    KeyBoard.prototype.show = function () {
-        var _this = this;
-
-        var a = _this.createDOM();
-
-        $('body').append($mask);
-        _this.$element.addClass('keyboard-show').find('ul').html(a);
-
-        $mask.on('click', function () {
-            $(this).remove();
-            _this.$element.removeClass('keyboard-show');
-        });
-    };
-
-    KeyBoard.prototype.createNums = function () {
-        var strArr = [];
-        for (var i = 0; i < 10; i++) {
-            strArr.push('<a href="javascript:;">' + i + '</a>');
-        }
-        return strArr;
-    };
-
-    /**
-     * 退格
-     */
-    KeyBoard.prototype.backspace = function () {
-
-    };
-
-    KeyBoard.prototype.createDOM = function () {
         var _this = this,
-            nums = _this.upsetOrder(_this.nums);
+            $element = _this.$element,
+            $target = _this.$target;
+
+        $mask.on('click.ydui.keyboard.mask', function () {
+            _this.hide();
+        });
+
+        $element.on('click.ydui.keyboard.nums', '.J_Nums', function () {
+            var c = $target.val();
+
+            if (c.length >= 6)return;
+
+            $target.val(c + $(this).html());
+
+            _this.fillPassword();
+        });
+
+        $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function () {
+            _this.backspace();
+        });
+
+        $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function () {
+            _this.hide();
+        });
+    };
+
+    KeyBoard.prototype.unbindEvent = function () {
+        this.$element.off('click.ydui.keyboard');
+    };
+
+    KeyBoard.prototype.fillPassword = function () {
+        var length = this.$target.val().length;
+
+        $('#J_Hei').find('i').hide();
+        $('#J_Hei').find('li:lt(' + length + ')').find('i').show();
+        if (length >= 6) {
+            alert('fdsjklf');
+        }
+    };
+
+    KeyBoard.prototype.backspace = function () {
+        var _this = this,
+            $target = _this.$target;
+
+        var c = $target.val();
+        c && $target.val(c.substr(0, c.length - 1));
+
+        _this.fillPassword();
+    };
+
+    KeyBoard.prototype.createNumsHtml = function () {
+        var _this = this,
+            nums = _this.createNums();
+
+        _this.options.disorder && _this.upsetOrder(nums);
 
         var arr = [];
         $.each(nums, function (k) {
             if (k % 3 == 0) {
                 if (k >= nums.length - 2) {
-                    arr.push('<li><a href="javascript:;">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;"><i class="backspace"></i></a></li>');
+                    arr.push('<li><a href="javascript:;" id="J_Cancel">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;" id="J_Backspace"></a></li>');
                 } else {
                     arr.push('<li>' + nums.slice(k, k + 3).join('') + '</li>');
                 }
@@ -81,11 +125,14 @@
         return arr.join('');
     };
 
-    /**
-     * 打乱数组顺序
-     * @param arr
-     * @returns {*}
-     */
+    KeyBoard.prototype.createNums = function () {
+        var strArr = [];
+        for (var i = 1; i <= 10; i++) {
+            strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</a>');
+        }
+        return strArr;
+    };
+
     KeyBoard.prototype.upsetOrder = function (arr) {
         var floor = Math.floor,
             random = Math.random,
@@ -107,14 +154,12 @@
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
+
             var $this = $(this),
                 keyboard = $this.data('ydui.keyboard');
 
             if (!keyboard) {
                 $this.data('ydui.keyboard', (keyboard = new KeyBoard(this, option)));
-                if (!option || $.type(option) == 'object') {
-                    // keyboard.show();
-                }
             }
 
             if ($.type(option) == 'string') {
@@ -125,4 +170,4 @@
 
     $.fn.keyBoard = Plugin;
 
-}(jQuery);
+}(jQuery, window);

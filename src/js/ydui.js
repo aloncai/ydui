@@ -1056,80 +1056,124 @@
 
 }(jQuery, window);
 
-!function ($) {
+!function ($, win) {
+    var $body = $(win.document.body),
+        $mask = $('<div class="mask-black"></div>');
+
     function KeyBoard(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
-
-        this.init();
-        this.bindEvent();
+        this.initElement();
     }
 
     KeyBoard.DEFAULTS = {
-        target: ''
+        disorder: false,
+        title: '安全键盘'
     };
 
-    var $mask = $('<div class="mask-white"></div>');
+    KeyBoard.prototype.initElement = function () {
+        var _this = this;
+
+        _this.$element
+            .prepend('<ul id="J_Hei" class="keyboard-password"><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li></ul>')
+            .prepend('<div class="keyboard-error"></div>')
+            .prepend('<div class="keyboard-head"><strong>输入数字密码</strong></div>')
+            .append('<div class="keyboard-title">' + _this.options.title + '</div>')
+            .append('<ul class="keyboard-numbers"></ul>');
+    };
+
+    KeyBoard.prototype.open = function (options) {
+        var _this = this,
+            $element = _this.$element;
+
+        $body.append($mask);
+
+        if (options) {
+            _this.options = $.extend({}, KeyBoard.DEFAULTS, options);
+        }
+
+        $element.addClass('keyboard-show');
+
+        var $numsBox = $element.find('.keyboard-numbers');
+
+        if (_this.options.disorder || $numsBox.data('fuck') != 1) {
+            var html = _this.createNumsHtml();
+            $numsBox.data('fuck', 1).html(html);
+        }
+
+        _this.bindEvent();
+    };
+
+    KeyBoard.prototype.hide = function () {
+        var _this = this;
+        $mask.remove();
+        _this.$element.removeClass('keyboard-show');
+        _this.unbindEvent();
+    };
 
     KeyBoard.prototype.bindEvent = function () {
-        var _this = this;
-        _this.$target.on('click', function () {
-            _this.show();
-        });
-
-        _this.$element.on('click', 'a', function () {
-            var c = _this.$target.val();
-            _this.$target.val(c + $(this).html());
-        });
-
-    };
-
-    KeyBoard.prototype.init = function () {
-        var _this = this;
-        _this.$target = $(this.options.target).attr('readonly', true);
-
-        _this.nums = this.createNums();
-        _this.titleHtml = '<div class="keyboard-title">' + _this.options.title + '</div>';
-    };
-
-    KeyBoard.prototype.show = function () {
-        var _this = this;
-
-        var a = _this.createDOM();
-
-        $('body').append($mask);
-        _this.$element.addClass('keyboard-show').find('ul').html(a);
-
-        $mask.on('click', function () {
-            $(this).remove();
-            _this.$element.removeClass('keyboard-show');
-        });
-    };
-
-    KeyBoard.prototype.createNums = function () {
-        var strArr = [];
-        for (var i = 0; i < 10; i++) {
-            strArr.push('<a href="javascript:;">' + i + '</a>');
-        }
-        return strArr;
-    };
-
-    /**
-     * 退格
-     */
-    KeyBoard.prototype.backspace = function () {
-
-    };
-
-    KeyBoard.prototype.createDOM = function () {
         var _this = this,
-            nums = _this.upsetOrder(_this.nums);
+            $element = _this.$element,
+            $target = _this.$target;
+
+        $mask.on('click.ydui.keyboard.mask', function () {
+            _this.hide();
+        });
+
+        $element.on('click.ydui.keyboard.nums', '.J_Nums', function () {
+            var c = $target.val();
+
+            if (c.length >= 6)return;
+
+            $target.val(c + $(this).html());
+
+            _this.fillPassword();
+        });
+
+        $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function () {
+            _this.backspace();
+        });
+
+        $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function () {
+            _this.hide();
+        });
+    };
+
+    KeyBoard.prototype.unbindEvent = function () {
+        this.$element.off('click.ydui.keyboard');
+    };
+
+    KeyBoard.prototype.fillPassword = function () {
+        var length = this.$target.val().length;
+
+        $('#J_Hei').find('i').hide();
+        $('#J_Hei').find('li:lt(' + length + ')').find('i').show();
+        if (length >= 6) {
+            alert('fdsjklf');
+        }
+    };
+
+    KeyBoard.prototype.backspace = function () {
+        var _this = this,
+            $target = _this.$target;
+
+        var c = $target.val();
+        c && $target.val(c.substr(0, c.length - 1));
+
+        _this.fillPassword();
+    };
+
+    KeyBoard.prototype.createNumsHtml = function () {
+        var _this = this,
+            nums = _this.createNums();
+
+        _this.options.disorder && _this.upsetOrder(nums);
 
         var arr = [];
         $.each(nums, function (k) {
             if (k % 3 == 0) {
                 if (k >= nums.length - 2) {
-                    arr.push('<li><a href="javascript:;">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;"><i class="backspace"></i></a></li>');
+                    arr.push('<li><a href="javascript:;" id="J_Cancel">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;" id="J_Backspace"></a></li>');
                 } else {
                     arr.push('<li>' + nums.slice(k, k + 3).join('') + '</li>');
                 }
@@ -1139,11 +1183,14 @@
         return arr.join('');
     };
 
-    /**
-     * 打乱数组顺序
-     * @param arr
-     * @returns {*}
-     */
+    KeyBoard.prototype.createNums = function () {
+        var strArr = [];
+        for (var i = 1; i <= 10; i++) {
+            strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</a>');
+        }
+        return strArr;
+    };
+
     KeyBoard.prototype.upsetOrder = function (arr) {
         var floor = Math.floor,
             random = Math.random,
@@ -1165,14 +1212,12 @@
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
+
             var $this = $(this),
                 keyboard = $this.data('ydui.keyboard');
 
             if (!keyboard) {
                 $this.data('ydui.keyboard', (keyboard = new KeyBoard(this, option)));
-                if (!option || $.type(option) == 'object') {
-                    // keyboard.show();
-                }
             }
 
             if ($.type(option) == 'string') {
@@ -1183,7 +1228,10 @@
 
     $.fn.keyBoard = Plugin;
 
-}(jQuery);
+}(jQuery, window);
+!function () {
+
+}();
 /**
  * pageScroll
  */
@@ -1680,30 +1728,31 @@
  * util
  */
 !function (win, $) {
-    var util = $.util = $.util || {},
+    var util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 
     /**
      * 日期格式化
-     * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * @param format 日期格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
-        var t = {};
+        var t = {},
+            floor = Math.floor;
 
         var checkTime = function (i) {
             return i < 10 ? '0' + i : i;
         };
 
         t.f = time % 1000;
-        time = Math.floor(time / 1000);
+        time = floor(time / 1000);
         t.s = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.m = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.h = time % 24;
-        t.d = Math.floor(time / 24);
+        t.d = floor(time / 24);
 
         var ment = function (a) {
             return '$1' + checkTime(a) + '$2';
@@ -1719,24 +1768,24 @@
     };
 
     /**
-     * js倒计时
-     * @param format 时间格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * js倒计时 TODO 有问题 哈哈哈哈哈哈
+     * @param format 时间格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 时间 毫秒
-     * @param speed 速度 毫秒
      * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
-     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', 60000, 1000, function(ret){ console.log(ret); }
+     * DEMO: YDUI.util.countdown('{%d}天{%h}时{%m}分{%s}秒{%f}毫秒', 60000, function(ret){ console.log(ret); });
      */
-    util.countdown = function (format, time, speed, callback) {
+    util.countdown = function (format, time, callback) {
         var that = this, tm = new Date().getTime();
         var timer = setInterval(function () {
-            var l_time = time - new Date().getTime() + tm;
+            var a = new Date().getTime();
+            var l_time = time - a + tm;
             if (l_time > 0) {
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
                 $.type(callback) == 'function' && callback('');
             }
-        }, speed);
+        }, 50);
     };
 
     /**
@@ -1924,4 +1973,4 @@
         };
     }
 
-}(window, YDUI);
+}(window, jQuery);

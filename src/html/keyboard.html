@@ -27,25 +27,26 @@
     <div class="m-cell demo-small-pitch">
         <div class="cell-item">
             <div class="cell-left">请输入密码：</div>
-            <div class="cell-right">
-                <input id="J_Input" type="text" class="cell-input" placeholder=""/>
-            </div>
+            <div class="cell-right"><input type="text" class="cell-input" placeholder="" id="J_Input"/></div>
         </div>
     </div>
 
+    <div class="m-button demo-pitch">
+        <a href="javascript:;" class="btn-block btn-primary" id="J_Open">打开</a>
+    </div>
+
     <div class="m-keyboard" id="J_KeyBoard">
-        <div class="keyboard-title">YDUI安全键盘</div>
-        <ul class="keyboard-numbers"></ul>
+        <div class="keyboard-forget-link"><a href="#">忘记密码</a></div>
     </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function(){
-        $('#J_KeyBoard').keyBoard({
-            target: '#J_Input'
+    !function ($) {
+        $('#J_Open').on('click', function () {
+            $('#J_KeyBoard').keyBoard('open', {disorder: false, title: 'YDUI安全键盘'});
         });
-    }();
+    }(jQuery);
 </script>
 </body>
 </html>

@@ -4,38 +4,38 @@
   left: 0;
   width: 100%;
   z-index: 999;
-  background-color: #FFF;
   transform: translate(0, 100%);
   transition: transform .3s;
+  background-color: #F7F7F7;
   &.keyboard-show {
     transform: translate(0, 0);
   }
 }
 
 .keyboard-title {
-  height: .8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+  padding: .2rem 0;
   color: #222;
-  font-size: .3rem;
+  font-size: .24rem;
   position: relative;
+  text-align: center;
+  background-color: #FFF;
   &:after {
     .top-line(@line-color);
   }
   &:before {
     font-family: @iconfont-inlay;
     content: '\e60a';
-    font-size: .3rem;
+    font-size: .26rem;
     color: #FF2424;
-    height: .3rem;
-    line-height: .34rem;
-    margin-right: .1rem;
+    line-height: 1;
+    margin-right: .06rem;
   }
 }
 
 .keyboard-numbers {
   font-size: .48rem;
+  background-color: #FFF;
   > li {
     width: 100%;
     display: flex;
@@ -63,15 +63,92 @@
       a:last-child,
       a:nth-last-child(3) {
         background-color: #F7F7F7;
+        font-size: .3rem;
+        color: #686868;
       }
       a:last-child {
-        .backspace:after {
+        &:after {
           font-family: @iconfont-inlay;
           content: '\e609';
-          color: #686868;
           font-size: .6rem;
         }
       }
     }
   }
+}
+
+.keyboard-head {
+  height: .8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1F2324;
+  font-size: .3rem;
+  position: relative;
+  &:after {
+    .bottom-line(@line-color);
+  }
+}
+
+.keyboard-forget-link {
+  text-align: right;
+  padding: 0 .8rem;
+  margin-bottom: .35rem;
+  margin-top: .1rem;
+  a {
+    color: #666;
+  }
+}
+
+.keyboard-password {
+  margin: 0 .8rem;
+  display: flex;
+  position: relative;
+  background-color: #FFF;
+  &:after {
+    content: '';
+    width: 200%;
+    height: 200%;
+    transform: scale(.5);
+    position: absolute;
+    border: 1px solid @line-color;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    border-radius: 4px;
+  }
+  li {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+    &:not(:last-child):after {
+      content: '';
+      width: 1px;
+      height: 50%;
+      position: absolute;
+      right: 0;
+      top: 25%;
+      background-color: @line-color;
+      transform: scaleX(.5);
+    }
+    i {
+      display: none;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #000;
+    }
+  }
+}
+
+.keyboard-error {
+  padding: 0 .8rem;
+  color: #C00;
+  height: .5rem;
+  display: flex;
+  align-items: center;
+  font-size: .24rem;
 }

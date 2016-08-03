@@ -2,30 +2,31 @@
  * util
  */
 !function (win, $) {
-    var util = $.util = $.util || {},
+    var util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 
     /**
      * 日期格式化
-     * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * @param format 日期格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
-        var t = {};
+        var t = {},
+            floor = Math.floor;
 
         var checkTime = function (i) {
             return i < 10 ? '0' + i : i;
         };
 
         t.f = time % 1000;
-        time = Math.floor(time / 1000);
+        time = floor(time / 1000);
         t.s = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.m = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.h = time % 24;
-        t.d = Math.floor(time / 24);
+        t.d = floor(time / 24);
 
         var ment = function (a) {
             return '$1' + checkTime(a) + '$2';
@@ -41,24 +42,24 @@
     };
 
     /**
-     * js倒计时
-     * @param format 时间格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * js倒计时 TODO 有问题 哈哈哈哈哈哈
+     * @param format 时间格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 时间 毫秒
-     * @param speed 速度 毫秒
      * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
-     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', 60000, 1000, function(ret){ console.log(ret); }
+     * DEMO: YDUI.util.countdown('{%d}天{%h}时{%m}分{%s}秒{%f}毫秒', 60000, function(ret){ console.log(ret); });
      */
-    util.countdown = function (format, time, speed, callback) {
+    util.countdown = function (format, time, callback) {
         var that = this, tm = new Date().getTime();
         var timer = setInterval(function () {
-            var l_time = time - new Date().getTime() + tm;
+            var a = new Date().getTime();
+            var l_time = time - a + tm;
             if (l_time > 0) {
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
                 $.type(callback) == 'function' && callback('');
             }
-        }, speed);
+        }, 50);
     };
 
     /**
@@ -246,4 +247,4 @@
         };
     }
 
-}(window, YDUI);
+}(window, jQuery);
