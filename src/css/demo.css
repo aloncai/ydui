@@ -3,13 +3,13 @@
   /* px */
   color: #FF5E53;
   text-align: center;
-  padding: .7rem 0 .5rem;
+  padding: .6rem 0 .4rem;
 }
 .demo-detail-title {
   color: #888;
   font-size: .28rem;
   /* px */
-  margin-bottom: .8rem;
+  margin-bottom: .5rem;
   font-weight: normal;
   line-height: 0.42rem;
   text-align: center;
@@ -157,7 +157,7 @@
 }
 @font-face {
   font-family: 'demo-icons';
-  src: url('//at.alicdn.com/t/font_1470107758_2550695.ttf') format('truetype');
+  src: url('http://at.alicdn.com/t/font_1470107758_2550695.ttf') format('truetype');
 }
 [class^="demo-icons-"]:before,
 [class*=" demo-icons-"]:before {

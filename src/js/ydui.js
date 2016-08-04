@@ -1063,12 +1063,14 @@
     function KeyBoard(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
+        this.fucknum = '';
         this.initElement();
     }
 
     KeyBoard.DEFAULTS = {
         disorder: false,
-        title: '安全键盘'
+        title: '安全键盘',
+        target: ''
     };
 
     KeyBoard.prototype.initElement = function () {
@@ -1104,7 +1106,7 @@
         _this.bindEvent();
     };
 
-    KeyBoard.prototype.hide = function () {
+    KeyBoard.prototype.close = function () {
         var _this = this;
         $mask.remove();
         _this.$element.removeClass('keyboard-show');
@@ -1113,19 +1115,19 @@
 
     KeyBoard.prototype.bindEvent = function () {
         var _this = this,
-            $element = _this.$element,
-            $target = _this.$target;
+            $element = _this.$element;
 
         $mask.on('click.ydui.keyboard.mask', function () {
-            _this.hide();
+            _this.close();
         });
 
         $element.on('click.ydui.keyboard.nums', '.J_Nums', function () {
-            var c = $target.val();
+            var c = _this.fucknum;
 
             if (c.length >= 6)return;
 
-            $target.val(c + $(this).html());
+            _this.fucknum = _this.fucknum + $(this).html();
+
 
             _this.fillPassword();
         });
@@ -1135,7 +1137,7 @@
         });
 
         $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function () {
-            _this.hide();
+            _this.close();
         });
     };
 
@@ -1144,21 +1146,33 @@
     };
 
     KeyBoard.prototype.fillPassword = function () {
-        var length = this.$target.val().length;
+        var _this = this;
+        var length = _this.fucknum.length;
+
+        if (_this.options.target) {
+            $(_this.options.target).val(_this.fucknum);
+        }
 
         $('#J_Hei').find('i').hide();
         $('#J_Hei').find('li:lt(' + length + ')').find('i').show();
         if (length >= 6) {
-            alert('fdsjklf');
+            _this.$element.trigger($.Event('over.ydui.keyboard', {
+                val: _this.fucknum
+            }));
         }
     };
 
-    KeyBoard.prototype.backspace = function () {
-        var _this = this,
-            $target = _this.$target;
+    KeyBoard.prototype.error = function (mes) {
+        this.$element.find('.keyboard-error').html(mes);
+    };
 
-        var c = $target.val();
-        c && $target.val(c.substr(0, c.length - 1));
+    KeyBoard.prototype.backspace = function () {
+        var _this = this;
+
+        var c = _this.fucknum;
+        if (c) {
+            _this.fucknum = c.substr(0, c.length - 1);
+        }
 
         _this.fillPassword();
     };

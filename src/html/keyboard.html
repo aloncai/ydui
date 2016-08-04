@@ -43,8 +43,15 @@
 <script src="../js/ydui.js"></script>
 <script>
     !function ($) {
+
         $('#J_Open').on('click', function () {
-            $('#J_KeyBoard').keyBoard('open', {disorder: false, title: 'YDUI安全键盘'});
+            $('#J_KeyBoard').keyBoard('open', {disorder: false, title: 'YDUI安全键盘', target: '#J_Input'});
+        });
+
+        $('#J_KeyBoard').on('over.ydui.keyboard', function(ret){
+            console.log(ret.val);
+//            $('#J_KeyBoard').keyBoard('close');
+            $('#J_KeyBoard').keyBoard('error', '对不起，您的支付密码不正确，请重新输入。');
         });
     }(jQuery);
 </script>
