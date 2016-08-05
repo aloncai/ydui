@@ -42,18 +42,37 @@
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
-    !function ($) {
+    !function ($, ydui) {
+
+        var dialog = ydui.dialog;
+
+        var $keyboard = $('#J_KeyBoard');
+
+        // 初始化参数
+        $keyboard.keyBoard({
+            disorder: false,
+            title: 'YDUI安全键盘',
+            target: '#J_Input'
+        });
 
         $('#J_Open').on('click', function () {
-            $('#J_KeyBoard').keyBoard('open', {disorder: false, title: 'YDUI安全键盘', target: '#J_Input'});
+            $keyboard.keyBoard('open');
         });
 
-        $('#J_KeyBoard').on('over.ydui.keyboard', function(ret){
+        $keyboard.on('done.ydui.keyboard', function (ret) {
             console.log(ret.val);
-//            $('#J_KeyBoard').keyBoard('close');
-            $('#J_KeyBoard').keyBoard('error', '对不起，您的支付密码不正确，请重新输入。');
+            dialog.loading.open('验证支付密码');
+
+            // 模拟校验密码
+            setTimeout(function () {
+                dialog.loading.close();
+                $keyboard.keyBoard('error', '对不起，您的支付密码不正确，请重新输入。');
+            }, 1500);
+
+            // 关闭键盘窗口
+            // $keyboard.keyBoard('close');
         });
-    }(jQuery);
+    }(jQuery, YDUI);
 </script>
 </body>
 </html>

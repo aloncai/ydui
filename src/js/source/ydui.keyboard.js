@@ -1,119 +1,183 @@
+/**
+ * KeyBoard
+ */
 !function ($, win) {
-    var $body = $(win.document.body),
-        $mask = $('<div class="mask-black"></div>');
+    var $body = $(win.document.body);
 
     function KeyBoard(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
-        this.fucknum = '';
-        this.initElement();
+        this.init();
     }
 
     KeyBoard.DEFAULTS = {
         disorder: false,
         title: '安全键盘',
-        target: ''
+        target: '',
+        fuck: true
     };
 
-    KeyBoard.prototype.initElement = function () {
+    KeyBoard.prototype.init = function () {
         var _this = this;
 
-        _this.$element
-            .prepend('<ul id="J_Hei" class="keyboard-password"><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li><li><i></i></li></ul>')
-            .prepend('<div class="keyboard-error"></div>')
-            .prepend('<div class="keyboard-head"><strong>输入数字密码</strong></div>')
-            .append('<div class="keyboard-title">' + _this.options.title + '</div>')
-            .append('<ul class="keyboard-numbers"></ul>');
+        _this.inputNums = '';
+
+        _this.toggleClass = 'keyboard-show';
+
+        function getfuck() {
+            var s = '';
+            for (var i = 0; i < 6; i++) {
+                s += '<li><i></i></li>';
+            }
+            return s;
+        }
+
+        var hd = '' +
+            '<div class="keyboard-head"><strong>输入数字密码</strong></div>' +
+            '<div class="keyboard-error"></div>' +
+            '<ul id="J_Hei" class="keyboard-password">' + getfuck() + '</ul>';
+
+        var ft = '' +
+            '<div class="keyboard-title">' + _this.options.title + '</div>' +
+            '<ul class="keyboard-numbers"></ul>';
+
+        _this.$element.prepend(_this.options.fuck ? hd : '').append(ft);
+
+        _this.$numsBox = _this.$element.find('.keyboard-numbers');
+
+        _this.$mask = $('<div class="mask-black"></div>');
     };
 
+    /**
+     * 打开键盘窗口
+     * @param options KeyBoard参数 可选
+     */
     KeyBoard.prototype.open = function (options) {
         var _this = this,
-            $element = _this.$element;
+            $element = _this.$element,
+            $numsBox = _this.$numsBox;
 
-        $body.append($mask);
-
+        // 处理后事件绑定
         if (options) {
-            _this.options = $.extend({}, KeyBoard.DEFAULTS, options);
+            _this.options = $.extend(KeyBoard.DEFAULTS, options);
         }
 
-        $element.addClass('keyboard-show');
+        $element.addClass(_this.toggleClass);
 
-        var $numsBox = $element.find('.keyboard-numbers');
-
-        if (_this.options.disorder || $numsBox.data('fuck') != 1) {
-            var html = _this.createNumsHtml();
-            $numsBox.data('fuck', 1).html(html);
+        if (_this.options.disorder || $numsBox.data('loaded-nums') != 1) {
+            $numsBox.data('loaded-nums', 1).html(_this.createNumsHtml());
         }
+
+        // 显示遮罩层
+        $body.append(_this.$mask);
 
         _this.bindEvent();
     };
 
+    /**
+     * 关闭键盘窗口
+     */
     KeyBoard.prototype.close = function () {
         var _this = this;
-        $mask.remove();
-        _this.$element.removeClass('keyboard-show');
+
+        _this.$mask.remove();
+        _this.$element.removeClass(_this.toggleClass);
         _this.unbindEvent();
+
+        _this.inputNums = '';
+        _this.fillPassword();
+
+        _this.clearError();
     };
 
+    /**
+     * 事件绑定
+     */
     KeyBoard.prototype.bindEvent = function () {
         var _this = this,
             $element = _this.$element;
 
-        $mask.on('click.ydui.keyboard.mask', function () {
+        // 遮罩层
+        _this.$mask.on('click.ydui.keyboard.mask', function () {
             _this.close();
         });
 
+        // 数字
         $element.on('click.ydui.keyboard.nums', '.J_Nums', function () {
-            var c = _this.fucknum;
+
+            var c = _this.inputNums;
 
             if (c.length >= 6)return;
 
-            _this.fucknum = _this.fucknum + $(this).html();
+            _this.inputNums = _this.inputNums + $(this).html();
 
-
+            _this.clearError();
             _this.fillPassword();
         });
 
+        // 退格
         $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function () {
             _this.backspace();
         });
 
+        // 取消
         $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function () {
             _this.close();
         });
+
     };
 
     KeyBoard.prototype.unbindEvent = function () {
         this.$element.off('click.ydui.keyboard');
+        $(win).off('hashchange.ydui.keyboard');
     };
 
     KeyBoard.prototype.fillPassword = function () {
         var _this = this;
-        var length = _this.fucknum.length;
+        var length = _this.inputNums.length;
 
         if (_this.options.target) {
-            $(_this.options.target).val(_this.fucknum);
+            $(_this.options.target).val(_this.inputNums);
         }
 
         $('#J_Hei').find('i').hide();
         $('#J_Hei').find('li:lt(' + length + ')').find('i').show();
         if (length >= 6) {
-            _this.$element.trigger($.Event('over.ydui.keyboard', {
-                val: _this.fucknum
+            _this.$element.trigger($.Event('done.ydui.keyboard', {
+                val: _this.inputNums
             }));
         }
     };
 
-    KeyBoard.prototype.error = function (mes) {
-        this.$element.find('.keyboard-error').html(mes);
+    /**
+     * 清空错误信息
+     */
+    KeyBoard.prototype.clearError = function () {
+        this.$element.find('.keyboard-error').html('');
     };
 
+    /**
+     * 提示错误信息
+     * @param mes
+     */
+    KeyBoard.prototype.error = function (mes) {
+        var _this = this;
+        _this.$element.find('.keyboard-error').html(mes);
+
+        // 重置输入数字以便清空显示的点点点
+        _this.inputNums = '';
+        _this.fillPassword();
+    };
+
+    /**
+     * 退格处理
+     */
     KeyBoard.prototype.backspace = function () {
         var _this = this;
 
-        var c = _this.fucknum;
-        if (c) {
-            _this.fucknum = c.substr(0, c.length - 1);
+        var _inputNums = _this.inputNums;
+        if (_inputNums) {
+            _this.inputNums = _inputNums.substr(0, _inputNums.length - 1);
         }
 
         _this.fillPassword();
@@ -139,14 +203,35 @@
         return arr.join('');
     };
 
+    /**
+     * 创建键盘数字
+     * @returns {Array} DOM数组
+     */
     KeyBoard.prototype.createNums = function () {
+        var _this = this;
+        var disorder = _this.options.disorder;
+
+        if (disorder && _this.cacheNums) {
+            return _this.cacheNums;
+        }
+
         var strArr = [];
         for (var i = 1; i <= 10; i++) {
             strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</a>');
         }
+
+        if (!disorder) {
+            _this.cacheNums = strArr;
+        }
+
         return strArr;
     };
 
+    /**
+     * 打乱数组顺序
+     * @param arr 数组
+     * @returns {*}
+     */
     KeyBoard.prototype.upsetOrder = function (arr) {
         var floor = Math.floor,
             random = Math.random,
@@ -185,3 +270,4 @@
     $.fn.keyBoard = Plugin;
 
 }(jQuery, window);
+

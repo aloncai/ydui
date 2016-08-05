@@ -78,7 +78,7 @@
         });
     }
 
-    $doc.on('click.ydui.actionsheet.dataapi', '[data-ydui-actionsheet]', function (e) {
+    $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
         var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),

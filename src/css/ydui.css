@@ -175,7 +175,7 @@ table {
 .mask-white {
   background-color: rgba(0, 0, 0, 0);
   position: fixed;
-  z-index: 998;
+  z-index: 1000;
   bottom: 0;
   right: 0;
   left: 0;
@@ -2703,7 +2703,7 @@ input[type="submit"].btn-hollow {
   background-color: #FFF;
 }
 .keyboard-numbers > li > a:active:active {
-  background-color: #f7f7f7;
+  background-color: #e6e6e6;
 }
 .keyboard-numbers > li:last-child a:last-child,
 .keyboard-numbers > li:last-child a:nth-last-child(3) {
