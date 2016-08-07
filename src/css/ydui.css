@@ -2646,7 +2646,7 @@ input[type="submit"].btn-hollow {
   display: -ms-flexbox;
   display: flex;
 }
-.keyboard-numbers > li > a {
+.keyboard-numbers > li > button {
   width: 1%;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -2654,22 +2654,12 @@ input[type="submit"].btn-hollow {
   flex: 1;
   color: #222;
   height: 1rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
   position: relative;
   z-index: 999;
+  border: none;
+  text-align: center;
 }
-.keyboard-numbers > li > a:not(:last-child):after {
+.keyboard-numbers > li > button:not(:last-child):after {
   content: '';
   position: absolute;
   z-index: 999;
@@ -2683,7 +2673,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-.keyboard-numbers > li > a:before {
+.keyboard-numbers > li > button:before {
   content: '';
   position: absolute;
   z-index: 999;
@@ -2699,19 +2689,19 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
 }
-.keyboard-numbers > li > a:active {
+.keyboard-numbers > li > button:active {
   background-color: #FFF;
 }
-.keyboard-numbers > li > a:active:active {
+.keyboard-numbers > li > button:active:active {
   background-color: #e6e6e6;
 }
-.keyboard-numbers > li:last-child a:last-child,
-.keyboard-numbers > li:last-child a:nth-last-child(3) {
+.keyboard-numbers > li:last-child button:last-child,
+.keyboard-numbers > li:last-child button:nth-last-child(3) {
   background-color: #F7F7F7;
   font-size: .3rem;
   color: #686868;
 }
-.keyboard-numbers > li:last-child a:last-child:after {
+.keyboard-numbers > li:last-child button:last-child:after {
   font-family: 'YDUI-INLAY';
   content: '\e609';
   font-size: .6rem;

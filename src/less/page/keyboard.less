@@ -39,16 +39,15 @@
   > li {
     width: 100%;
     display: flex;
-    > a {
+    > button {
       width: 1%;
       flex: 1;
       color: #222;
       height: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       position: relative;
       z-index: 999;
+      border: none;
+      text-align: center;
       &:not(:last-child):after {
         .right-line(@line-color, 999);
       }
@@ -60,13 +59,13 @@
       }
     }
     &:last-child {
-      a:last-child,
-      a:nth-last-child(3) {
+      button:last-child,
+      button:nth-last-child(3) {
         background-color: #F7F7F7;
         font-size: .3rem;
         color: #686868;
       }
-      a:last-child {
+      button:last-child {
         &:after {
           font-family: @iconfont-inlay;
           content: '\e609';

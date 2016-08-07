@@ -24,7 +24,7 @@
 
         _this.toggleClass = 'keyboard-show';
 
-        function getfuck() {
+        function getDot() {
             var s = '';
             for (var i = 0; i < 6; i++) {
                 s += '<li><i></i></li>';
@@ -35,7 +35,7 @@
         var hd = '' +
             '<div class="keyboard-head"><strong>输入数字密码</strong></div>' +
             '<div class="keyboard-error"></div>' +
-            '<ul id="J_Hei" class="keyboard-password">' + getfuck() + '</ul>';
+            '<ul id="J_Hei" class="keyboard-password">' + getDot() + '</ul>';
 
         var ft = '' +
             '<div class="keyboard-title">' + _this.options.title + '</div>' +
@@ -98,16 +98,16 @@
             $element = _this.$element;
 
         // 遮罩层
-        _this.$mask.on('click.ydui.keyboard.mask', function () {
+        _this.$mask.on('click.ydui.keyboard.mask', function (e) {
+            e.preventDefault();
             _this.close();
         });
 
         // 数字
-        $element.on('click.ydui.keyboard.nums', '.J_Nums', function () {
+        $element.on('click.ydui.keyboard.nums', '.J_Nums', function (e) {
+            e.preventDefault();
 
-            var c = _this.inputNums;
-
-            if (c.length >= 6)return;
+            if (_this.inputNums.length >= 6)return;
 
             _this.inputNums = _this.inputNums + $(this).html();
 
@@ -116,22 +116,30 @@
         });
 
         // 退格
-        $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function () {
+        $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function (e) {
+            e.preventDefault();
             _this.backspace();
         });
 
         // 取消
-        $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function () {
+        $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function (e) {
+            e.preventDefault();
             _this.close();
         });
 
     };
 
+    /**
+     * 解绑事件
+     */
     KeyBoard.prototype.unbindEvent = function () {
         this.$element.off('click.ydui.keyboard');
         $(win).off('hashchange.ydui.keyboard');
     };
 
+    /**
+     * 填充密码
+     */
     KeyBoard.prototype.fillPassword = function () {
         var _this = this;
         var length = _this.inputNums.length;
@@ -183,6 +191,10 @@
         _this.fillPassword();
     };
 
+    /**
+     * 创建键盘HTML
+     * @returns {string}
+     */
     KeyBoard.prototype.createNumsHtml = function () {
         var _this = this,
             nums = _this.createNums();
@@ -193,7 +205,7 @@
         $.each(nums, function (k) {
             if (k % 3 == 0) {
                 if (k >= nums.length - 2) {
-                    arr.push('<li><a href="javascript:;" id="J_Cancel">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;" id="J_Backspace"></a></li>');
+                    arr.push('<li><button type="button" id="J_Cancel">取消</button>' + nums.slice(k, k + 3).join('') + '<button type="button" id="J_Backspace"></button></li>');
                 } else {
                     arr.push('<li>' + nums.slice(k, k + 3).join('') + '</li>');
                 }
@@ -217,7 +229,7 @@
 
         var strArr = [];
         for (var i = 1; i <= 10; i++) {
-            strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</a>');
+            strArr.push('<button type="button" class="J_Nums">' + (i % 10) + '</button>');
         }
 
         if (!disorder) {
