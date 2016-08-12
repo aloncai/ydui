@@ -72,6 +72,10 @@
     }
 
 }(window, jQuery);
+/**
+ * ActionSheet
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     var doc = win.document,
@@ -137,7 +141,7 @@
 
             if (!actionsheet) {
                 $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
-                if ($.type(option) == 'object') {
+                if (!option || $.type(option) == 'object') {
                     actionsheet.open();
                 }
             }
@@ -148,7 +152,7 @@
         });
     }
 
-    $doc.on('click.ydui.actionsheet.dataapi', '[data-ydui-actionsheet]', function (e) {
+    $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
         var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
@@ -163,6 +167,7 @@
 }(window, jQuery);
 /**
  * dialog
+ * Dependency： ydui.pageScroll.js
  */
 !function (win, $, ydui) {
     var dialog = ydui.dialog = ydui.dialog || {},
@@ -987,6 +992,351 @@
     window.FastClick = FastClick;
 }();
 /**
+ * 判断元素是否处于可视窗口
+ */
+!function ($, win) {
+
+    var $doc = $(win.document);
+
+    function InView(element, callback) {
+        this.$element = $(element);
+        this.bindEvent(callback);
+    }
+
+    /**
+     * 绑定事件
+     * @param callback
+     */
+    InView.prototype.bindEvent = function (callback) {
+        var _this = this;
+        var fnCheckInView = _this.checkInView;
+
+        callback.call(_this, fnCheckInView(_this.$element));
+
+        $(win).on('scroll resize', function () {
+            callback.call(_this, fnCheckInView(_this.$element));
+        });
+    };
+
+    /**
+     * 判断是否显示在窗口中
+     * @param $element
+     * @returns {number}【0未显示， 1露头， 2局部， 3包含， 4露尾】
+     */
+    InView.prototype.checkInView = function ($element) {
+
+        var scrollTop = $doc.scrollTop(),
+            scrollBottom = $doc.scrollTop() + $(win).height(),
+            offset = $element.offset(),
+            top = offset.top,
+            bottom = top + $element.height();
+
+        var status = 0;
+        if (top >= scrollTop && top <= scrollBottom && bottom <= scrollBottom) {
+            status = 3;
+        } else {
+            if (top >= scrollTop && top < scrollBottom) {
+                status = 1;
+            } else if (bottom > scrollTop && bottom <= scrollBottom) {
+                status = 4;
+            } else if (top < scrollTop && bottom > scrollBottom) {
+                status = 2;
+            } else {
+                status = 0;
+            }
+        }
+        return status;
+    };
+
+    $.fn.inView = function (callback) {
+        return this.each(function () {
+            new InView(this, callback);
+        });
+    };
+
+}(jQuery, window);
+
+/**
+ * KeyBoard
+ */
+!function ($, win) {
+    var $body = $(win.document.body),
+        triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
+
+    function KeyBoard(element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
+        this.init();
+    }
+
+    KeyBoard.DEFAULTS = {
+        disorder: false,
+        title: '安全键盘'
+    };
+
+    KeyBoard.prototype.init = function () {
+        var _this = this;
+
+        _this.inputNums = '';
+
+        _this.toggleClass = 'keyboard-show';
+
+        function getDot() {
+            var s = '';
+            for (var i = 0; i < 6; i++) {
+                s += '<li><i></i></li>';
+            }
+            return s;
+        }
+
+        var hd = '' +
+            '<div class="keyboard-head"><strong>输入数字密码</strong></div>' +
+            '<div class="keyboard-error"></div>' +
+            '<ul class="keyboard-password J_FillPwdBox">' + getDot() + '</ul>';
+
+        var ft = '' +
+            '<div class="keyboard-title">' + _this.options.title + '</div>' +
+            '<ul class="keyboard-numbers"></ul>';
+
+        _this.$element.prepend(hd).append(ft);
+
+        _this.$numsBox = _this.$element.find('.keyboard-numbers');
+
+        _this.$mask = $('<div class="mask-black"></div>');
+    };
+
+    /**
+     * 打开键盘窗口
+     */
+    KeyBoard.prototype.open = function () {
+        var _this = this,
+            $element = _this.$element,
+            $numsBox = _this.$numsBox;
+
+        $element.addClass(_this.toggleClass);
+
+        if (_this.options.disorder || $numsBox.data('loaded-nums') != 1) {
+            $numsBox.data('loaded-nums', 1).html(_this.createNumsHtml());
+        }
+
+        // 显示遮罩层
+        $body.append(_this.$mask);
+
+        _this.bindEvent();
+    };
+
+    /**
+     * 关闭键盘窗口
+     */
+    KeyBoard.prototype.close = function () {
+        var _this = this;
+
+        _this.$mask.remove();
+        _this.$element.removeClass(_this.toggleClass);
+        _this.unbindEvent();
+
+        _this.inputNums = '';
+        _this.fillPassword();
+
+        _this.clearError();
+    };
+
+    /**
+     * 事件绑定
+     */
+    KeyBoard.prototype.bindEvent = function () {
+        var _this = this,
+            $element = _this.$element;
+
+        // 遮罩层
+        _this.$mask.on(triggerEvent + '.ydui.keyboard.mask', function (e) {
+            e.preventDefault();
+            _this.close();
+        });
+
+        // 数字
+        $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
+            e.preventDefault();
+
+            if (_this.inputNums.length >= 6)return;
+
+            _this.inputNums = _this.inputNums + $(this).html();
+
+            _this.clearError();
+            _this.fillPassword();
+        });
+
+        // 退格
+        $element.on(triggerEvent + '.ydui.keyboard.backspace', '.J_Backspace', function (e) {
+            e.preventDefault();
+            _this.backspace();
+        });
+
+        // 取消
+        $element.on(triggerEvent + '.ydui.keyboard.cancel', '.J_Cancel', function (e) {
+            e.preventDefault();
+            _this.close();
+        });
+    };
+
+    /**
+     * 解绑事件
+     */
+    KeyBoard.prototype.unbindEvent = function () {
+        this.$element.off(triggerEvent + '.ydui.keyboard');
+        $(win).off('hashchange.ydui.keyboard');
+    };
+
+    /**
+     * 填充密码
+     */
+    KeyBoard.prototype.fillPassword = function () {
+        var _this = this,
+            inputNums = _this.inputNums,
+            length = inputNums.length;
+
+        var $li = _this.$element.find('.J_FillPwdBox').find('li');
+        $li.find('i').hide();
+        $li.filter(':lt(' + length + ')').find('i').show();
+
+        if (length >= 6) {
+            _this.$element.trigger($.Event('done.ydui.keyboard', {
+                password: inputNums
+            }));
+        }
+    };
+
+    /**
+     * 清空错误信息
+     */
+    KeyBoard.prototype.clearError = function () {
+        this.$element.find('.keyboard-error').html('');
+    };
+
+    /**
+     * 提示错误信息
+     * @param mes
+     */
+    KeyBoard.prototype.error = function (mes) {
+        var _this = this;
+        _this.$element.find('.keyboard-error').html(mes);
+
+        // 重置已输入的数字以便清空显示的点点点
+        _this.inputNums = '';
+        _this.fillPassword();
+    };
+
+    /**
+     * 退格处理
+     */
+    KeyBoard.prototype.backspace = function () {
+        var _this = this;
+
+        var _inputNums = _this.inputNums;
+        if (_inputNums) {
+            _this.inputNums = _inputNums.substr(0, _inputNums.length - 1);
+        }
+
+        _this.fillPassword();
+    };
+
+    /**
+     * 创建键盘HTML
+     * @returns {string}
+     */
+    KeyBoard.prototype.createNumsHtml = function () {
+        var _this = this,
+            nums = _this.createNums();
+
+        _this.options.disorder && _this.upsetOrder(nums);
+
+        var arr = [];
+        $.each(nums, function (k) {
+            if (k % 3 == 0) {
+                if (k >= nums.length - 2) {
+                    arr.push('<li><a href="javascript:;" class="J_Cancel">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;" class="J_Backspace"></a></li>');
+                } else {
+                    arr.push('<li>' + nums.slice(k, k + 3).join('') + '</li>');
+                }
+            }
+        });
+
+        return arr.join('');
+    };
+
+    /**
+     * 创建键盘数字
+     * @returns {Array} DOM数组
+     */
+    KeyBoard.prototype.createNums = function () {
+        var _this = this;
+        var disorder = _this.options.disorder;
+
+        if (disorder && _this.cacheNums) {
+            return _this.cacheNums;
+        }
+
+        var strArr = [];
+        for (var i = 1; i <= 10; i++) {
+            strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</div>');
+        }
+
+        if (!disorder) {
+            _this.cacheNums = strArr;
+        }
+
+        return strArr;
+    };
+
+    /**
+     * 打乱数组顺序
+     * @param arr 数组
+     * @returns {*}
+     */
+    KeyBoard.prototype.upsetOrder = function (arr) {
+        var floor = Math.floor,
+            random = Math.random,
+            len = arr.length, i, j, temp,
+            n = floor(len / 2) + 1;
+        while (n--) {
+            i = floor(random() * len);
+            j = floor(random() * len);
+            if (i !== j) {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        return arr;
+    };
+
+    function Plugin(option) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+
+            var $this = $(this),
+                keyboard = $this.data('ydui.keyboard');
+
+            if (!keyboard) {
+                $this.data('ydui.keyboard', (keyboard = new KeyBoard(this, option)));
+            }
+
+            if ($.type(option) == 'string') {
+                keyboard[option] && keyboard[option].apply(keyboard, args);
+            }
+        });
+    }
+
+    $.fn.keyBoard = Plugin;
+
+}(jQuery, window);
+
+
+!function () {
+
+}();
+/**
  * pageScroll
  */
 !function (win, ydui) {
@@ -1019,7 +1369,233 @@
 
 }(window, YDUI);
 /**
+ * ProgressBar
+ * Dependency：[ydui.inview.js,ydui.util.js]
+ * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
+ */
+!function (win, $) {
+
+    var doc = win.document,
+        util = win.YDUI.util;
+
+    function Circle(element, options) {
+        this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
+        ProgressBar.apply(this, arguments);
+    }
+
+    Circle.prototype = new ProgressBar();
+
+    Circle.prototype.getPathString = function (widthOfWider) {
+        var _this = this,
+            r = 50 - widthOfWider / 2;
+        return _this.render(_this.pathTemplate, {
+            radius: r,
+            '2radius': r * 2
+        });
+    };
+
+    Circle.prototype.initSvg = function (svg) {
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.style.display = 'block';
+        svg.style.width = '100%';
+    };
+
+    function Line(element, options) {
+        this.pathTemplate = 'M 0,{center} L 100,{center}';
+        ProgressBar.apply(this, arguments);
+    }
+
+    Line.prototype = new ProgressBar();
+
+    Line.prototype.getPathString = function (widthOfWider) {
+        var _this = this;
+        return _this.render(_this.pathTemplate, {
+            center: widthOfWider / 2
+        });
+    };
+
+    Line.prototype.initSvg = function (svg, options) {
+        svg.setAttribute('viewBox', '0 0 100 ' + options.strokeWidth);
+        svg.setAttribute('preserveAspectRatio', 'none');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+    };
+
+    function ProgressBar(element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, ProgressBar.DEFAULTS, options || {});
+    }
+
+    ProgressBar.DEFAULTS = {
+        strokeWidth: 4,
+        strokeColor: '#E5E5E5',
+        trailWidth: 4,
+        trailColor: '#646464',
+        fill: null,
+        progress: .5
+    };
+
+    ProgressBar.prototype.set = function (progress) {
+
+        var _this = this,
+            length = _this.trailPath.getTotalLength();
+
+        if (!progress) progress = _this.options.progress;
+        if (progress > 1)progress = 1;
+
+        _this.trailPath.style.strokeDashoffset = length - progress * length;
+
+    };
+
+    ProgressBar.prototype.show = function () {
+        var _this = this,
+            progress = _this.options.progress,
+            svgView = _this.createSvgView(),
+            $element = _this.$element;
+
+        var path = svgView.trailPath,
+            length = path.getTotalLength();
+
+        path.style.strokeDasharray = length + ' ' + length;
+
+        $element.append(svgView.svg);
+
+        $element.inView(function (s) {
+            if ($element.data('loaded') == 1)return;
+            if (s > 0) {
+                $element.data('loaded', 1);
+                _this.trailPath.style.strokeDashoffset = length - progress * length;
+            }
+        });
+
+        return this;
+    };
+
+    ProgressBar.prototype.createSvgView = function () {
+        var _this = this,
+            options = _this.options;
+
+        var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        _this.initSvg(svg, options);
+
+        var path = _this.createPath(options);
+        svg.appendChild(path);
+
+        var trailPath = null;
+        if (options.trailColor || options.trailWidth) {
+            trailPath = _this.createTrailPath(options);
+            trailPath.style.strokeDashoffset = trailPath.getTotalLength();
+            svg.appendChild(trailPath);
+        }
+
+        _this.svg = svg;
+        _this.trailPath = trailPath;
+
+        return {
+            svg: svg,
+            trailPath: trailPath
+        }
+    };
+
+    ProgressBar.prototype.createTrailPath = function (options) {
+
+        var _this = this;
+
+        var pathString = _this.getPathString(options.trailWidth);
+
+        return _this.createPathElement(pathString, options.trailColor, options.trailWidth);
+    };
+
+    ProgressBar.prototype.createPath = function (options) {
+        var _this = this,
+            width = options.strokeWidth;
+
+        if (options.trailWidth && options.trailWidth > options.strokeWidth) {
+            width = options.trailWidth;
+        }
+
+        var pathString = _this.getPathString(width);
+        return _this.createPathElement(pathString, options.strokeColor, options.strokeWidth, options.fill);
+    };
+
+    ProgressBar.prototype.createPathElement = function (pathString, color, width, fill) {
+
+        var path = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathString);
+        path.setAttribute('stroke', color);
+        path.setAttribute('stroke-width', width);
+
+        if (fill) {
+            path.setAttribute('fill', fill);
+        } else {
+            path.setAttribute('fill-opacity', '0');
+        }
+
+        return path;
+    };
+
+    ProgressBar.prototype.render = function (template, vars) {
+        var rendered = template;
+
+        for (var key in vars) {
+            if (vars.hasOwnProperty(key)) {
+                var val = vars[key];
+                var regExpString = '\\{' + key + '\\}';
+                var regExp = new RegExp(regExpString, 'g');
+
+                rendered = rendered.replace(regExp, val);
+            }
+        }
+
+        return rendered;
+    };
+
+    function Plugin(option, type) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+            var $this = $(this),
+                progressbar = $this.data('ydui.progressbar');
+
+            if (!progressbar) {
+                if (type == 'line') {
+                    $this.data('ydui.progressbar', (progressbar = new Line(this, option)));
+                } else {
+                    $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
+                }
+                if (!option || $.type(option) == 'object') {
+                    progressbar.show().set();
+                }
+            }
+
+            if ($.type(option) == 'string') {
+                progressbar[option] && progressbar[option].apply(progressbar, args);
+            }
+        });
+    }
+
+    $('[data-ydui-progressbar-cricle]').each(function () {
+        var $this = $(this);
+
+        var options = util.parseOptions($this.data('ydui-progressbar-cricle'));
+
+        Plugin.call($this, options, 'cricle');
+    });
+
+    $('[data-ydui-progressbar-line]').each(function () {
+        var $this = $(this);
+
+        var options = util.parseOptions($this.data('ydui-progressbar-line'));
+
+        Plugin.call($this, options, 'line');
+    });
+
+    $.fn.progressBar = Plugin;
+
+}(window, jQuery);
+/**
  * 发生验证码倒计时
+ * Dependency：[ydui.util.js]
  */
 !function (win, $) {
 
@@ -1123,6 +1699,10 @@
     $.fn.sendCode = Plugin;
 
 }(window, jQuery);
+/**
+ * Tab
+ * Dependency：[ydui.util.js]
+ */
 !function (win, $) {
 
     function Tab(element, options) {
@@ -1252,30 +1832,31 @@
  * util
  */
 !function (win, $) {
-    var util = $.util = $.util || {},
+    var util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 
     /**
      * 日期格式化
-     * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * @param format 日期格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
-        var t = {};
+        var t = {},
+            floor = Math.floor;
 
         var checkTime = function (i) {
             return i < 10 ? '0' + i : i;
         };
 
         t.f = time % 1000;
-        time = Math.floor(time / 1000);
+        time = floor(time / 1000);
         t.s = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.m = time % 60;
-        time = Math.floor(time / 60);
+        time = floor(time / 60);
         t.h = time % 24;
-        t.d = Math.floor(time / 24);
+        t.d = floor(time / 24);
 
         var ment = function (a) {
             return '$1' + checkTime(a) + '$2';
@@ -1291,24 +1872,24 @@
     };
 
     /**
-     * js倒计时
-     * @param format 时间格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
+     * js倒计时 TODO 有问题 哈哈哈哈哈哈
+     * @param format 时间格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
      * @param time 时间 毫秒
-     * @param speed 速度 毫秒
      * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
-     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', 60000, 1000, function(ret){ console.log(ret); }
+     * DEMO: YDUI.util.countdown('{%d}天{%h}时{%m}分{%s}秒{%f}毫秒', 60000, function(ret){ console.log(ret); });
      */
-    util.countdown = function (format, time, speed, callback) {
+    util.countdown = function (format, time, callback) {
         var that = this, tm = new Date().getTime();
         var timer = setInterval(function () {
-            var l_time = time - new Date().getTime() + tm;
+            var a = new Date().getTime();
+            var l_time = time - a + tm;
             if (l_time > 0) {
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
                 $.type(callback) == 'function' && callback('');
             }
-        }, speed);
+        }, 50);
     };
 
     /**
@@ -1496,4 +2077,4 @@
         };
     }
 
-}(window, YDUI);
+}(window, jQuery);

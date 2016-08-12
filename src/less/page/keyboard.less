@@ -15,6 +15,7 @@
 .keyboard-title {
   overflow: hidden;
   padding: .2rem 0;
+  margin-top: .3rem;
   color: #222;
   font-size: .24rem;
   position: relative;
@@ -39,15 +40,16 @@
   > li {
     width: 100%;
     display: flex;
-    > button {
+    > a {
       width: 1%;
       flex: 1;
       color: #222;
       height: 1rem;
       position: relative;
       z-index: 999;
-      border: none;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:not(:last-child):after {
         .right-line(@line-color, 999);
       }
@@ -59,13 +61,13 @@
       }
     }
     &:last-child {
-      button:last-child,
-      button:nth-last-child(3) {
+      > a:last-child,
+      > a:nth-last-child(3) {
         background-color: #F7F7F7;
         font-size: .3rem;
         color: #686868;
       }
-      button:last-child {
+      > a:last-child {
         &:after {
           font-family: @iconfont-inlay;
           content: '\e609';
@@ -86,16 +88,6 @@
   position: relative;
   &:after {
     .bottom-line(@line-color);
-  }
-}
-
-.keyboard-forget-link {
-  text-align: right;
-  padding: 0 .8rem;
-  margin-bottom: .35rem;
-  margin-top: .1rem;
-  a {
-    color: #666;
   }
 }
 

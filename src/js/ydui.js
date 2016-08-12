@@ -1060,7 +1060,8 @@
  * KeyBoard
  */
 !function ($, win) {
-    var $body = $(win.document.body);
+    var $body = $(win.document.body),
+        triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
 
     function KeyBoard(element, options) {
         this.$element = $(element);
@@ -1070,9 +1071,7 @@
 
     KeyBoard.DEFAULTS = {
         disorder: false,
-        title: '安全键盘',
-        target: '',
-        fuck: true
+        title: '安全键盘'
     };
 
     KeyBoard.prototype.init = function () {
@@ -1093,13 +1092,13 @@
         var hd = '' +
             '<div class="keyboard-head"><strong>输入数字密码</strong></div>' +
             '<div class="keyboard-error"></div>' +
-            '<ul id="J_Hei" class="keyboard-password">' + getDot() + '</ul>';
+            '<ul class="keyboard-password J_FillPwdBox">' + getDot() + '</ul>';
 
         var ft = '' +
             '<div class="keyboard-title">' + _this.options.title + '</div>' +
             '<ul class="keyboard-numbers"></ul>';
 
-        _this.$element.prepend(_this.options.fuck ? hd : '').append(ft);
+        _this.$element.prepend(hd).append(ft);
 
         _this.$numsBox = _this.$element.find('.keyboard-numbers');
 
@@ -1108,17 +1107,11 @@
 
     /**
      * 打开键盘窗口
-     * @param options KeyBoard参数 可选
      */
-    KeyBoard.prototype.open = function (options) {
+    KeyBoard.prototype.open = function () {
         var _this = this,
             $element = _this.$element,
             $numsBox = _this.$numsBox;
-
-        // 处理后事件绑定
-        if (options) {
-            _this.options = $.extend(KeyBoard.DEFAULTS, options);
-        }
 
         $element.addClass(_this.toggleClass);
 
@@ -1156,13 +1149,13 @@
             $element = _this.$element;
 
         // 遮罩层
-        _this.$mask.on('click.ydui.keyboard.mask', function (e) {
+        _this.$mask.on(triggerEvent + '.ydui.keyboard.mask', function (e) {
             e.preventDefault();
             _this.close();
         });
 
         // 数字
-        $element.on('click.ydui.keyboard.nums', '.J_Nums', function (e) {
+        $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
             e.preventDefault();
 
             if (_this.inputNums.length >= 6)return;
@@ -1174,24 +1167,23 @@
         });
 
         // 退格
-        $element.on('click.ydui.keyboard.backspace', '#J_Backspace', function (e) {
+        $element.on(triggerEvent + '.ydui.keyboard.backspace', '.J_Backspace', function (e) {
             e.preventDefault();
             _this.backspace();
         });
 
         // 取消
-        $element.on('click.ydui.keyboard.cancel', '#J_Cancel', function (e) {
+        $element.on(triggerEvent + '.ydui.keyboard.cancel', '.J_Cancel', function (e) {
             e.preventDefault();
             _this.close();
         });
-
     };
 
     /**
      * 解绑事件
      */
     KeyBoard.prototype.unbindEvent = function () {
-        this.$element.off('click.ydui.keyboard');
+        this.$element.off(triggerEvent + '.ydui.keyboard');
         $(win).off('hashchange.ydui.keyboard');
     };
 
@@ -1199,18 +1191,17 @@
      * 填充密码
      */
     KeyBoard.prototype.fillPassword = function () {
-        var _this = this;
-        var length = _this.inputNums.length;
+        var _this = this,
+            inputNums = _this.inputNums,
+            length = inputNums.length;
 
-        if (_this.options.target) {
-            $(_this.options.target).val(_this.inputNums);
-        }
+        var $li = _this.$element.find('.J_FillPwdBox').find('li');
+        $li.find('i').hide();
+        $li.filter(':lt(' + length + ')').find('i').show();
 
-        $('#J_Hei').find('i').hide();
-        $('#J_Hei').find('li:lt(' + length + ')').find('i').show();
         if (length >= 6) {
             _this.$element.trigger($.Event('done.ydui.keyboard', {
-                val: _this.inputNums
+                password: inputNums
             }));
         }
     };
@@ -1230,7 +1221,7 @@
         var _this = this;
         _this.$element.find('.keyboard-error').html(mes);
 
-        // 重置输入数字以便清空显示的点点点
+        // 重置已输入的数字以便清空显示的点点点
         _this.inputNums = '';
         _this.fillPassword();
     };
@@ -1263,7 +1254,7 @@
         $.each(nums, function (k) {
             if (k % 3 == 0) {
                 if (k >= nums.length - 2) {
-                    arr.push('<li><button type="button" id="J_Cancel">取消</button>' + nums.slice(k, k + 3).join('') + '<button type="button" id="J_Backspace"></button></li>');
+                    arr.push('<li><a href="javascript:;" class="J_Cancel">取消</a>' + nums.slice(k, k + 3).join('') + '<a href="javascript:;" class="J_Backspace"></a></li>');
                 } else {
                     arr.push('<li>' + nums.slice(k, k + 3).join('') + '</li>');
                 }
@@ -1287,7 +1278,7 @@
 
         var strArr = [];
         for (var i = 1; i <= 10; i++) {
-            strArr.push('<button type="button" class="J_Nums">' + (i % 10) + '</button>');
+            strArr.push('<a href="javascript:;" class="J_Nums">' + (i % 10) + '</div>');
         }
 
         if (!disorder) {
