@@ -48,7 +48,7 @@
 
     $(win).on('load', function () {
         /* 直接绑定FastClick */
-        if ($.type(FastClick) == 'function') {
+        if (typeof FastClick == 'function') {
             FastClick.attach(doc.body);
         }
     });
@@ -1055,7 +1055,6 @@
     };
 
 }(jQuery, window);
-
 /**
  * KeyBoard
  */
@@ -1331,8 +1330,6 @@
     $.fn.keyBoard = Plugin;
 
 }(jQuery, window);
-
-
 !function () {
 
 }();
