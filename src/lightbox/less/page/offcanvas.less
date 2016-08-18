@@ -1,0 +1,24 @@
+.m-offcanvas {
+  width: 45%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  padding: .24rem;
+  overflow-y: auto;
+  background-color: #F9F9F9;
+  transition: all .2s ease-in;
+  -webkit-overflow-scrolling: touch;
+  &.offcanvas-left {
+    left: -45%;
+  }
+  &.offcanvas-right {
+    right: -45%;
+  }
+  &.off-left {
+    left: 0;
+  }
+  &.off-right {
+    right: 0;
+  }
+}

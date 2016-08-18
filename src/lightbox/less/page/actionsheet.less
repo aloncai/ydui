@@ -1,0 +1,36 @@
+.m-actionsheet {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #EFEFF4;
+  transform: translate(0, 100%);
+  transition: transform .3s;
+  > dd, > dt {
+    a {
+      display: block;
+      height: 1rem;
+      line-height: 1rem;
+      background-color: #FFF;
+      font-size: .28rem; /* px */
+      color: #555;
+    }
+  }
+  > dd {
+    position: relative;
+    &:after {
+      .bottom-line(@line-color);
+    }
+    &:first-child {
+      border-top: none;
+    }
+  }
+  > dt {
+    margin-top: .15rem;
+  }
+  &.actionsheet-toggle {
+    transform: translate(0, 0);
+  }
+}

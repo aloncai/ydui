@@ -1,0 +1,43 @@
+.m-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 49;
+  display: flex;
+  align-items: center;
+  background-color: rgba(245, 245, 245, .96);
+  &:after {
+	.top-line(@line-high-color);
+  }
+}
+
+.m-tabbar > a {
+  text-align: center;
+  display: block;
+  flex: 1;
+  color: @tabbar-color;
+  &.crt {
+	color: @tabbar-color-crt;
+  }
+}
+
+.tabbar-icon {
+  height: .66rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
+  *:before {
+	font-size: .46rem !important;
+  }
+  img {
+	height: 65%;
+  }
+}
+
+.tabbar-txt {
+  display: block;
+  font-size: @tabbar-fontsize; /* px */
+  padding-bottom: .05rem;
+}

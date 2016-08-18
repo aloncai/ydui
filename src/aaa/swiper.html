@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="css/yueqi.css" />
+    <script src="js/base.js"></script>
+</head>
+<body>
+<section class="g-doc">
+    <header class="m-nav">
+        <nav>
+            <a href="javascript:history.back();" class="u-back-ico"></a>
+            <div class="center">4324</div>
+        </nav>
+    </header>
+    <section class="m-banner">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
+            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
+            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </section>
+</section>
+<script src="libs/jquery/jquery.js"></script>
+<script src="libs/swiper/swiper.jquery.js"></script>
+<script>
+    !function () {
+        new Swiper('.m-banner', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            loop: false,
+            autoplay: 116000
+        });
+    }(jQuery);
+</script>
+</body>
+</html>

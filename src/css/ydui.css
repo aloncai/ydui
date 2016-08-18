@@ -2823,3 +2823,22 @@ input[type="submit"].btn-hollow {
   align-items: center;
   font-size: .24rem;
 }
+.swiper-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
+  position: relative;
+  z-index: 1;
+}
+.swiper-slide {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+.swiper-slide img {
+  width: 100%;
+}
