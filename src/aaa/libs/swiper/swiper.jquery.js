@@ -1972,12 +1972,14 @@
             if (s.activeIndex < s.loopedSlides) {
                 newIndex = s.slides.length - s.loopedSlides * 3 + s.activeIndex;
                 newIndex = newIndex + s.loopedSlides;
+                console.log('aaa');
                 s.slideTo(newIndex, 0, false, true);
             }
             //Fix For Positive Oversliding
             else if ((s.params.slidesPerView === 'auto' && s.activeIndex >= s.loopedSlides * 2) || (s.activeIndex > s.slides.length - s.params.slidesPerView * 2)) {
                 newIndex = -s.slides.length + s.activeIndex + s.loopedSlides;
                 newIndex = newIndex + s.loopedSlides;
+                console.log('bbb');
                 s.slideTo(newIndex, 0, false, true);
             }
         };

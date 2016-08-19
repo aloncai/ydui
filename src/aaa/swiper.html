@@ -20,12 +20,16 @@
     </header>
     <section class="m-banner">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
-            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
-            <div class="swiper-slide"><a href="#"><img src="img/goods1.png"></a></div>
+            <div class="swiper-slide"><img src="http://www.dcloud.io/hellomui/images/shuijiao.jpg"></div>
+            <div class="swiper-slide"><img src="http://www.dcloud.io/hellomui/images/muwu.jpg"></div>
+            <div class="swiper-slide"><img src="http://www.dcloud.io/hellomui/images/cbd.jpg"></div>
         </div>
         <div class="swiper-pagination"></div>
     </section>
+    <div style="padding-top: 20px;">
+        <a href="javascript:;" id="J_Prev">上一个</a>
+        <a href="javascript:;" id="J_Next">下一个</a>
+    </div>
 </section>
 <script src="libs/jquery/jquery.js"></script>
 <script src="libs/swiper/swiper.jquery.js"></script>
@@ -34,8 +38,8 @@
         new Swiper('.m-banner', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
-            loop: false,
-            autoplay: 116000
+            loop: true,
+            autoplay: 3000
         });
     }(jQuery);
 </script>
