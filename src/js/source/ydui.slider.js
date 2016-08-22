@@ -46,7 +46,6 @@
 
         _this.transitioning = true;
 
-        // TODO 为什么不能用全局的变量
         _this.setTranslate(-index * $(win).width());
 
         $element.one('webkitTransitionEnd', function () {
@@ -79,10 +78,8 @@
     var touches = {
         moveingTag: 0,//移动状态(start,move,end)标记
         startClientX: 0,//起始拖动坐标
-        startPixelOffset: 0,
-        fuck: 0,
-        pixelOffset: 0,//偏移量（移动位置）
-        currentSlide: 0//当前选中索引
+        pianyiX: 0,
+        fuck: 0
     };
 
     Slider.prototype.updateContainerSize = function () {
@@ -107,7 +104,12 @@
         }
     };
 
+    Slider.prototype.cursor = function () {
+        this.$element.css('cursor', '-webkit-grabbing');
+    };
+
     Slider.prototype.onTouchMove = function (event) {
+
         var _this = this;
 
         event.preventDefault();
@@ -115,36 +117,44 @@
             event = event.originalEvent.touches[0];
 
         var deltaSlide = touches.fuck = event.clientX - touches.startClientX;
-
-        _this.$element[0].style.cursor = 'move';
-        _this.$element[0].style.cursor = '-webkit-grabbing';
-        _this.$element[0].style.cursor = '-moz-grabbin';
-        _this.$element[0].style.cursor = 'grabbing';
+        //_this.cursor();
 
         if (touches.moveingTag == 1 && deltaSlide != 0) {
             touches.moveingTag = 2;
-            touches.startPixelOffset = touches.pixelOffset;
         }
         if (touches.moveingTag == 2) {
-            var of = touches.pixelOffset = touches.startPixelOffset + deltaSlide;
-            this.setTranslate(of);
+            _this.setTranslate(-_this.index * $(win).width() + deltaSlide);
         }
     };
 
     Slider.prototype.onTouchEnd = function (event) {
-        var $body = $('body');
-        var imgslength = 3;
+
+        event.preventDefault();
+
+        var _this = this;
 
         if (touches.moveingTag == 2) {
             touches.moveingTag = 0;
-            touches.currentSlide = touches.pixelOffset < touches.startPixelOffset ? touches.currentSlide + 1 : touches.currentSlide - 1;
-            touches.currentSlide = Math.min(Math.max(touches.currentSlide, 0), imgslength - 1);
-            var of = touches.pixelOffset = touches.currentSlide * -$body.width();
 
-            if (Math.abs(touches.fuck) > 150) {
-                this.setTranslate(of);
+            if (_this.transitioning)return;
+
+            if (Math.abs(touches.fuck) <= .1 * _this.winWidth) {
+                // 弹回去
+                _this.setTranslate(-_this.index * $(win).width());
             } else {
-                this.setTranslate(0);
+                if (touches.fuck > 0) {
+                    if (_this.index == 0) {
+                        _this.index = 3;
+                        _this.resetTranslate(-3 * _this.winWidth + 'px');
+                    }
+                    _this.stop().move(--_this.index);
+                } else {
+                    if (_this.index == 3) {
+                        _this.index = 0;
+                        _this.resetTranslate('0px');
+                    }
+                    _this.stop().move(++_this.index);
+                }
             }
         }
     };
@@ -184,7 +194,7 @@
 
         var touchEvents = _this.touchEvents();
 
-        _this.$element.find('.slider-wrapper')
+        _this.$element.find('.slider-item')
             .on(touchEvents.start, function (e) {
                 _this.onTouchStart(e);
             }).on(touchEvents.move, function (e) {
