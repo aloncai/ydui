@@ -1,59 +1,79 @@
 /**
- * swiper
+ * slider
  */
 !function ($, win) {
 
-    function Swiper(element, options) {
+    function Slider(element, options) {
         this.$element = $(element);
-        this.options = $.extend({}, Swiper.DEFAULTS, options || {});
+        this.options = $.extend({}, Slider.DEFAULTS, options || {});
         this.init();
-        this.initEvent();
-        this.bbEvent();
-        this.initInterVal();
-        this.fuck();
     }
 
-    Swiper.DEFAULTS = {
+    Slider.DEFAULTS = {
         loop: true,//是否循环
-        autoplay: 3000,//循环时间
+        speed: 300,
+        autoplay: 2000,//循环时间
         simulateTouch: true//是否仿生拖动事件
     };
 
-    Swiper.prototype.setSlidesSize = function () {
-        this.$element.find('.swiper-slide').css({width: $(win).width()});
+    Slider.prototype.setSlidesSize = function () {
+        var _this = this;
+
+        _this.$element.css('transform', 'translate3d(-' + $(window).width() + 'px,0,0)')
+            .find('.slider-item').css({width: _this.winWidth});
+
+        return _this;
     };
 
-    Swiper.prototype.width = 0;
+    Slider.prototype.width = 0;
 
-    Swiper.prototype.fuck = function () {
+    Slider.prototype.cloneItem = function () {
         var _this = this;
         var $element = _this.$element;
         if (_this.options.loop) {
-            $element.append($element.find('.swiper-slide:lt(2)').clone());
+            $element.prepend($element.find('.slider-item:last-child').clone());
+            $element.append($element.find('.slider-item:first-child').clone());
         }
+        _this.setSlidesSize();
+
+        return _this;
     };
 
-    Swiper.prototype.initInterVal = function () {
+    Slider.prototype.move = function (index) {
+
+        var _this = this,
+            $element = _this.$element;
+
+        _this.transitioning = true;
+
+        // TODO 为什么不能用全局的变量
+        _this.setTranslate(-index * $(win).width());
+
+        $element.one('webkitTransitionEnd', function () {
+            _this.transitioning = false;
+        }).emulateTransitionEnd(_this.options.speed);
+    };
+
+    Slider.prototype.initInterVal = function () {
         var _this = this;
-        var a = 0;
-        setInterval(function () {
-            ++a;
-            if (a > 2) {
-                a = 0;
-                _this.$element.css({'background': 'red', 'transform': 'translate3d(0px,0,0)'});
-            }
-            _this.setTranslate(-a * $(win).width());
+        _this.autoPlayId = setInterval(function () {
+            //  _this.move(++_this.index);
         }, _this.options.autoplay);
+
+        return this;
     };
 
-    Swiper.prototype.bbEvent = function () {
-        $('#J_Prev').on('click', function () {
-
+    Slider.prototype.setTranslate = function (x) {
+        var _this = this;
+        _this.$element.css({
+            'transitionDuration': _this.options.speed + 'ms',
+            'transform': 'translate3d(' + x + 'px,0,0)'
         });
+    };
 
-        $('#J_Next').on('click', function () {
-
-        });
+    Slider.prototype.stop = function () {
+        clearInterval(this.autoPlayId);
+        return this;
     };
 
     var touches = {
@@ -65,11 +85,7 @@
         currentSlide: 0//当前选中索引
     };
 
-    Swiper.prototype.setTranslate = function (x) {
-        this.$element.css('transform', 'translate3d(' + x + 'px,0,0)');
-    };
-
-    Swiper.prototype.updateContainerSize = function () {
+    Slider.prototype.updateContainerSize = function () {
         var _this = this;
 
         var width = _this.$element[0].clientWidth;
@@ -79,7 +95,7 @@
         _this.width = width;
     };
 
-    Swiper.prototype.onTouchStart = function (event) {
+    Slider.prototype.onTouchStart = function (event) {
 
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
@@ -91,7 +107,7 @@
         }
     };
 
-    Swiper.prototype.onTouchMove = function (event) {
+    Slider.prototype.onTouchMove = function (event) {
         var _this = this;
 
         event.preventDefault();
@@ -115,7 +131,7 @@
         }
     };
 
-    Swiper.prototype.onTouchEnd = function (event) {
+    Slider.prototype.onTouchEnd = function (event) {
         var $body = $('body');
         var imgslength = 3;
 
@@ -133,41 +149,73 @@
         }
     };
 
-    Swiper.prototype.initEvent = function () {
+    /**
+     * 偷偷地将DOM移动到合适位置
+     * @param x
+     */
+    Slider.prototype.resetTranslate = function (x) {
+        this.$element.css('transitionDuration', '0ms').css('transform', 'translate3d(' + x + ',0,0)');
+    };
+
+    Slider.prototype.initEvent = function () {
         var _this = this;
 
         $('#J_Prev').on('click', function () {
+            if (_this.transitioning)return;
 
+            if (_this.index == 0) {
+                _this.index = 3;
+                _this.resetTranslate(-3 * _this.winWidth + 'px');
+            }
+
+            _this.stop().move(--_this.index);
         });
 
         $('#J_Next').on('click', function () {
+            if (_this.transitioning)return;
 
+            if (_this.index == 3) {
+                _this.index = 0;
+                _this.resetTranslate('0px');
+            }
+
+            _this.stop().move(++_this.index);
         });
 
         var touchEvents = _this.touchEvents();
 
-        _this.$element.find('.swiper-wrapper').on(touchEvents.start, function (e) {
-            _this.onTouchStart(e);
-        }).on(touchEvents.move, function (e) {
-            _this.onTouchMove(e);
-        }).on(touchEvents.end, function (e) {
-            _this.onTouchEnd(e);
-        });
+        _this.$element.find('.slider-wrapper')
+            .on(touchEvents.start, function (e) {
+                _this.onTouchStart(e);
+            }).on(touchEvents.move, function (e) {
+                _this.onTouchMove(e);
+            }).on(touchEvents.end, function (e) {
+                _this.onTouchEnd(e);
+            });
 
         $(win).on('resize', function () {
             _this.setSlidesSize();
         });
+
+        _this.initInterVal();
+
+        return this;
     };
 
-    Swiper.prototype.init = function () {
-        this.setSlidesSize();
+    Slider.prototype.init = function () {
+        var _this = this;
+        _this.index = 1;
+        _this.autoPlayId = null;
+        _this.transitioning = false;
+        _this.winWidth = $(win).width();
+        _this.cloneItem().initEvent();
     };
 
-    Swiper.prototype.supportTouch = (win.Modernizr && !!Modernizr.touch) || (function () {
+    Slider.prototype.supportTouch = (win.Modernizr && !!Modernizr.touch) || (function () {
         return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
     })();
 
-    Swiper.prototype.touchEvents = function () {
+    Slider.prototype.touchEvents = function () {
         var _this = this,
             touch = _this.supportTouch,
             simulateTouch = _this.options.simulateTouch;
@@ -185,18 +233,18 @@
         return this.each(function () {
 
             var $this = $(this),
-                swiper = $this.data('ydui.swiper');
+                slider = $this.data('ydui.slider');
 
-            if (!swiper) {
-                $this.data('ydui.swiper', (swiper = new Swiper(this, option)));
+            if (!slider) {
+                $this.data('ydui.slider', (slider = new Slider(this, option)));
             }
 
             if ($.type(option) == 'string') {
-                swiper[option] && swiper[option].apply(swiper, args);
+                slider[option] && slider[option].apply(slider, args);
             }
         });
     }
 
-    $.fn.swiper = Plugin;
+    $.fn.slider = Plugin;
 
 }(jQuery, window);
