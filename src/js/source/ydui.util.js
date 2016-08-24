@@ -2,6 +2,8 @@
  * util
  */
 !function (win, $) {
+    "use strict";
+
     var util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 

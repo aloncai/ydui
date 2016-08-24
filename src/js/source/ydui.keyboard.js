@@ -2,6 +2,8 @@
  * KeyBoard
  */
 !function ($, win) {
+    "use strict";
+
     var $body = $(win.document.body),
         triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
 

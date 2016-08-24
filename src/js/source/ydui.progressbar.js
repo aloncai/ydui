@@ -4,6 +4,7 @@
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (win, $) {
+    "use strict";
 
     var doc = win.document,
         util = win.YDUI.util;

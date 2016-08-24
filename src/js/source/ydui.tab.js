@@ -3,6 +3,7 @@
  * Dependency：[ydui.util.js]
  */
 !function (win, $) {
+    "use strict";
 
     function Tab(element, options) {
         this.$element = $(element);

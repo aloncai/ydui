@@ -2824,6 +2824,10 @@ input[type="submit"].btn-hollow {
   font-size: .24rem;
 }
 .m-slider {
+  overflow-x: hidden;
+  width: 100%;
+}
+.slider-wrapper {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

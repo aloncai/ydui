@@ -2,6 +2,8 @@
  * pageScroll
  */
 !function (win, ydui) {
+    "use strict";
+
     var doc = win.document;
 
     /**

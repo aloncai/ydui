@@ -3,6 +3,8 @@
  * Dependency： ydui.pageScroll.js
  */
 !function (win, $, ydui) {
+    "use strict";
+
     var dialog = ydui.dialog = ydui.dialog || {},
         $body = $(win.document.body);
 

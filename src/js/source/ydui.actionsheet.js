@@ -3,6 +3,7 @@
  * Dependency：[ydui.util.js]
  */
 !function (win, $) {
+    "use strict";
 
     var doc = win.document,
         $doc = $(doc),

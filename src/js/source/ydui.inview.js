@@ -2,6 +2,7 @@
  * 判断元素是否处于可视窗口
  */
 !function ($, win) {
+    "use strict";
 
     var $doc = $(win.document);
 

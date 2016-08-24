@@ -2,6 +2,8 @@
  * ydui
  */
 !function (win, $) {
+    "use strict";
+
     var ydui = {},
         doc = win.document,
         ua = win.navigator && win.navigator.userAgent || '';

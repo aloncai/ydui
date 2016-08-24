@@ -2,6 +2,8 @@
  * ydui
  */
 !function (win, $) {
+    "use strict";
+
     var ydui = {},
         doc = win.document,
         ua = win.navigator && win.navigator.userAgent || '';
@@ -77,6 +79,7 @@
  * Dependency：[ydui.util.js]
  */
 !function (win, $) {
+    "use strict";
 
     var doc = win.document,
         $doc = $(doc),
@@ -170,6 +173,8 @@
  * Dependency： ydui.pageScroll.js
  */
 !function (win, $, ydui) {
+    "use strict";
+
     var dialog = ydui.dialog = ydui.dialog || {},
         $body = $(win.document.body);
 
@@ -995,6 +1000,7 @@
  * 判断元素是否处于可视窗口
  */
 !function ($, win) {
+    "use strict";
 
     var $doc = $(win.document);
 
@@ -1059,6 +1065,8 @@
  * KeyBoard
  */
 !function ($, win) {
+    "use strict";
+
     var $body = $(win.document.body),
         triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
 
@@ -1337,6 +1345,8 @@
  * pageScroll
  */
 !function (win, ydui) {
+    "use strict";
+
     var doc = win.document;
 
     /**
@@ -1371,6 +1381,7 @@
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (win, $) {
+    "use strict";
 
     var doc = win.document,
         util = win.YDUI.util;
@@ -1595,6 +1606,7 @@
  * Dependency：[ydui.util.js]
  */
 !function (win, $) {
+    "use strict";
 
     function SendCode(element, options) {
         /**
@@ -1698,11 +1710,15 @@
 }(window, jQuery);
 /**
  * Slider
+ * TODO 图片懒加载
+ * TODO 上一个 下一个
+ * TODO 点点点
  */
 !function ($, win) {
+    "use strict";
 
     function Slider(element, options) {
-        this.$element = $(element);
+        this.$element = $(element).find('.slider-wrapper');
         this.options = $.extend({}, Slider.DEFAULTS, options || {});
         this.init();
     }
@@ -1715,7 +1731,7 @@
 
     Slider.DEFAULTS = {
         loop: true, // 是否循环
-        speed: 300, // 移动速度
+        speed: 600, // 移动速度
         autoplay: 2000 // 循环时间
     };
 
@@ -1726,8 +1742,7 @@
         var _this = this;
         _this.index = 1;
         _this.autoPlayId = null;
-        _this.transitioning = false;
-        _this.winWidth = $(win).width();
+        _this.winWidth = _this.$element.width();
         _this.cloneItem().bindEvent();
     };
 
@@ -1738,23 +1753,21 @@
         var _this = this;
 
         $('#J_Prev').on('click', function () {
-            if (_this.transitioning)return;
 
-            var winWidth = $(win).width();
+            var winWidth = _this.$element.width();
             if (_this.index == 0) {
                 _this.index = 3;
-                _this.resetTranslate(-3 * winWidth + 'px');
+                _this.setTranslate(0, -3 * winWidth);
             }
 
             _this.stop().move(--_this.index);
         });
 
         $('#J_Next').on('click', function () {
-            if (_this.transitioning)return;
 
             if (_this.index == 3) {
                 _this.index = 0;
-                _this.resetTranslate('0px');
+                _this.setTranslate(0, 0);
             }
 
             _this.stop().move(++_this.index);
@@ -1779,26 +1792,6 @@
     };
 
     /**
-     * 偷偷地将DOM移动到合适位置
-     * @param x
-     */
-    Slider.prototype.resetTranslate = function (x) {
-        this.$element.css('transitionDuration', '0ms').css('transform', 'translate3d(' + x + ',0,0)');
-    };
-
-    /**
-     * 左右滑动Slider
-     * @param x 横向移动宽度
-     */
-    Slider.prototype.setTranslate = function (x) {
-        var _this = this;
-        _this.$element.css({
-            'transitionDuration': _this.options.speed + 'ms',
-            'transform': 'translate3d(' + x + 'px,0,0)'
-        });
-    };
-
-    /**
      * 复制第一个和最后一个item，以便无缝循环
      * @returns {Slider}
      */
@@ -1819,7 +1812,7 @@
      */
     Slider.prototype.setSlidesSize = function () {
         var _this = this,
-            winWidth = $(win).width();
+            winWidth = _this.$element.width();
 
         _this.$element.css('transform', 'translate3d(-' + winWidth + 'px,0,0)')
             .find('.slider-item').css({width: winWidth});
@@ -1831,13 +1824,11 @@
     Slider.prototype.play = function () {
         var _this = this;
 
-        if (_this.transitioning)return;
-
         _this.autoPlayId = setInterval(function () {
 
             if (_this.index == 3) {
                 _this.index = 0;
-                _this.resetTranslate('0px');
+                _this.setTranslate(0, 0);
             }
 
             _this.move(++_this.index);
@@ -1854,32 +1845,63 @@
         return this;
     };
 
+    /**
+     * 根据索引移动
+     * @param index
+     */
     Slider.prototype.move = function (index) {
 
-        var _this = this,
-            $element = _this.$element;
+        var _this = this;
 
-        _this.transitioning = true;
-
-        _this.setTranslate(-index * $(win).width());
-
-        $element.one('webkitTransitionEnd', function () {
-            _this.transitioning = false;
-        }).emulateTransitionEnd(_this.options.speed);
+        _this.setTranslate(_this.options.speed, -index * _this.$element.width());
     };
 
+    /**
+     * 左右滑动Slider
+     * @param speed 移动速度 0：当前是偷偷摸摸的移动啦，生怕给你看见
+     * @param x 横向移动宽度
+     */
+    Slider.prototype.setTranslate = function (speed, x) {
+        this.$element.css({
+            'transitionDuration': speed + 'ms',
+            'transform': 'translate3d(' + x + 'px,0,0)'
+        });
+    };
+
+    /**
+     * 开始滑动
+     * @param event
+     */
     Slider.prototype.onTouchStart = function (event) {
+        event.preventDefault();
 
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
+
+        var _this = this;
 
         if (touches.moveTag == 0) {
             touches.moveTag = 1;
             // 记录鼠标起始拖动位置
             touches.startClientX = event.clientX;
+
+            if (_this.index == 0) {
+                _this.index = 3;
+                _this.setTranslate(0, -3 * _this.$element.width());
+                return;
+            }
+
+            if (_this.index == 3) {
+                _this.index = 0;
+                _this.setTranslate(0, 0);
+            }
         }
     };
 
+    /**
+     * 滑动中
+     * @param event
+     */
     Slider.prototype.onTouchMove = function (event) {
         event.preventDefault();
 
@@ -1890,37 +1912,57 @@
 
         var deltaSlide = touches.moveOffset = event.clientX - touches.startClientX;
 
-        if (touches.moveTag == 1 && deltaSlide != 0) {
-            touches.moveTag = 2;
+        if (deltaSlide == 0) {
+            touches.moveTag = 0;
+            return;
         }
-        if (touches.moveTag == 2) {
-            _this.resetTranslate(-_this.index * $(win).width() + deltaSlide);
+
+        if (deltaSlide != 0 && touches.moveTag != 0) {
+
+            if (touches.moveTag == 1) {
+                touches.moveTag = 2;
+            }
+            if (touches.moveTag == 2) {
+                _this.setTranslate(0, -_this.index * _this.$element.width() + deltaSlide);
+            }
         }
     };
 
+    /**
+     * 滑动后
+     * @param event
+     */
     Slider.prototype.onTouchEnd = function (event) {
         event.preventDefault();
 
         var _this = this,
-            winWidth = $(win).width();
+            winWidth = _this.$element.width();
 
-        if (touches.moveTag == 2 && !_this.transitioning) {
+        var moveOffset = touches.moveOffset;
+
+        if (moveOffset == 0 && touches.moveTag == 1) {
+            touches.moveTag = 0;
+            _this.setTranslate(_this.options.speed, -_this.index * _this.$element.width());
+            return;
+        }
+
+        if (touches.moveTag == 2) {
             touches.moveTag = 0;
 
-            if (Math.abs(touches.moveOffset) <= 10) {
+            if (Math.abs(moveOffset) <= _this.$element.width() * .1) {
                 // 弹回去
-                _this.setTranslate(-_this.index * $(win).width());
+                _this.setTranslate(_this.options.speed, -_this.index * _this.$element.width());
             } else {
-                if (touches.moveOffset > 0) {
+                if (moveOffset > 0) {
                     if (_this.index == 0) {
                         _this.index = 3;
-                        _this.resetTranslate(-3 * winWidth + 'px');
+                        _this.setTranslate(0, -3 * winWidth);
                     }
                     _this.stop().move(--_this.index);
                 } else {
                     if (_this.index == 3) {
                         _this.index = 0;
-                        _this.resetTranslate('0px');
+                        _this.setTranslate(0, 0);
                     }
                     _this.stop().move(++_this.index);
                 }
@@ -1977,6 +2019,7 @@
  * Dependency：[ydui.util.js]
  */
 !function (win, $) {
+    "use strict";
 
     function Tab(element, options) {
         this.$element = $(element);
@@ -2105,6 +2148,8 @@
  * util
  */
 !function (win, $) {
+    "use strict";
+
     var util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 

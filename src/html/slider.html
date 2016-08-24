@@ -22,12 +22,13 @@
             <div class="nav-center">Slider</div>
         </nav>
     </header>
-    <div style="width: 100%;overflow-x: hidden;">
-        <div class="m-slider" id="J_Fuck">
+    <div class="m-slider" id="J_Fuck">
+        <div class="slider-wrapper">
             <div class="slider-item"><img src="../img/1.jpg"></div>
             <div class="slider-item"><img src="../img/2.jpg"></div>
             <div class="slider-item"><img src="../img/3.jpg"></div>
         </div>
+        <div class="slider-pagination"></div>
     </div>
     <div style="padding-top: 30px;">
         <a href="javascript:;" id="J_Prev">上一个</a>
@@ -36,12 +37,13 @@
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
+<script src="../js/debug.js"></script>
 <script>
     /**
      * Javascript API调用Swiper
      */
     !function ($) {
-        $('#J_Fuck').slider();
+        $('#J_Fuck').slider({speed: 300});
     }(jQuery);
 </script>
 </body>
