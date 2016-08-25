@@ -1723,13 +1723,10 @@
     }
 
     Slider.DEFAULTS = {
-        speed: 600, // 移动速度
+        speed: 300, // 移动速度
         autoplay: 2000 // 循环时间
     };
 
-    /**
-     * 初始化
-     */
     /**
      * 初始化
      */
@@ -1747,30 +1744,8 @@
      * 绑定事件
      */
     Slider.prototype.bindEvent = function () {
-        var _this = this;
-
-        $('#J_Prev').on('click', function () {
-
-            var _width = _this.$wrapper.width();
-            if (_this.index == 0) {
-                _this.index = 3;
-                _this.setTranslate(0, -3 * _width);
-            }
-
-            _this.move(--_this.index);
-        });
-
-        $('#J_Next').on('click', function () {
-
-            if (_this.index == 3) {
-                _this.index = 0;
-                _this.setTranslate(0, 0);
-            }
-
-            _this.move(++_this.index);
-        });
-
-        var touchEvents = _this.touchEvents();
+        var _this = this,
+            touchEvents = _this.touchEvents();
 
         _this.$wrapper.find('.slider-item')
             .on(touchEvents.start, function (e) {
@@ -1789,18 +1764,18 @@
     };
 
     /**
-     * 复制第一个和最后一个item，以便无缝循环
+     * 复制第一个和最后一个item
      * @returns {Slider}
      */
     Slider.prototype.cloneItem = function () {
         var _this = this,
-            $wrapper = _this.$wrapper;
+            $wrapper = _this.$wrapper,
+            $sliderItem = $wrapper.find('.slider-item'),
+            $firstChild = $sliderItem.filter(':first-child').clone(),
+            $lastChild = $sliderItem.filter(':last-child').clone();
 
-        var $f = $wrapper.find('.slider-item:first-child').clone();
-        var $l = $wrapper.find('.slider-item:last-child').clone();
-
-        $wrapper.prepend($l);
-        $wrapper.append($f);
+        $wrapper.prepend($lastChild);
+        $wrapper.append($firstChild);
 
         _this.setSlidesSize();
 
@@ -1837,12 +1812,12 @@
 
         _this.autoPlayId = setInterval(function () {
 
-            if (_this.index == 3) {
-                _this.index = 0;
-                _this.setTranslate(0, 0);
+            if (_this.index > 3) {
+                _this.index = 1;
+                _this.setTranslate(0, -_this.$wrapper.width());
             }
 
-            _this.move(++_this.index);
+            _this.setTranslate(_this.options.speed, -(++_this.index * _this.$wrapper.width()));
 
         }, _this.options.autoplay);
     };
@@ -1858,12 +1833,16 @@
     };
 
     /**
-     * 根据索引移动
-     * @param index
+     * 当前页码标识加高亮
      */
-    Slider.prototype.move = function (index) {
+    Slider.prototype.activeBullet = function () {
         var _this = this;
-        _this.setTranslate(_this.options.speed, -index * _this.$wrapper.width());
+
+        var index = _this.index % 3 >= 3 ? 0 : _this.index % 3 - 1;
+
+        !!_this.$pagination[0] && _this.$pagination.find('span')
+            .removeClass('slider-pagination-active')
+            .eq(index).addClass('slider-pagination-active');
     };
 
     /**
@@ -1874,11 +1853,7 @@
     Slider.prototype.setTranslate = function (speed, x) {
         var _this = this;
 
-        var index = _this.index % 3 >= 3 ? 0 : _this.index % 3 - 1;
-
-        !!_this.$pagination[0] && _this.$pagination.find('span')
-            .removeClass('slider-pagination-active')
-            .eq(index).addClass('slider-pagination-active');
+        _this.activeBullet();
 
         _this.$wrapper.css({
             'transitionDuration': speed + 'ms',
@@ -1940,6 +1915,7 @@
 
         _this.stop();
 
+        // 拖动偏移量
         var deltaSlide = _this.touches.moveOffset = event.clientX - _this.touches.startClientX;
 
         if (deltaSlide != 0 && _this.touches.moveTag != 0) {
@@ -1960,6 +1936,8 @@
         event.preventDefault();
 
         var _this = this,
+            speed = _this.options.speed,
+            _width = _this.$wrapper.width(),
             moveOffset = _this.touches.moveOffset;
 
         if (_this.touches.moveTag == 2) {
@@ -1968,17 +1946,13 @@
             // 计算开始触摸到结束触摸时间，用以计算是否需要执行下一页
             var timeDiff = Date.now() - _this.touches.touchStartTime;
 
+            // 拖动时间超过300毫秒或者未拖动超过内容一半
             if (timeDiff > 300 && Math.abs(moveOffset) <= _this.$wrapper.width() * .5) {
                 // 弹回去
-                _this.setTranslate(_this.options.speed, -_this.index * _this.$wrapper.width());
+                _this.setTranslate(speed, -_this.index * _this.$wrapper.width());
             } else {
-                if (moveOffset > 0) {
-                    // 左移
-                    _this.move(--_this.index);
-                } else {
-                    // 右移
-                    _this.move(++_this.index);
-                }
+                // --为左移，++为右移
+                _this.setTranslate(speed, -((moveOffset > 0 ? --_this.index : ++_this.index) * _width));
             }
         }
     };
