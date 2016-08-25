@@ -2826,6 +2826,7 @@ input[type="submit"].btn-hollow {
 .m-slider {
   overflow-x: hidden;
   width: 100%;
+  position: relative;
 }
 .slider-wrapper {
   display: -webkit-box;
@@ -2847,8 +2848,38 @@ input[type="submit"].btn-hollow {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  position: relative;
 }
 .slider-item img {
   width: 100%;
+}
+.slider-pagination {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  bottom: .15rem;
+  pointer-events: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.slider-pagination span {
+  margin: 0 .08rem;
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 100%;
+  background-color: #B7D0E1;
+}
+.slider-pagination span.slider-pagination-active {
+  background-color: #FF0005;
 }

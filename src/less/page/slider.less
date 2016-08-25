@@ -1,6 +1,7 @@
 .m-slider {
   overflow-x: hidden;
   width: 100%;
+  position: relative;
 }
 
 .slider-wrapper {
@@ -15,8 +16,30 @@
 .slider-item {
   width: 100%;
   flex-shrink: 0;
-  position: relative;
   img {
     width: 100%;
+  }
+}
+
+.slider-pagination {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  bottom: .15rem;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  span {
+    margin: 0 .08rem;
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 100%;
+    background-color: #B7D0E1;
+    &.slider-pagination-active {
+      background-color: #FF0005;
+    }
   }
 }

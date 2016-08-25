@@ -1712,25 +1712,17 @@
  * Slider
  * TODO 图片懒加载
  * TODO 上一个 下一个
- * TODO 点点点
  */
 !function ($, win) {
     "use strict";
 
     function Slider(element, options) {
-        this.$element = $(element).find('.slider-wrapper');
+        this.$element = $(element);
         this.options = $.extend({}, Slider.DEFAULTS, options || {});
         this.init();
     }
 
-    var touches = {
-        moveTag: 0, // 移动状态(start,move,end)标记
-        startClientX: 0, // 起始拖动坐标
-        moveOffset: 0 // 移动偏移量（左右移动宽度）
-    };
-
     Slider.DEFAULTS = {
-        loop: true, // 是否循环
         speed: 600, // 移动速度
         autoplay: 2000 // 循环时间
     };
@@ -1738,11 +1730,16 @@
     /**
      * 初始化
      */
+    /**
+     * 初始化
+     */
     Slider.prototype.init = function () {
         var _this = this;
         _this.index = 1;
         _this.autoPlayId = null;
-        _this.winWidth = _this.$element.width();
+        _this.$wrapper = _this.$element.find('.slider-wrapper');
+        _this.$pagination = _this.$element.find('.slider-pagination');
+        _this.createBullet();
         _this.cloneItem().bindEvent();
     };
 
@@ -1754,13 +1751,13 @@
 
         $('#J_Prev').on('click', function () {
 
-            var winWidth = _this.$element.width();
+            var _width = _this.$wrapper.width();
             if (_this.index == 0) {
                 _this.index = 3;
-                _this.setTranslate(0, -3 * winWidth);
+                _this.setTranslate(0, -3 * _width);
             }
 
-            _this.stop().move(--_this.index);
+            _this.move(--_this.index);
         });
 
         $('#J_Next').on('click', function () {
@@ -1770,12 +1767,12 @@
                 _this.setTranslate(0, 0);
             }
 
-            _this.stop().move(++_this.index);
+            _this.move(++_this.index);
         });
 
         var touchEvents = _this.touchEvents();
 
-        _this.$element.find('.slider-item')
+        _this.$wrapper.find('.slider-item')
             .on(touchEvents.start, function (e) {
                 _this.onTouchStart(e);
             }).on(touchEvents.move, function (e) {
@@ -1796,15 +1793,29 @@
      * @returns {Slider}
      */
     Slider.prototype.cloneItem = function () {
-        var _this = this;
-        var $element = _this.$element;
-        if (_this.options.loop) {
-            $element.prepend($element.find('.slider-item:last-child').clone());
-            $element.append($element.find('.slider-item:first-child').clone());
-        }
+        var _this = this,
+            $wrapper = _this.$wrapper;
+
+        var $f = $wrapper.find('.slider-item:first-child').clone();
+        var $l = $wrapper.find('.slider-item:last-child').clone();
+
+        $wrapper.prepend($l);
+        $wrapper.append($f);
+
         _this.setSlidesSize();
 
         return _this;
+    };
+
+    /**
+     * 创建点点点
+     */
+    Slider.prototype.createBullet = function () {
+        var _this = this;
+
+        var len = _this.$wrapper.find('.slider-item').length;
+
+        _this.$pagination.append('<span class="slider-pagination-active"></span>' + new Array(len).join('<span></span>'));
     };
 
     /**
@@ -1812,10 +1823,10 @@
      */
     Slider.prototype.setSlidesSize = function () {
         var _this = this,
-            winWidth = _this.$element.width();
+            _width = _this.$wrapper.width();
 
-        _this.$element.css('transform', 'translate3d(-' + winWidth + 'px,0,0)')
-            .find('.slider-item').css({width: winWidth});
+        _this.$wrapper.css('transform', 'translate3d(-' + _width + 'px,0,0)')
+            .find('.slider-item').css({width: _width});
     };
 
     /**
@@ -1841,8 +1852,9 @@
      * @returns {Slider}
      */
     Slider.prototype.stop = function () {
-        clearInterval(this.autoPlayId);
-        return this;
+        var _this = this;
+        clearInterval(_this.autoPlayId);
+        return _this;
     };
 
     /**
@@ -1850,10 +1862,8 @@
      * @param index
      */
     Slider.prototype.move = function (index) {
-
         var _this = this;
-
-        _this.setTranslate(_this.options.speed, -index * _this.$element.width());
+        _this.setTranslate(_this.options.speed, -index * _this.$wrapper.width());
     };
 
     /**
@@ -1862,10 +1872,25 @@
      * @param x 横向移动宽度
      */
     Slider.prototype.setTranslate = function (speed, x) {
-        this.$element.css({
+        var _this = this;
+
+        var index = _this.index % 3 >= 3 ? 0 : _this.index % 3 - 1;
+
+        !!_this.$pagination[0] && _this.$pagination.find('span')
+            .removeClass('slider-pagination-active')
+            .eq(index).addClass('slider-pagination-active');
+
+        _this.$wrapper.css({
             'transitionDuration': speed + 'ms',
             'transform': 'translate3d(' + x + 'px,0,0)'
         });
+    };
+
+    Slider.prototype.touches = {
+        moveTag: 0, // 移动状态(start,move,end)标记
+        startClientX: 0, // 起始拖动坐标
+        moveOffset: 0, // 移动偏移量（左右移动宽度）
+        touchStartTime: 0
     };
 
     /**
@@ -1880,20 +1905,23 @@
 
         var _this = this;
 
-        if (touches.moveTag == 0) {
-            touches.moveTag = 1;
+        if (_this.touches.moveTag == 0) {
+            _this.touches.moveTag = 1;
+
             // 记录鼠标起始拖动位置
-            touches.startClientX = event.clientX;
+            _this.touches.startClientX = event.clientX;
+            // 记录开始触摸时间
+            _this.touches.touchStartTime = Date.now();
 
             if (_this.index == 0) {
                 _this.index = 3;
-                _this.setTranslate(0, -3 * _this.$element.width());
+                _this.setTranslate(0, -3 * _this.$wrapper.width());
                 return;
             }
 
-            if (_this.index == 3) {
-                _this.index = 0;
-                _this.setTranslate(0, 0);
+            if (_this.index > 3) {
+                _this.index = 1;
+                _this.setTranslate(0, -_this.$wrapper.width());
             }
         }
     };
@@ -1910,20 +1938,16 @@
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        var deltaSlide = touches.moveOffset = event.clientX - touches.startClientX;
+        _this.stop();
 
-        if (deltaSlide == 0) {
-            touches.moveTag = 0;
-            return;
-        }
+        var deltaSlide = _this.touches.moveOffset = event.clientX - _this.touches.startClientX;
 
-        if (deltaSlide != 0 && touches.moveTag != 0) {
-
-            if (touches.moveTag == 1) {
-                touches.moveTag = 2;
+        if (deltaSlide != 0 && _this.touches.moveTag != 0) {
+            if (_this.touches.moveTag == 1) {
+                _this.touches.moveTag = 2;
             }
-            if (touches.moveTag == 2) {
-                _this.setTranslate(0, -_this.index * _this.$element.width() + deltaSlide);
+            if (_this.touches.moveTag == 2) {
+                _this.setTranslate(0, -_this.index * _this.$wrapper.width() + deltaSlide);
             }
         }
     };
@@ -1936,55 +1960,37 @@
         event.preventDefault();
 
         var _this = this,
-            winWidth = _this.$element.width();
+            moveOffset = _this.touches.moveOffset;
 
-        var moveOffset = touches.moveOffset;
+        if (_this.touches.moveTag == 2) {
+            _this.touches.moveTag = 0;
 
-        if (moveOffset == 0 && touches.moveTag == 1) {
-            touches.moveTag = 0;
-            _this.setTranslate(_this.options.speed, -_this.index * _this.$element.width());
-            return;
-        }
+            // 计算开始触摸到结束触摸时间，用以计算是否需要执行下一页
+            var timeDiff = Date.now() - _this.touches.touchStartTime;
 
-        if (touches.moveTag == 2) {
-            touches.moveTag = 0;
-
-            if (Math.abs(moveOffset) <= _this.$element.width() * .1) {
+            if (timeDiff > 300 && Math.abs(moveOffset) <= _this.$wrapper.width() * .5) {
                 // 弹回去
-                _this.setTranslate(_this.options.speed, -_this.index * _this.$element.width());
+                _this.setTranslate(_this.options.speed, -_this.index * _this.$wrapper.width());
             } else {
                 if (moveOffset > 0) {
-                    if (_this.index == 0) {
-                        _this.index = 3;
-                        _this.setTranslate(0, -3 * winWidth);
-                    }
-                    _this.stop().move(--_this.index);
+                    // 左移
+                    _this.move(--_this.index);
                 } else {
-                    if (_this.index == 3) {
-                        _this.index = 0;
-                        _this.setTranslate(0, 0);
-                    }
-                    _this.stop().move(++_this.index);
+                    // 右移
+                    _this.move(++_this.index);
                 }
             }
         }
     };
 
     /**
-     * 判断是否支持touch事件
-     * @type {*|boolean}
-     */
-    Slider.prototype.supportTouch = (win.Modernizr && !!Modernizr.touch) || (function () {
-        return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
-    })();
-
-    /**
-     * 当前设备事件
+     * 当前设备支持的事件
      * @type {{start, move, end}}
      */
     Slider.prototype.touchEvents = function () {
-        var _this = this,
-            supportTouch = _this.supportTouch;
+        var supportTouch = (win.Modernizr && !!Modernizr.touch) || (function () {
+                return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
+            })();
 
         return {
             start: supportTouch ? 'touchstart' : 'mousedown',
