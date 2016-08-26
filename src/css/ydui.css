@@ -149,7 +149,7 @@ table {
   margin: 0 auto;
   min-width: 300px;
   /* no */
-  padding-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
 }
 .mask-black {
   background-color: rgba(0, 0, 0, 0.4);
@@ -2872,7 +2872,7 @@ input[type="submit"].btn-hollow {
   -ms-flex-pack: center;
   justify-content: center;
 }
-.slider-pagination span {
+.slider-pagination > .slider-pagination-item {
   margin: 0 .08rem;
   width: 6px;
   height: 6px;
@@ -2880,6 +2880,6 @@ input[type="submit"].btn-hollow {
   border-radius: 100%;
   background-color: #B7D0E1;
 }
-.slider-pagination span.slider-pagination-active {
+.slider-pagination > .slider-pagination-item.slider-pagination-item-active {
   background-color: #FF0005;
 }

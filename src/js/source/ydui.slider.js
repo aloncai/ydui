@@ -1,7 +1,7 @@
 /**
  * Slider
  * TODO 图片懒加载
- * TODO 上一个 下一个
+ * TODO 鼠标移动上去不要停掉定时器
  */
 !function ($, win) {
     "use strict";
@@ -14,18 +14,23 @@
 
     Slider.DEFAULTS = {
         speed: 300, // 移动速度
-        autoplay: 2000 // 循环时间
+        autoplay: 3000, // 循环时间
+        bulletClass: 'slider-pagination-item',
+        bulletActiveClass: 'slider-pagination-item-active'
     };
 
     /**
      * 初始化
      */
     Slider.prototype.init = function () {
-        var _this = this;
+        var _this = this,
+            $element = _this.$element;
+
         _this.index = 1;
         _this.autoPlayId = null;
-        _this.$wrapper = _this.$element.find('.slider-wrapper');
-        _this.$pagination = _this.$element.find('.slider-pagination');
+        _this.$wrapper = $element.find('.slider-wrapper');
+        _this.$pagination = $element.find('.slider-pagination');
+        _this.itemNums = _this.$wrapper.find('.slider-item').length;
         _this.createBullet();
         _this.cloneItem().bindEvent();
     };
@@ -60,7 +65,7 @@
     Slider.prototype.cloneItem = function () {
         var _this = this,
             $wrapper = _this.$wrapper,
-            $sliderItem = $wrapper.find('.slider-item'),
+            $sliderItem = _this.$wrapper.find('.slider-item'),
             $firstChild = $sliderItem.filter(':first-child').clone(),
             $lastChild = $sliderItem.filter(':last-child').clone();
 
@@ -76,11 +81,10 @@
      * 创建点点点
      */
     Slider.prototype.createBullet = function () {
-        var _this = this;
+        var _this = this,
+            initActive = '<span class="' + (_this.options.bulletClass + ' ' + _this.options.bulletActiveClass) + '"></span>';
 
-        var len = _this.$wrapper.find('.slider-item').length;
-
-        _this.$pagination.append('<span class="slider-pagination-active"></span>' + new Array(len).join('<span></span>'));
+        _this.$pagination.append(initActive + new Array(_this.itemNums).join('<span class="' + _this.options.bulletClass + '"></span>'));
     };
 
     /**
@@ -90,8 +94,8 @@
         var _this = this,
             _width = _this.$wrapper.width();
 
-        _this.$wrapper.css('transform', 'translate3d(-' + _width + 'px,0,0)')
-            .find('.slider-item').css({width: _width});
+        _this.$wrapper.css('transform', 'translate3d(-' + _width + 'px,0,0)');
+        _this.$wrapper.find('.slider-item').css({width: _width});
     };
 
     /**
@@ -102,7 +106,7 @@
 
         _this.autoPlayId = setInterval(function () {
 
-            if (_this.index > 3) {
+            if (_this.index > _this.itemNums) {
                 _this.index = 1;
                 _this.setTranslate(0, -_this.$wrapper.width());
             }
@@ -126,13 +130,25 @@
      * 当前页码标识加高亮
      */
     Slider.prototype.activeBullet = function () {
-        var _this = this;
+        var _this = this,
+            itemNums = _this.itemNums,
+            bulletActiveClass = _this.options.bulletActiveClass;
 
-        var index = _this.index % 3 >= 3 ? 0 : _this.index % 3 - 1;
+        var index = _this.index % itemNums >= itemNums ? 0 : _this.index % itemNums - 1;
 
-        !!_this.$pagination[0] && _this.$pagination.find('span')
-            .removeClass('slider-pagination-active')
-            .eq(index).addClass('slider-pagination-active');
+        !!_this.$pagination[0] && _this.$pagination.find('.' + _this.options.bulletClass)
+            .removeClass(bulletActiveClass)
+            .eq(index).addClass(bulletActiveClass);
+    };
+
+    /**
+     * 延迟加载图片
+     */
+    Slider.prototype.loadImage = function () {
+        var _this = this,
+            $img = _this.$wrapper.find('.slider-item').eq(_this.index).find('img');
+
+        $img.data('load') != 1 && $img.attr('src', $img.data('src')).data('load', 1);
     };
 
     /**
@@ -143,6 +159,8 @@
     Slider.prototype.setTranslate = function (speed, x) {
         var _this = this;
 
+        _this.loadImage();
+
         _this.activeBullet();
 
         _this.$wrapper.css({
@@ -151,11 +169,14 @@
         });
     };
 
+    /**
+     * 处理滑动一些标识
+     */
     Slider.prototype.touches = {
         moveTag: 0, // 移动状态(start,move,end)标记
         startClientX: 0, // 起始拖动坐标
-        moveOffset: 0, // 移动偏移量（左右移动宽度）
-        touchStartTime: 0
+        moveOffset: 0, // 移动偏移量（左右拖动宽度）
+        touchStartTime: 0 // 开始触摸的时间点
     };
 
     /**
@@ -168,7 +189,8 @@
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        var _this = this;
+        var _this = this,
+            itemNums = _this.itemNums;
 
         if (_this.touches.moveTag == 0) {
             _this.touches.moveTag = 1;
@@ -179,12 +201,13 @@
             _this.touches.touchStartTime = Date.now();
 
             if (_this.index == 0) {
-                _this.index = 3;
-                _this.setTranslate(0, -3 * _this.$wrapper.width());
+                _this.index = itemNums;
+                _this.setTranslate(0, -itemNums * _this.$wrapper.width());
                 return;
             }
+            console.log(_this.index, itemNums);
+            if (_this.index > itemNums) {
 
-            if (_this.index > 3) {
                 _this.index = 1;
                 _this.setTranslate(0, -_this.$wrapper.width());
             }
@@ -233,7 +256,7 @@
         if (_this.touches.moveTag == 2) {
             _this.touches.moveTag = 0;
 
-            // 计算开始触摸到结束触摸时间，用以计算是否需要执行下一页
+            // 计算开始触摸到结束触摸时间，用以计算是否需要滑至下一页
             var timeDiff = Date.now() - _this.touches.touchStartTime;
 
             // 拖动时间超过300毫秒或者未拖动超过内容一半
@@ -280,6 +303,14 @@
             }
         });
     }
+
+    // 直接给Data API方式绑定事件
+    $(win).on('load', function () {
+        $('[data-ydui-slider]').each(function () {
+            var $this = $(this);
+            $this.slider(win.YDUI.util.parseOptions($this.data('ydui-slider')));
+        });
+    });
 
     $.fn.slider = Plugin;
 
