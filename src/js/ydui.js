@@ -1710,8 +1710,8 @@
 }(window, jQuery);
 /**
  * Slider
- * TODO 图片懒加载
- * TODO 鼠标移动上去不要停掉定时器
+ * TODO 超链接点击问题
+ * Dependency：[ydui.util.js]
  */
 !function ($, win) {
     "use strict";
@@ -1725,6 +1725,10 @@
     Slider.DEFAULTS = {
         speed: 300, // 移动速度
         autoplay: 3000, // 循环时间
+        lazyLoad: false, // 是否延迟加载图片 data-src=""
+        pagination: '',
+        wrapperClass: 'slider-wrapper',
+        slideClass: 'slider-item',
         bulletClass: 'slider-pagination-item',
         bulletActiveClass: 'slider-pagination-item-active'
     };
@@ -1734,14 +1738,19 @@
      */
     Slider.prototype.init = function () {
         var _this = this,
+            options = _this.options,
             $element = _this.$element;
 
         _this.index = 1;
         _this.autoPlayId = null;
-        _this.$wrapper = $element.find('.slider-wrapper');
-        _this.$pagination = $element.find('.slider-pagination');
-        _this.itemNums = _this.$wrapper.find('.slider-item').length;
+        _this.$pagination = $element.find(options.pagination);
+        _this.$wrapper = $element.find('.' + options.wrapperClass);
+        _this.itemNums = _this.$wrapper.find('.' + options.slideClass).length;
+
+        options.lazyLoad && _this.loadImage(0);
+
         _this.createBullet();
+
         _this.cloneItem().bindEvent();
     };
 
@@ -1752,7 +1761,7 @@
         var _this = this,
             touchEvents = _this.touchEvents();
 
-        _this.$wrapper.find('.slider-item')
+        _this.$wrapper.find('.' + _this.options.slideClass)
             .on(touchEvents.start, function (e) {
                 _this.onTouchStart(e);
             }).on(touchEvents.move, function (e) {
@@ -1765,7 +1774,7 @@
             _this.setSlidesSize();
         });
 
-        ~~_this.options.autoplay > 0 && _this.play();
+        ~~_this.options.autoplay > 0 && _this.autoplay();
     };
 
     /**
@@ -1775,7 +1784,7 @@
     Slider.prototype.cloneItem = function () {
         var _this = this,
             $wrapper = _this.$wrapper,
-            $sliderItem = _this.$wrapper.find('.slider-item'),
+            $sliderItem = _this.$wrapper.find('.' + _this.options.slideClass),
             $firstChild = $sliderItem.filter(':first-child').clone(),
             $lastChild = $sliderItem.filter(':last-child').clone();
 
@@ -1791,10 +1800,31 @@
      * 创建点点点
      */
     Slider.prototype.createBullet = function () {
-        var _this = this,
-            initActive = '<span class="' + (_this.options.bulletClass + ' ' + _this.options.bulletActiveClass) + '"></span>';
+
+        var _this = this;
+
+        if (!_this.$pagination[0])return;
+
+        var initActive = '<span class="' + (_this.options.bulletClass + ' ' + _this.options.bulletActiveClass) + '"></span>';
 
         _this.$pagination.append(initActive + new Array(_this.itemNums).join('<span class="' + _this.options.bulletClass + '"></span>'));
+    };
+
+    /**
+     * 当前页码标识加高亮
+     */
+    Slider.prototype.activeBullet = function () {
+        var _this = this;
+
+        if (!_this.$pagination[0])return;
+
+        var itemNums = _this.itemNums,
+            index = _this.index % itemNums >= itemNums ? 0 : _this.index % itemNums - 1,
+            bulletActiveClass = _this.options.bulletActiveClass;
+
+        !!_this.$pagination[0] && _this.$pagination.find('.' + _this.options.bulletClass)
+            .removeClass(bulletActiveClass)
+            .eq(index).addClass(bulletActiveClass);
     };
 
     /**
@@ -1805,13 +1835,13 @@
             _width = _this.$wrapper.width();
 
         _this.$wrapper.css('transform', 'translate3d(-' + _width + 'px,0,0)');
-        _this.$wrapper.find('.slider-item').css({width: _width});
+        _this.$wrapper.find('.' + _this.options.slideClass).css({width: _width});
     };
 
     /**
      * 自动播放
      */
-    Slider.prototype.play = function () {
+    Slider.prototype.autoplay = function () {
         var _this = this;
 
         _this.autoPlayId = setInterval(function () {
@@ -1830,35 +1860,22 @@
      * 停止播放
      * @returns {Slider}
      */
-    Slider.prototype.stop = function () {
+    Slider.prototype.stopAutoplay = function () {
         var _this = this;
         clearInterval(_this.autoPlayId);
         return _this;
     };
 
     /**
-     * 当前页码标识加高亮
-     */
-    Slider.prototype.activeBullet = function () {
-        var _this = this,
-            itemNums = _this.itemNums,
-            bulletActiveClass = _this.options.bulletActiveClass;
-
-        var index = _this.index % itemNums >= itemNums ? 0 : _this.index % itemNums - 1;
-
-        !!_this.$pagination[0] && _this.$pagination.find('.' + _this.options.bulletClass)
-            .removeClass(bulletActiveClass)
-            .eq(index).addClass(bulletActiveClass);
-    };
-
-    /**
      * 延迟加载图片
+     * @param index 索引
      */
-    Slider.prototype.loadImage = function () {
+    Slider.prototype.loadImage = function (index) {
         var _this = this,
-            $img = _this.$wrapper.find('.slider-item').eq(_this.index).find('img');
+            $img = _this.$wrapper.find('.' + _this.options.slideClass).eq(index).find('img'),
+            imgsrc = $img.data('src');
 
-        $img.data('load') != 1 && $img.attr('src', $img.data('src')).data('load', 1);
+        $img.data('load') != 1 && !!imgsrc && $img.attr('src', imgsrc).data('load', 1);
     };
 
     /**
@@ -1869,7 +1886,7 @@
     Slider.prototype.setTranslate = function (speed, x) {
         var _this = this;
 
-        _this.loadImage();
+        _this.options.lazyLoad && _this.loadImage(_this.index);
 
         _this.activeBullet();
 
@@ -1886,8 +1903,32 @@
         moveTag: 0, // 移动状态(start,move,end)标记
         startClientX: 0, // 起始拖动坐标
         moveOffset: 0, // 移动偏移量（左右拖动宽度）
-        touchStartTime: 0 // 开始触摸的时间点
+        touchStartTime: 0, // 开始触摸的时间点
+        lastClickTime: Date.now(),
+        clickTimeout: 0,
+        isTouchEvent: false
     };
+
+    function findElementInEvent(e, selector) {
+        var el = $(e.target);
+        if (!el.is(selector)) {
+            if (typeof selector === 'string') {
+                el = el.parents(selector);
+            }
+            else if (selector.nodeType) {
+                var found;
+                el.parents().each(function (index, _el) {
+                    if (_el === selector) found = selector;
+                });
+                if (!found) return undefined;
+                else return selector;
+            }
+        }
+        if (el.length === 0) {
+            return undefined;
+        }
+        return el[0];
+    }
 
     /**
      * 开始滑动
@@ -1899,11 +1940,17 @@
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        var _this = this,
-            itemNums = _this.itemNums;
+        var _this = this;
+
+        _this.touches.isTouchEvent = event.type === 'touchstart';
+
+        // 鼠标右键
+        if (!_this.touches.isTouchEvent && 'which' in event && event.which === 3) return;
 
         if (_this.touches.moveTag == 0) {
             _this.touches.moveTag = 1;
+
+            var itemNums = _this.itemNums;
 
             // 记录鼠标起始拖动位置
             _this.touches.startClientX = event.clientX;
@@ -1915,9 +1962,8 @@
                 _this.setTranslate(0, -itemNums * _this.$wrapper.width());
                 return;
             }
-            console.log(_this.index, itemNums);
-            if (_this.index > itemNums) {
 
+            if (_this.index > itemNums) {
                 _this.index = 1;
                 _this.setTranslate(0, -_this.$wrapper.width());
             }
@@ -1936,13 +1982,14 @@
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        _this.stop();
+        if (_this.touches.isTouchEvent && event.type === 'mousemove') return;
 
         // 拖动偏移量
         var deltaSlide = _this.touches.moveOffset = event.clientX - _this.touches.startClientX;
 
         if (deltaSlide != 0 && _this.touches.moveTag != 0) {
             if (_this.touches.moveTag == 1) {
+                _this.stopAutoplay();
                 _this.touches.moveTag = 2;
             }
             if (_this.touches.moveTag == 2) {
@@ -1997,19 +2044,13 @@
     };
 
     function Plugin(option) {
-        var args = Array.prototype.slice.call(arguments, 1);
-
         return this.each(function () {
 
             var $this = $(this),
                 slider = $this.data('ydui.slider');
 
             if (!slider) {
-                $this.data('ydui.slider', (slider = new Slider(this, option)));
-            }
-
-            if ($.type(option) == 'string') {
-                slider[option] && slider[option].apply(slider, args);
+                $this.data('ydui.slider', new Slider(this, option));
             }
         });
     }
