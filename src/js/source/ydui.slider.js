@@ -1,6 +1,5 @@
 /**
  * Slider
- * TODO 超链接点击问题
  * Dependency：[ydui.util.js]
  */
 !function ($, win) {
@@ -16,7 +15,7 @@
         speed: 300, // 移动速度
         autoplay: 3000, // 循环时间
         lazyLoad: false, // 是否延迟加载图片 data-src=""
-        pagination: '',
+        pagination: '.slider-pagination',
         wrapperClass: 'slider-wrapper',
         slideClass: 'slider-item',
         bulletClass: 'slider-pagination-item',
@@ -32,7 +31,7 @@
             $element = _this.$element;
 
         _this.index = 1;
-        _this.autoPlayId = null;
+        _this.autoPlayTimer = null;
         _this.$pagination = $element.find(options.pagination);
         _this.$wrapper = $element.find('.' + options.wrapperClass);
         _this.itemNums = _this.$wrapper.find('.' + options.slideClass).length;
@@ -64,7 +63,13 @@
             _this.setSlidesSize();
         });
 
-        ~~_this.options.autoplay > 0 && _this.autoplay();
+        ~~_this.options.autoplay > 0 && _this.autoPlay();
+
+        _this.$wrapper.on('click', function (e) {
+            if (!_this.touches.allowClick) {
+                e.preventDefault();
+            }
+        });
     };
 
     /**
@@ -131,10 +136,10 @@
     /**
      * 自动播放
      */
-    Slider.prototype.autoplay = function () {
+    Slider.prototype.autoPlay = function () {
         var _this = this;
 
-        _this.autoPlayId = setInterval(function () {
+        _this.autoPlayTimer = setInterval(function () {
 
             if (_this.index > _this.itemNums) {
                 _this.index = 1;
@@ -152,7 +157,7 @@
      */
     Slider.prototype.stopAutoplay = function () {
         var _this = this;
-        clearInterval(_this.autoPlayId);
+        clearInterval(_this.autoPlayTimer);
         return _this;
     };
 
@@ -194,58 +199,37 @@
         startClientX: 0, // 起始拖动坐标
         moveOffset: 0, // 移动偏移量（左右拖动宽度）
         touchStartTime: 0, // 开始触摸的时间点
-        lastClickTime: Date.now(),
-        clickTimeout: 0,
-        isTouchEvent: false
+        isTouchEvent: false, // 是否触摸事件
+        allowClick: false // 用于判断事件为点击还是拖动
     };
-
-    function findElementInEvent(e, selector) {
-        var el = $(e.target);
-        if (!el.is(selector)) {
-            if (typeof selector === 'string') {
-                el = el.parents(selector);
-            }
-            else if (selector.nodeType) {
-                var found;
-                el.parents().each(function (index, _el) {
-                    if (_el === selector) found = selector;
-                });
-                if (!found) return undefined;
-                else return selector;
-            }
-        }
-        if (el.length === 0) {
-            return undefined;
-        }
-        return el[0];
-    }
 
     /**
      * 开始滑动
      * @param event
      */
     Slider.prototype.onTouchStart = function (event) {
-        event.preventDefault();
-
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        var _this = this;
+        var _this = this,
+            touches = _this.touches;
 
-        _this.touches.isTouchEvent = event.type === 'touchstart';
+        touches.allowClick = true;
+
+        touches.isTouchEvent = event.type === 'touchstart';
 
         // 鼠标右键
-        if (!_this.touches.isTouchEvent && 'which' in event && event.which === 3) return;
+        if (!touches.isTouchEvent && 'which' in event && event.which === 3) return;
 
-        if (_this.touches.moveTag == 0) {
-            _this.touches.moveTag = 1;
-
-            var itemNums = _this.itemNums;
+        if (touches.moveTag == 0) {
+            touches.moveTag = 1;
 
             // 记录鼠标起始拖动位置
-            _this.touches.startClientX = event.clientX;
+            touches.startClientX = event.clientX;
             // 记录开始触摸时间
-            _this.touches.touchStartTime = Date.now();
+            touches.touchStartTime = Date.now();
+
+            var itemNums = _this.itemNums;
 
             if (_this.index == 0) {
                 _this.index = itemNums;
@@ -267,22 +251,26 @@
     Slider.prototype.onTouchMove = function (event) {
         event.preventDefault();
 
-        var _this = this;
-
         if (event.originalEvent.touches)
             event = event.originalEvent.touches[0];
 
-        if (_this.touches.isTouchEvent && event.type === 'mousemove') return;
+        var _this = this,
+            touches = _this.touches;
+
+        touches.allowClick = false;
+
+        if (touches.isTouchEvent && event.type === 'mousemove') return;
 
         // 拖动偏移量
-        var deltaSlide = _this.touches.moveOffset = event.clientX - _this.touches.startClientX;
+        var deltaSlide = touches.moveOffset = event.clientX - touches.startClientX;
 
-        if (deltaSlide != 0 && _this.touches.moveTag != 0) {
-            if (_this.touches.moveTag == 1) {
+        if (deltaSlide != 0 && touches.moveTag != 0) {
+
+            if (touches.moveTag == 1) {
                 _this.stopAutoplay();
-                _this.touches.moveTag = 2;
+                touches.moveTag = 2;
             }
-            if (_this.touches.moveTag == 2) {
+            if (touches.moveTag == 2) {
                 _this.setTranslate(0, -_this.index * _this.$wrapper.width() + deltaSlide);
             }
         }
@@ -290,21 +278,29 @@
 
     /**
      * 滑动后
-     * @param event
      */
-    Slider.prototype.onTouchEnd = function (event) {
-        event.preventDefault();
-
+    Slider.prototype.onTouchEnd = function () {
         var _this = this,
             speed = _this.options.speed,
             _width = _this.$wrapper.width(),
-            moveOffset = _this.touches.moveOffset;
+            touches = _this.touches,
+            moveOffset = touches.moveOffset;
 
-        if (_this.touches.moveTag == 2) {
-            _this.touches.moveTag = 0;
+        // 释放a链接点击跳转
+        setTimeout(function () {
+            touches.allowClick = true;
+        }, 0);
+
+        // 短暂点击并未拖动
+        if (touches.moveTag == 1) {
+            touches.moveTag = 0;
+        }
+
+        if (touches.moveTag == 2) {
+            touches.moveTag = 0;
 
             // 计算开始触摸到结束触摸时间，用以计算是否需要滑至下一页
-            var timeDiff = Date.now() - _this.touches.touchStartTime;
+            var timeDiff = Date.now() - touches.touchStartTime;
 
             // 拖动时间超过300毫秒或者未拖动超过内容一半
             if (timeDiff > 300 && Math.abs(moveOffset) <= _this.$wrapper.width() * .5) {
@@ -322,7 +318,7 @@
      * @type {{start, move, end}}
      */
     Slider.prototype.touchEvents = function () {
-        var supportTouch = (win.Modernizr && !!Modernizr.touch) || (function () {
+        var supportTouch = (win.Modernizr && !!win.Modernizr.touch) || (function () {
                 return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
             })();
 
