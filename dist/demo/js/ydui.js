@@ -1144,7 +1144,8 @@
 
     var $ = win.$,
         $body = $(win.document.body),
-        triggerEvent = win.YDUI.device.isMobile ? 'touchstart' : 'click';
+        isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+        triggerEvent = isMobile ? 'touchstart' : 'click';
 
     function KeyBoard(element, options) {
         this.$element = $(element);
