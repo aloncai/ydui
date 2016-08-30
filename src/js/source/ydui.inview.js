@@ -1,10 +1,11 @@
 /**
- * 判断元素是否处于可视窗口
+ * inView
  */
-!function ($, win) {
+!function (win) {
     "use strict";
 
-    var $doc = $(win.document);
+    var $ = win.$,
+        $doc = $(win.document);
 
     function InView(element, callback) {
         this.$element = $(element);
@@ -62,4 +63,4 @@
         });
     };
 
-}(jQuery, window);
+}(window);

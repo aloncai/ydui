@@ -1,29 +1,21 @@
 /**
  * ydui
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var ydui = {},
+    var $ = win.$ = jQuery,
         doc = win.document,
-        ua = win.navigator && win.navigator.userAgent || '';
+        ydui = {};
+
+    /**
+     * 直接绑定FastClick
+     */
+    $(win).on('load', function () {
+        typeof FastClick == 'function' && FastClick.attach(doc.body);
+    });
 
     ydui.util = {
-        /**
-         * 是否移动终端
-         * @return {Boolean}
-         */
-        isMobile: !!ua.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement,
-        /**
-         * 是否IOS终端
-         * @returns {boolean}
-         */
-        isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
-        /**
-         * 是否微信端
-         * @returns {boolean}
-         */
-        isWeixin: ua.indexOf('MicroMessenger') > -1,
         /**
          * 格式化参数
          * @param string
@@ -38,32 +30,55 @@
 
             if (start != -1) {
                 try {
-                    options = (new Function('',
-                        'var json = ' + string.substr(start) +
-                        '; return JSON.parse(JSON.stringify(json));'))();
+                    options = (new Function('', 'var json = ' + string.substr(start) + '; return JSON.parse(JSON.stringify(json));'))();
                 } catch (e) {
                 }
             }
             return options;
-        }
+        },
+        /**
+         * 页面滚动方法【移动端】
+         * @type {{lock, unlock}}
+         * lock：禁止页面滚动, unlock：释放页面滚动
+         */
+        pageScroll: function () {
+            var fn = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            var islock = false;
+
+            return {
+                lock: function () {
+                    if (islock)return;
+                    islock = true;
+                    doc.addEventListener('touchmove', fn);
+                },
+                unlock: function () {
+                    islock = false;
+                    doc.removeEventListener('touchmove', fn);
+                }
+            };
+        }()
     };
 
-    $(win).on('load', function () {
-        /* 直接绑定FastClick */
-        if (typeof FastClick == 'function') {
-            FastClick.attach(doc.body);
-        }
-    });
-
-    // http://blog.alexmaccaw.com/css-transitions
+    /**
+     * 判断css3动画是否执行完毕
+     * @git http://blog.alexmaccaw.com/css-transitions
+     * @param duration
+     */
     $.fn.emulateTransitionEnd = function (duration) {
-        var called = false, $el = this;
+        var called = false,
+            $el = this;
+
         $(this).one('webkitTransitionEnd', function () {
             called = true;
         });
+
         var callback = function () {
             if (!called) $($el).trigger('webkitTransitionEnd');
         };
+
         setTimeout(callback, duration);
     };
 
@@ -73,15 +88,15 @@
         win.YDUI = ydui;
     }
 
-}(window, jQuery);
+}(window);
 /**
  * ActionSheet
- * Dependency：[ydui.util.js]
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var doc = win.document,
+    var $ = win.$,
+        doc = win.document,
         $doc = $(doc),
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
@@ -167,15 +182,74 @@
 
     $.fn.actionSheet = Plugin;
 
-}(window, jQuery);
+}(window);
+/**
+ * device
+ */
+!function (win) {
+    var doc = win.document,
+        ydui = win.YDUI,
+        ua = win.navigator && win.navigator.userAgent || '';
+
+    var ipad = !!ua.match(/(iPad).*OS\s([\d_]+)/),
+        ipod = !!ua.match(/(iPod)(.*OS\s([\d_]+))?/),
+        iphone = !ipad && !!ua.match(/(iPhone\sOS)\s([\d_]+)/);
+
+    ydui.device = {
+        /**
+         * 是否移动终端
+         * @return {Boolean}
+         */
+        isMobile: !!ua.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement,
+        /**
+         * 是否IOS终端
+         * @returns {boolean}
+         */
+        isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+        /**
+         * 是否Android终端
+         * @returns {boolean}
+         */
+        isAndroid: !!ua.match(/(Android);?[\s\/]+([\d.]+)?/),
+        /**
+         * 是否ipad终端
+         * @returns {boolean}
+         */
+        isIpad: ipad,
+        /**
+         * 是否ipod终端
+         * @returns {boolean}
+         */
+        isIpod: ipod,
+        /**
+         * 是否iphone终端
+         * @returns {boolean}
+         */
+        isIphone: iphone,
+        /**
+         * 是否webview
+         * @returns {boolean}
+         */
+        isWebView: (iphone || ipad || ipod) && !!ua.match(/.*AppleWebKit(?!.*Safari)/i),
+        /**
+         * 是否微信端
+         * @returns {boolean}
+         */
+        isWeixin: ua.indexOf('MicroMessenger') > -1,
+        /**
+         * 设备像素比
+         */
+        pixelRatio: win.devicePixelRatio || 1
+    };
+}(window);
 /**
  * dialog
- * Dependency： ydui.pageScroll.js
  */
-!function (win, $, ydui) {
+!function (win, ydui) {
     "use strict";
 
-    var dialog = ydui.dialog = ydui.dialog || {},
+    var $ = win.$,
+        dialog = ydui.dialog = ydui.dialog || {},
         $body = $(win.document.body);
 
     /**
@@ -243,7 +317,7 @@
                     // 是否保留弹窗
                     if (!btnArr[p].stay) {
                         // 释放页面滚动
-                        ydui.pageScroll.unlock();
+                        ydui.util.pageScroll.unlock();
                         $dom.remove();
                     }
                     btnArr[p].callback && btnArr[p].callback();
@@ -255,7 +329,7 @@
         $dom.find('.m-confirm').append($btnBox);
 
         // 禁止滚动屏幕【移动端】
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
     };
@@ -279,13 +353,13 @@
         '   </div>' +
         '</div>').remove();
 
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
 
         $dom.find('a').on('click', function () {
             $dom.remove();
-            ydui.pageScroll.unlock();
+            ydui.util.pageScroll.unlock();
             $.type(callback) === 'function' && callback();
         });
     };
@@ -313,7 +387,7 @@
         '   </div>' +
         '</div>').remove();
 
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
 
@@ -324,7 +398,7 @@
 
         var inter = setTimeout(function () {
             clearTimeout(inter);
-            ydui.pageScroll.unlock();
+            ydui.util.pageScroll.unlock();
             $dom.remove();
             $.type(callback) === 'function' && callback();
         }, (~~timeout || 2000) + 100);//100为动画时间
@@ -362,19 +436,19 @@
                 '    </div>' +
                 '</div>').remove();
 
-                ydui.pageScroll.lock();
+                ydui.util.pageScroll.lock();
                 $body.append($dom);
             },
             /**
              * 加载中 - 隐藏
              */
             close: function () {
-                ydui.pageScroll.unlock();
+                ydui.util.pageScroll.unlock();
                 $('#YDUI_LOADING').remove();
             }
         };
     }();
-}(window, jQuery, YDUI);
+}(window, YDUI);
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -997,12 +1071,13 @@
     window.FastClick = FastClick;
 }();
 /**
- * 判断元素是否处于可视窗口
+ * inView
  */
-!function ($, win) {
+!function (win) {
     "use strict";
 
-    var $doc = $(win.document);
+    var $ = win.$,
+        $doc = $(win.document);
 
     function InView(element, callback) {
         this.$element = $(element);
@@ -1060,15 +1135,16 @@
         });
     };
 
-}(jQuery, window);
+}(window);
 /**
  * KeyBoard
  */
-!function ($, win) {
+!function (win) {
     "use strict";
 
-    var $body = $(win.document.body),
-        triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
+    var $ = win.$,
+        $body = $(win.document.body),
+        triggerEvent = win.YDUI.device.isMobile ? 'touchstart' : 'click';
 
     function KeyBoard(element, options) {
         this.$element = $(element);
@@ -1337,53 +1413,23 @@
 
     $.fn.keyBoard = Plugin;
 
-}(jQuery, window);
+}(window);
+/**
+ * LazyLoad
+ */
 !function () {
 
 }();
 /**
- * pageScroll
- */
-!function (win, ydui) {
-    "use strict";
-
-    var doc = win.document;
-
-    /**
-     * 页面滚动方法
-     * @type {{lock, unlock}}
-     * lock：禁止页面滚动, unlock：释放页面滚动
-     */
-    ydui.pageScroll = function () {
-        var fn = function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        };
-        var islock = false;
-
-        return {
-            lock: function () {
-                if (islock)return;
-                islock = true;
-                doc.addEventListener('touchmove', fn);
-            },
-            unlock: function () {
-                islock = false;
-                doc.removeEventListener('touchmove', fn);
-            }
-        };
-    }();
-
-}(window, YDUI);
-/**
  * ProgressBar
- * Dependency：[ydui.inview.js,ydui.util.js]
+ * Dependency：[ydui.inview.js]
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var doc = win.document,
+    var $ = win.$,
+        doc = win.document,
         util = win.YDUI.util;
 
     function Circle(element, options) {
@@ -1600,13 +1646,14 @@
 
     $.fn.progressBar = Plugin;
 
-}(window, jQuery);
+}(window);
 /**
- * 发生验证码倒计时
- * Dependency：[ydui.util.js]
+ * SendCode
  */
-!function (win, $) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function SendCode(element, options) {
         /**
@@ -1707,13 +1754,14 @@
 
     $.fn.sendCode = Plugin;
 
-}(window, jQuery);
+}(window);
 /**
  * Slider
- * Dependency：[ydui.util.js]
  */
-!function ($, win) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function Slider(element, options) {
         this.$element = $(element);
@@ -2061,13 +2109,14 @@
 
     $.fn.slider = Plugin;
 
-}(jQuery, window);
+}(window);
 /**
  * Tab
- * Dependency：[ydui.util.js]
  */
-!function (win, $) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function Tab(element, options) {
         this.$element = $(element);
@@ -2191,14 +2240,15 @@
 
     $.fn.tab = Plugin;
 
-}(window, jQuery);
+}(window);
 /**
  * util
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var util = win.YDUI.util = win.YDUI.util || {},
+    var $ = win.$,
+        util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 
     /**
@@ -2443,4 +2493,4 @@
         };
     }
 
-}(window, jQuery);
+}(window);

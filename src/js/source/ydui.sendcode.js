@@ -1,9 +1,10 @@
 /**
- * 发生验证码倒计时
- * Dependency：[ydui.util.js]
+ * SendCode
  */
-!function (win, $) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function SendCode(element, options) {
         /**
@@ -104,4 +105,4 @@
 
     $.fn.sendCode = Plugin;
 
-}(window, jQuery);
+}(window);

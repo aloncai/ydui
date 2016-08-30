@@ -1,9 +1,10 @@
 /**
  * Slider
- * Dependency：[ydui.util.js]
  */
-!function ($, win) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function Slider(element, options) {
         this.$element = $(element);
@@ -351,4 +352,4 @@
 
     $.fn.slider = Plugin;
 
-}(jQuery, window);
+}(window);

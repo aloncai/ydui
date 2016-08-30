@@ -1,11 +1,11 @@
 /**
  * ActionSheet
- * Dependency：[ydui.util.js]
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var doc = win.document,
+    var $ = win.$,
+        doc = win.document,
         $doc = $(doc),
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
@@ -91,4 +91,4 @@
 
     $.fn.actionSheet = Plugin;
 
-}(window, jQuery);
+}(window);

@@ -1,29 +1,21 @@
 /**
  * ydui
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var ydui = {},
+    var $ = win.$ = jQuery,
         doc = win.document,
-        ua = win.navigator && win.navigator.userAgent || '';
+        ydui = {};
+
+    /**
+     * 直接绑定FastClick
+     */
+    $(win).on('load', function () {
+        typeof FastClick == 'function' && FastClick.attach(doc.body);
+    });
 
     ydui.util = {
-        /**
-         * 是否移动终端
-         * @return {Boolean}
-         */
-        isMobile: !!ua.match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in doc.documentElement,
-        /**
-         * 是否IOS终端
-         * @returns {boolean}
-         */
-        isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
-        /**
-         * 是否微信端
-         * @returns {boolean}
-         */
-        isWeixin: ua.indexOf('MicroMessenger') > -1,
         /**
          * 格式化参数
          * @param string
@@ -38,32 +30,55 @@
 
             if (start != -1) {
                 try {
-                    options = (new Function('',
-                        'var json = ' + string.substr(start) +
-                        '; return JSON.parse(JSON.stringify(json));'))();
+                    options = (new Function('', 'var json = ' + string.substr(start) + '; return JSON.parse(JSON.stringify(json));'))();
                 } catch (e) {
                 }
             }
             return options;
-        }
+        },
+        /**
+         * 页面滚动方法【移动端】
+         * @type {{lock, unlock}}
+         * lock：禁止页面滚动, unlock：释放页面滚动
+         */
+        pageScroll: function () {
+            var fn = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            var islock = false;
+
+            return {
+                lock: function () {
+                    if (islock)return;
+                    islock = true;
+                    doc.addEventListener('touchmove', fn);
+                },
+                unlock: function () {
+                    islock = false;
+                    doc.removeEventListener('touchmove', fn);
+                }
+            };
+        }()
     };
 
-    $(win).on('load', function () {
-        /* 直接绑定FastClick */
-        if (typeof FastClick == 'function') {
-            FastClick.attach(doc.body);
-        }
-    });
-
-    // http://blog.alexmaccaw.com/css-transitions
+    /**
+     * 判断css3动画是否执行完毕
+     * @git http://blog.alexmaccaw.com/css-transitions
+     * @param duration
+     */
     $.fn.emulateTransitionEnd = function (duration) {
-        var called = false, $el = this;
+        var called = false,
+            $el = this;
+
         $(this).one('webkitTransitionEnd', function () {
             called = true;
         });
+
         var callback = function () {
             if (!called) $($el).trigger('webkitTransitionEnd');
         };
+
         setTimeout(callback, duration);
     };
 
@@ -73,4 +88,4 @@
         win.YDUI = ydui;
     }
 
-}(window, jQuery);
+}(window);

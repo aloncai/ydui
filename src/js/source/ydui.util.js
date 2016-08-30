@@ -1,10 +1,11 @@
 /**
  * util
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var util = win.YDUI.util = win.YDUI.util || {},
+    var $ = win.$,
+        util = win.YDUI.util = win.YDUI.util || {},
         doc = win.document;
 
     /**
@@ -249,4 +250,4 @@
         };
     }
 
-}(window, jQuery);
+}(window);

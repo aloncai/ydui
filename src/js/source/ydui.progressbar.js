@@ -1,12 +1,13 @@
 /**
  * ProgressBar
- * Dependency：[ydui.inview.js,ydui.util.js]
+ * Dependency：[ydui.inview.js]
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
-!function (win, $) {
+!function (win) {
     "use strict";
 
-    var doc = win.document,
+    var $ = win.$,
+        doc = win.document,
         util = win.YDUI.util;
 
     function Circle(element, options) {
@@ -223,4 +224,4 @@
 
     $.fn.progressBar = Plugin;
 
-}(window, jQuery);
+}(window);

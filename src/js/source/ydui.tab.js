@@ -1,9 +1,10 @@
 /**
  * Tab
- * Dependency：[ydui.util.js]
  */
-!function (win, $) {
+!function (win) {
     "use strict";
+
+    var $ = win.$;
 
     function Tab(element, options) {
         this.$element = $(element);
@@ -127,4 +128,4 @@
 
     $.fn.tab = Plugin;
 
-}(window, jQuery);
+}(window);

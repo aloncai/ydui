@@ -1,11 +1,12 @@
 /**
  * KeyBoard
  */
-!function ($, win) {
+!function (win) {
     "use strict";
 
-    var $body = $(win.document.body),
-        triggerEvent = win.YDUI.util.isMobile ? 'touchstart' : 'click';
+    var $ = win.$,
+        $body = $(win.document.body),
+        triggerEvent = win.YDUI.device.isMobile ? 'touchstart' : 'click';
 
     function KeyBoard(element, options) {
         this.$element = $(element);
@@ -274,4 +275,4 @@
 
     $.fn.keyBoard = Plugin;
 
-}(jQuery, window);
+}(window);

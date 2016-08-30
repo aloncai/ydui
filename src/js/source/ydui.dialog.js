@@ -1,11 +1,11 @@
 /**
  * dialog
- * Dependency： ydui.pageScroll.js
  */
-!function (win, $, ydui) {
+!function (win, ydui) {
     "use strict";
 
-    var dialog = ydui.dialog = ydui.dialog || {},
+    var $ = win.$,
+        dialog = ydui.dialog = ydui.dialog || {},
         $body = $(win.document.body);
 
     /**
@@ -73,7 +73,7 @@
                     // 是否保留弹窗
                     if (!btnArr[p].stay) {
                         // 释放页面滚动
-                        ydui.pageScroll.unlock();
+                        ydui.util.pageScroll.unlock();
                         $dom.remove();
                     }
                     btnArr[p].callback && btnArr[p].callback();
@@ -85,7 +85,7 @@
         $dom.find('.m-confirm').append($btnBox);
 
         // 禁止滚动屏幕【移动端】
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
     };
@@ -109,13 +109,13 @@
         '   </div>' +
         '</div>').remove();
 
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
 
         $dom.find('a').on('click', function () {
             $dom.remove();
-            ydui.pageScroll.unlock();
+            ydui.util.pageScroll.unlock();
             $.type(callback) === 'function' && callback();
         });
     };
@@ -143,7 +143,7 @@
         '   </div>' +
         '</div>').remove();
 
-        ydui.pageScroll.lock();
+        ydui.util.pageScroll.lock();
 
         $body.append($dom);
 
@@ -154,7 +154,7 @@
 
         var inter = setTimeout(function () {
             clearTimeout(inter);
-            ydui.pageScroll.unlock();
+            ydui.util.pageScroll.unlock();
             $dom.remove();
             $.type(callback) === 'function' && callback();
         }, (~~timeout || 2000) + 100);//100为动画时间
@@ -192,16 +192,16 @@
                 '    </div>' +
                 '</div>').remove();
 
-                ydui.pageScroll.lock();
+                ydui.util.pageScroll.lock();
                 $body.append($dom);
             },
             /**
              * 加载中 - 隐藏
              */
             close: function () {
-                ydui.pageScroll.unlock();
+                ydui.util.pageScroll.unlock();
                 $('#YDUI_LOADING').remove();
             }
         };
     }();
-}(window, jQuery, YDUI);
+}(window, YDUI);
