@@ -1482,12 +1482,13 @@
     }
 
     ProgressBar.DEFAULTS = {
-        strokeWidth: 4,
+        type: 'circle',
+        strokeWidth: 0,
         strokeColor: '#E5E5E5',
-        trailWidth: 4,
+        trailWidth: 0,
         trailColor: '#646464',
-        fill: null,
-        progress: .5
+        fill: '',
+        progress: 0
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -1556,6 +1557,10 @@
 
         var _this = this;
 
+        if (options.trailWidth == 0) {
+            options.trailWidth = options.strokeWidth;
+        }
+
         var pathString = _this.getPathString(options.trailWidth);
 
         return _this.createPathElement(pathString, options.trailColor, options.trailWidth);
@@ -1605,7 +1610,7 @@
         return rendered;
     };
 
-    function Plugin(option, type) {
+    function Plugin(option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -1613,7 +1618,8 @@
                 progressbar = $this.data('ydui.progressbar');
 
             if (!progressbar) {
-                if (type == 'line') {
+                console.log(option);
+                if (option.type == 'line') {
                     $this.data('ydui.progressbar', (progressbar = new Line(this, option)));
                 } else {
                     $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
@@ -1629,20 +1635,10 @@
         });
     }
 
-    $('[data-ydui-progressbar-cricle]').each(function () {
+    $('[data-ydui-progressbar]').each(function () {
         var $this = $(this);
 
-        var options = util.parseOptions($this.data('ydui-progressbar-cricle'));
-
-        Plugin.call($this, options, 'cricle');
-    });
-
-    $('[data-ydui-progressbar-line]').each(function () {
-        var $this = $(this);
-
-        var options = util.parseOptions($this.data('ydui-progressbar-line'));
-
-        Plugin.call($this, options, 'line');
+        Plugin.call($this, util.parseOptions($this.data('ydui-progressbar')));
     });
 
     $.fn.progressBar = Plugin;

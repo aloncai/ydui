@@ -32,7 +32,7 @@
         <div class="demo-progressbar demo-small-pitch">
             <div class="demo-progressbar-item">
                 <!-- 代码部分start -->
-                <div style="width: 2rem; height: 2rem;" class="progress-bar" data-ydui-progressbar-cricle="{progress: .1}" id="J_Progress2">
+                <div style="width: 2rem; height: 2rem;" class="progress-bar" data-ydui-progressbar="{type: 'cricle', strokeWidth: 4, progress: .1}">
                     <div class="progressbar-content">10%</div>
                 </div>
                 <!-- 代码部分end -->
@@ -48,13 +48,13 @@
         <div class="demo-progressbar demo-small-pitch">
             <div class="demo-progressbar-item">
                 <!-- 代码部分start -->
-                <div style="height: .15rem;width: 100%;" data-ydui-progressbar-line="{progress: .4, trailColor: '#FE5D51'}" id="J_Progress3"></div>
+                <div style="height: .15rem;width: 100%;" class="progress-bar" data-ydui-progressbar="{type: 'line', strokeWidth: 4, progress: .4, trailColor: '#FE5D51'}"></div>
                 <!-- 代码部分end -->
             </div>
         </div>
 
         <div class="m-button">
-            <a href="javascript:;" id="J_Set" class="btn-block btn-hollow">手动设置为80%</a>
+            <a href="javascript:;" id="J_Set" class="btn-block btn-hollow">手动设置右圈为80%</a>
         </div>
 
         <aside class="demo-tip demo-pitch">
@@ -79,6 +79,7 @@
      */
     !function($){
         $('#J_Progress1').progressBar({
+            type: 'circle',
             strokeWidth: 2,
             strokeColor: '#B2B2B2',
             trailWidth: 5,
@@ -89,7 +90,7 @@
 
         $('#J_Set').on('click', function () {
             // 手动设置进度为80%
-            $('#J_Progress1,#J_Progress2,#J_Progress3').progressBar('set', .8);
+            $('#J_Progress1').progressBar('set', .8);
         });
 
     }(jQuery);
