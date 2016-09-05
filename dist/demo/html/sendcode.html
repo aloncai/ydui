@@ -25,21 +25,9 @@
     </header>
 
     <aside class="demo-tip">
-        Data API 和 Javascript API方式调用都需手动触发【发送事件】，没有成功发送，就开始倒计时的都是流氓；两者的区别说白了就是一个参数写在标签上，一个写在js里。
+        SendCode 仅支持Javascript API方式调用，需手动触发【发送事件】。
     </aside>
 
-    <div class="m-celltitle">Data API</div>
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
-            <div class="cell-right">
-                <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
-                <a href="javascript:;" class="btn btn-warning" id="J_DataAPI" data-ydui-sendcode="{disClass: 'btn-disabled',secs: 25}">获取短信验证码</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="m-celltitle">Javascript API</div>
     <div class="m-cell">
         <div class="cell-item">
             <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
@@ -58,21 +46,6 @@
 
         var dialog = win.YDUI.dialog;
 
-        // ======================= Data API 调用 ↓↓↓↓↓↓ =======================
-
-        $('#J_DataAPI').on('click', function () {
-            var $this = $(this);
-            dialog.loading.open('发送中');
-            // ajax 成功发送验证码后调用【start】
-            setTimeout(function () { //模拟ajax发送
-                dialog.loading.close();
-                $this.sendCode('start');
-                dialog.toast('已发送', 'success', 1500);
-            }, 800);
-        });
-
-        // ======================= Javascript API 调用 ↓↓↓↓↓↓ =======================
-
         var $getCode = $('#J_GetCode');
 
         // 定义参数
@@ -85,9 +58,14 @@
         });
 
         $getCode.on('click', function () {
+            var $this = $(this);
+            dialog.loading.open('发送中');
             // ajax 成功发送验证码后调用【start】
-            $getCode.sendCode('start');
-            dialog.toast('已发送', 'success', 1500);
+            setTimeout(function () { //模拟ajax发送
+                dialog.loading.close();
+                $this.sendCode('start');
+                dialog.toast('已发送', 'success', 1500);
+            }, 800);
         });
 
     }(window, jQuery);
