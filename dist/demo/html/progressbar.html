@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=172320aa2fa03f682f05931a09e098d2"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=2ffdfaca8d56e579db3d157759b9f3d6"/>
     <link rel="stylesheet" href="../css/demo.css" />
     <!-- build:tb_flexible -->
     <script src="../js/ydui.flexible.js"></script>
@@ -39,7 +39,7 @@
             </div>
             <div class="demo-progressbar-item">
                 <!-- 代码部分start -->
-                <div style="width: 2rem; height: 2rem;" class="progress-bar" id="J_Progress1">
+                <div style="width: 2rem; height: 2rem;" class="progress-bar" id="J_Progress">
                     <div class="progressbar-content">40%</div>
                 </div>
                 <!-- 代码部分end -->
@@ -65,7 +65,7 @@
             <!-- 代码部分start -->
             <div class="demo-progressbar-item">
                 <div class="m-progressbar">
-                    <div class="trail-line" style="width: 50%;"></div>
+                    <div class="trail-line trail-line-bg" style="width: 50%;"></div>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
      * Javascript API调用ActionSheet
      */
     !function($){
-        $('#J_Progress1').progressBar({
+        $('#J_Progress').progressBar({
             type: 'circle',
             strokeWidth: 2,
             strokeColor: '#B2B2B2',
@@ -90,7 +90,7 @@
 
         $('#J_Set').on('click', function () {
             // 手动设置进度为80%
-            $('#J_Progress1').progressBar('set', .8);
+            $('#J_Progress').progressBar('set', .8);
         });
 
     }(jQuery);
