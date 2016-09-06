@@ -80,5 +80,4 @@
     }
 
     $.fn.sendCode = Plugin;
-
 }(window);
