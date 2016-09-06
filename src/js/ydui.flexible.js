@@ -13,8 +13,8 @@
     var recalc = (function refreshRem() {
         var clientWidth = docEl.getBoundingClientRect().width;
 
-        /* 8.55：为防止页面最小宽度过小[320px]，11：为防止页面最大宽度过大，导致PC端浏览页面丑陋 */
-        docEl.style.fontSize = Math.max(Math.min(20 * (clientWidth / docWidth), 11), 8.55) * 5 + 'px';
+        /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
+        docEl.style.fontSize = Math.max(Math.min(20 * (clientWidth / docWidth), 11.2), 8.55) * 5 + 'px';
 
         return refreshRem;
     })();
@@ -28,9 +28,4 @@
     if (!doc.addEventListener) return;
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
-
-    /* 解决:active这个高端洋气的CSS伪类不能使用问题，之所以放在这里，防止页面未引入ydui.js，也能正常使用:active */
-    doc.addEventListener('touchstart', function (event) {
-        /* do nothing */
-    }, false);
 }(window);
