@@ -273,11 +273,11 @@ table {
   background-color: #cccccc;
 }
 .btn-hollow {
-  background-color: #F7F7F7;
+  background-color: #FFF;
   color: #454545;
 }
 .btn-hollow:active {
-  background-color: #dedede;
+  background-color: #e6e6e6;
 }
 .btn-hollow:after {
   content: ' ';
