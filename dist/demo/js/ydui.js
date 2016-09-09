@@ -1626,7 +1626,6 @@
                 progressbar = $this.data('ydui.progressbar');
 
             if (!progressbar) {
-                console.log(option);
                 if (option.type == 'line') {
                     $this.data('ydui.progressbar', (progressbar = new Line(this, option)));
                 } else {

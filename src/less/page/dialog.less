@@ -7,17 +7,17 @@
   }
   0% {
     opacity: 0;
-    transform: translate3d(0, -3000px, 0); /* no */
+    transform: translate3d(0, -3000px, 0);
   }
   60% {
     opacity: 1;
-    transform: translate3d(0, 25px, 0); /* no */
+    transform: translate3d(0, 25px, 0);
   }
   75% {
-    transform: translate3d(0, -15px, 0); /* no */
+    transform: translate3d(0, -15px, 0);
   }
   90% {
-    transform: translate3d(0, 5px, 0); /* no */
+    transform: translate3d(0, 5px, 0);
   }
   to {
     transform: none;
@@ -31,9 +31,9 @@
   top: 30%;
   left: 50%;
   background-color: #FAFAFA;
-  border-radius: 3px; /* no */
+  border-radius: 3px;
   margin-left: -42.5%;
-  font-size: 15px; /* no */
+  font-size: 15px;
   animation: bounceInDown .3s ease forwards;
 }
 
@@ -41,16 +41,16 @@
   animation: zoomIn .25s ease forwards;
   .confirm-bd {
     text-align: center;
-    padding: 20px 20px 0 20px; /* no */
+    padding: 20px 20px 0 20px;
   }
   .confirm-ft {
-    margin-top: 14px; /* no */
+    margin-top: 14px;
   }
 }
 
 .confirm-hd {
   text-align: left;
-  padding: 15px 20px 5px; /* no */
+  padding: 15px 20px 5px;
   .confirm-title {
     font-weight: normal;
     color: #444;
@@ -59,16 +59,16 @@
 
 .confirm-bd {
   text-align: left;
-  padding: 0 20px; /* no */
-  font-size: 14px; /* no */
+  padding: 0 20px;
+  font-size: 14px;
   color: #888;
-  line-height: 20px; /* no */
+  line-height: 20px;
 }
 
 .confirm-ft {
   position: relative;
-  line-height: 40px; /* no */
-  margin-top: 14px; /* no */
+  line-height: 40px;
+  margin-top: 14px;
   display: flex;
   &:after {
     .top-line(@line-color);
@@ -78,7 +78,7 @@
     text-align: center;
     display: block;
     flex: 1;
-    padding: 0 2px; /* no */
+    padding: 0 2px;
     &:not(:last-child):after {
       .right-line(@line-color);
     }
@@ -110,28 +110,28 @@
 
 .m-toast {
   position: fixed;
-  width: 140px; /* no */
+  width: 140px;
   top: 25%;
   left: 50%;
-  margin-left: -70px; /* no */
+  margin-left: -70px;
   background: rgba(40, 40, 40, .75);
   text-align: center;
-  border-radius: 5px; /* no */
+  border-radius: 5px;
   color: #FFF;
   z-index: 999;
   animation: zoomIn .06s ease-in forwards;
 }
 
 .toast-content {
-  font-size: 14px; /* no */
-  padding: 0 10px 15px; /* no */
-  line-height: 22px; /* no */
+  font-size: 14px;
+  padding: 0 10px 15px;
+  line-height: 22px;
 }
 
 .toast-success-ico, .toast-error-ico {
-  margin: 22px 0 0; /* no */
+  margin: 22px 0 0;
   display: block;
-  margin-bottom: 10px; /* no */
+  margin-bottom: 10px;
   &:after {
     display: inline-block;
     content: '';
@@ -139,28 +139,28 @@
 }
 
 .toast-success-ico:after {
-  width: 50px; /* no */
-  height: 41px; /* no */
+  width: 50px;
+  height: 41px;
   background: url(@icon-success) no-repeat;
-  background-size: 50px 41px; /* no */
+  background-size: 50px 41px;
 }
 
 .toast-error-ico:after {
-  width: 40px; /* no */
-  height: 40px; /* no */
+  width: 40px;
+  height: 40px;
   background: url(@icon-error) no-repeat;
-  background-size: 40px 40px; /* no */
+  background-size: 40px 40px;
 }
 
 /* copy for weui. */
 .m-loading {
   position: fixed;
   z-index: 9999;
-  width: 120px; /* no */
+  width: 120px;
   top: 27%;
   left: 50%;
-  margin-left: -60px; /* no */
-  border-radius: 5px; /* no */
+  margin-left: -60px;
+  border-radius: 5px;
   color: #FFF;
   background-color: rgba(40, 40, 40, .75);
   text-align: center;
@@ -170,99 +170,99 @@
     width: 0;
     z-index: 99999;
     left: 50%;
-    top: 43px; /* no */
+    top: 43px;
   }
   .loading-txt {
-    margin: 75px 5px 15px; /* no */
-    font-size: 14px; /* no */
-    line-height: 20px; /* no */
+    margin: 75px 5px 15px;
+    font-size: 14px;
+    line-height: 20px;
   }
 }
 
 .loading-leaf {
   position: absolute;
-  top: -1px; /* no */
+  top: -1px;
   opacity: .25;
   &:before {
     content: '';
     position: absolute;
-    width: 10px; /* no */
-    height: 3px; /* no */
+    width: 10px;
+    height: 3px;
     background-color: rgb(209, 209, 213);
-    box-shadow: rgba(0, 0, 0, .098) 0 0 1px; /* no */
-    border-radius: 1px; /* no */
-    transform-origin: left 50% 0px; /* no */
+    box-shadow: rgba(0, 0, 0, .098) 0 0 1px;
+    border-radius: 1px;
+    transform-origin: left 50% 0px;
   }
   &-0 {
     animation: opacity-60-25-0-12 1.25s linear infinite;
     &:before {
-      transform: rotate(0deg) translate(10px, 0px); /* no */
+      transform: rotate(0deg) translate(10px, 0px);
     }
   }
   &-1 {
     animation: opacity-60-25-1-12 1.25s linear infinite;
     &:before {
-      transform: rotate(30deg) translate(10px, 0px); /* no */
+      transform: rotate(30deg) translate(10px, 0px);
     }
   }
   &-2 {
     animation: opacity-60-25-2-12 1.25s linear infinite;
     &:before {
-      transform: rotate(60deg) translate(10px, 0px); /* no */
+      transform: rotate(60deg) translate(10px, 0px);
     }
   }
   &-3 {
     animation: opacity-60-25-3-12 1.25s linear infinite;
     &:before {
-      transform: rotate(90deg) translate(10px, 0px); /* no */
+      transform: rotate(90deg) translate(10px, 0px);
     }
   }
   &-4 {
     animation: opacity-60-25-4-12 1.25s linear infinite;
     &:before {
-      transform: rotate(120deg) translate(10px, 0px); /* no */
+      transform: rotate(120deg) translate(10px, 0px);
     }
   }
   &-5 {
     animation: opacity-60-25-5-12 1.25s linear infinite;
     &:before {
-      transform: rotate(150deg) translate(10px, 0px); /* no */
+      transform: rotate(150deg) translate(10px, 0px);
     }
   }
   &-6 {
     animation: opacity-60-25-6-12 1.25s linear infinite;
     &:before {
-      transform: rotate(180deg) translate(10px, 0px); /* no */
+      transform: rotate(180deg) translate(10px, 0px);
     }
   }
   &-7 {
     animation: opacity-60-25-7-12 1.25s linear infinite;
     &:before {
-      transform: rotate(210deg) translate(10px, 0px); /* no */
+      transform: rotate(210deg) translate(10px, 0px);
     }
   }
   &-8 {
     animation: opacity-60-25-8-12 1.25s linear infinite;
     &:before {
-      transform: rotate(240deg) translate(10px, 0px); /* no */
+      transform: rotate(240deg) translate(10px, 0px);
     }
   }
   &-9 {
     animation: opacity-60-25-9-12 1.25s linear infinite;
     &:before {
-      transform: rotate(270deg) translate(10px, 0px); /* no */
+      transform: rotate(270deg) translate(10px, 0px);
     }
   }
   &-10 {
     animation: opacity-60-25-10-12 1.25s linear infinite;
     &:before {
-      transform: rotate(300deg) translate(10px, 0px); /* no */
+      transform: rotate(300deg) translate(10px, 0px);
     }
   }
   &-11 {
     animation: opacity-60-25-11-12 1.25s linear infinite;
     &:before {
-      transform: rotate(330deg) translate(10px, 0px); /* no */
+      transform: rotate(330deg) translate(10px, 0px);
     }
   }
 }

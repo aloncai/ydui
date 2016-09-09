@@ -1,6 +1,6 @@
 .m-celltitle {
   padding: .15rem @body-padding-vertical .1rem;
-  font-size: @cell-title-fontsize; /* px */
+  font-size: @cell-title-fontsize;
   text-align: left;
   color: @cell-title-color;
   position: relative;
@@ -35,7 +35,7 @@
 
 .cell-left {
   color: @cell-left-color;
-  font-size: @cell-left-fontsize; /* px */
+  font-size: @cell-left-fontsize;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
   min-height: @cell-height;
   color: @cell-right-color;
   text-align: right;
-  font-size: @cell-right-fontsize; /* px */
+  font-size: @cell-right-fontsize;
   padding-right: @body-padding-vertical;
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@
     & + .cell-radio-icon:after,
     & + .cell-checkbox-icon:after {
       font-family: @iconfont-inlay;
-      font-size: .44rem; /* px */
+      font-size: .44rem;
     }
     & + .cell-radio-icon:after {
       content: '\e600';
@@ -94,7 +94,7 @@
   height: @cell-height;
   border: none;
   line-height: 1.15;
-  font-size: @cell-input-fontsize; /* px */
+  font-size: @cell-input-fontsize;
   background: transparent;
   color: @cell-input-color;
   display: flex;
@@ -108,7 +108,7 @@
   border: none;
   display: block;
   color: @cell-select-color;
-  font-size: @cell-select-fontsize; /* px */
+  font-size: @cell-select-fontsize;
   margin-left: -.08rem; /* 去除select默认缩进 */
 }
 
@@ -116,7 +116,7 @@
   display: block;
   &:before, &:after {
     color: #A6A5A5;
-    font-size: @cell-icon-fontsize !important; /* px */
+    font-size: @cell-icon-fontsize !important;
     margin-right: .1rem;
   }
   img {
@@ -148,10 +148,10 @@
 .checkbox-ios {
   -webkit-appearance: none;
   position: relative;
-  width: 52px; /* no */
-  height: 32px; /* no */
-  border: 1px solid #DFDFDF; /* no */
-  border-radius: 16px; /* no */
+  width: 52px;
+  height: 32px;
+  border: 1px solid #DFDFDF;
+  border-radius: 16px;
   background-color: #DFDFDF;
   z-index: 2;
   &:before, &:after {
@@ -159,18 +159,18 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 30px; /* no */
-    border-radius: 15px; /* no */
+    height: 30px;
+    border-radius: 15px;
     transition: transform .3s;
   }
   &:before {
-    width: 50px; /* no */
+    width: 50px;
     background-color: #FDFDFD;
   }
   &:after {
-    width: 30px; /* no */
+    width: 30px;
     background-color: #FFF;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .4); /* no */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
   }
   &:checked {
     border-color: #4CD864;
@@ -179,7 +179,7 @@
       transform: scale(0);
     }
     &:after {
-      transform: translateX(20px); /* no */
+      transform: translateX(20px);
     }
   }
 }

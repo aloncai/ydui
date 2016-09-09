@@ -10,7 +10,6 @@
 body {
   background-color: #F5F5F5;
   font-size: 12px;
-  /* no */
   -webkit-font-smoothing: antialiased;
   font-family: arial, sans-serif;
 }
@@ -141,10 +140,8 @@ table {
 }
 .g-doc {
   max-width: 750px;
-  /* no */
   margin: 0 auto;
   min-width: 300px;
-  /* no */
   padding-bottom: 0.5rem;
 }
 .mask-black {
@@ -224,11 +221,9 @@ table {
   height: 0.7rem;
   line-height: 0.7rem;
   font-size: 0.26rem;
-  /* px */
   display: inline-block;
   padding: 0 .2rem;
   border-radius: 3px;
-  /* no */
 }
 .btn-block {
   text-align: center;
@@ -237,12 +232,10 @@ table {
   width: 100%;
   display: block;
   font-size: 0.36rem;
-  /* px */
   height: 1rem;
   line-height: 1rem;
   margin-top: 0.5rem;
   border-radius: 3px;
-  /* no */
 }
 .btn-primary {
   background-color: #04BE02;
@@ -291,19 +284,15 @@ table {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   border: 1px solid #B2B2B2;
-  /* no */
   border-radius: 6px;
-  /* no */
 }
 input[type="button"].btn-hollow,
 input[type="submit"].btn-hollow {
   border: 1px solid #B2B2B2;
-  /* no */
 }
 .hairline input[type="button"].btn-hollow,
 .hairline input[type="submit"].btn-hollow {
   border: 0.5px solid #B2B2B2;
-  /* no */
 }
 @-webkit-keyframes bounceInDown {
   from,
@@ -318,23 +307,19 @@ input[type="submit"].btn-hollow {
     opacity: 0;
     -webkit-transform: translate3d(0, -3000px, 0);
     transform: translate3d(0, -3000px, 0);
-    /* no */
   }
   60% {
     opacity: 1;
     -webkit-transform: translate3d(0, 25px, 0);
     transform: translate3d(0, 25px, 0);
-    /* no */
   }
   75% {
     -webkit-transform: translate3d(0, -15px, 0);
     transform: translate3d(0, -15px, 0);
-    /* no */
   }
   90% {
     -webkit-transform: translate3d(0, 5px, 0);
     transform: translate3d(0, 5px, 0);
-    /* no */
   }
   to {
     -webkit-transform: none;
@@ -354,23 +339,19 @@ input[type="submit"].btn-hollow {
     opacity: 0;
     -webkit-transform: translate3d(0, -3000px, 0);
     transform: translate3d(0, -3000px, 0);
-    /* no */
   }
   60% {
     opacity: 1;
     -webkit-transform: translate3d(0, 25px, 0);
     transform: translate3d(0, 25px, 0);
-    /* no */
   }
   75% {
     -webkit-transform: translate3d(0, -15px, 0);
     transform: translate3d(0, -15px, 0);
-    /* no */
   }
   90% {
     -webkit-transform: translate3d(0, 5px, 0);
     transform: translate3d(0, 5px, 0);
-    /* no */
   }
   to {
     -webkit-transform: none;
@@ -385,10 +366,8 @@ input[type="submit"].btn-hollow {
   left: 50%;
   background-color: #FAFAFA;
   border-radius: 3px;
-  /* no */
   margin-left: -42.5%;
   font-size: 15px;
-  /* no */
   -webkit-animation: bounceInDown .3s ease forwards;
   animation: bounceInDown .3s ease forwards;
 }
@@ -399,16 +378,13 @@ input[type="submit"].btn-hollow {
 .m-alert .confirm-bd {
   text-align: center;
   padding: 20px 20px 0 20px;
-  /* no */
 }
 .m-alert .confirm-ft {
   margin-top: 14px;
-  /* no */
 }
 .confirm-hd {
   text-align: left;
   padding: 15px 20px 5px;
-  /* no */
 }
 .confirm-hd .confirm-title {
   font-weight: normal;
@@ -417,19 +393,14 @@ input[type="submit"].btn-hollow {
 .confirm-bd {
   text-align: left;
   padding: 0 20px;
-  /* no */
   font-size: 14px;
-  /* no */
   color: #888;
   line-height: 20px;
-  /* no */
 }
 .confirm-ft {
   position: relative;
   line-height: 40px;
-  /* no */
   margin-top: 14px;
-  /* no */
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -445,7 +416,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-top: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -460,7 +430,6 @@ input[type="submit"].btn-hollow {
   -ms-flex: 1;
   flex: 1;
   padding: 0 2px;
-  /* no */
 }
 .confirm-ft > a:not(:last-child):after {
   content: '';
@@ -470,7 +439,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -511,15 +479,12 @@ input[type="submit"].btn-hollow {
 .m-toast {
   position: fixed;
   width: 140px;
-  /* no */
   top: 25%;
   left: 50%;
   margin-left: -70px;
-  /* no */
   background: rgba(40, 40, 40, 0.75);
   text-align: center;
   border-radius: 5px;
-  /* no */
   color: #FFF;
   z-index: 999;
   -webkit-animation: zoomIn 0.06s ease-in forwards;
@@ -527,19 +492,14 @@ input[type="submit"].btn-hollow {
 }
 .toast-content {
   font-size: 14px;
-  /* no */
   padding: 0 10px 15px;
-  /* no */
   line-height: 22px;
-  /* no */
 }
 .toast-success-ico,
 .toast-error-ico {
   margin: 22px 0 0;
-  /* no */
   display: block;
   margin-bottom: 10px;
-  /* no */
 }
 .toast-success-ico:after,
 .toast-error-ico:after {
@@ -548,34 +508,25 @@ input[type="submit"].btn-hollow {
 }
 .toast-success-ico:after {
   width: 50px;
-  /* no */
   height: 41px;
-  /* no */
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABSCAMAAACVH4HWAAACH1BMVEX////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9O2oTAAAAtHRSTlMAAQIEBQYHCAkKCw0ODxAREhQVFhcYGRobHB0gISIkJSYnKCkqKy4vMDM1Nzg5Ojw+QEJDREZHSElKTE9VVldYWltdXl9gYWJlZmdoaWprbG5zd3h6e3x9fn+AgoOFhoiJiouNjpCSlJWYmZqbnJ2eoKKjpKaoqausrq+wtLa3ubq7vL2+wcLFxsfIy83Oz9DR0tPV19jZ2tvc3d7f4OHm5+jp6uvs7e7v8PL19/j5+vv8/f6CNheHAAACzElEQVQYGbXBCVtMUQAG4G9KJUok2cmSCNkqIbIURbRIlrIrRAhZUgoJpc1ehKK0yGR8P9CD1F3O3Lkzc877QqlFJTV7A6BUeMkgyYYYKBT3ln81h0CZjYMcVQJVNo/wvyoospvjjkGNPI57MRFKFFNjH5Qoo8YdKFFJjTdhUCD0PjU+L4MC0Y3UcG6AAvM6qbUNCqz4QK0jUGD1ELUuQ4HkAWrVTYB8O35Rqy0c8uVQp38J5DtFneFEyFdGvQxI57hDvQJIN/Eu9cohXVgT9aoh3bwm6rVMg2yxPdTrnQvZ1vdSz5UC2Tb/oMF2yJZBowLIlkOjS5DtEI3qIdtZGrXMgFwBN2j0aT7kCrpHI1ci5Ip+QpNMWAieG+WAdyLbaVIE9yafeD3wpX4LvLH8PU0uwL0FzfzrSjBsS/hKkzoH3Apq5aj2xbBpk5Mm7dPg3n6O6U+BLalOmnTHwcJNapyGDbk0+5kAK1epdXsKPMmjQBYsZVDnXQysXaBAPqxFfqRO31ZYuUaBCnhykAZH4VZoDQVq4Nl9GlSFQSy8gQKdEfBszhcadKyCyMwWCnyMhR2pNBpOhdnCVxRwrYc952hS6oBBfC9FdsGmwGc0eRQFnaQBihTDtqW9NOlaCY2dFLoCL2TQ7HsmxhygUHUAvFFCgVKMKqTQyzB4JeQpBR7OwR9nKNQXBy/F9VOgJwFAOYWcSfBaGoXSUUmxHfDBRYoMtI5Q6DB8EdJIL1yHb5YN0bb6YPgom3Y9j4DPymlPfwx8N+kN7XBthD/WOWnDHvgni54Vwl+V9OQq/BbeTGu1kCB+hFZaoiFDLi18i4EcFXQvGZJM7aA76ZAmmW4UQaJ8CpVDqloKPA6EVLM6adI2HZIl0ag7FtIVUc+1FgrcpU42VJjdRY3jUGMDx12EKof4X50DyhTzn4YIKJTWTdJ1MghKzTj/4NYa+Os3kb93+haplFoAAAAASUVORK5CYII=') no-repeat;
   background-size: 50px 41px;
-  /* no */
 }
 .toast-error-ico:after {
   width: 40px;
-  /* no */
   height: 40px;
-  /* no */
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAMAAAC5zwKfAAACwVBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8rW7LaAAAA6nRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAkJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERkdJSktMTU5PUFFTVFZXWFlaW1xdXl9gYWJjZGZnaGlqa2xvcHFyc3R1dnd4eXp7fH1+f4CBgoSFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam52foKGio6SlpqeoqaqrrK2ur7GytLW2t7i5uru8vb6/wMHCw8TFyMnKy8zNzs/Q0dLT1NXW19na29zd3t/g4eLj5OXm5+jp6uvs7e7w8fLz9PX29/j5+vv8/f6tqYiUAAAEt0lEQVQYGa3BiWOOBQDH8d/YELOxWGUraTkqt0quhaQcuVKOLoucCZkMIyJHVKOYKMdMskjTlKMVDbEwM7KhYSL7/hW9z/tur/d5Pc97bO/no5AYmk/RSIXOhximKFRG4HRMIVLrDE5/11ZoTMIlWwGo12n0nDWZ2fv2ZWeuThnVoa4snMTpanP5EfHcqt9uYFKWu6JnTZn1Ze+E1yclvxwl33qmX8ZQfip7U9rKlWmb957GqeTLRHkaM0L+1X4zH4fCdZN7xMrtvsQp68/j8OfocFUKqxMmv5L+AS6u6CgLnT8rAa6MlreoAcu3LWwsC4nFwK99ZOvFw8C5zjJZhKHoYXmrnQH83FY+dToEfBWhO8LaLMIwT166lUJRb/nV/wIUd5KnATikyOxdYJkCEf45ME6eRsOeSJmkwY3uClCfm7BKnpp2CZfJNsiNVMAaH4ct8iELNiko22GrbG2BNQpSOqyXjWWwVkHbDKmylASZqoLdMFwW2sCxCFXBPSehpe5SI48bzVQlj8N+3WUejFQVjYEZ8tIaNqrKtsNjMttJWZyqLAG+lsmzME3VMBO6y9MeToSpGqJL+F4eEmGcqmUqtNMdaVysr2qJLuFTucWWMVfVtJirjVQpCVrIS6tuDWUrpntzeekMr6nSLg7KrGsBsFg2lgOn2sssl42q0KCU92XyJE6rZWkrTu1kMouSunLpDR1l8gMuXWUhEZcMmTwFveQym4IweWpyG5c5spCKS3Edeap3iQ/kspMtMnmICvNlYREulyNlks23cmp0llSZHcLlBVnoj8sumS3lpJzawRsy64fTTln6Bae+MnuLaw1lGAA95WUUDln1ZanBHqD8JXnpDY/IMAZayVv08HHtZKvDO0Pry9sT8IwMMyBeIfAQ9JMhlesxCoHG/zJEhoWURikEoksZIcMCrjVUCNxbxjAZkrn9gEIgDgbIMBYeVQi0gB4yDIEuCoEe0EqGp+EVhcBIbsXKEFdMsvyIHz4sTn6kUhAmpxzWyrd5OMyUb9v5US5LOSqftuKULl9qFvKRXAZBgnwYT4Wx8qElDJRLPLwtezFXqFAcKXtjuXm/KhwgS/aScBsie7vIUqWZ3I6TrbW4rZatBJioSs1hrGzl4nZQtqZDgtwyOSI7Nc/hVhgmO0fJ0B1DYZBsRJzH7UJN2RgOfeThGNmycxS3I7LzB4flaRQMkY2tuG2SjRHwqkzyyK8ha9NxS5K1uoXsk1l/mC1rCVQqf1DWlsPz8rIBusjacioskbVE+ELeml7naLgs1TqOU66sRZ3jQrTuMhi2yFqDAzjkRMtaBgyUhZWQIhu9VizrIRsfw1xZ2g0TFbRpsEPWok5AkoI0Hg7XkI3YQpisoMyE/BjZijsLnygIaXAmVj40OAb76ylAMbnwe235lgk3+ysgg8vhG/k1A9jWSH7FZQETFYAORVA+p658qr8A+Ku1ArMQuJnSSLZi598CUhSwJjtx2NGnhiyE98vCISNWwUjYjEPp9nFtI+ShVvsJ313DYUMzBatp8mkMV35atzh5fFLShFlL0nNKMeRPj1eVdF647z+83MpJ7ahqaNj7vfScvIJLpaUlBXl7103tFSV//gdBGS+HTn1vcwAAAABJRU5ErkJggg==') no-repeat;
   background-size: 40px 40px;
-  /* no */
 }
 /* copy for weui. */
 .m-loading {
   position: fixed;
   z-index: 9999;
   width: 120px;
-  /* no */
   top: 27%;
   left: 50%;
   margin-left: -60px;
-  /* no */
   border-radius: 5px;
-  /* no */
   color: #FFF;
   background-color: rgba(40, 40, 40, 0.75);
   text-align: center;
@@ -588,37 +539,27 @@ input[type="submit"].btn-hollow {
   z-index: 99999;
   left: 50%;
   top: 43px;
-  /* no */
 }
 .m-loading .loading-txt {
   margin: 75px 5px 15px;
-  /* no */
   font-size: 14px;
-  /* no */
   line-height: 20px;
-  /* no */
 }
 .loading-leaf {
   position: absolute;
   top: -1px;
-  /* no */
   opacity: .25;
 }
 .loading-leaf:before {
   content: '';
   position: absolute;
   width: 10px;
-  /* no */
   height: 3px;
-  /* no */
   background-color: #d1d1d5;
   box-shadow: rgba(0, 0, 0, 0.098) 0 0 1px;
-  /* no */
   border-radius: 1px;
-  /* no */
   -webkit-transform-origin: left 50% 0px;
   transform-origin: left 50% 0px;
-  /* no */
 }
 .loading-leaf-0 {
   -webkit-animation: opacity-60-25-0-12 1.25s linear infinite;
@@ -627,7 +568,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-0:before {
   -webkit-transform: rotate(0deg) translate(10px, 0px);
   transform: rotate(0deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-1 {
   -webkit-animation: opacity-60-25-1-12 1.25s linear infinite;
@@ -636,7 +576,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-1:before {
   -webkit-transform: rotate(30deg) translate(10px, 0px);
   transform: rotate(30deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-2 {
   -webkit-animation: opacity-60-25-2-12 1.25s linear infinite;
@@ -645,7 +584,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-2:before {
   -webkit-transform: rotate(60deg) translate(10px, 0px);
   transform: rotate(60deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-3 {
   -webkit-animation: opacity-60-25-3-12 1.25s linear infinite;
@@ -654,7 +592,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-3:before {
   -webkit-transform: rotate(90deg) translate(10px, 0px);
   transform: rotate(90deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-4 {
   -webkit-animation: opacity-60-25-4-12 1.25s linear infinite;
@@ -663,7 +600,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-4:before {
   -webkit-transform: rotate(120deg) translate(10px, 0px);
   transform: rotate(120deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-5 {
   -webkit-animation: opacity-60-25-5-12 1.25s linear infinite;
@@ -672,7 +608,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-5:before {
   -webkit-transform: rotate(150deg) translate(10px, 0px);
   transform: rotate(150deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-6 {
   -webkit-animation: opacity-60-25-6-12 1.25s linear infinite;
@@ -681,7 +616,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-6:before {
   -webkit-transform: rotate(180deg) translate(10px, 0px);
   transform: rotate(180deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-7 {
   -webkit-animation: opacity-60-25-7-12 1.25s linear infinite;
@@ -690,7 +624,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-7:before {
   -webkit-transform: rotate(210deg) translate(10px, 0px);
   transform: rotate(210deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-8 {
   -webkit-animation: opacity-60-25-8-12 1.25s linear infinite;
@@ -699,7 +632,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-8:before {
   -webkit-transform: rotate(240deg) translate(10px, 0px);
   transform: rotate(240deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-9 {
   -webkit-animation: opacity-60-25-9-12 1.25s linear infinite;
@@ -708,7 +640,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-9:before {
   -webkit-transform: rotate(270deg) translate(10px, 0px);
   transform: rotate(270deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-10 {
   -webkit-animation: opacity-60-25-10-12 1.25s linear infinite;
@@ -717,7 +648,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-10:before {
   -webkit-transform: rotate(300deg) translate(10px, 0px);
   transform: rotate(300deg) translate(10px, 0px);
-  /* no */
 }
 .loading-leaf-11 {
   -webkit-animation: opacity-60-25-11-12 1.25s linear infinite;
@@ -726,7 +656,6 @@ input[type="submit"].btn-hollow {
 .loading-leaf-11:before {
   -webkit-transform: rotate(330deg) translate(10px, 0px);
   transform: rotate(330deg) translate(10px, 0px);
-  /* no */
 }
 @-webkit-keyframes opacity-60-25-0-12 {
   0% {
@@ -1139,7 +1068,6 @@ input[type="submit"].btn-hollow {
 .m-celltitle {
   padding: 0.15rem 0.24rem 0.1rem;
   font-size: 0.3rem;
-  /* px */
   text-align: left;
   color: #888;
   position: relative;
@@ -1154,7 +1082,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1175,7 +1102,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1209,7 +1135,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1218,7 +1143,6 @@ input[type="submit"].btn-hollow {
 .cell-left {
   color: #333;
   font-size: 0.3rem;
-  /* px */
   white-space: nowrap;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1239,7 +1163,6 @@ input[type="submit"].btn-hollow {
   color: #525252;
   text-align: right;
   font-size: 0.26rem;
-  /* px */
   padding-right: 0.24rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1272,7 +1195,6 @@ input[type="submit"].btn-hollow {
 .cell-right input[type="checkbox"]:not(.checkbox-ios) + .cell-checkbox-icon:after {
   font-family: 'YDUI-INLAY';
   font-size: .44rem;
-  /* px */
 }
 .cell-right input[type="radio"] + .cell-radio-icon:after,
 .cell-right input[type="checkbox"]:not(.checkbox-ios) + .cell-radio-icon:after {
@@ -1303,7 +1225,6 @@ input[type="submit"].btn-hollow {
   border: none;
   line-height: 1.15;
   font-size: 0.3rem;
-  /* px */
   background: transparent;
   color: #555;
   display: -webkit-box;
@@ -1327,7 +1248,6 @@ input[type="submit"].btn-hollow {
   display: block;
   color: #A9A9A9;
   font-size: 0.3rem;
-  /* px */
   margin-left: -0.08rem;
   /* 去除select默认缩进 */
 }
@@ -1338,7 +1258,6 @@ input[type="submit"].btn-hollow {
 .cell-icon:after {
   color: #A6A5A5;
   font-size: 0.42rem !important;
-  /* px */
   margin-right: .1rem;
 }
 .cell-icon img {
@@ -1366,13 +1285,9 @@ input[type="submit"].btn-hollow {
   -webkit-appearance: none;
   position: relative;
   width: 52px;
-  /* no */
   height: 32px;
-  /* no */
   border: 1px solid #DFDFDF;
-  /* no */
   border-radius: 16px;
-  /* no */
   background-color: #DFDFDF;
   z-index: 2;
 }
@@ -1383,9 +1298,7 @@ input[type="submit"].btn-hollow {
   top: 0;
   left: 0;
   height: 30px;
-  /* no */
   border-radius: 15px;
-  /* no */
   -webkit-transition: -webkit-transform .3s;
   transition: -webkit-transform .3s;
   transition: transform .3s;
@@ -1393,15 +1306,12 @@ input[type="submit"].btn-hollow {
 }
 .checkbox-ios:before {
   width: 50px;
-  /* no */
   background-color: #FDFDFD;
 }
 .checkbox-ios:after {
   width: 30px;
-  /* no */
   background-color: #FFF;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  /* no */
 }
 .checkbox-ios:checked {
   border-color: #4CD864;
@@ -1414,7 +1324,6 @@ input[type="submit"].btn-hollow {
 .checkbox-ios:checked:after {
   -webkit-transform: translateX(20px);
   transform: translateX(20px);
-  /* no */
 }
 .m-grids-2 {
   overflow: hidden;
@@ -1431,7 +1340,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1448,7 +1356,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -1469,7 +1376,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1486,7 +1392,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -1507,7 +1412,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1524,7 +1428,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -1545,7 +1448,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1562,7 +1464,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -1574,7 +1475,6 @@ input[type="submit"].btn-hollow {
   position: relative;
   padding: 0.4rem 0;
   font-size: 0.28rem;
-  /* px */
 }
 .grids-item:after {
   content: '';
@@ -1586,7 +1486,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1818,7 +1717,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -1842,7 +1740,6 @@ input[type="submit"].btn-hollow {
   -ms-flex-align: center;
   align-items: center;
   font-size: 0.3rem;
-  /* px */
   white-space: nowrap;
   overflow: hidden;
   color: #5C5C5C;
@@ -1898,7 +1795,6 @@ input[type="submit"].btn-hollow {
   width: 50%;
   margin-left: 25%;
   font-size: 0.4rem;
-  /* px */
   color: #5C5C5C;
 }
 .nav-center img {
@@ -1931,7 +1827,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-top: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -1977,9 +1872,7 @@ input[type="submit"].btn-hollow {
 .tabbar-dot {
   display: block;
   width: 10px;
-  /* no */
   height: 10px;
-  /* no */
   background-color: #EF4F4F;
   border-radius: 50%;
   position: absolute;
@@ -2012,7 +1905,6 @@ input[type="submit"].btn-hollow {
 .tabbar-txt {
   display: inline-block;
   font-size: 0.24rem;
-  /* px */
 }
 .m-list {
   overflow: hidden;
@@ -2034,7 +1926,6 @@ input[type="submit"].btn-hollow {
 .m-list .list-ft .title {
   color: #505050;
   font-size: .26rem;
-  /* px */
   text-align: justify;
 }
 .m-list .list-ft .item {
@@ -2060,17 +1951,14 @@ input[type="submit"].btn-hollow {
 }
 .m-list .list-ft .d-price {
   font-size: .3rem;
-  /* px */
   color: #EB5211;
 }
 .m-list .list-ft .d-price > em {
   font-size: .22rem;
-  /* px */
 }
 .m-list .list-ft .del-price {
   padding-left: .06rem;
   font-size: .2rem;
-  /* px */
   margin-left: .02rem;
   position: relative;
   color: #8C8C8C;
@@ -2085,7 +1973,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #8C8C8C;
   border-top: 1px solid #8C8C8C;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -2095,15 +1982,12 @@ input[type="submit"].btn-hollow {
 }
 .list-theme1 {
   padding: 0 2px;
-  /* no */
 }
 .list-theme1 .list-item {
   width: 50%;
   float: left;
   padding: 0 2px;
-  /* no */
   margin-top: 4px;
-  /* no */
 }
 .list-theme1 .list-item .list-ft {
   padding: .1rem;
@@ -2120,15 +2004,12 @@ input[type="submit"].btn-hollow {
   width: 50%;
   float: left;
   padding-top: 4px;
-  /* no */
 }
 .list-theme2 .list-item:nth-child(odd) {
   padding-right: 2px;
-  /* no */
 }
 .list-theme2 .list-item:nth-child(even) {
   padding-left: 2px;
-  /* no */
 }
 .list-theme2 .list-item .list-ft {
   padding: .1rem;
@@ -2158,7 +2039,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -2172,7 +2052,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -2191,7 +2070,6 @@ input[type="submit"].btn-hollow {
 }
 .list-theme4 {
   padding: 0 7px;
-  /* no */
   background-color: #FFF;
 }
 .list-theme4 .list-item {
@@ -2201,7 +2079,6 @@ input[type="submit"].btn-hollow {
   display: -ms-flexbox;
   display: flex;
   padding: 7px 0 8px 0;
-  /* no */
   position: relative;
 }
 .list-theme4 .list-item:not(:last-child):after {
@@ -2214,7 +2091,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -2230,7 +2106,6 @@ input[type="submit"].btn-hollow {
   -ms-flex: 1;
   flex: 1;
   padding-left: 7px;
-  /* no */
 }
 .list-theme4 .list-item .list-ft .title {
   overflow: hidden;
@@ -2263,7 +2138,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -2278,33 +2152,25 @@ input[type="submit"].btn-hollow {
 @media screen and (min-width: 768px) {
   .list-theme1 {
     padding: 0 4px;
-    /* no */
   }
   .list-theme1 .list-item {
     padding: 0 4px;
-    /* no */
     margin-top: 8px;
-    /* no */
   }
   .list-theme2 .list-item {
     padding-top: 8px;
-    /* no */
   }
   .list-theme2 .list-item:nth-child(odd) {
     padding-right: 4px;
-    /* no */
   }
   .list-theme2 .list-item:nth-child(even) {
     padding-left: 4px;
-    /* no */
   }
   .list-theme4 {
     padding: 0 9px;
-    /* no */
   }
   .list-theme4 .list-item {
     padding: 9px 0 10px 0;
-    /* no */
   }
   .list-theme4 .list-item .list-ft {
     padding-left: 9px;
@@ -2329,7 +2195,6 @@ input[type="submit"].btn-hollow {
   display: block;
   position: relative;
   font-size: 0.28rem;
-  /* px */
   color: #555;
   height: 1rem;
   line-height: 1rem;
@@ -2345,7 +2210,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -2355,7 +2219,6 @@ input[type="submit"].btn-hollow {
   display: block;
   margin-top: .15rem;
   font-size: 0.28rem;
-  /* px */
   color: #555;
   height: 1rem;
   line-height: 1rem;
@@ -2383,7 +2246,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #B2B2B2;
   border-bottom: 1px solid #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -2399,7 +2261,6 @@ input[type="submit"].btn-hollow {
   text-align: center;
   color: #585858;
   font-size: 0.28rem;
-  /* px */
   line-height: 0.85rem;
   display: block;
   background-color: #FFF;
@@ -2423,7 +2284,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   content: '';
   width: 1px;
-  /* no */
   height: 30%;
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
@@ -2436,7 +2296,6 @@ input[type="submit"].btn-hollow {
   content: '';
   width: 70%;
   height: 2px;
-  /* no */
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -2473,14 +2332,11 @@ input[type="submit"].btn-hollow {
 .badge {
   color: #333;
   font-size: 12px;
-  /* no */
   position: relative;
   display: inline-block;
   border-radius: 1000px;
-  /* no */
   line-height: 1;
   padding: 3px 6px;
-  /* no */
   white-space: nowrap;
   background-color: #D0D0D0;
 }
@@ -2489,7 +2345,6 @@ input[type="submit"].btn-hollow {
   width: 200%;
   height: 200%;
   border: 1px solid #D0D0D0;
-  /* no */
   position: absolute;
   top: 0;
   left: 0;
@@ -2501,11 +2356,9 @@ input[type="submit"].btn-hollow {
 }
 .badge-radius {
   border-radius: 2px;
-  /* no */
 }
 .badge-radius:after {
   border-radius: 2px;
-  /* no */
 }
 .badge-primary {
   background-color: #04BE02;
@@ -2553,17 +2406,14 @@ input[type="submit"].btn-hollow {
 .m-progressbar {
   width: 100%;
   border-radius: 100px;
-  /* no */
   position: relative;
   z-index: 0;
   height: 9px;
-  /* no */
   background-color: #E5E5E5;
   display: block;
 }
 .m-progressbar > .trail-line {
   border-radius: 100px;
-  /* no */
   -webkit-transition: width .25s ease;
   transition: width .25s ease;
   max-width: 100%;
@@ -2578,7 +2428,6 @@ input[type="submit"].btn-hollow {
   background-image: url(http://static.ydcss.com/uploads/ydui/pb_bg.png);
   background-repeat: repeat-x;
   background-size: 14px 9px;
-  /* no */
 }
 .m-keyboard {
   position: fixed;
@@ -2618,7 +2467,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-top: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -2674,7 +2522,6 @@ input[type="submit"].btn-hollow {
   right: 0;
   height: 100%;
   border-right: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleX(0.5);
   transform: scaleX(0.5);
   -webkit-transform-origin: 100% 0;
@@ -2690,7 +2537,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-top: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -2741,7 +2587,6 @@ input[type="submit"].btn-hollow {
   height: 1px;
   background-color: #D9D9D9;
   border-bottom: 1px solid #D9D9D9;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;

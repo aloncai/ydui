@@ -1,2 +1,2 @@
-/*! YDUI v1.0.0 by YDCSS (c) 2016 Licensed MIT */ 
+/*! YDUI Touch v1.0.0 by YDCSS (c) 2016 Licensed MIT */ 
 !function(n){var e=750,t=n.document,a=t.documentElement,i="orientationchange"in n?"orientationchange":"resize",d=function o(){var n=a.getBoundingClientRect().width;return a.style.fontSize=5*Math.max(Math.min(20*(n/e),11.2),8.55)+"px",o}();/iP(hone|od|ad)/.test(n.navigator.userAgent)&&parseInt(n.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1],10)>=8&&t.documentElement.classList.add("hairline"),t.addEventListener&&(n.addEventListener(i,d,!1),t.addEventListener("DOMContentLoaded",d,!1))}(window);

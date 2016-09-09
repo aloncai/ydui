@@ -1,6 +1,5 @@
 .demo-pagetitle {
   font-size: .68rem;
-  /* px */
   color: #FF5E53;
   text-align: center;
   padding: .6rem 0 .4rem;
@@ -8,7 +7,6 @@
 .demo-detail-title {
   color: #888;
   font-size: .28rem;
-  /* px */
   margin-bottom: .5rem;
   font-weight: normal;
   line-height: 0.42rem;
@@ -16,7 +14,6 @@
 }
 .demo-loading {
   margin-bottom: 20px;
-  /* no */
 }
 .demo-loading li a {
   -webkit-box-align: center;
@@ -43,10 +40,8 @@
 .demo-tip {
   color: #B1B1B1;
   font-size: .24rem;
-  /* px */
   padding: .2rem .24rem .4rem;
   line-height: 18px;
-  /* no */
   font-family: \5fae\8f6f\96c5\9ed1;
   position: relative;
 }
@@ -57,7 +52,6 @@
   left: 0;
   width: 100%;
   border-bottom: 1px dashed #B2B2B2;
-  /* no */
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 100%;
@@ -65,7 +59,6 @@
 }
 .demo-tip i {
   margin-right: 3px;
-  /* no */
 }
 .demo-tip a {
   color: #5AA700;
@@ -95,9 +88,7 @@
 .demo-components {
   background-color: #FFF;
   padding: 10px;
-  /* no */
   margin-bottom: 10px;
-  /* no */
 }
 .demo-upload {
   overflow: hidden;
@@ -152,7 +143,6 @@
 .demo-icons [class^="icon-"]:before,
 .demo-icons [class*=" icon-"]:before {
   font-size: .6rem;
-  /* px */
   color: #FF685D;
 }
 @font-face {
