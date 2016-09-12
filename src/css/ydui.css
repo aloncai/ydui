@@ -2300,7 +2300,7 @@ input[type="submit"].btn-hollow {
   left: 50%;
   bottom: 0;
   margin-left: -35%;
-  z-index: 2;
+  z-index: 4;
   background-color: currentColor;
 }
 .tab-panel {

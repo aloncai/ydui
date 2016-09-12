@@ -8,7 +8,8 @@
     var docWidth = 750;
 
     var doc = win.document,
-        docEl = doc.documentElement, resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
+        docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
 
     var recalc = (function refreshRem() {
         var clientWidth = docEl.getBoundingClientRect().width;
@@ -19,6 +20,9 @@
         return refreshRem;
     })();
 
+    /* 添加倍屏标识，安卓为1 */
+    docEl.setAttribute('data-dpr', win.navigator.appVersion.match(/iphone/gi) ? win.devicePixelRatio : 1);
+
     /* IOS8以上给html添加hairline样式，以便特殊处理 */
     if (/iP(hone|od|ad)/.test(win.navigator.userAgent)) {
         if (parseInt(win.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
@@ -28,4 +32,5 @@
     if (!doc.addEventListener) return;
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
+
 }(window);
