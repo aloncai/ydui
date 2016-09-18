@@ -69,7 +69,7 @@
         _this.$element.each(function () {
             var $this = $(this);
 
-            $this.one('loadfuck', function(){
+            $this.one('loadfuck', function () {
 
             });
         });
@@ -80,7 +80,7 @@
                 tag = data.tag,
                 url = data.url;
 
-            $img.one('loadfuck', function(){
+            $img.one('loadfuck', function () {
 
             });
 
