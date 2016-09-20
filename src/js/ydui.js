@@ -101,7 +101,7 @@
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
 
-    function ActionSheet(element, closeElement) {
+    function ActionSheet (element, closeElement) {
         /**
          * DOM
          * @type {*|HTMLElement}
@@ -150,7 +150,7 @@
         //$doc.off('click.ydui.actionsheet', _this.closeElement);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -300,13 +300,13 @@
         }
 
         var $dom = $('' +
-        '<div id="YDUI_CONFRIM">' +
-        '   <div class="mask-black"></div>' +
-        '   <div class="m-confirm">' +
-        '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
-        '       <div class="confirm-bd">' + mes + '</div>' +
-        '   </div>' +
-        '</div>').remove();
+            '<div id="YDUI_CONFRIM">' +
+            '   <div class="mask-black"></div>' +
+            '   <div class="m-confirm">' +
+            '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
+            '       <div class="confirm-bd">' + mes + '</div>' +
+            '   </div>' +
+            '</div>').remove();
 
         // 遍历按钮数组
         var $btnBox = $('<div class="confirm-ft"></div>');
@@ -349,17 +349,17 @@
      */
     dialog.alert = function (mes, callback) {
         var $dom = $('' +
-        '<div id="YDUI_ALERT">' +
-        '   <div>' +
-        '       <div class="mask-black"></div>' +
-        '       <div class="m-confirm m-alert">' +
-        '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
-        '           <div class="confirm-ft">' +
-        '               <a href="javascript:;" class="confirm-btn primary">确定</a>' +
-        '           </div>' +
-        '       </div>' +
-        '   </div>' +
-        '</div>').remove();
+            '<div id="YDUI_ALERT">' +
+            '   <div>' +
+            '       <div class="mask-black"></div>' +
+            '       <div class="m-confirm m-alert">' +
+            '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
+            '           <div class="confirm-ft">' +
+            '               <a href="javascript:;" class="confirm-btn primary">确定</a>' +
+            '           </div>' +
+            '       </div>' +
+            '   </div>' +
+            '</div>').remove();
 
         ydui.util.pageScroll.lock();
 
@@ -387,13 +387,13 @@
         }
 
         var $dom = $('' +
-        '<div id="YDUI_TOAST">' +
-        '   <div class="mask-white"></div>' +
-        '   <div class="m-toast">' +
-        '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
-        '       <p class="toast-content">' + (mes || '') + '</p>' +
-        '   </div>' +
-        '</div>').remove();
+            '<div id="YDUI_TOAST">' +
+            '   <div class="mask-white"></div>' +
+            '   <div class="m-toast">' +
+            '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
+            '       <p class="toast-content">' + (mes || '') + '</p>' +
+            '   </div>' +
+            '</div>').remove();
 
         ydui.util.pageScroll.lock();
 
@@ -423,26 +423,26 @@
              */
             open: function (text) {
                 var $dom = $('' +
-                '<div id="YDUI_LOADING">' +
-                '    <div class="mask-white"></div>' +
-                '    <div class="m-loading">' +
-                '        <div class="loading-hd">' +
-                '            <div class="loading-leaf loading-leaf-0"></div>' +
-                '            <div class="loading-leaf loading-leaf-1"></div>' +
-                '            <div class="loading-leaf loading-leaf-2"></div>' +
-                '            <div class="loading-leaf loading-leaf-3"></div>' +
-                '            <div class="loading-leaf loading-leaf-4"></div>' +
-                '            <div class="loading-leaf loading-leaf-5"></div>' +
-                '            <div class="loading-leaf loading-leaf-6"></div>' +
-                '            <div class="loading-leaf loading-leaf-7"></div>' +
-                '            <div class="loading-leaf loading-leaf-8"></div>' +
-                '            <div class="loading-leaf loading-leaf-9"></div>' +
-                '            <div class="loading-leaf loading-leaf-10"></div>' +
-                '            <div class="loading-leaf loading-leaf-11"></div>' +
-                '        </div>' +
-                '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
-                '    </div>' +
-                '</div>').remove();
+                    '<div id="YDUI_LOADING">' +
+                    '    <div class="mask-white"></div>' +
+                    '    <div class="m-loading">' +
+                    '        <div class="loading-hd">' +
+                    '            <div class="loading-leaf loading-leaf-0"></div>' +
+                    '            <div class="loading-leaf loading-leaf-1"></div>' +
+                    '            <div class="loading-leaf loading-leaf-2"></div>' +
+                    '            <div class="loading-leaf loading-leaf-3"></div>' +
+                    '            <div class="loading-leaf loading-leaf-4"></div>' +
+                    '            <div class="loading-leaf loading-leaf-5"></div>' +
+                    '            <div class="loading-leaf loading-leaf-6"></div>' +
+                    '            <div class="loading-leaf loading-leaf-7"></div>' +
+                    '            <div class="loading-leaf loading-leaf-8"></div>' +
+                    '            <div class="loading-leaf loading-leaf-9"></div>' +
+                    '            <div class="loading-leaf loading-leaf-10"></div>' +
+                    '            <div class="loading-leaf loading-leaf-11"></div>' +
+                    '        </div>' +
+                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
+                    '    </div>' +
+                    '</div>').remove();
 
                 ydui.util.pageScroll.lock();
                 $body.append($dom);
@@ -476,7 +476,7 @@
      * @param {Element} layer The layer to listen on
      * @param {Object} [options={}] The options to override the defaults
      */
-    function FastClick(layer, options) {
+    function FastClick (layer, options) {
 
         var oldOnClick;
 
@@ -552,7 +552,7 @@
         this.tapTimeout = options.tapTimeout || 700;
 
         // Some old versions of Android don't have Function.prototype.bind
-        function bind(method, context) {
+        function bind (method, context) {
             return function () {
                 return method.apply(context, arguments);
             };
@@ -588,10 +588,10 @@
                 var adv = Node.prototype.addEventListener;
                 if (type === 'click') {
                     adv.call(layer, type, callback.hijacked || (callback.hijacked = function (event) {
-                        if (!event.propagationStopped) {
-                            callback(event);
-                        }
-                    }), capture);
+                            if (!event.propagationStopped) {
+                                callback(event);
+                            }
+                        }), capture);
                 } else {
                     adv.call(layer, type, callback, capture);
                 }
@@ -1079,72 +1079,6 @@
     window.FastClick = FastClick;
 }();
 /**
- * inView
- */
-!function (win) {
-    "use strict";
-
-    var $ = win.$,
-        $doc = $(win.document);
-
-    function InView(element, callback) {
-        this.$element = $(element);
-        this.bindEvent(callback);
-    }
-
-    /**
-     * 绑定事件
-     * @param callback
-     */
-    InView.prototype.bindEvent = function (callback) {
-        var _this = this;
-        var fnCheckInView = _this.checkInView;
-
-        callback.call(_this, fnCheckInView(_this.$element));
-
-        $(win).on('scroll resize', function () {
-            callback.call(_this, fnCheckInView(_this.$element));
-        });
-    };
-
-    /**
-     * 判断是否显示在窗口中
-     * @param $element
-     * @returns {number}【0未显示， 1露头， 2局部， 3包含， 4露尾】
-     */
-    InView.prototype.checkInView = function ($element) {
-
-        var scrollTop = $doc.scrollTop(),
-            scrollBottom = $doc.scrollTop() + $(win).height(),
-            offset = $element.offset(),
-            top = offset.top,
-            bottom = top + $element.height();
-
-        var status = 0;
-        if (top >= scrollTop && top <= scrollBottom && bottom <= scrollBottom) {
-            status = 3;
-        } else {
-            if (top >= scrollTop && top < scrollBottom) {
-                status = 1;
-            } else if (bottom > scrollTop && bottom <= scrollBottom) {
-                status = 4;
-            } else if (top < scrollTop && bottom > scrollBottom) {
-                status = 2;
-            } else {
-                status = 0;
-            }
-        }
-        return status;
-    };
-
-    $.fn.inView = function (callback) {
-        return this.each(function () {
-            new InView(this, callback);
-        });
-    };
-
-}(window);
-/**
  * KeyBoard
  */
 !function (win) {
@@ -1155,7 +1089,7 @@
         isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
         triggerEvent = isMobile ? 'touchstart' : 'click';
 
-    function KeyBoard(element, options) {
+    function KeyBoard (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
         this.init();
@@ -1173,7 +1107,7 @@
 
         _this.toggleClass = 'keyboard-show';
 
-        function getDot() {
+        function getDot () {
             var s = '';
             for (var i = 0; i < 6; i++) {
                 s += '<li><i></i></li>';
@@ -1402,7 +1336,7 @@
         return arr;
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -1476,7 +1410,7 @@
 
             // 判断是否位于可视区域内
             if ((post >= 0 && post < contentHeight) || (posb > 0 && posb <= contentHeight)) {
-                $img.trigger('appear');
+                $img.trigger('appear.ydui.lazyload');
             }
         });
     };
@@ -1496,7 +1430,7 @@
                 $img.attr("src", options.placeholder);
             }
 
-            $img.one("appear", function () {
+            $img.one("appear.ydui.lazyload", function () {
                 if ($img.is("img")) {
                     $img.attr("src", $img.attr(options.attr));
                 }
@@ -1518,7 +1452,6 @@
 }(jQuery, window);
 /**
  * ProgressBar
- * Dependency：[ydui.inview.js]
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (win) {
@@ -1528,7 +1461,7 @@
         doc = win.document,
         util = win.YDUI.util;
 
-    function Circle(element, options) {
+    function Circle (element, options) {
         this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
         ProgressBar.apply(this, arguments);
     }
@@ -1550,7 +1483,7 @@
         svg.style.width = '100%';
     };
 
-    function Line(element, options) {
+    function Line (element, options) {
         this.pathTemplate = 'M 0,{center} L 100,{center}';
         ProgressBar.apply(this, arguments);
     }
@@ -1571,7 +1504,7 @@
         svg.style.height = '100%';
     };
 
-    function ProgressBar(element, options) {
+    function ProgressBar (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, ProgressBar.DEFAULTS, options || {});
     }
@@ -1583,7 +1516,9 @@
         trailWidth: 0,
         trailColor: '#646464',
         fill: '',
-        progress: 0
+        progress: 0,
+        delay: true,
+        container: win
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -1595,31 +1530,58 @@
         if (progress > 1)progress = 1;
 
         _this.trailPath.style.strokeDashoffset = length - progress * length;
-
     };
 
-    ProgressBar.prototype.show = function () {
+    ProgressBar.prototype.appendView = function () {
         var _this = this,
-            progress = _this.options.progress,
+            options = _this.options,
+            progress = options.progress,
             svgView = _this.createSvgView(),
             $element = _this.$element;
+
+        _this.$container = options.container === win || options.container == 'window' ? $(win) : $(options.container);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
 
         path.style.strokeDasharray = length + ' ' + length;
 
-        $element.append(svgView.svg);
-
-        $element.inView(function (s) {
-            if ($element.data('loaded') == 1)return;
-            if (s > 0) {
-                $element.data('loaded', 1);
-                _this.trailPath.style.strokeDashoffset = length - progress * length;
-            }
+        var $svg = $(svgView.svg);
+        $svg.one('appear.ydui.progressbar', function () {
+            _this.set(progress);
         });
+        $element.append($svg);
+
+        if (options.delay) {
+            _this.checkInView($svg);
+
+            _this.$container.on('scroll', function () {
+                _this.checkInView($svg);
+            });
+
+            $(win).on('resize', function () {
+                _this.checkInView($svg);
+            });
+        } else {
+            $svg.trigger('appear.ydui.progressbar');
+        }
 
         return this;
+    };
+
+    ProgressBar.prototype.checkInView = function ($svg) {
+
+        var _this = this,
+            $container = _this.$container,
+            contentHeight = $container.height(),
+            contentTop = $container.get(0) === win ? $(win).scrollTop() : $container.offset().top;
+
+        var post = $svg.offset().top - contentTop,
+            posb = post + $svg.height();
+
+        if ((post >= 0 && post < contentHeight) || (posb > 0 && posb <= contentHeight)) {
+            $svg.trigger('appear.ydui.progressbar');
+        }
     };
 
     ProgressBar.prototype.createSvgView = function () {
@@ -1705,7 +1667,7 @@
         return rendered;
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -1719,7 +1681,7 @@
                     $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
                 }
                 if (!option || $.type(option) == 'object') {
-                    progressbar.show().set();
+                    progressbar.appendView();
                 }
             }
 
@@ -1746,7 +1708,7 @@
 
     var $ = win.$;
 
-    function SendCode(element, options) {
+    function SendCode (element, options) {
         this.$btn = $(element);
         this.options = $.extend({}, SendCode.DEFAULTS, options || {});
     }
@@ -1800,7 +1762,7 @@
         _this.$btn.html(options.resetStr).css('pointer-events', 'auto').removeClass(options.disClass);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -1829,7 +1791,7 @@
 
     var $ = win.$;
 
-    function Slider(element, options) {
+    function Slider (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, Slider.DEFAULTS, options || {});
         this.init();
@@ -1875,13 +1837,13 @@
             touchEvents = _this.touchEvents();
 
         _this.$wrapper.find('.' + _this.options.slideClass)
-            .on(touchEvents.start, function (e) {
-                _this.onTouchStart(e);
-            }).on(touchEvents.move, function (e) {
-                _this.onTouchMove(e);
-            }).on(touchEvents.end, function (e) {
-                _this.onTouchEnd(e);
-            });
+        .on(touchEvents.start, function (e) {
+            _this.onTouchStart(e);
+        }).on(touchEvents.move, function (e) {
+            _this.onTouchMove(e);
+        }).on(touchEvents.end, function (e) {
+            _this.onTouchEnd(e);
+        });
 
         $(win).on('resize', function () {
             _this.setSlidesSize();
@@ -1942,8 +1904,8 @@
             bulletActiveClass = _this.options.bulletActiveClass;
 
         !!_this.$pagination[0] && _this.$pagination.find('.' + _this.options.bulletClass)
-            .removeClass(bulletActiveClass)
-            .eq(index).addClass(bulletActiveClass);
+        .removeClass(bulletActiveClass)
+        .eq(index).addClass(bulletActiveClass);
     };
 
     /**
@@ -2153,7 +2115,7 @@
         };
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         return this.each(function () {
 
             var $this = $(this),
@@ -2184,7 +2146,7 @@
 
     var $ = win.$;
 
-    function Tab(element, options) {
+    function Tab (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, Tab.DEFAULTS, options || {});
         this.init();
@@ -2268,7 +2230,7 @@
 
         var $avtive = $container.filter('.' + activeClass);
 
-        function next() {
+        function next () {
             $.type(callback) == 'function' && callback();
         }
 
@@ -2279,7 +2241,7 @@
         $element.addClass(activeClass);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -2374,19 +2336,19 @@
         }, 50);
     };
 
-  // util.countdown = function (format, time, callback) {
-  //       var c = time * 1000;
-  //       var timer = setInterval(function () {
-  //           var l_time = c - new Date().getTime();
-  //           if (l_time > 0) {
-  //               callback(util.timestampTotime(format, l_time));
-  //           } else {
-  //               clearInterval(timer);
-  //               $.type(callback) == 'function' && callback('');
-  //           }
-  //       }, 10);
-  //   };
-    
+    // util.countdown = function (format, time, callback) {
+    //       var c = time * 1000;
+    //       var timer = setInterval(function () {
+    //           var l_time = c - new Date().getTime();
+    //           if (l_time > 0) {
+    //               callback(util.timestampTotime(format, l_time));
+    //           } else {
+    //               clearInterval(timer);
+    //               $.type(callback) == 'function' && callback('');
+    //           }
+    //       }, 10);
+    //   };
+
     /**
      * js 加减乘除
      * @param arg1 数值1
@@ -2554,7 +2516,7 @@
     /**
      * HTML5存储
      */
-    function storage(ls) {
+    function storage (ls) {
         var _util = util;
         return {
             set: function (key, value) {

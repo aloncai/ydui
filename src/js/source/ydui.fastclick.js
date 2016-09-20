@@ -17,7 +17,7 @@
      * @param {Element} layer The layer to listen on
      * @param {Object} [options={}] The options to override the defaults
      */
-    function FastClick(layer, options) {
+    function FastClick (layer, options) {
 
         var oldOnClick;
 
@@ -93,7 +93,7 @@
         this.tapTimeout = options.tapTimeout || 700;
 
         // Some old versions of Android don't have Function.prototype.bind
-        function bind(method, context) {
+        function bind (method, context) {
             return function () {
                 return method.apply(context, arguments);
             };
@@ -129,10 +129,10 @@
                 var adv = Node.prototype.addEventListener;
                 if (type === 'click') {
                     adv.call(layer, type, callback.hijacked || (callback.hijacked = function (event) {
-                        if (!event.propagationStopped) {
-                            callback(event);
-                        }
-                    }), capture);
+                            if (!event.propagationStopped) {
+                                callback(event);
+                            }
+                        }), capture);
                 } else {
                     adv.call(layer, type, callback, capture);
                 }

@@ -51,7 +51,7 @@
 
             // 判断是否位于可视区域内
             if ((post >= 0 && post < contentHeight) || (posb > 0 && posb <= contentHeight)) {
-                $img.trigger('appear');
+                $img.trigger('appear.ydui.lazyload');
             }
         });
     };
@@ -71,7 +71,7 @@
                 $img.attr("src", options.placeholder);
             }
 
-            $img.one("appear", function () {
+            $img.one("appear.ydui.lazyload", function () {
                 if ($img.is("img")) {
                     $img.attr("src", $img.attr(options.attr));
                 }

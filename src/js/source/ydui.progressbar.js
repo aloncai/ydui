@@ -1,6 +1,5 @@
 /**
  * ProgressBar
- * Dependency：[ydui.inview.js]
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (win) {
@@ -10,7 +9,7 @@
         doc = win.document,
         util = win.YDUI.util;
 
-    function Circle(element, options) {
+    function Circle (element, options) {
         this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
         ProgressBar.apply(this, arguments);
     }
@@ -32,7 +31,7 @@
         svg.style.width = '100%';
     };
 
-    function Line(element, options) {
+    function Line (element, options) {
         this.pathTemplate = 'M 0,{center} L 100,{center}';
         ProgressBar.apply(this, arguments);
     }
@@ -53,7 +52,7 @@
         svg.style.height = '100%';
     };
 
-    function ProgressBar(element, options) {
+    function ProgressBar (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, ProgressBar.DEFAULTS, options || {});
     }
@@ -65,7 +64,9 @@
         trailWidth: 0,
         trailColor: '#646464',
         fill: '',
-        progress: 0
+        progress: 0,
+        delay: true,
+        container: win
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -77,31 +78,58 @@
         if (progress > 1)progress = 1;
 
         _this.trailPath.style.strokeDashoffset = length - progress * length;
-
     };
 
-    ProgressBar.prototype.show = function () {
+    ProgressBar.prototype.appendView = function () {
         var _this = this,
-            progress = _this.options.progress,
+            options = _this.options,
+            progress = options.progress,
             svgView = _this.createSvgView(),
             $element = _this.$element;
+
+        _this.$container = options.container === win || options.container == 'window' ? $(win) : $(options.container);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
 
         path.style.strokeDasharray = length + ' ' + length;
 
-        $element.append(svgView.svg);
-
-        $element.inView(function (s) {
-            if ($element.data('loaded') == 1)return;
-            if (s > 0) {
-                $element.data('loaded', 1);
-                _this.trailPath.style.strokeDashoffset = length - progress * length;
-            }
+        var $svg = $(svgView.svg);
+        $svg.one('appear.ydui.progressbar', function () {
+            _this.set(progress);
         });
+        $element.append($svg);
+
+        if (options.delay) {
+            _this.checkInView($svg);
+
+            _this.$container.on('scroll', function () {
+                _this.checkInView($svg);
+            });
+
+            $(win).on('resize', function () {
+                _this.checkInView($svg);
+            });
+        } else {
+            $svg.trigger('appear.ydui.progressbar');
+        }
 
         return this;
+    };
+
+    ProgressBar.prototype.checkInView = function ($svg) {
+
+        var _this = this,
+            $container = _this.$container,
+            contentHeight = $container.height(),
+            contentTop = $container.get(0) === win ? $(win).scrollTop() : $container.offset().top;
+
+        var post = $svg.offset().top - contentTop,
+            posb = post + $svg.height();
+
+        if ((post >= 0 && post < contentHeight) || (posb > 0 && posb <= contentHeight)) {
+            $svg.trigger('appear.ydui.progressbar');
+        }
     };
 
     ProgressBar.prototype.createSvgView = function () {
@@ -187,7 +215,7 @@
         return rendered;
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
@@ -201,7 +229,7 @@
                     $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
                 }
                 if (!option || $.type(option) == 'object') {
-                    progressbar.show().set();
+                    progressbar.appendView();
                 }
             }
 

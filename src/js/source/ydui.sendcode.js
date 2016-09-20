@@ -6,7 +6,7 @@
 
     var $ = win.$;
 
-    function SendCode(element, options) {
+    function SendCode (element, options) {
         this.$btn = $(element);
         this.options = $.extend({}, SendCode.DEFAULTS, options || {});
     }
@@ -60,7 +60,7 @@
         _this.$btn.html(options.resetStr).css('pointer-events', 'auto').removeClass(options.disClass);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {

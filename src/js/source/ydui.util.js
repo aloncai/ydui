@@ -65,19 +65,19 @@
         }, 50);
     };
 
-  // util.countdown = function (format, time, callback) {
-  //       var c = time * 1000;
-  //       var timer = setInterval(function () {
-  //           var l_time = c - new Date().getTime();
-  //           if (l_time > 0) {
-  //               callback(util.timestampTotime(format, l_time));
-  //           } else {
-  //               clearInterval(timer);
-  //               $.type(callback) == 'function' && callback('');
-  //           }
-  //       }, 10);
-  //   };
-    
+    // util.countdown = function (format, time, callback) {
+    //       var c = time * 1000;
+    //       var timer = setInterval(function () {
+    //           var l_time = c - new Date().getTime();
+    //           if (l_time > 0) {
+    //               callback(util.timestampTotime(format, l_time));
+    //           } else {
+    //               clearInterval(timer);
+    //               $.type(callback) == 'function' && callback('');
+    //           }
+    //       }, 10);
+    //   };
+
     /**
      * js 加减乘除
      * @param arg1 数值1
@@ -245,7 +245,7 @@
     /**
      * HTML5存储
      */
-    function storage(ls) {
+    function storage (ls) {
         var _util = util;
         return {
             set: function (key, value) {

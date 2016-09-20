@@ -10,7 +10,7 @@
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
 
-    function ActionSheet(element, closeElement) {
+    function ActionSheet (element, closeElement) {
         /**
          * DOM
          * @type {*|HTMLElement}
@@ -59,7 +59,7 @@
         //$doc.off('click.ydui.actionsheet', _this.closeElement);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {

@@ -9,7 +9,7 @@
         isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
         triggerEvent = isMobile ? 'touchstart' : 'click';
 
-    function KeyBoard(element, options) {
+    function KeyBoard (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, KeyBoard.DEFAULTS, options || {});
         this.init();
@@ -27,7 +27,7 @@
 
         _this.toggleClass = 'keyboard-show';
 
-        function getDot() {
+        function getDot () {
             var s = '';
             for (var i = 0; i < 6; i++) {
                 s += '<li><i></i></li>';
@@ -256,7 +256,7 @@
         return arr;
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {

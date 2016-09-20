@@ -11,7 +11,7 @@
         docEl = doc.documentElement,
         resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
 
-    var recalc = (function refreshRem() {
+    var recalc = (function refreshRem () {
         var clientWidth = docEl.getBoundingClientRect().width;
 
         /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */

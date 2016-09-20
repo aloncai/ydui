@@ -6,7 +6,7 @@
 
     var $ = win.$;
 
-    function Tab(element, options) {
+    function Tab (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, Tab.DEFAULTS, options || {});
         this.init();
@@ -90,7 +90,7 @@
 
         var $avtive = $container.filter('.' + activeClass);
 
-        function next() {
+        function next () {
             $.type(callback) == 'function' && callback();
         }
 
@@ -101,7 +101,7 @@
         $element.addClass(activeClass);
     };
 
-    function Plugin(option) {
+    function Plugin (option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
