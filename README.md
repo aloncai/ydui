@@ -15,5 +15,6 @@ Blog: <a href="http://www.ydcss.com">http://www.ydcss.com</a>
 * <a href="https://github.com/weui/weui" target="_blank">[WEUI]</a> (<a href="https://github.com/weui/weui" target="_blank">[MIT License]</a>)
 * <a href="https://github.com/daneden/animate.css" target="_blank">[animate.css]</a> (<a href="https://github.com/daneden/animate.css/blob/master/LICENSE" target="_blank">[MIT License]</a>)
 * <a href="https://github.com/kimmobrunfeldt/progressbar.js" target="_blank">[progressbar.js]</a> (<a href="https://github.com/kimmobrunfeldt/progressbar.js/blob/master/LICENSE" target="_blank">[MIT License]</a>)
+* <a href="https://github.com/ftlabs/fastclick" target="_blank">[fastclick]</a> (<a href="https://github.com/ftlabs/fastclick/blob/master/LICENSE" target="_blank">[MIT License]</a>)
 
 #### Developed with Open Source Licensed <a href="http://www.jetbrains.com/webstorm/" target="_blank">WebStorm</a>
