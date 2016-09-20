@@ -27,6 +27,7 @@
         <input type="button" class="btn-block btn-danger" id="J_ToastS" value="toast->Success"/>
         <input type="button" class="btn-block btn-danger" id="J_ToastE" value="toast->Error"/>
         <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
+        <input type="button" class="btn-block btn-hollow" id="J_Log" value="Log"/>
     </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -93,6 +94,13 @@
             setTimeout(function () {
                 dialog.loading.close();//移除loading
             }, 2000);
+        });
+
+        // 顶部提示框
+        $('#J_Log').on('click', function () {
+            dialog.log('5秒后自动消失，点击也可以消失！', 5000, function(){
+                console.log('我走咯！');
+            });
         });
     }(window, jQuery);
 </script>

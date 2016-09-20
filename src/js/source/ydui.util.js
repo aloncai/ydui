@@ -10,17 +10,13 @@
 
     /**
      * 日期格式化
-     * @param format 日期格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
+     * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
         var t = {},
             floor = Math.floor;
-
-        var checkTime = function (i) {
-            return i < 10 ? '0' + i : i;
-        };
 
         t.f = time % 1000;
         time = floor(time / 1000);
@@ -32,7 +28,10 @@
         t.d = floor(time / 24);
 
         var ment = function (a) {
-            return '$1' + checkTime(a) + '$2';
+            if (a <= 0) {
+                return '';
+            }
+            return '$1' + (a < 10 ? '0' + a : a) + '$2';
         };
 
         format = format.replace(/\{([^{]*?)%d(.*?)\}/g, ment(t.d));
@@ -45,47 +44,34 @@
     };
 
     /**
-     * js倒计时 TODO 有问题 哈哈哈哈哈哈
+     * js倒计时
      * @param format 时间格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
-     * @param time 时间 毫秒
-     * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
-     * DEMO: YDUI.util.countdown('{%d}天{%h}时{%m}分{%s}秒{%f}毫秒', 60000, function(ret){ console.log(ret); });
+     * @param time 结束时间时间戳 毫秒
+     * @param speed 速度
+     * @param callback ret 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
+     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', Date.parse(new Date()) + 60000, 1000, function(ret){ console.log(ret); });
      */
-    util.countdown = function (format, time, callback) {
-        var that = this, tm = new Date().getTime();
+    util.countdown = function (format, time, speed, callback) {
+        var that = this;
         var timer = setInterval(function () {
-            var a = new Date().getTime();
-            var l_time = time - a + tm;
+            var l_time = time - new Date().getTime();
             if (l_time > 0) {
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
                 $.type(callback) == 'function' && callback('');
             }
-        }, 50);
+        }, speed);
     };
-
-    // util.countdown = function (format, time, callback) {
-    //       var c = time * 1000;
-    //       var timer = setInterval(function () {
-    //           var l_time = c - new Date().getTime();
-    //           if (l_time > 0) {
-    //               callback(util.timestampTotime(format, l_time));
-    //           } else {
-    //               clearInterval(timer);
-    //               $.type(callback) == 'function' && callback('');
-    //           }
-    //       }, 10);
-    //   };
 
     /**
      * js 加减乘除
      * @param arg1 数值1
-     * @param arg2 数值2
      * @param op 操作符string 【+ - * /】
+     * @param arg2 数值2
      * @returns {Object} arg1 与 arg2运算的精确结果
      */
-    util.calc = function (arg1, arg2, op) {
+    util.calc = function (arg1, op, arg2) {
         var ra = 1, rb = 1, m;
 
         try {

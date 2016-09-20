@@ -268,6 +268,10 @@
      * @constructor
      */
     dialog.confirm = function (title, mes, opts) {
+        var ID = 'YDUI_CONFRIM';
+
+        $('#' + ID).remove();
+
         var args = arguments.length;
         if (args < 2) {
             console.error('From YDUI\'s confirm: Please set two or three parameters!!!');
@@ -300,16 +304,17 @@
         }
 
         var $dom = $('' +
-            '<div id="YDUI_CONFRIM">' +
+            '<div id="' + ID + '">' +
             '   <div class="mask-black"></div>' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
             '   </div>' +
-            '</div>').remove();
+            '</div>');
 
         // 遍历按钮数组
         var $btnBox = $('<div class="confirm-ft"></div>');
+
         $.each(btnArr, function (i, val) {
             var $btn;
             // 指定按钮颜色
@@ -348,8 +353,13 @@
      * @param callback  回调函数Function 【可选】
      */
     dialog.alert = function (mes, callback) {
+
+        var ID = 'YDUI_ALERT';
+
+        $('#' + ID).remove();
+
         var $dom = $('' +
-            '<div id="YDUI_ALERT">' +
+            '<div id="' + ID + '">' +
             '   <div>' +
             '       <div class="mask-black"></div>' +
             '       <div class="m-confirm m-alert">' +
@@ -359,7 +369,7 @@
             '           </div>' +
             '       </div>' +
             '   </div>' +
-            '</div>').remove();
+            '</div>');
 
         ydui.util.pageScroll.lock();
 
@@ -374,56 +384,117 @@
 
     /**
      * 弹出提示层
-     * @param mes       提示文字String 【必填】
-     * @param type      类型String success or error 【必填】
-     * @param timeout   多久后消失Number 毫秒 【默认：2000ms】【可选】
-     * @param callback  回调函数Function 【可选】
      */
-    dialog.toast = function (mes, type, timeout, callback) {
-        var args = arguments.length;
-        if (args < 2) {
-            console.error('From YDUI\'s toast: Please set two or more parameters!!!');
-            return;
+    dialog.toast = function () {
+        var timer = null;
+        /**
+         * @param mes       提示文字String 【必填】
+         * @param type      类型String success or error 【必填】
+         * @param timeout   多久后消失Number 毫秒 【默认：2000ms】【可选】
+         * @param callback  回调函数Function 【可选】
+         */
+        return function (mes, type, timeout, callback) {
+
+            clearTimeout(timer);
+
+            var ID = 'YDUI_TOAST';
+
+            $('#' + ID).remove();
+
+            var args = arguments.length;
+            if (args < 2) {
+                console.error('From YDUI\'s toast: Please set two or more parameters!!!');
+                return;
+            }
+
+            var $dom = $('' +
+                '<div id="' + ID + '">' +
+                '   <div class="mask-white"></div>' +
+                '   <div class="m-toast">' +
+                '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
+                '       <p class="toast-content">' + (mes || '') + '</p>' +
+                '   </div>' +
+                '</div>');
+
+            ydui.util.pageScroll.lock();
+
+            $body.append($dom);
+
+            if ($.type(timeout) === 'function' && arguments.length >= 3) {
+                callback = timeout;
+                timeout = 2000;
+            }
+
+            timer = setTimeout(function () {
+                clearTimeout(timer);
+                ydui.util.pageScroll.unlock();
+                $dom.remove();
+                $.type(callback) === 'function' && callback();
+            }, (~~timeout || 2000) + 100);//100为动画时间
+        };
+    }();
+
+    /**
+     * 顶部提示层
+     */
+    dialog.log = function () {
+
+        var timer = null;
+
+        /**
+         * @param mes       提示文字String 【必填】
+         * @param timeout   多久后消失Number 毫秒 【默认：2000ms】【可选】
+         */
+        return function (mes, timeout, callback) {
+
+            clearTimeout(timer);
+
+            var ID = 'YDUI_LOG';
+
+            $('#' + ID).remove();
+
+            var $dom = $('<div id="' + ID + '"><div class="m-log">' + (mes || '') + '</div></div>');
+
+            $body.append($dom);
+
+            var next = function () {
+                $dom.remove();
+                $.type(callback) == 'function' && callback();
+            };
+
+            var closeLog = function () {
+                clearTimeout(timer);
+
+                $dom.find('.m-log').addClass('log-out');
+
+                $dom.one('webkitTransitionEnd', next).emulateTransitionEnd(150);
+            };
+
+            $dom.on('click', closeLog);
+
+            if (~~timeout > 0) {
+                timer = setTimeout(closeLog, timeout + 200);
+            }
         }
-
-        var $dom = $('' +
-            '<div id="YDUI_TOAST">' +
-            '   <div class="mask-white"></div>' +
-            '   <div class="m-toast">' +
-            '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
-            '       <p class="toast-content">' + (mes || '') + '</p>' +
-            '   </div>' +
-            '</div>').remove();
-
-        ydui.util.pageScroll.lock();
-
-        $body.append($dom);
-
-        if ($.type(timeout) === 'function' && arguments.length >= 3) {
-            callback = timeout;
-            timeout = 2000;
-        }
-
-        var inter = setTimeout(function () {
-            clearTimeout(inter);
-            ydui.util.pageScroll.unlock();
-            $dom.remove();
-            $.type(callback) === 'function' && callback();
-        }, (~~timeout || 2000) + 100);//100为动画时间
-    };
+    }();
 
     /**
      * 加载中提示框
      */
     dialog.loading = function () {
+
+        var ID = 'YDUI_LOADING';
+
         return {
             /**
              * 加载中 - 显示
              * @param text 显示文字String 【可选】
              */
             open: function (text) {
+                $('#' + ID).remove();
+
                 var $dom = $('' +
-                    '<div id="YDUI_LOADING">' +
+                    '<div id="' + ID + '">' +
                     '    <div class="mask-white"></div>' +
                     '    <div class="m-loading">' +
                     '        <div class="loading-hd">' +
@@ -452,7 +523,7 @@
              */
             close: function () {
                 ydui.util.pageScroll.unlock();
-                $('#YDUI_LOADING').remove();
+                $('#' + ID).remove();
             }
         };
     }();
@@ -2281,17 +2352,13 @@
 
     /**
      * 日期格式化
-     * @param format 日期格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
+     * @param format 日期格式 {%d天}{%h时}{%m分}{%s秒}{%f毫秒}
      * @param time 单位 毫秒
      * @returns {string}
      */
     util.timestampTotime = function (format, time) {
         var t = {},
             floor = Math.floor;
-
-        var checkTime = function (i) {
-            return i < 10 ? '0' + i : i;
-        };
 
         t.f = time % 1000;
         time = floor(time / 1000);
@@ -2303,7 +2370,10 @@
         t.d = floor(time / 24);
 
         var ment = function (a) {
-            return '$1' + checkTime(a) + '$2';
+            if (a <= 0) {
+                return '';
+            }
+            return '$1' + (a < 10 ? '0' + a : a) + '$2';
         };
 
         format = format.replace(/\{([^{]*?)%d(.*?)\}/g, ment(t.d));
@@ -2316,47 +2386,34 @@
     };
 
     /**
-     * js倒计时 TODO 有问题 哈哈哈哈哈哈
+     * js倒计时
      * @param format 时间格式 {%d}天{%h}时{%m}分{%s}秒{%f}毫秒
-     * @param time 时间 毫秒
-     * @param callback(ret) 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
-     * DEMO: YDUI.util.countdown('{%d}天{%h}时{%m}分{%s}秒{%f}毫秒', 60000, function(ret){ console.log(ret); });
+     * @param time 结束时间时间戳 毫秒
+     * @param speed 速度
+     * @param callback ret 倒计时结束回调函数 ret 时间字符 ；ret == '' 则倒计时结束
+     * DEMO: YDUI.util.countdown('{%d天}{%h时}{%m分}{%s秒}{%f毫秒}', Date.parse(new Date()) + 60000, 1000, function(ret){ console.log(ret); });
      */
-    util.countdown = function (format, time, callback) {
-        var that = this, tm = new Date().getTime();
+    util.countdown = function (format, time, speed, callback) {
+        var that = this;
         var timer = setInterval(function () {
-            var a = new Date().getTime();
-            var l_time = time - a + tm;
+            var l_time = time - new Date().getTime();
             if (l_time > 0) {
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
                 $.type(callback) == 'function' && callback('');
             }
-        }, 50);
+        }, speed);
     };
-
-    // util.countdown = function (format, time, callback) {
-    //       var c = time * 1000;
-    //       var timer = setInterval(function () {
-    //           var l_time = c - new Date().getTime();
-    //           if (l_time > 0) {
-    //               callback(util.timestampTotime(format, l_time));
-    //           } else {
-    //               clearInterval(timer);
-    //               $.type(callback) == 'function' && callback('');
-    //           }
-    //       }, 10);
-    //   };
 
     /**
      * js 加减乘除
      * @param arg1 数值1
-     * @param arg2 数值2
      * @param op 操作符string 【+ - * /】
+     * @param arg2 数值2
      * @returns {Object} arg1 与 arg2运算的精确结果
      */
-    util.calc = function (arg1, arg2, op) {
+    util.calc = function (arg1, op, arg2) {
         var ra = 1, rb = 1, m;
 
         try {
