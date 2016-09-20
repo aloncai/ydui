@@ -1,5 +1,5 @@
 /**
- * LazyLoad for Mobile
+ * LazyLoad
  * @example $(selector).find("img").lazyLoad();
  */
 !function ($, win) {
@@ -13,87 +13,69 @@
 
     LazyLoad.DEFAULTS = {
         attr: 'data-url',
-        container: $(win)
+        $container: $(win),
+        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC'
     };
 
     LazyLoad.prototype.init = function () {
         var _this = this;
 
-        _this.cache = _this.getCache();
+        _this.bindImgEvent();
 
-        _this.loadimg();
+        _this.loadImg();
 
-        _this.options.container.on('scroll', function () {
-            _this.loadimg();
+        _this.options.$container.on('scroll', function () {
+            _this.loadImg();
         });
 
         $(win).on('resize', function () {
-            _this.loadimg();
+            _this.loadImg();
         });
     };
 
     /**
-     * 将所有图片存起来
-     * @returns {Array}
+     * 加载图片
      */
-    LazyLoad.prototype.getCache = function () {
-        var _this = this,
-            _cache = [];
-
-        _this.$element.each(function () {
-            var $this = $(this);
-
-            var data = {
-                $img: $this,
-                tag: $this[0].tagName.toLowerCase(),
-                url: $this.attr(_this.options["attr"])
-            };
-            _cache.push(data);
-        });
-
-        return _cache;
-    };
-
-    /**
-     * 判断图片在可视区域就加载出来
-     */
-    LazyLoad.prototype.loadimg = function () {
+    LazyLoad.prototype.loadImg = function () {
         var _this = this,
             options = _this.options;
 
-        var contHeight = options.container.height(),
-            contop = options.container.get(0) === win ? $(win).scrollTop() : options.container.offset().top;
-
-        var _cache = _this.cache;
+        var contentHeight = options.$container.height(),
+            contentTop = options.$container.get(0) === win ? $(win).scrollTop() : options.$container.offset().top;
 
         _this.$element.each(function () {
-            var $this = $(this);
+            var $img = $(this);
 
-            $this.one('loadfuck', function () {
+            var post = $img.offset().top - contentTop,
+                posb = post + $img.height();
 
-            });
-        });
-
-        // TODO 采取one事件绑定方案 禁止遍历多个
-        $.each(_cache, function (key, data) {
-            var $img = data.$img,
-                tag = data.tag,
-                url = data.url;
-
-            $img.one('loadfuck', function () {
-
-            });
-
-            if ($img && tag == "img" && url) {
-                var post = $img.offset().top - contop,
-                    posb = post + $img.height();
-
-                // 判断是否位于可视区域内
-                if ((post >= 0 && post < contHeight) || (posb > 0 && posb <= contHeight)) {
-                    $img.attr("src", url);
-                    data.$img = null;
-                }
+            // 判断是否位于可视区域内
+            if ((post >= 0 && post < contentHeight) || (posb > 0 && posb <= contentHeight)) {
+                $img.trigger('appear');
             }
+        });
+    };
+
+    /**
+     * 给所有图片绑定单次自定义事件
+     */
+    LazyLoad.prototype.bindImgEvent = function () {
+        var _this = this,
+            options = _this.options;
+
+        _this.$element.each(function () {
+            var $img = $(this);
+
+            // 若未填写img src则默认给个小小小小小小的图标
+            if ($img.is("img") && !$img.attr("src")) {
+                $img.attr("src", options.placeholder);
+            }
+
+            $img.one("appear", function () {
+                if ($img.is("img")) {
+                    $img.attr("src", $img.attr(options.attr));
+                }
+            });
         });
     };
 

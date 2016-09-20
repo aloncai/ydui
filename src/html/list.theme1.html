@@ -20,7 +20,6 @@
             <div class="nav-center">List - theme1</div>
         </nav>
     </header>
-    <div id="fuck" style="height: 300px;width: 100%;overflow-x: auto;">
     <section class="m-list list-theme1">
         <a href="javascript:;" class="list-item">
             <div class="list-img">
@@ -110,16 +109,12 @@
             </div>
         </a>
     </section>
-    </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
     !function () {
-        $('.list-theme1').find('img').lazyload({
-            container: '#fuck',
-            data_attribute: 'url'
-        });
+        $('.list-theme1').find('img').lazyLoad();
     }();
 </script>
 </body>
