@@ -600,8 +600,8 @@ input[type="submit"].btn-hollow {
 }
 .m-log.log-out {
   opacity: 1;
-  -webkit-animation: upOut .15s linear;
-  animation: upOut .15s linear;
+  -webkit-animation: upOut .15s linear forwards;
+  animation: upOut .15s linear forwards;
 }
 /* copy for weui. */
 .m-loading {
