@@ -27,7 +27,7 @@
         <input type="button" class="btn-block btn-danger" id="J_ToastS" value="toast->Success"/>
         <input type="button" class="btn-block btn-danger" id="J_ToastE" value="toast->Error"/>
         <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
-        <input type="button" class="btn-block btn-hollow" id="J_Log" value="Log"/>
+        <input type="button" class="btn-block btn-hollow" id="J_Notify" value="Notify"/>
     </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -73,7 +73,7 @@
 
         //普通提示框
         $('#J_Alert').on('click', function () {
-            dialog.alert('我有一个小毛驴我从来也不骑！');
+            dialog.alert('消息一出，休想滚动屏幕【移动终端】！');
         });
 
         //正确提示框
@@ -97,8 +97,8 @@
         });
 
         // 顶部提示框
-        $('#J_Log').on('click', function () {
-            dialog.log('5秒后自动消失，点击也可以消失！', 5000, function(){
+        $('#J_Notify').on('click', function () {
+            dialog.notify('5秒后自动消失，点我也可以消失！', 5000, function(){
                 console.log('我走咯！');
             });
         });

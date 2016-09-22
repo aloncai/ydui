@@ -437,7 +437,7 @@
     /**
      * 顶部提示层
      */
-    dialog.log = function () {
+    dialog.notify = function () {
 
         var timer = null;
 
@@ -449,11 +449,11 @@
 
             clearTimeout(timer);
 
-            var ID = 'YDUI_LOG';
+            var ID = 'YDUI_NOTIFY';
 
             $('#' + ID).remove();
 
-            var $dom = $('<div id="' + ID + '"><div class="m-log">' + (mes || '') + '</div></div>');
+            var $dom = $('<div id="' + ID + '"><div class="m-notify">' + (mes || '') + '</div></div>');
 
             $body.append($dom);
 
@@ -462,18 +462,18 @@
                 $.type(callback) == 'function' && callback();
             };
 
-            var closeLog = function () {
+            var closeNotify = function () {
                 clearTimeout(timer);
 
-                $dom.find('.m-log').addClass('log-out');
+                $dom.find('.m-notify').addClass('notify-out');
 
                 $dom.one('webkitTransitionEnd', next).emulateTransitionEnd(150);
             };
 
-            $dom.on('click', closeLog);
+            $dom.on('click', closeNotify);
 
             if (~~timeout > 0) {
-                timer = setTimeout(closeLog, timeout + 200);
+                timer = setTimeout(closeNotify, timeout + 200);
             }
         }
     }();
@@ -1444,7 +1444,7 @@
     LazyLoad.DEFAULTS = {
         attr: 'data-url',
         $container: $(win),
-        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC'
+        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWN4BQAA7ADrKJeAMwAAAABJRU5ErkJggg=='
     };
 
     LazyLoad.prototype.init = function () {

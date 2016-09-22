@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=db15fda74ea294192c1e4c84236e78ab"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=67c52a7bdfa0c3d1ced71e453a33e94a"/>
     <link rel="stylesheet" href="../css/demo.css" />
     <script src="../js/ydui.flexible.js"></script>
 </head>
@@ -27,7 +27,7 @@
         <input type="button" class="btn-block btn-danger" id="J_ToastS" value="toast->Success"/>
         <input type="button" class="btn-block btn-danger" id="J_ToastE" value="toast->Error"/>
         <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
-        <input type="button" class="btn-block btn-hollow" id="J_Log" value="Log"/>
+        <input type="button" class="btn-block btn-hollow" id="J_Notify" value="Notify"/>
     </div>
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -73,7 +73,7 @@
 
         //普通提示框
         $('#J_Alert').on('click', function () {
-            dialog.alert('我有一个小毛驴我从来也不骑！');
+            dialog.alert('消息一出，休想滚动屏幕【移动终端】！');
         });
 
         //正确提示框
@@ -97,8 +97,8 @@
         });
 
         // 顶部提示框
-        $('#J_Log').on('click', function () {
-            dialog.log('5秒后自动消失，点击也可以消失！', 5000, function(){
+        $('#J_Notify').on('click', function () {
+            dialog.notify('5秒后自动消失，点我也可以消失！', 5000, function(){
                 console.log('我走咯！');
             });
         });
