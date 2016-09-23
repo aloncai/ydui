@@ -26,7 +26,7 @@
             return;
         }
 
-        if ($.type(arguments[1]) != 'function' && args == 2 && !arguments[1] instanceof Array) {
+        if (typeof arguments[1] != 'function' && args == 2 && !arguments[1] instanceof Array) {
             console.error('From YDUI\'s confirm: The second parameter must be a function or array!!!');
             return;
         }
@@ -38,7 +38,7 @@
         }
 
         var btnArr = opts;
-        if ($.type(opts) === 'function') {
+        if (typeof opts === 'function') {
             btnArr = [{
                 txt: '取消',
                 color: false
@@ -66,9 +66,9 @@
         $.each(btnArr, function (i, val) {
             var $btn;
             // 指定按钮颜色
-            if ($.type(val.color) == 'boolean') {
+            if (typeof val.color == 'boolean') {
                 $btn = $('<a href="javascript:;" class="' + 'confirm-btn ' + (val.color ? 'primary' : 'default') + '">' + (val.txt || '') + '</a>');
-            } else if ($.type(val.color) == 'string') {
+            } else if (typeof val.color == 'string') {
                 $btn = $('<a href="javascript:;" style="color: ' + val.color + '">' + (val.txt || '') + '</a>');
             }
 
@@ -126,7 +126,7 @@
         $dom.find('a').on('click', function () {
             $dom.remove();
             ydui.util.pageScroll.unlock();
-            $.type(callback) === 'function' && callback();
+            typeof callback === 'function' && callback();
         });
     };
 
@@ -168,7 +168,7 @@
 
             $body.append($dom);
 
-            if ($.type(timeout) === 'function' && arguments.length >= 3) {
+            if (typeof timeout === 'function' && arguments.length >= 3) {
                 callback = timeout;
                 timeout = 2000;
             }
@@ -177,7 +177,7 @@
                 clearTimeout(timer);
                 ydui.util.pageScroll.unlock();
                 $dom.remove();
-                $.type(callback) === 'function' && callback();
+                typeof callback === 'function' && callback();
             }, (~~timeout || 2000) + 100);//100为动画时间
         };
     }();
@@ -207,7 +207,7 @@
 
             var next = function () {
                 $dom.remove();
-                $.type(callback) == 'function' && callback();
+                typeof callback == 'function' && callback();
             };
 
             var closeNotify = function () {

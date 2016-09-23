@@ -69,11 +69,11 @@
 
             if (!sendcode) {
                 $this.data('ydui.sendcode', (sendcode = new SendCode(this, option)));
-                if ($.type(option) == 'object' && option.run) {
+                if (typeof option == 'object' && option.run) {
                     sendcode.start();
                 }
             }
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 sendcode[option] && sendcode[option].apply(sendcode, args);
             }
         });

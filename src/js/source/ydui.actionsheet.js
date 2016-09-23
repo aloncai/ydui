@@ -11,25 +11,11 @@
         $mask = $('<div class="mask-black"></div>');
 
     function ActionSheet (element, closeElement) {
-        /**
-         * DOM
-         * @type {*|HTMLElement}
-         */
         this.$element = $(element);
-        /**
-         * 第三方关闭窗口操作
-         */
         this.closeElement = closeElement;
-        /**
-         * 切换窗口显示/关闭样式
-         * @type {string}
-         */
         this.toggleClass = 'actionsheet-toggle';
     }
 
-    /**
-     * 打开窗口
-     */
     ActionSheet.prototype.open = function () {
         var _this = this;
         $body.append($mask);
@@ -49,9 +35,6 @@
         _this.$element.addClass(_this.toggleClass).trigger('open.ydui.actionsheet');
     };
 
-    /**
-     *
-     */
     ActionSheet.prototype.close = function () {
         var _this = this;
         $mask.off('click.ydui.actionsheet.mask').remove();
@@ -68,12 +51,12 @@
 
             if (!actionsheet) {
                 $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
-                if (!option || $.type(option) == 'object') {
+                if (!option || typeof option == 'object') {
                     actionsheet.open();
                 }
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 actionsheet[option] && actionsheet[option].apply(actionsheet, args);
             }
         });

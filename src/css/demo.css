@@ -137,6 +137,17 @@
   -ms-flex-pack: center;
   justify-content: center;
 }
+.demo-spinner {
+  background-color: #FFF;
+  padding: .24rem;
+  font-size: 0;
+}
+.demo-spinner-title {
+  font-size: .26rem;
+  color: #888;
+  display: block;
+  margin-bottom: .1rem;
+}
 .demo-badege {
   padding: 0 .24rem;
 }
@@ -155,7 +166,7 @@
 }
 @font-face {
   font-family: 'demo-icons';
-  src: url('http://at.alicdn.com/t/font_1472174482_228979.ttf') format('truetype');
+  src: url('http://at.alicdn.com/t/font_1474622432_9461653.ttf') format('truetype');
 }
 [class^="demo-icons-"]:before,
 [class*=" demo-icons-"]:before {
@@ -241,4 +252,8 @@
 .demo-icons-slider:before {
   content: '\e614';
   color: #8B78E2;
+}
+.demo-icons-spinner:before {
+  content: '\e615';
+  color: #FF8D20;
 }

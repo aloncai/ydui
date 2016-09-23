@@ -102,25 +102,11 @@
         $mask = $('<div class="mask-black"></div>');
 
     function ActionSheet (element, closeElement) {
-        /**
-         * DOM
-         * @type {*|HTMLElement}
-         */
         this.$element = $(element);
-        /**
-         * 第三方关闭窗口操作
-         */
         this.closeElement = closeElement;
-        /**
-         * 切换窗口显示/关闭样式
-         * @type {string}
-         */
         this.toggleClass = 'actionsheet-toggle';
     }
 
-    /**
-     * 打开窗口
-     */
     ActionSheet.prototype.open = function () {
         var _this = this;
         $body.append($mask);
@@ -140,9 +126,6 @@
         _this.$element.addClass(_this.toggleClass).trigger('open.ydui.actionsheet');
     };
 
-    /**
-     *
-     */
     ActionSheet.prototype.close = function () {
         var _this = this;
         $mask.off('click.ydui.actionsheet.mask').remove();
@@ -159,12 +142,12 @@
 
             if (!actionsheet) {
                 $this.data('ydui.actionsheet', (actionsheet = new ActionSheet(this, option.closeElement)));
-                if (!option || $.type(option) == 'object') {
+                if (!option || typeof option == 'object') {
                     actionsheet.open();
                 }
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 actionsheet[option] && actionsheet[option].apply(actionsheet, args);
             }
         });
@@ -278,7 +261,7 @@
             return;
         }
 
-        if ($.type(arguments[1]) != 'function' && args == 2 && !arguments[1] instanceof Array) {
+        if (typeof arguments[1] != 'function' && args == 2 && !arguments[1] instanceof Array) {
             console.error('From YDUI\'s confirm: The second parameter must be a function or array!!!');
             return;
         }
@@ -290,7 +273,7 @@
         }
 
         var btnArr = opts;
-        if ($.type(opts) === 'function') {
+        if (typeof opts === 'function') {
             btnArr = [{
                 txt: '取消',
                 color: false
@@ -318,9 +301,9 @@
         $.each(btnArr, function (i, val) {
             var $btn;
             // 指定按钮颜色
-            if ($.type(val.color) == 'boolean') {
+            if (typeof val.color == 'boolean') {
                 $btn = $('<a href="javascript:;" class="' + 'confirm-btn ' + (val.color ? 'primary' : 'default') + '">' + (val.txt || '') + '</a>');
-            } else if ($.type(val.color) == 'string') {
+            } else if (typeof val.color == 'string') {
                 $btn = $('<a href="javascript:;" style="color: ' + val.color + '">' + (val.txt || '') + '</a>');
             }
 
@@ -378,7 +361,7 @@
         $dom.find('a').on('click', function () {
             $dom.remove();
             ydui.util.pageScroll.unlock();
-            $.type(callback) === 'function' && callback();
+            typeof callback === 'function' && callback();
         });
     };
 
@@ -420,7 +403,7 @@
 
             $body.append($dom);
 
-            if ($.type(timeout) === 'function' && arguments.length >= 3) {
+            if (typeof timeout === 'function' && arguments.length >= 3) {
                 callback = timeout;
                 timeout = 2000;
             }
@@ -429,7 +412,7 @@
                 clearTimeout(timer);
                 ydui.util.pageScroll.unlock();
                 $dom.remove();
-                $.type(callback) === 'function' && callback();
+                typeof callback === 'function' && callback();
             }, (~~timeout || 2000) + 100);//100为动画时间
         };
     }();
@@ -459,7 +442,7 @@
 
             var next = function () {
                 $dom.remove();
-                $.type(callback) == 'function' && callback();
+                typeof callback == 'function' && callback();
             };
 
             var closeNotify = function () {
@@ -1419,7 +1402,7 @@
                 $this.data('ydui.keyboard', (keyboard = new KeyBoard(this, option)));
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 keyboard[option] && keyboard[option].apply(keyboard, args);
             }
         });
@@ -1751,12 +1734,12 @@
                 } else {
                     $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
                 }
-                if (!option || $.type(option) == 'object') {
+                if (!option || typeof option == 'object') {
                     progressbar.appendView();
                 }
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 progressbar[option] && progressbar[option].apply(progressbar, args);
             }
         });
@@ -1842,11 +1825,11 @@
 
             if (!sendcode) {
                 $this.data('ydui.sendcode', (sendcode = new SendCode(this, option)));
-                if ($.type(option) == 'object' && option.run) {
+                if (typeof option == 'object' && option.run) {
                     sendcode.start();
                 }
             }
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 sendcode[option] && sendcode[option].apply(sendcode, args);
             }
         });
@@ -2210,6 +2193,188 @@
 
 }(window);
 /**
+ * Spinner
+ */
+!function (win) {
+    "use strict";
+
+    function Spinner (element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, Spinner.DEFAULTS, options || {});
+        this.init();
+    }
+
+    Spinner.DEFAULTS = {
+        input: '.J_Input',
+        add: '.J_Add',
+        minus: '.J_Del',
+        unit: 1,
+        max: 0,
+        callback: null
+    };
+
+    Spinner.prototype.init = function () {
+        var _this = this,
+            options = _this.options;
+
+        _this.$input = $(options.input, _this.$element);
+        _this.$add = $(options.add, _this.$element);
+        _this.$minus = $(options.minus, _this.$element);
+
+        _this.checkParameters();
+
+        _this.initInputVal();
+
+        _this.bindEvent();
+    };
+
+    Spinner.prototype.initInputVal = function () {
+        var _this = this,
+            options = _this.options,
+            v = _this.$input.val();
+
+        _this.$input.val(!v || v % options.unit != 0 ? options.unit : v);
+    };
+
+    Spinner.prototype.isNumber = function (val) {
+        //return /^([0]|[1-9]\d*)(\.\d{1,2})?$/.test(val);
+        return /^\d*$/.test(val);
+    };
+
+    Spinner.prototype.FixNumber = function (val) {
+        //return parseFloat(val);
+        return parseInt(val);
+    };
+
+    Spinner.prototype.checkParameters = function () {
+
+        var _this = this,
+            options = _this.options;
+
+        var params = [
+            {param: 'unit', default: 1},
+            {param: 'max', default: 0}
+        ];
+
+        $.each(params, function (k, v) {
+            var _val = options[v.param],
+                _dataVal = _this.$input.data(v.param);
+
+            if (!!_dataVal) {
+                _val = _dataVal;
+                if (!_this.isNumber(_dataVal)) {
+                    _val = options[v.param];
+                    if (typeof _val == 'function') {
+                        _val = _val();
+                    }
+                }
+            } else {
+                if (typeof options[v.param] == 'function') {
+                    var _fnVal = options[v.param]();
+
+                    _val = _fnVal;
+                    if (!_this.isNumber(_fnVal)) {
+                        _val = options[v.param];
+                    }
+                }
+            }
+
+            if (!_this.isNumber(_val)) {
+                _val = v.default;
+            }
+
+            options[v.param] = _this.FixNumber(_val);
+        });
+    };
+
+    Spinner.prototype.setValue = function (val) {
+        var _this = this,
+            options = _this.options,
+            max = options.max,
+            unit = options.unit;
+
+        val = _this.FixNumber(val);
+
+        if (!_this.isNumber(val)) val = unit;
+
+        if (val > max && max != 0) val = max;
+
+        if (val % unit > 0) {
+            val = val - val % unit + unit;
+            if (val > max && max != 0) val -= unit;
+        }
+
+        if (val < unit) val = unit;
+
+        _this.$input.val(val);
+
+        typeof options.callback == 'function' && options.callback(val, _this.$input);
+    };
+
+    Spinner.prototype.bindEvent = function () {
+        var _this = this,
+            options = _this.options,
+            unit = options.unit,
+            max = options.max,
+            isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+            triggerEvent = isMobile ? 'touchstart' : 'click';
+
+        _this.$add.on(triggerEvent, function () {
+            var $input = _this.$input,
+                val = $input.val(),
+                temp = _this.FixNumber(val) + unit;
+
+            if ((max != 0 && temp > max) || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
+            _this.setValue(temp);
+        });
+
+        _this.$minus.on(triggerEvent, function () {
+            var $input = _this.$input,
+                val = $input.val(),
+                temp = val - unit;
+
+            if (temp < unit || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
+            _this.setValue(temp);
+        });
+
+        _this.$input.on('change', function () {
+            _this.setValue($(this).val());
+        }).on('keydown', function (event) {
+            if (event.keyCode == 13) {
+                _this.setValue($(this).val());
+                return false;
+            }
+        });
+    };
+
+    function Plugin (option) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+            var $this = $(this),
+                spinner = $this.data('ydui.spinner');
+
+            if (!spinner) {
+                $this.data('ydui.spinner', (spinner = new Spinner(this, option)));
+            }
+
+            if (typeof option == 'string') {
+                spinner[option] && spinner[option].apply(spinner, args);
+            }
+        });
+    }
+
+    // 直接给Data API方式绑定事件
+    $(win).on('load', function () {
+        $('[data-ydui-spinner]').each(function () {
+            var $this = $(this);
+            $this.spinner(win.YDUI.util.parseOptions($this.data('ydui-spinner')));
+        });
+    });
+
+    $.fn.spinner = Plugin;
+}(window);
+/**
  * Tab
  */
 !function (win) {
@@ -2261,7 +2426,7 @@
     Tab.prototype.open = function (index) {
         var _this = this;
 
-        index = $.type(index) == 'number' ? index : _this.$nav.filter(index).index();
+        index = typeof index == 'number' ? index : _this.$nav.filter(index).index();
 
         var $curNav = _this.$nav.eq(index);
 
@@ -2302,7 +2467,7 @@
         var $avtive = $container.filter('.' + activeClass);
 
         function next () {
-            $.type(callback) == 'function' && callback();
+            typeof callback == 'function' && callback();
         }
 
         // 动画执行完毕后回调
@@ -2316,14 +2481,15 @@
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
-            var $this = $(this),
+            var target = this,
+                $this = $(target),
                 tab = $this.data('ydui.tab');
 
             if (!tab) {
-                $this.data('ydui.tab', (tab = new Tab($(this), option)));
+                $this.data('ydui.tab', (tab = new Tab(target, option)));
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 tab[option] && tab[option].apply(tab, args);
             }
         });
@@ -2401,7 +2567,7 @@
                 callback(that.timestampTotime(format, l_time));
             } else {
                 clearInterval(timer);
-                $.type(callback) == 'function' && callback('');
+                typeof callback == 'function' && callback('');
             }
         }, speed);
     };
@@ -2468,7 +2634,7 @@
         reader.readAsDataURL(file);
         reader.onload = function () {
             dataimg = this.result;
-            $.type(callback) === 'function' && callback(dataimg);
+            typeof callback === 'function' && callback(dataimg);
         };
     };
 
@@ -2491,7 +2657,7 @@
      * @returns {string}
      */
     util.serialize = function (value) {
-        if ($.type(value) === 'string') return value;
+        if (typeof value === 'string') return value;
         return JSON.stringify(value);
     };
 
@@ -2501,7 +2667,7 @@
      * @returns {*}
      */
     util.deserialize = function (value) {
-        if ($.type(value) !== 'string') return undefined;
+        if (typeof value !== 'string') return undefined;
         try {
             return JSON.parse(value);
         } catch (e) {
@@ -2552,7 +2718,7 @@
                     date = expires;
 
                 // 从当前时间开始，多少小时后过期
-                if ($.type(date) === 'number') {
+                if (typeof date === 'number') {
                     date = new Date();
                     date.setTime(date.getTime() + expires * 1000);
                 }

@@ -50,7 +50,7 @@
     Tab.prototype.open = function (index) {
         var _this = this;
 
-        index = $.type(index) == 'number' ? index : _this.$nav.filter(index).index();
+        index = typeof index == 'number' ? index : _this.$nav.filter(index).index();
 
         var $curNav = _this.$nav.eq(index);
 
@@ -91,7 +91,7 @@
         var $avtive = $container.filter('.' + activeClass);
 
         function next () {
-            $.type(callback) == 'function' && callback();
+            typeof callback == 'function' && callback();
         }
 
         // 动画执行完毕后回调
@@ -105,14 +105,15 @@
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {
-            var $this = $(this),
+            var target = this,
+                $this = $(target),
                 tab = $this.data('ydui.tab');
 
             if (!tab) {
-                $this.data('ydui.tab', (tab = new Tab($(this), option)));
+                $this.data('ydui.tab', (tab = new Tab(target, option)));
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 tab[option] && tab[option].apply(tab, args);
             }
         });

@@ -268,7 +268,7 @@
                 $this.data('ydui.keyboard', (keyboard = new KeyBoard(this, option)));
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 keyboard[option] && keyboard[option].apply(keyboard, args);
             }
         });

@@ -228,12 +228,12 @@
                 } else {
                     $this.data('ydui.progressbar', (progressbar = new Circle(this, option)));
                 }
-                if (!option || $.type(option) == 'object') {
+                if (!option || typeof option == 'object') {
                     progressbar.appendView();
                 }
             }
 
-            if ($.type(option) == 'string') {
+            if (typeof option == 'string') {
                 progressbar[option] && progressbar[option].apply(progressbar, args);
             }
         });
