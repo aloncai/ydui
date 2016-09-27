@@ -273,7 +273,7 @@ table {
   background-color: #e6e6e6;
 }
 .btn-hollow:after {
-  content: ' ';
+  content: '';
   width: 200%;
   height: 200%;
   position: absolute;
@@ -1329,13 +1329,37 @@ input[type="submit"].btn-hollow {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  line-height: 1rem;
+  height: 1rem;
   border: none;
   display: block;
   color: #A9A9A9;
   font-size: 0.3rem;
   margin-left: -0.08rem;
   /* 去除select默认缩进 */
+}
+.cell-multiple-selecet {
+  margin-right: 2%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  display: block;
+}
+.cell-multiple-selecet select {
+  width: 100%;
+  height: .6rem;
+  border: 1px solid #D9D9D9;
+  border-radius: 2px;
+  -webkit-appearance: button;
+  text-indent: 2px;
+  color: #A9A9A9;
+}
+.cell-multiple-selecet select:active {
+  border-color: #888;
+  background-color: #F2F2F2;
+}
+.cell-multiple-selecet:last-child {
+  margin-right: 0;
 }
 .cell-icon {
   display: block;
