@@ -164,6 +164,9 @@
   height: .15rem;
   width: 100%;
 }
+.nav-center .nav-title {
+  font-family: \5fae\8f6f\96c5\9ed1;
+}
 @font-face {
   font-family: 'demo-icons';
   src: url('http://at.alicdn.com/t/font_1474965703_1820433.ttf') format('truetype');

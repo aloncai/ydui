@@ -1,7 +1,7 @@
 /**
  * CitySelect
  */
-!function (win) {
+!function (window) {
     "use strict";
 
     function CitySelect (element, options) {
@@ -116,10 +116,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-cityselect]').each(function () {
             var $this = $(this);
-            $this.citySelect(win.YDUI.util.parseOptions($this.data('ydui-cityselect')));
+            $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));
         });
     });
 

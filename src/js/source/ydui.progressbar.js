@@ -2,12 +2,11 @@
  * ProgressBar
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        doc = win.document,
-        util = win.YDUI.util;
+    var doc = window.document,
+        util = window.YDUI.util;
 
     function Circle (element, options) {
         this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
@@ -66,7 +65,7 @@
         fill: '',
         progress: 0,
         delay: true,
-        container: win
+        container: window
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -87,7 +86,7 @@
             svgView = _this.createSvgView(),
             $element = _this.$element;
 
-        _this.$container = options.container === win || options.container == 'window' ? $(win) : $(options.container);
+        _this.$container = options.container === window || options.container == 'window' ? $(window) : $(options.container);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
@@ -107,7 +106,7 @@
                 _this.checkInView($svg);
             });
 
-            $(win).on('resize', function () {
+            $(window).on('resize', function () {
                 _this.checkInView($svg);
             });
         } else {
@@ -122,7 +121,7 @@
         var _this = this,
             $container = _this.$container,
             contentHeight = $container.height(),
-            contentTop = $container.get(0) === win ? $(win).scrollTop() : $container.offset().top;
+            contentTop = $container.get(0) === window ? $(window).scrollTop() : $container.offset().top;
 
         var post = $svg.offset().top - contentTop,
             posb = post + $svg.height();

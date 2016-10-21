@@ -1,10 +1,8 @@
 /**
  * Tab
  */
-!function (win) {
+!function (window) {
     "use strict";
-
-    var $ = win.$;
 
     function Tab (element, options) {
         this.$element = $(element);
@@ -120,10 +118,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-tab]').each(function () {
             var $this = $(this);
-            $this.tab(win.YDUI.util.parseOptions($this.data('ydui-tab')));
+            $this.tab(window.YDUI.util.parseOptions($this.data('ydui-tab')));
         });
     });
 

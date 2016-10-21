@@ -1,15 +1,21 @@
 .m-tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+
   width: 100%;
-  z-index: 49;
+
+  position: relative;
+  z-index: 9;
   display: flex;
   align-items: center;
   padding: .104rem 0 .07rem;
   background-color: @tabbar-bg;
   &:after {
     .top-line(@tabbar-border-color);
+  }
+  &.tabbar-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 49;
   }
 }
 

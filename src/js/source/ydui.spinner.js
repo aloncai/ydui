@@ -1,7 +1,7 @@
 /**
  * Spinner
  */
-!function (win) {
+!function (window) {
     "use strict";
 
     function Spinner (element, options) {
@@ -122,7 +122,7 @@
             options = _this.options,
             unit = options.unit,
             max = options.max,
-            isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+            isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
             triggerEvent = isMobile ? 'touchstart' : 'click';
 
         _this.$add.on(triggerEvent, function () {
@@ -171,10 +171,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-spinner]').each(function () {
             var $this = $(this);
-            $this.spinner(win.YDUI.util.parseOptions($this.data('ydui-spinner')));
+            $this.spinner(window.YDUI.util.parseOptions($this.data('ydui-spinner')));
         });
     });
 

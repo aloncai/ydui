@@ -1,17 +1,16 @@
 /**
  * ydui
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$ = jQuery,
-        doc = win.document,
+    var doc = window.document,
         ydui = {};
 
     /**
      * 直接绑定FastClick
      */
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         typeof FastClick == 'function' && FastClick.attach(doc.body);
     });
 
@@ -85,18 +84,17 @@
     if (typeof define === 'function') {
         define(ydui);
     } else {
-        win.YDUI = ydui;
+        window.YDUI = ydui;
     }
 
 }(window);
 /**
  * ActionSheet
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        doc = win.document,
+    var doc = window.document,
         $doc = $(doc),
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
@@ -156,7 +154,7 @@
     $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
-        var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
+        var options = window.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
             $target = $(options.target),
             option = $target.data('ydui.actionsheet') ? 'open' : options;
 
@@ -169,15 +167,15 @@
 /**
  * 解决:active这个高端洋气的CSS伪类不能使用问题
  */
-!function (win) {
-    win.document.addEventListener('touchstart', function (event) {
+!function (window) {
+    window.document.addEventListener('touchstart', function (event) {
         /* do nothing */
     }, false);
 }(window);
 /**
  * CitySelect
  */
-!function (win) {
+!function (window) {
     "use strict";
 
     function CitySelect (element, options) {
@@ -292,10 +290,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-cityselect]').each(function () {
             var $this = $(this);
-            $this.citySelect(win.YDUI.util.parseOptions($this.data('ydui-cityselect')));
+            $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));
         });
     });
 
@@ -304,10 +302,10 @@
 /**
  * device
  */
-!function (win) {
-    var doc = win.document,
-        ydui = win.YDUI,
-        ua = win.navigator && win.navigator.userAgent || '';
+!function (window) {
+    var doc = window.document,
+        ydui = window.YDUI,
+        ua = window.navigator && window.navigator.userAgent || '';
 
     var ipad = !!ua.match(/(iPad).*OS\s([\d_]+)/),
         ipod = !!ua.match(/(iPod)(.*OS\s([\d_]+))?/),
@@ -357,18 +355,17 @@
         /**
          * 设备像素比
          */
-        pixelRatio: win.devicePixelRatio || 1
+        pixelRatio: window.devicePixelRatio || 1
     };
 }(window);
 /**
  * dialog
  */
-!function (win, ydui) {
+!function (window, ydui) {
     "use strict";
 
-    var $ = win.$,
-        dialog = ydui.dialog = ydui.dialog || {},
-        $body = $(win.document.body);
+    var dialog = ydui.dialog = ydui.dialog || {},
+        $body = $(window.document.body);
 
     /**
      * 确认提示框
@@ -1260,14 +1257,109 @@
     window.FastClick = FastClick;
 }();
 /**
- * KeyBoard
+ * InfiniteScroll
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        $body = $(win.document.body),
-        isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+    function InfiniteScroll (element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, InfiniteScroll.DEFAULTS, options || {});
+        this.init();
+    }
+
+    InfiniteScroll.DEFAULTS = {
+        binder: window,
+        initLoad: true,
+        pageSize: 0,
+        loadFunction: null,
+        loadingHtml: '加载中...',
+        doneTxt: '没有更多数据了'
+    };
+
+    InfiniteScroll.prototype.init = function () {
+        var _this = this;
+
+        if (~~_this.options.pageSize <= 0) {
+            console.error('[YDUI warn]: 需指定pageSize参数【即每页请求数据的长度】');
+            return;
+        }
+
+        _this.$element.append(_this.$tag = $('<div class="J_InfiniteScrollTag"></div>'));
+
+        _this.initLoadingTip();
+
+        _this.bindScroll();
+    };
+
+    InfiniteScroll.prototype.initLoadingTip = function () {
+        var _this = this;
+
+        _this.$element.append(_this.$loading = $('<div class="list-loading">' + _this.options.loadingHtml + '</div>'));
+    };
+
+    InfiniteScroll.prototype.bindScroll = function () {
+
+        var _this = this,
+            options = _this.options,
+            $binder = $(options.binder),
+            isWindow = $binder.get(0) === window,
+            contentHeight = isWindow ? $(window).height() : $binder.height();
+
+        options.initLoad && _this.checkLoad();
+
+        $binder.on('scroll', function () {
+
+            if (_this.loading || _this.isDone)return;
+
+            var contentTop = isWindow ? $(window).scrollTop() : $binder.offset().top;
+
+            // 当浏览器滚动到底部时，此时 _this.$tag.offset().top 等于 contentTop + contentHeight
+            if (_this.$tag.offset().top <= contentTop + contentHeight + contentHeight / 10) {
+                _this.checkLoad();
+            }
+        });
+    };
+
+    InfiniteScroll.prototype.checkLoad = function () {
+        var _this = this,
+            options = _this.options;
+
+        _this.loading = true;
+        _this.$loading.show();
+
+        typeof options.loadFunction == 'function' && options.loadFunction().done(function (len) {
+            if (~~len <= 0) {
+                console.error('[YDUI warn]: 需在 resolve() 方法里回传本次获取记录的总数');
+                return;
+            }
+
+            if (len < options.pageSize) {
+                _this.$element.append('<div class="list-donetip">' + options.doneTxt + '</div>');
+                _this.isDone = true;
+            }
+            _this.$loading.hide();
+            _this.loading = false;
+        });
+    };
+
+    function Plugin (option) {
+        return this.each(function () {
+            new InfiniteScroll(this, option);
+        });
+    }
+
+    $.fn.infiniteScroll = Plugin;
+
+}(window);
+/**
+ * KeyBoard
+ */
+!function (window) {
+    "use strict";
+
+    var $body = $(window.document.body),
+        isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
         triggerEvent = isMobile ? 'touchstart' : 'click';
 
     function KeyBoard (element, options) {
@@ -1391,7 +1483,7 @@
      */
     KeyBoard.prototype.unbindEvent = function () {
         this.$element.off(triggerEvent + '.ydui.keyboard');
-        $(win).off('hashchange.ydui.keyboard');
+        $(window).off('hashchange.ydui.keyboard');
     };
 
     /**
@@ -1542,7 +1634,7 @@
  * LazyLoad
  * @example $(selector).find("img").lazyLoad();
  */
-!function ($, win) {
+!function (window) {
     "use strict";
 
     function LazyLoad (element, options) {
@@ -1553,7 +1645,7 @@
 
     LazyLoad.DEFAULTS = {
         attr: 'data-url',
-        $container: $(win),
+        binder: window,
         placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWN4BQAA7ADrKJeAMwAAAABJRU5ErkJggg=='
     };
 
@@ -1564,11 +1656,11 @@
 
         _this.loadImg();
 
-        _this.options.$container.on('scroll', function () {
+        $(_this.options.binder).on('scroll', function () {
             _this.loadImg();
         });
 
-        $(win).on('resize', function () {
+        $(window).on('resize', function () {
             _this.loadImg();
         });
     };
@@ -1578,10 +1670,11 @@
      */
     LazyLoad.prototype.loadImg = function () {
         var _this = this,
-            options = _this.options;
+            options = _this.options,
+            $binder = $(options.binder);
 
-        var contentHeight = options.$container.height(),
-            contentTop = options.$container.get(0) === win ? $(win).scrollTop() : options.$container.offset().top;
+        var contentHeight = $binder.height(),
+            contentTop = $binder.get(0) === window ? $(window).scrollTop() : $binder.offset().top;
 
         _this.$element.each(function () {
             var $img = $(this);
@@ -1606,7 +1699,6 @@
         _this.$element.each(function () {
             var $img = $(this);
 
-            // 若未填写img src则默认给个小小小小小小的图标
             if ($img.is("img") && !$img.attr("src")) {
                 $img.attr("src", options.placeholder);
             }
@@ -1619,28 +1711,20 @@
         });
     };
 
-    function Plugin (option) {
-        var $this = $(this),
-            lazyload = $this.data('ydui.lazyload');
+    $.fn.lazyLoad = function (option) {
+        new LazyLoad(this, option);
+    };
 
-        if (!lazyload) {
-            $this.data('ydui.lazyload', new LazyLoad(this, option));
-        }
-    }
-
-    $.fn.lazyLoad = Plugin;
-
-}(jQuery, window);
+}(window);
 /**
  * ProgressBar
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        doc = win.document,
-        util = win.YDUI.util;
+    var doc = window.document,
+        util = window.YDUI.util;
 
     function Circle (element, options) {
         this.pathTemplate = 'M 50,50 m 0,-{radius} a {radius},{radius} 0 1 1 0,{2radius} a {radius},{radius} 0 1 1 0,-{2radius}';
@@ -1699,7 +1783,7 @@
         fill: '',
         progress: 0,
         delay: true,
-        container: win
+        container: window
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -1720,7 +1804,7 @@
             svgView = _this.createSvgView(),
             $element = _this.$element;
 
-        _this.$container = options.container === win || options.container == 'window' ? $(win) : $(options.container);
+        _this.$container = options.container === window || options.container == 'window' ? $(window) : $(options.container);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
@@ -1740,7 +1824,7 @@
                 _this.checkInView($svg);
             });
 
-            $(win).on('resize', function () {
+            $(window).on('resize', function () {
                 _this.checkInView($svg);
             });
         } else {
@@ -1755,7 +1839,7 @@
         var _this = this,
             $container = _this.$container,
             contentHeight = $container.height(),
-            contentTop = $container.get(0) === win ? $(win).scrollTop() : $container.offset().top;
+            contentTop = $container.get(0) === window ? $(window).scrollTop() : $container.offset().top;
 
         var post = $svg.offset().top - contentTop,
             posb = post + $svg.height();
@@ -1882,12 +1966,204 @@
 
 }(window);
 /**
- * SendCode
+ * PullRefresh
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$;
+    function PullRefresh (element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, PullRefresh.DEFAULTS, options || {});
+        this.init();
+    }
+
+    PullRefresh.DEFAULTS = {
+        loadFunction: null,
+        initLoad: true,
+        dragDistance: 100,
+        dragTxt: '按住下拉',
+        doneTxt: '松开刷新',
+        loadingTxt: '加载中...'
+    };
+
+    PullRefresh.prototype.init = function () {
+        var _this = this;
+
+        _this.$dragTip = $('<div class="list-dragtip"><span>' + _this.options.dragTxt + '</span></div>');
+
+        _this.$element.after(_this.$dragTip);
+
+        _this.offsetTop = _this.$element.offset().top;
+
+        _this.initTip();
+
+        _this.bindEvent();
+
+        _this.options.initLoad && _this.checkLoad();
+    };
+
+    PullRefresh.prototype.bindEvent = function () {
+        var _this = this;
+
+        _this.$element.on('touchstart', function (e) {
+            _this.onTouchStart(e);
+        }).on('touchmove', function (e) {
+            _this.onTouchMove(e);
+        }).on('touchend', function (e) {
+            _this.onTouchEnd(e);
+        });
+
+        _this.stopWeixinDrag();
+    };
+
+    PullRefresh.prototype.touches = {
+        loading: false,
+        startClientY: 0,
+        moveOffset: 0,
+        isDraging: false
+    };
+
+    PullRefresh.prototype.stopWeixinDrag = function () {
+        var _this = this;
+        $(document.body).on('touchmove', function (event) {
+            _this.touches.isDraging && event.preventDefault();
+        });
+    };
+
+    PullRefresh.prototype.onTouchStart = function (event) {
+        var _this = this;
+
+        if (_this.touches.loading) {
+            event.preventDefault();
+            return;
+        }
+        if (_this.$element.offset().top < _this.offsetTop) {
+            return;
+        }
+
+        _this.touches.startClientY = event.originalEvent.touches[0].clientY;
+
+    };
+
+    PullRefresh.prototype.onTouchMove = function (event) {
+        var _this = this,
+            _touches = event.originalEvent.touches[0];
+
+        if (_this.touches.loading) {
+            event.preventDefault();
+            return;
+        }
+
+        if (_this.touches.startClientY > _touches.clientY || _this.$element.offset().top < _this.offsetTop || _this.touches.loading) {
+            return;
+        }
+
+        _this.touches.isDraging = true;
+
+        _this.$dragTip.show().find('span').addClass('down');
+
+        var deltaSlide = _touches.clientY - _this.touches.startClientY;
+
+        if (deltaSlide >= _this.options.dragDistance) {
+            _this.$dragTip.find('span').addClass('up').text(_this.options.doneTxt);
+            deltaSlide = _this.options.dragDistance;
+        }
+        _this.touches.moveOffset = deltaSlide;
+
+        _this.moveDragTip(deltaSlide);
+    };
+
+    PullRefresh.prototype.onTouchEnd = function (event) {
+
+        var _this = this,
+            touches = _this.touches;
+
+        if (touches.loading) {
+            event.preventDefault();
+            return;
+        }
+
+        if (_this.$element.offset().top < _this.offsetTop) {
+            return;
+        }
+
+        _this.$dragTip.addClass('list-draganimation');
+
+        if (touches.moveOffset >= _this.options.dragDistance) {
+            _this.checkLoad();
+            return;
+        }
+
+        _this.touches.isDraging = false;
+
+        _this.resetDragTipTxt();
+
+        _this.moveDragTip(0);
+    };
+
+    PullRefresh.prototype.checkLoad = function () {
+        var _this = this,
+            touches = _this.touches;
+
+        touches.loading = true;
+
+        _this.$dragTip.find('span').removeClass('down up').text(_this.options.loadingTxt);
+
+        typeof _this.options.loadFunction == 'function' && _this.options.loadFunction().done(function () {
+            touches.isDraging = false;
+            touches.loading = false;
+            _this.resetDragTipTxt();
+            _this.moveDragTip(0);
+        });
+    };
+
+    PullRefresh.prototype.resetDragTipTxt = function () {
+        var _this = this;
+
+        _this.$dragTip.one('webkitTransitionEnd', function () {
+            $(this).removeClass('list-draganimation').hide().find('span').removeClass('down up').text(_this.options.dragTxt);
+        }).emulateTransitionEnd(150);
+    };
+
+    PullRefresh.prototype.moveDragTip = function (y) {
+        this.$dragTip.css({'transform': 'translate3d(0,' + y + 'px,0)'});
+    };
+
+    PullRefresh.prototype.initTip = function () {
+        var _this = this,
+            ls = window.localStorage;
+
+        if (ls.getItem('LIST-PULLREFRESH-TIP') == 'YDUI')return;
+
+        _this.$tip = $('<div class="list-draghelp"><div><span>下拉更新</span></div></div>');
+
+        _this.$tip.on('click', function () {
+            $(this).remove();
+        });
+
+        _this.$element.after(_this.$tip);
+        ls.setItem('LIST-PULLREFRESH-TIP', 'YDUI');
+
+        setTimeout(function () {
+            _this.$tip.remove();
+        }, 5000);
+    };
+
+    function Plugin (option) {
+        return this.each(function () {
+            var self = this;
+            new PullRefresh(self, option);
+        });
+    }
+
+    $.fn.pullRefresh = Plugin;
+
+}(window);
+/**
+ * SendCode
+ */
+!function () {
+    "use strict";
 
     function SendCode (element, options) {
         this.$btn = $(element);
@@ -1963,14 +2239,12 @@
     }
 
     $.fn.sendCode = Plugin;
-}(window);
+}();
 /**
  * Slider
  */
-!function (win) {
+!function (window) {
     "use strict";
-
-    var $ = win.$;
 
     function Slider (element, options) {
         this.$element = $(element);
@@ -2026,7 +2300,7 @@
             _this.onTouchEnd(e);
         });
 
-        $(win).on('resize', function () {
+        $(window).on('resize', function () {
             _this.setSlidesSize();
         });
 
@@ -2285,8 +2559,8 @@
      * @type {{start, move, end}}
      */
     Slider.prototype.touchEvents = function () {
-        var supportTouch = (win.Modernizr && !!win.Modernizr.touch) || (function () {
-                return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
+        var supportTouch = (window.Modernizr && !!window.Modernizr.touch) || (function () {
+                return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
             })();
 
         return {
@@ -2309,10 +2583,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-slider]').each(function () {
             var $this = $(this);
-            $this.slider(win.YDUI.util.parseOptions($this.data('ydui-slider')));
+            $this.slider(window.YDUI.util.parseOptions($this.data('ydui-slider')));
         });
     });
 
@@ -2322,7 +2596,7 @@
 /**
  * Spinner
  */
-!function (win) {
+!function (window) {
     "use strict";
 
     function Spinner (element, options) {
@@ -2443,7 +2717,7 @@
             options = _this.options,
             unit = options.unit,
             max = options.max,
-            isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+            isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
             triggerEvent = isMobile ? 'touchstart' : 'click';
 
         _this.$add.on(triggerEvent, function () {
@@ -2492,10 +2766,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-spinner]').each(function () {
             var $this = $(this);
-            $this.spinner(win.YDUI.util.parseOptions($this.data('ydui-spinner')));
+            $this.spinner(window.YDUI.util.parseOptions($this.data('ydui-spinner')));
         });
     });
 
@@ -2504,10 +2778,8 @@
 /**
  * Tab
  */
-!function (win) {
+!function (window) {
     "use strict";
-
-    var $ = win.$;
 
     function Tab (element, options) {
         this.$element = $(element);
@@ -2623,10 +2895,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-tab]').each(function () {
             var $this = $(this);
-            $this.tab(win.YDUI.util.parseOptions($this.data('ydui-tab')));
+            $this.tab(window.YDUI.util.parseOptions($this.data('ydui-tab')));
         });
     });
 
@@ -2636,12 +2908,11 @@
 /**
  * util
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        util = win.YDUI.util = win.YDUI.util || {},
-        doc = win.document;
+    var util = window.YDUI.util = window.YDUI.util || {},
+        doc = window.document;
 
     /**
      * 日期格式化
@@ -2772,7 +3043,7 @@
      */
     util.getQueryString = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"),
-            r = win.location.search.substr(1).match(reg),
+            r = window.location.search.substr(1).match(reg),
             qs = '';
         if (r != null)qs = decodeURIComponent(r[2]);
         return qs;
@@ -2806,14 +3077,14 @@
      * 本地存储
      */
     util.localStorage = function () {
-        return storage(win.localStorage);
+        return storage(window.localStorage);
     }();
 
     /**
      * Session存储
      */
     util.sessionStorage = function () {
-        return storage(win.sessionStorage);
+        return storage(window.sessionStorage);
     }();
 
     /**

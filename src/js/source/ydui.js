@@ -1,17 +1,16 @@
 /**
  * ydui
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$ = jQuery,
-        doc = win.document,
+    var doc = window.document,
         ydui = {};
 
     /**
      * 直接绑定FastClick
      */
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         typeof FastClick == 'function' && FastClick.attach(doc.body);
     });
 
@@ -85,7 +84,7 @@
     if (typeof define === 'function') {
         define(ydui);
     } else {
-        win.YDUI = ydui;
+        window.YDUI = ydui;
     }
 
 }(window);

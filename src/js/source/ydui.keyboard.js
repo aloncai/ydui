@@ -1,12 +1,11 @@
 /**
  * KeyBoard
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        $body = $(win.document.body),
-        isMobile = !!(win.navigator && win.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in win.document.documentElement,
+    var $body = $(window.document.body),
+        isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
         triggerEvent = isMobile ? 'touchstart' : 'click';
 
     function KeyBoard (element, options) {
@@ -130,7 +129,7 @@
      */
     KeyBoard.prototype.unbindEvent = function () {
         this.$element.off(triggerEvent + '.ydui.keyboard');
-        $(win).off('hashchange.ydui.keyboard');
+        $(window).off('hashchange.ydui.keyboard');
     };
 
     /**

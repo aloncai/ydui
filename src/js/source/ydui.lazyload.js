@@ -2,7 +2,7 @@
  * LazyLoad
  * @example $(selector).find("img").lazyLoad();
  */
-!function ($, win) {
+!function (window) {
     "use strict";
 
     function LazyLoad (element, options) {
@@ -13,7 +13,7 @@
 
     LazyLoad.DEFAULTS = {
         attr: 'data-url',
-        $container: $(win),
+        binder: window,
         placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQIHWN4BQAA7ADrKJeAMwAAAABJRU5ErkJggg=='
     };
 
@@ -24,11 +24,11 @@
 
         _this.loadImg();
 
-        _this.options.$container.on('scroll', function () {
+        $(_this.options.binder).on('scroll', function () {
             _this.loadImg();
         });
 
-        $(win).on('resize', function () {
+        $(window).on('resize', function () {
             _this.loadImg();
         });
     };
@@ -38,10 +38,11 @@
      */
     LazyLoad.prototype.loadImg = function () {
         var _this = this,
-            options = _this.options;
+            options = _this.options,
+            $binder = $(options.binder);
 
-        var contentHeight = options.$container.height(),
-            contentTop = options.$container.get(0) === win ? $(win).scrollTop() : options.$container.offset().top;
+        var contentHeight = $binder.height(),
+            contentTop = $binder.get(0) === window ? $(window).scrollTop() : $binder.offset().top;
 
         _this.$element.each(function () {
             var $img = $(this);
@@ -66,7 +67,6 @@
         _this.$element.each(function () {
             var $img = $(this);
 
-            // 若未填写img src则默认给个小小小小小小的图标
             if ($img.is("img") && !$img.attr("src")) {
                 $img.attr("src", options.placeholder);
             }
@@ -79,15 +79,8 @@
         });
     };
 
-    function Plugin (option) {
-        var $this = $(this),
-            lazyload = $this.data('ydui.lazyload');
+    $.fn.lazyLoad = function (option) {
+        new LazyLoad(this, option);
+    };
 
-        if (!lazyload) {
-            $this.data('ydui.lazyload', new LazyLoad(this, option));
-        }
-    }
-
-    $.fn.lazyLoad = Plugin;
-
-}(jQuery, window);
+}(window);

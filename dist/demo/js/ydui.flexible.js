@@ -2,14 +2,14 @@
  * YDUI 可伸缩布局方案
  * rem计算方式：设计图尺寸px / 100 = 实际rem  例: 100px = 1rem
  */
-!function (win) {
+!function (window) {
 
     /* 设计图文档宽度 */
     var docWidth = 750;
 
-    var doc = win.document,
+    var doc = window.document,
         docEl = doc.documentElement,
-        resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
 
     var recalc = (function refreshRem () {
         var clientWidth = docEl.getBoundingClientRect().width;
@@ -21,16 +21,16 @@
     })();
 
     /* 添加倍屏标识，安卓为1 */
-    docEl.setAttribute('data-dpr', win.navigator.appVersion.match(/iphone/gi) ? win.devicePixelRatio : 1);
+    docEl.setAttribute('data-dpr', window.navigator.appVersion.match(/iphone/gi) ? window.devicePixelRatio : 1);
 
     /* IOS8以上给html添加hairline样式，以便特殊处理 */
-    if (/iP(hone|od|ad)/.test(win.navigator.userAgent)) {
-        if (parseInt(win.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
+    if (/iP(hone|od|ad)/.test(window.navigator.userAgent)) {
+        if (parseInt(window.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
             doc.documentElement.classList.add('hairline');
     }
 
     if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvt, recalc, false);
+    window.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
 
 }(window);

@@ -1,10 +1,10 @@
 /**
  * device
  */
-!function (win) {
-    var doc = win.document,
-        ydui = win.YDUI,
-        ua = win.navigator && win.navigator.userAgent || '';
+!function (window) {
+    var doc = window.document,
+        ydui = window.YDUI,
+        ua = window.navigator && window.navigator.userAgent || '';
 
     var ipad = !!ua.match(/(iPad).*OS\s([\d_]+)/),
         ipod = !!ua.match(/(iPod)(.*OS\s([\d_]+))?/),
@@ -54,6 +54,6 @@
         /**
          * 设备像素比
          */
-        pixelRatio: win.devicePixelRatio || 1
+        pixelRatio: window.devicePixelRatio || 1
     };
 }(window);

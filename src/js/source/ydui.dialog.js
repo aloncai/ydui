@@ -1,12 +1,11 @@
 /**
  * dialog
  */
-!function (win, ydui) {
+!function (window, ydui) {
     "use strict";
 
-    var $ = win.$,
-        dialog = ydui.dialog = ydui.dialog || {},
-        $body = $(win.document.body);
+    var dialog = ydui.dialog = ydui.dialog || {},
+        $body = $(window.document.body);
 
     /**
      * 确认提示框

@@ -1,11 +1,10 @@
 /**
  * ActionSheet
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        doc = win.document,
+    var doc = window.document,
         $doc = $(doc),
         $body = $(doc.body),
         $mask = $('<div class="mask-black"></div>');
@@ -65,7 +64,7 @@
     $doc.on('click.ydui.actionsheet.data-api', '[data-ydui-actionsheet]', function (e) {
         e.preventDefault();
 
-        var options = win.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
+        var options = window.YDUI.util.parseOptions($(this).data('ydui-actionsheet')),
             $target = $(options.target),
             option = $target.data('ydui.actionsheet') ? 'open' : options;
 

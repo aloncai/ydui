@@ -1,10 +1,8 @@
 /**
  * SendCode
  */
-!function (win) {
+!function () {
     "use strict";
-
-    var $ = win.$;
 
     function SendCode (element, options) {
         this.$btn = $(element);
@@ -80,4 +78,4 @@
     }
 
     $.fn.sendCode = Plugin;
-}(window);
+}();

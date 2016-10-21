@@ -3,15 +3,19 @@
 }
 
 .nav-box {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 997;
+  position: relative;
+  z-index: 9;
   display: flex;
   background-color: @navbar-bg;
   &:after {
     .bottom-line(@navbar-border-color);
+  }
+  &.nav-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 997;
   }
 }
 
@@ -51,14 +55,22 @@
 .nav-center {
   order: 2;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: @navbar-height;
   width: @navbar-center-width;
   margin-left: (100% - @navbar-center-width) / 2;
-  font-size: @navbar-center-fontsize;
-  color: @navbar-center-color;
-  img {
+  .nav-title {
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    font-size: @navbar-center-fontsize;
+    color: @navbar-center-color;
+  }
+  > img {
     height: 60%;
   }
 }

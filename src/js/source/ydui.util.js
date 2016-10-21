@@ -1,12 +1,11 @@
 /**
  * util
  */
-!function (win) {
+!function (window) {
     "use strict";
 
-    var $ = win.$,
-        util = win.YDUI.util = win.YDUI.util || {},
-        doc = win.document;
+    var util = window.YDUI.util = window.YDUI.util || {},
+        doc = window.document;
 
     /**
      * 日期格式化
@@ -137,7 +136,7 @@
      */
     util.getQueryString = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"),
-            r = win.location.search.substr(1).match(reg),
+            r = window.location.search.substr(1).match(reg),
             qs = '';
         if (r != null)qs = decodeURIComponent(r[2]);
         return qs;
@@ -171,14 +170,14 @@
      * 本地存储
      */
     util.localStorage = function () {
-        return storage(win.localStorage);
+        return storage(window.localStorage);
     }();
 
     /**
      * Session存储
      */
     util.sessionStorage = function () {
-        return storage(win.sessionStorage);
+        return storage(window.sessionStorage);
     }();
 
     /**

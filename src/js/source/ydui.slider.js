@@ -1,10 +1,8 @@
 /**
  * Slider
  */
-!function (win) {
+!function (window) {
     "use strict";
-
-    var $ = win.$;
 
     function Slider (element, options) {
         this.$element = $(element);
@@ -60,7 +58,7 @@
             _this.onTouchEnd(e);
         });
 
-        $(win).on('resize', function () {
+        $(window).on('resize', function () {
             _this.setSlidesSize();
         });
 
@@ -319,8 +317,8 @@
      * @type {{start, move, end}}
      */
     Slider.prototype.touchEvents = function () {
-        var supportTouch = (win.Modernizr && !!win.Modernizr.touch) || (function () {
-                return !!(('ontouchstart' in win) || win.DocumentTouch && document instanceof DocumentTouch);
+        var supportTouch = (window.Modernizr && !!window.Modernizr.touch) || (function () {
+                return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
             })();
 
         return {
@@ -343,10 +341,10 @@
     }
 
     // 直接给Data API方式绑定事件
-    $(win).on('load', function () {
+    $(window).on('load', function () {
         $('[data-ydui-slider]').each(function () {
             var $this = $(this);
-            $this.slider(win.YDUI.util.parseOptions($this.data('ydui-slider')));
+            $this.slider(window.YDUI.util.parseOptions($this.data('ydui-slider')));
         });
     });
 

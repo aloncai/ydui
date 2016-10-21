@@ -189,22 +189,22 @@
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, .8);
-  line-height: .38rem;
+  line-height: .28rem;
   z-index: 99999;
   font-size: .26rem;
-  color: #0074CC;
+  color: #FFF;
   padding: .3rem .24rem;
   opacity: 0;
   animation: downIn .2s linear forwards;
   word-break: break-all;
-  text-align: justify;
+  text-align: center;
   &.notify-out {
     opacity: 1;
     animation: upOut .15s linear forwards;
   }
 }
 
-/* copy for weui. */
+/* copy from weui. */
 .m-loading {
   position: fixed;
   z-index: 9999;
@@ -244,7 +244,7 @@
     background-color: rgb(209, 209, 213);
     box-shadow: rgba(0, 0, 0, .098) 0 0 1px;
     border-radius: 1px;
-    transform-origin: left 50% 0px;
+    transform-origin: left 50% 0;
   }
   &-0 {
     animation: opacity-60-25-0-12 1.25s linear infinite;

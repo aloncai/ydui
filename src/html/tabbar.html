@@ -2,26 +2,77 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Aside</title>
-    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <meta content="telephone=no" name="format-detection" />
+    <title>Tabbar</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=@@hash" />
-    <link rel="stylesheet" href="../css/demo.css" />
+    <link rel="stylesheet" href="../css/ydui.css?rev=@@hash"/>
+    <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
 <section class="g-doc">
+
     <header class="m-nav">
-        <nav class="nav-box">
-            <a href="../index.html" class="nav-item"><i class="back-ico"></i>返回</a>
-            <div class="nav-center">Aside</div>
-            <a href="javascript:;" class="nav-item">前进<i class="next-ico"></i></a>
+        <nav class="nav-box nav-fixed">
+            <a href="asidebar.html" class="nav-item"><i class="back-ico"></i></a>
+            <div class="nav-center"><span class="nav-title">Tabbar</span></div>
         </nav>
     </header>
-    <footer class="m-tabbar">
+
+    <footer class="m-tabbar demo-small-pitch">
+        <a href="../index.html" class="tabbar-item">
+            <span class="tabbar-icon">
+                <i class="demo-icons-weixin"></i>
+            </span>
+            <span class="tabbar-txt">微信</span>
+        </a>
+        <a href="../index.html" class="tabbar-item">
+            <span class="tabbar-icon">
+                <i class="demo-icons-contact"></i>
+            </span>
+            <span class="tabbar-txt">通讯录</span>
+        </a>
+        <a href="../index.html" class="tabbar-item">
+            <span class="tabbar-icon">
+                <i class="demo-icons-discover"></i>
+            </span>
+            <span class="tabbar-txt">发现</span>
+        </a>
+    </footer>
+
+    <footer class="m-tabbar demo-small-pitch">
+        <a href="../index.html" class="tabbar-item crt">
+            <span class="tabbar-icon">
+                <i class="demo-icons-weixin"></i>
+                <span class="badge badge-danger">2</span>
+            </span>
+            <span class="tabbar-txt">微信</span>
+        </a>
+        <a href="../index.html" class="tabbar-item">
+            <span class="tabbar-icon">
+                <i class="demo-icons-contact"></i>
+            </span>
+            <span class="tabbar-txt">通讯录</span>
+        </a>
+        <a href="../index.html" class="tabbar-item">
+            <span class="tabbar-icon">
+                <i class="demo-icons-discover"></i>
+                <span class="tabbar-dot"></span>
+            </span>
+            <span class="tabbar-txt">发现</span>
+        </a>
+        <a href="../index.html" class="tabbar-item">
+            <div class="tabbar-icon">
+                <img src="http://static.ydcss.com/app-icon144x144@2x.png" />
+            </div>
+            <div class="tabbar-txt">图片</div>
+        </a>
+    </footer>
+
+    <footer class="m-tabbar tabbar-fixed">
         <a href="../index.html" class="tabbar-item crt">
             <span class="tabbar-icon">
                 <i class="demo-icons-weixin"></i>
@@ -55,6 +106,7 @@
             <div class="tabbar-txt">图片</div>
         </a>
     </footer>
+
 </section>
 </body>
 </html>
