@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=f99d86f40b47984abf69f987a668669e"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=e5353d6363e8476c5bee79a90fb89399"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
@@ -17,7 +17,7 @@
 
     <header class="m-nav">
         <nav class="nav-box nav-fixed">
-            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <a href="tabs.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Tab</span></div>
         </nav>
     </header>
@@ -73,10 +73,10 @@
         });
 
         /*
-        $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
-            console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
-        });
-        */
+         $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
+             console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
+         });
+         */
 
         $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
             console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());

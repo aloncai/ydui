@@ -17,7 +17,7 @@
 
     <header class="m-nav">
         <nav class="nav-box nav-fixed">
-            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
+            <a href="tabs.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Tab</span></div>
         </nav>
     </header>
@@ -73,10 +73,10 @@
         });
 
         /*
-        $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
-            console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
-        });
-        */
+         $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
+             console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
+         });
+         */
 
         $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
             console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());

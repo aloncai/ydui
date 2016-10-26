@@ -220,7 +220,7 @@
   content: '\e600';
   color: #FC746C;
 }
-.demo-icons-tab:before {
+.demo-icons-tabs:before {
   content: '\e607';
   color: #FF8D20;
 }
@@ -263,4 +263,41 @@
 .demo-icons-cityselect:before {
   content: '\e617';
   color: #FF685E;
+}
+@font-face {
+  font-family: 'demo-category-icons';
+  src: url('//at.alicdn.com/t/font_1477296366_4593668.eot');
+  /* IE9*/
+  src: url('//at.alicdn.com/t/font_1477296366_4593668.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1477296366_4593668.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1477296366_4593668.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1477296366_4593668.svg#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+[class^="demo-icons-category"]:before,
+[class*=" demo-icons-category"]:before {
+  font-family: 'demo-category-icons';
+  font-size: .48rem;
+  color: #5B5D5C;
+}
+.demo-icons-category1:before {
+  content: '\E604';
+}
+.demo-icons-category2:before {
+  content: '\E602';
+}
+.demo-icons-category3:before {
+  content: '\E605';
+}
+.demo-icons-category4:before {
+  content: '\E603';
+}
+.demo-icons-category5:before {
+  content: '\E607';
+}
+.demo-icons-category6:before {
+  content: '\E600';
+}
+.demo-icons-category7:before {
+  content: '\E606';
+}
+.demo-icons-category8:before {
+  content: '\E601';
 }
