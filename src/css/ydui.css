@@ -3076,7 +3076,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-.category-nav .categroy-item {
+.categroy-item {
   padding: 0 .3rem;
   height: 1rem;
   display: -webkit-box;
@@ -3090,11 +3090,27 @@ input[type="submit"].btn-hollow {
   position: relative;
   z-index: 1;
 }
-.category-nav .categroy-item .category-icon {
+.categroy-item .category-icon {
   margin-right: .2rem;
   font-size: .32rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
-.category-nav .categroy-item .category-title {
+.categroy-item .category-icon > img {
+  height: .4rem;
+  display: inline-block;
+}
+.categroy-item .category-title {
   font-size: .3rem;
   color: #666;
   overflow-x: hidden;
@@ -3102,10 +3118,10 @@ input[type="submit"].btn-hollow {
   white-space: nowrap;
   max-width: 1.6rem;
 }
-.category-nav .categroy-item.crt {
+.categroy-item.crt {
   background-color: #FFF;
 }
-.category-nav .categroy-item.crt:before {
+.categroy-item.crt:before {
   content: '';
   position: absolute;
   z-index: 0;
@@ -3118,7 +3134,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-.category-nav .categroy-item:after {
+.categroy-item:after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -3133,7 +3149,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.category-nav .categroy-item:before {
+.categroy-item:before {
   content: '';
   position: absolute;
   z-index: 0;
@@ -3158,18 +3174,18 @@ input[type="submit"].btn-hollow {
   padding: 0 .24rem .24rem .24rem;
   position: relative;
 }
-.category-content .category-content-title {
+.category-content-title {
   font-size: .3rem;
   font-weight: normal;
   color: #555;
   display: block;
   padding-bottom: .1rem;
-  margin-bottom: .2rem;
   padding-top: .32rem;
+  margin-bottom: .2rem;
   position: relative;
   z-index: 1;
 }
-.category-content .category-content-title:after {
+.category-content-title:after {
   content: '';
   position: absolute;
   z-index: 0;
