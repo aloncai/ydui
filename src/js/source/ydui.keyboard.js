@@ -64,7 +64,6 @@
             $numsBox.data('loaded-nums', 1).html(_this.createNumsHtml());
         }
 
-        // 显示遮罩层
         $body.append(_this.$mask);
 
         _this.bindEvent();
@@ -93,13 +92,11 @@
         var _this = this,
             $element = _this.$element;
 
-        // 遮罩层
         _this.$mask.on(triggerEvent + '.ydui.keyboard.mask', function (e) {
             e.preventDefault();
             _this.close();
         });
 
-        // 数字
         $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
             e.preventDefault();
 
@@ -166,7 +163,6 @@
         var _this = this;
         _this.$element.find('.keyboard-error').html(mes);
 
-        // 重置已输入的数字以便清空显示的点点点
         _this.inputNums = '';
         _this.fillPassword();
     };

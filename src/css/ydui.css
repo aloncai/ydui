@@ -146,8 +146,9 @@ table {
   max-width: 750px;
   margin: 0 auto;
   min-width: 300px;
+  padding-bottom: .5rem;
 }
-.g-view {
+.g-flexview {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -3044,7 +3045,7 @@ input[type="submit"].btn-hollow {
   position: relative;
   font-size: .26rem;
 }
-.m-categorynav {
+.m-scrolltab {
   position: absolute;
   top: 0;
   left: 0;
@@ -3055,7 +3056,7 @@ input[type="submit"].btn-hollow {
   display: -ms-flexbox;
   display: flex;
 }
-.category-nav {
+.scrolltab-nav {
   height: 100%;
   background-color: #F5F5F5;
   overflow-y: auto;
@@ -3063,7 +3064,7 @@ input[type="submit"].btn-hollow {
   position: relative;
   z-index: 1;
 }
-.category-nav:after {
+.scrolltab-nav:after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -3076,7 +3077,7 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-.categroy-item {
+.scrolltab-item {
   padding: 0 .3rem;
   height: 1rem;
   display: -webkit-box;
@@ -3090,7 +3091,51 @@ input[type="submit"].btn-hollow {
   position: relative;
   z-index: 1;
 }
-.categroy-item .category-icon {
+.scrolltab-item.crt {
+  background-color: #FFF;
+}
+.scrolltab-item.crt:before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid #FFF;
+  -webkit-transform: scaleX(0.5);
+  transform: scaleX(0.5);
+  -webkit-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+}
+.scrolltab-item:after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #DFDFDF;
+  border-bottom: 1px solid #DFDFDF;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+.scrolltab-item:before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid #DFDFDF;
+  -webkit-transform: scaleX(0.5);
+  transform: scaleX(0.5);
+  -webkit-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+}
+.scrolltab-icon {
   margin-right: .2rem;
   font-size: .32rem;
   display: -webkit-box;
@@ -3106,11 +3151,11 @@ input[type="submit"].btn-hollow {
   -ms-flex-pack: center;
   justify-content: center;
 }
-.categroy-item .category-icon > img {
+.scrolltab-icon > img {
   height: .4rem;
   display: inline-block;
 }
-.categroy-item .category-title {
+.scrolltab-title {
   font-size: .3rem;
   color: #666;
   overflow-x: hidden;
@@ -3118,51 +3163,7 @@ input[type="submit"].btn-hollow {
   white-space: nowrap;
   max-width: 1.6rem;
 }
-.categroy-item.crt {
-  background-color: #FFF;
-}
-.categroy-item.crt:before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 0;
-  height: 100%;
-  border-right: 1px solid #FFF;
-  -webkit-transform: scaleX(0.5);
-  transform: scaleX(0.5);
-  -webkit-transform-origin: 100% 0;
-  transform-origin: 100% 0;
-}
-.categroy-item:after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: #DFDFDF;
-  border-bottom: 1px solid #DFDFDF;
-  -webkit-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  -webkit-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-}
-.categroy-item:before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  right: 0;
-  height: 100%;
-  border-right: 1px solid #DFDFDF;
-  -webkit-transform: scaleX(0.5);
-  transform: scaleX(0.5);
-  -webkit-transform-origin: 100% 0;
-  transform-origin: 100% 0;
-}
-.category-content {
+.scrolltab-content {
   height: 100%;
   background-color: #FFF;
   overflow-y: auto;
@@ -3174,7 +3175,7 @@ input[type="submit"].btn-hollow {
   padding: 0 .24rem .24rem .24rem;
   position: relative;
 }
-.category-content-title {
+.scrolltab-content-title {
   font-size: .3rem;
   font-weight: normal;
   color: #555;
@@ -3185,7 +3186,7 @@ input[type="submit"].btn-hollow {
   position: relative;
   z-index: 1;
 }
-.category-content-title:after {
+.scrolltab-content-title:after {
   content: '';
   position: absolute;
   z-index: 0;

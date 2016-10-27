@@ -102,7 +102,7 @@
         if (options.delay) {
             _this.checkInView($svg);
 
-            _this.$container.on('scroll', function () {
+            _this.$container.on('scroll.ydui.progressbar', function () {
                 _this.checkInView($svg);
             });
 

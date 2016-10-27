@@ -123,7 +123,7 @@
             unit = options.unit,
             max = options.max,
             isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
-            triggerEvent = isMobile ? 'touchstart' : 'click';
+            triggerEvent = isMobile ? 'touchstart.ydui.spinner' : 'click.ydui.spinner';
 
         _this.$add.on(triggerEvent, function () {
             var $input = _this.$input,
@@ -143,7 +143,7 @@
             _this.setValue(temp);
         });
 
-        _this.$input.on('change', function () {
+        _this.$input.on('change.ydui.spinner', function () {
             _this.setValue($(this).val());
         }).on('keydown', function (event) {
             if (event.keyCode == 13) {
@@ -170,8 +170,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.spinner', function () {
         $('[data-ydui-spinner]').each(function () {
             var $this = $(this);
             $this.spinner(window.YDUI.util.parseOptions($this.data('ydui-spinner')));

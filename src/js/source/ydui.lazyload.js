@@ -24,11 +24,11 @@
 
         _this.loadImg();
 
-        $(_this.options.binder).on('scroll', function () {
+        $(_this.options.binder).on('scroll.ydui.lazyload', function () {
             _this.loadImg();
         });
 
-        $(window).on('resize', function () {
+        $(window).on('resize.ydui.lazyload', function () {
             _this.loadImg();
         });
     };

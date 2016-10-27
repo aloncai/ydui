@@ -117,8 +117,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.tab', function () {
         $('[data-ydui-tab]').each(function () {
             var $this = $(this);
             $this.tab(window.YDUI.util.parseOptions($this.data('ydui-tab')));

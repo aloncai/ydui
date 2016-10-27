@@ -50,7 +50,7 @@
 
         options.initLoad && _this.checkLoad();
 
-        $binder.on('scroll', function () {
+        $binder.on('scroll.ydui.infinitescroll', function () {
 
             if (_this.loading || _this.isDone)return;
 

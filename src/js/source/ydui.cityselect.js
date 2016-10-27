@@ -55,10 +55,10 @@
     CitySelect.prototype.bindEvent = function () {
         var _this = this;
 
-        !!_this.$city[0] && _this.$provance.on('change', function () {
+        !!_this.$city[0] && _this.$provance.on('change.ydui.cityselect', function () {
             _this.loadCity();
         });
-        !!_this.$area[0] && _this.$city.on('change', function () {
+        !!_this.$area[0] && _this.$city.on('change.ydui.cityselect', function () {
             _this.loadArea();
         });
     };
@@ -103,10 +103,10 @@
 
         return this.each(function () {
             var $this = $(this),
-                citySelect = $this.data('ydui.citySelect');
+                citySelect = $this.data('ydui.cityselect');
 
             if (!citySelect) {
-                $this.data('ydui.citySelect', (citySelect = new CitySelect(this, option)));
+                $this.data('ydui.cityselect', (citySelect = new CitySelect(this, option)));
             }
 
             if (typeof option == 'string') {
@@ -115,8 +115,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.cityselect', function () {
         $('[data-ydui-cityselect]').each(function () {
             var $this = $(this);
             $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));

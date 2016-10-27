@@ -58,13 +58,13 @@
             _this.onTouchEnd(e);
         });
 
-        $(window).on('resize', function () {
+        $(window).on('resize.ydui.slider', function () {
             _this.setSlidesSize();
         });
 
         ~~_this.options.autoplay > 0 && _this.autoPlay();
 
-        _this.$wrapper.on('click', function (e) {
+        _this.$wrapper.on('click.ydui.slider', function (e) {
             if (!_this.touches.allowClick) {
                 e.preventDefault();
             }
@@ -322,9 +322,9 @@
             })();
 
         return {
-            start: supportTouch ? 'touchstart' : 'mousedown',
-            move: supportTouch ? 'touchmove' : 'mousemove',
-            end: supportTouch ? 'touchend' : 'mouseup'
+            start: supportTouch ? 'touchstart.ydui.slider' : 'mousedown.ydui.slider',
+            move: supportTouch ? 'touchmove.ydui.slider' : 'mousemove.ydui.slider',
+            end: supportTouch ? 'touchend.ydui.slider' : 'mouseup.ydui.slider'
         };
     };
 
@@ -340,8 +340,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.slider', function () {
         $('[data-ydui-slider]').each(function () {
             var $this = $(this);
             $this.slider(window.YDUI.util.parseOptions($this.data('ydui-slider')));

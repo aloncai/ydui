@@ -38,11 +38,11 @@
     PullRefresh.prototype.bindEvent = function () {
         var _this = this;
 
-        _this.$element.on('touchstart', function (e) {
+        _this.$element.on('touchstart.ydui.pullrefresh', function (e) {
             _this.onTouchStart(e);
-        }).on('touchmove', function (e) {
+        }).on('touchmove.ydui.pullrefresh', function (e) {
             _this.onTouchMove(e);
-        }).on('touchend', function (e) {
+        }).on('touchend.ydui.pullrefresh', function (e) {
             _this.onTouchEnd(e);
         });
 
@@ -58,7 +58,7 @@
 
     PullRefresh.prototype.stopWeixinDrag = function () {
         var _this = this;
-        $(document.body).on('touchmove', function (event) {
+        $(document.body).on('touchmove.ydui.pullrefresh', function (event) {
             _this.touches.isDraging && event.preventDefault();
         });
     };
@@ -70,12 +70,12 @@
             event.preventDefault();
             return;
         }
+
         if (_this.$element.offset().top < _this.offsetTop) {
             return;
         }
 
         _this.touches.startClientY = event.originalEvent.touches[0].clientY;
-
     };
 
     PullRefresh.prototype.onTouchMove = function (event) {
@@ -147,13 +147,14 @@
             touches.loading = false;
             _this.resetDragTipTxt();
             _this.moveDragTip(0);
+            touches.moveOffset = 0;
         });
     };
 
     PullRefresh.prototype.resetDragTipTxt = function () {
         var _this = this;
 
-        _this.$dragTip.one('webkitTransitionEnd', function () {
+        _this.$dragTip.one('webkitTransitionEnd.ydui.pullrefresh', function () {
             $(this).removeClass('list-draganimation').hide().find('span').removeClass('down up').text(_this.options.dragTxt);
         }).emulateTransitionEnd(150);
     };
@@ -170,7 +171,7 @@
 
         _this.$tip = $('<div class="list-draghelp"><div><span>下拉更新</span></div></div>');
 
-        _this.$tip.on('click', function () {
+        _this.$tip.on('click.ydui.pullrefresh', function () {
             $(this).remove();
         });
 

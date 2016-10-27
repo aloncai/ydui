@@ -173,92 +173,6 @@
     }, false);
 }(window);
 /**
- * ScrollTab
- */
-!function (window) {
-    "use strict";
-
-    function ScrollTab (element, options) {
-        this.$element = $(element);
-        this.options = $.extend({}, ScrollTab.DEFAULTS, options || {});
-        this.init();
-    }
-
-    ScrollTab.DEFAULTS = {};
-
-    var fuck = false;
-    ScrollTab.prototype.init = function () {
-        var _this = this;
-
-        _this.offsetTop = $('.category-content').offset().top;
-
-        var contentHeight = $('.category-content').height();
-
-        $('.category-content').on('resize scroll', function () {
-            if (fuck)return;
-            $('.category-content-item').each(function () {
-                var $this = $(this);
-                var post = $this.offset().top;
-
-                if ($('.category-content').scrollTop() == 0) {
-                    $('.categroy-item').removeClass('crt').eq(0).addClass('crt');
-                    return;
-                }
-
-                if ($('.category-content').scrollTop() + 3 >= $('.category-content-item').height() * $('.category-content-item').length - $('.category-content').height()) {
-                    $('.categroy-item').removeClass('crt').eq($('.categroy-item').length - 1).addClass('crt');
-                    return;
-                }
-
-                if (post <= _this.offsetTop) {
-                    $('.categroy-item').removeClass('crt').eq($this.index()).addClass('crt');
-                }
-            });
-        });
-
-        $('.categroy-item').on('click', function () {
-            var $this = $(this);
-
-            if (fuck)return;
-            fuck = true;
-
-            $('.categroy-item').removeClass('crt');
-            $this.addClass('crt');
-
-            var offset = $('.category-content-item').eq($this.index()).offset().top;
-
-            var post = offset + $('.category-content').scrollTop();
-
-            offset && $('.category-content').stop().animate({
-                scrollTop: post - _this.offsetTop + 1
-            }, 200, function () {
-                fuck = false;
-            });
-        });
-    };
-
-    function Plugin (option) {
-        var args = Array.prototype.slice.call(arguments, 1);
-
-        return this.each(function () {
-            var target = this,
-                $this = $(target),
-                scrollTab = $this.data('ydui.scrollTab');
-
-            if (!scrollTab) {
-                $this.data('ydui.scrollTab', (scrollTab = new ScrollTab(target, option)));
-            }
-
-            if (typeof option == 'string') {
-                scrollTab[option] && scrollTab[option].apply(scrollTab, args);
-            }
-        });
-    }
-
-    $.fn.scrollTab = Plugin;
-
-}(window);
-/**
  * CitySelect
  */
 !function (window) {
@@ -315,10 +229,10 @@
     CitySelect.prototype.bindEvent = function () {
         var _this = this;
 
-        !!_this.$city[0] && _this.$provance.on('change', function () {
+        !!_this.$city[0] && _this.$provance.on('change.ydui.cityselect', function () {
             _this.loadCity();
         });
-        !!_this.$area[0] && _this.$city.on('change', function () {
+        !!_this.$area[0] && _this.$city.on('change.ydui.cityselect', function () {
             _this.loadArea();
         });
     };
@@ -363,10 +277,10 @@
 
         return this.each(function () {
             var $this = $(this),
-                citySelect = $this.data('ydui.citySelect');
+                citySelect = $this.data('ydui.cityselect');
 
             if (!citySelect) {
-                $this.data('ydui.citySelect', (citySelect = new CitySelect(this, option)));
+                $this.data('ydui.cityselect', (citySelect = new CitySelect(this, option)));
             }
 
             if (typeof option == 'string') {
@@ -375,8 +289,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.cityselect', function () {
         $('[data-ydui-cityselect]').each(function () {
             var $this = $(this);
             $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));
@@ -1394,7 +1307,7 @@
 
         options.initLoad && _this.checkLoad();
 
-        $binder.on('scroll', function () {
+        $binder.on('scroll.ydui.infinitescroll', function () {
 
             if (_this.loading || _this.isDone)return;
 
@@ -1504,7 +1417,6 @@
             $numsBox.data('loaded-nums', 1).html(_this.createNumsHtml());
         }
 
-        // 显示遮罩层
         $body.append(_this.$mask);
 
         _this.bindEvent();
@@ -1533,13 +1445,11 @@
         var _this = this,
             $element = _this.$element;
 
-        // 遮罩层
         _this.$mask.on(triggerEvent + '.ydui.keyboard.mask', function (e) {
             e.preventDefault();
             _this.close();
         });
 
-        // 数字
         $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
             e.preventDefault();
 
@@ -1606,7 +1516,6 @@
         var _this = this;
         _this.$element.find('.keyboard-error').html(mes);
 
-        // 重置已输入的数字以便清空显示的点点点
         _this.inputNums = '';
         _this.fillPassword();
     };
@@ -1742,11 +1651,11 @@
 
         _this.loadImg();
 
-        $(_this.options.binder).on('scroll', function () {
+        $(_this.options.binder).on('scroll.ydui.lazyload', function () {
             _this.loadImg();
         });
 
-        $(window).on('resize', function () {
+        $(window).on('resize.ydui.lazyload', function () {
             _this.loadImg();
         });
     };
@@ -1906,7 +1815,7 @@
         if (options.delay) {
             _this.checkInView($svg);
 
-            _this.$container.on('scroll', function () {
+            _this.$container.on('scroll.ydui.progressbar', function () {
                 _this.checkInView($svg);
             });
 
@@ -2091,11 +2000,11 @@
     PullRefresh.prototype.bindEvent = function () {
         var _this = this;
 
-        _this.$element.on('touchstart', function (e) {
+        _this.$element.on('touchstart.ydui.pullrefresh', function (e) {
             _this.onTouchStart(e);
-        }).on('touchmove', function (e) {
+        }).on('touchmove.ydui.pullrefresh', function (e) {
             _this.onTouchMove(e);
-        }).on('touchend', function (e) {
+        }).on('touchend.ydui.pullrefresh', function (e) {
             _this.onTouchEnd(e);
         });
 
@@ -2111,7 +2020,7 @@
 
     PullRefresh.prototype.stopWeixinDrag = function () {
         var _this = this;
-        $(document.body).on('touchmove', function (event) {
+        $(document.body).on('touchmove.ydui.pullrefresh', function (event) {
             _this.touches.isDraging && event.preventDefault();
         });
     };
@@ -2123,12 +2032,12 @@
             event.preventDefault();
             return;
         }
+
         if (_this.$element.offset().top < _this.offsetTop) {
             return;
         }
 
         _this.touches.startClientY = event.originalEvent.touches[0].clientY;
-
     };
 
     PullRefresh.prototype.onTouchMove = function (event) {
@@ -2200,13 +2109,14 @@
             touches.loading = false;
             _this.resetDragTipTxt();
             _this.moveDragTip(0);
+            touches.moveOffset = 0;
         });
     };
 
     PullRefresh.prototype.resetDragTipTxt = function () {
         var _this = this;
 
-        _this.$dragTip.one('webkitTransitionEnd', function () {
+        _this.$dragTip.one('webkitTransitionEnd.ydui.pullrefresh', function () {
             $(this).removeClass('list-draganimation').hide().find('span').removeClass('down up').text(_this.options.dragTxt);
         }).emulateTransitionEnd(150);
     };
@@ -2223,7 +2133,7 @@
 
         _this.$tip = $('<div class="list-draghelp"><div><span>下拉更新</span></div></div>');
 
-        _this.$tip.on('click', function () {
+        _this.$tip.on('click.ydui.pullrefresh', function () {
             $(this).remove();
         });
 
@@ -2243,6 +2153,138 @@
     }
 
     $.fn.pullRefresh = Plugin;
+
+}(window);
+/**
+ * ScrollTab
+ */
+!function (window) {
+    "use strict";
+
+    function ScrollTab (element, options) {
+        this.$element = $(element);
+        this.options = $.extend({}, ScrollTab.DEFAULTS, options || {});
+        this.init();
+    }
+
+    ScrollTab.DEFAULTS = {
+        navItem: '.scrolltab-item',
+        content: '.scrolltab-content',
+        contentItem: '.scrolltab-content-item',
+        initIndex: 0
+    };
+
+    ScrollTab.prototype.init = function () {
+        var _this = this,
+            $element = _this.$element,
+            options = _this.options;
+
+        _this.$navItem = $element.find(options.navItem);
+        _this.$content = $element.find(options.content);
+        _this.$contentItem = $element.find(options.contentItem);
+
+        _this.scrolling = false;
+        _this.contentOffsetTop = _this.$content.offset().top;
+
+        _this.bindEvent();
+
+        _this.movePosition(_this.options.initIndex, false);
+    };
+
+    ScrollTab.prototype.bindEvent = function () {
+        var _this = this;
+
+        _this.$content.on('resize.ydui.scrolltab scroll.ydui.scrolltab', function () {
+            _this.checkInView();
+        });
+
+        _this.$navItem.on('click.ydui.scrolltab', function () {
+            _this.movePosition($(this).index(), true);
+        });
+    };
+
+    ScrollTab.prototype.movePosition = function (index, animate) {
+        var _this = this;
+
+        if (_this.scrolling)return;
+        _this.scrolling = true;
+
+        _this.$navItem.removeClass('crt');
+        _this.$navItem.eq(index).addClass('crt');
+
+        var offset = _this.$contentItem.eq(index).offset().top;
+
+        var top = offset + _this.$content.scrollTop() - _this.contentOffsetTop + 1;
+
+        _this.$content.stop().animate({scrollTop: top}, animate ? 200 : 0, function () {
+            _this.scrolling = false;
+        });
+    };
+
+    ScrollTab.prototype.checkInView = function () {
+        var _this = this;
+
+        if (_this.scrolling)return;
+
+        _this.$contentItem.each(function () {
+            var $this = $(this);
+
+            if (_this.isScrollTop()) {
+                _this.setClass(0);
+                return;
+            }
+
+            if (_this.isScrollBottom()) {
+                _this.setClass(_this.$navItem.length - 1);
+                return;
+            }
+
+            if ($this.offset().top <= _this.contentOffsetTop) {
+                _this.setClass($this.index());
+            }
+        });
+    };
+
+    ScrollTab.prototype.setClass = function (index) {
+        this.$navItem.removeClass('crt').eq(index).addClass('crt');
+    };
+
+    ScrollTab.prototype.isScrollTop = function () {
+        return this.$content.scrollTop() == 0;
+    };
+
+    ScrollTab.prototype.isScrollBottom = function () {
+        var _this = this;
+
+        return _this.$content.scrollTop() + 3 >= _this.$contentItem.height() * _this.$contentItem.length - _this.$content.height();
+    };
+
+    function Plugin (option) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        return this.each(function () {
+            var target = this,
+                $this = $(target),
+                scrollTab = $this.data('ydui.scrolltab');
+
+            if (!scrollTab) {
+                $this.data('ydui.scrolltab', (scrollTab = new ScrollTab(target, option)));
+            }
+
+            if (typeof option == 'string') {
+                scrollTab[option] && scrollTab[option].apply(scrollTab, args);
+            }
+        });
+    }
+
+    $(window).on('load.ydui.scrolltab', function () {
+        $('[data-ydui-scrolltab]').each(function () {
+            var $this = $(this);
+            $this.scrollTab(window.YDUI.util.parseOptions($this.data('ydui-scrolltab')));
+        });
+    });
+
+    $.fn.scrollTab = Plugin;
 
 }(window);
 /**
@@ -2386,13 +2428,13 @@
             _this.onTouchEnd(e);
         });
 
-        $(window).on('resize', function () {
+        $(window).on('resize.ydui.slider', function () {
             _this.setSlidesSize();
         });
 
         ~~_this.options.autoplay > 0 && _this.autoPlay();
 
-        _this.$wrapper.on('click', function (e) {
+        _this.$wrapper.on('click.ydui.slider', function (e) {
             if (!_this.touches.allowClick) {
                 e.preventDefault();
             }
@@ -2650,9 +2692,9 @@
             })();
 
         return {
-            start: supportTouch ? 'touchstart' : 'mousedown',
-            move: supportTouch ? 'touchmove' : 'mousemove',
-            end: supportTouch ? 'touchend' : 'mouseup'
+            start: supportTouch ? 'touchstart.ydui.slider' : 'mousedown.ydui.slider',
+            move: supportTouch ? 'touchmove.ydui.slider' : 'mousemove.ydui.slider',
+            end: supportTouch ? 'touchend.ydui.slider' : 'mouseup.ydui.slider'
         };
     };
 
@@ -2668,8 +2710,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.slider', function () {
         $('[data-ydui-slider]').each(function () {
             var $this = $(this);
             $this.slider(window.YDUI.util.parseOptions($this.data('ydui-slider')));
@@ -2804,7 +2845,7 @@
             unit = options.unit,
             max = options.max,
             isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
-            triggerEvent = isMobile ? 'touchstart' : 'click';
+            triggerEvent = isMobile ? 'touchstart.ydui.spinner' : 'click.ydui.spinner';
 
         _this.$add.on(triggerEvent, function () {
             var $input = _this.$input,
@@ -2824,7 +2865,7 @@
             _this.setValue(temp);
         });
 
-        _this.$input.on('change', function () {
+        _this.$input.on('change.ydui.spinner', function () {
             _this.setValue($(this).val());
         }).on('keydown', function (event) {
             if (event.keyCode == 13) {
@@ -2851,8 +2892,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.spinner', function () {
         $('[data-ydui-spinner]').each(function () {
             var $this = $(this);
             $this.spinner(window.YDUI.util.parseOptions($this.data('ydui-spinner')));
@@ -2980,8 +3020,7 @@
         });
     }
 
-    // 直接给Data API方式绑定事件
-    $(window).on('load', function () {
+    $(window).on('load.ydui.tab', function () {
         $('[data-ydui-tab]').each(function () {
             var $this = $(this);
             $this.tab(window.YDUI.util.parseOptions($this.data('ydui-tab')));
