@@ -13,48 +13,52 @@
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="tabs.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Tab</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>Data API 和 Javascript API方式都包含以下两个自定义事件：</p>
-        <p>1. [open.ydui.tab]：打开一个选项卡时立即触发</p>
-        <p>2. [opened.ydui.tab]：选项卡打开完成后触发（CSS 动画执行完成）</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="m-tab demo-small-pitch" data-ydui-tab>
-        <ul class="tab-nav">
-            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">选项四</a></li>
-        </ul>
-        <div class="tab-panel">
-            <div class="tab-panel-item tab-active">Data API调用</div>
-            <div class="tab-panel-item">土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</div>
-            <div class="tab-panel-item">我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</div>
-            <div class="tab-panel-item">时间是一切财富中最宝贵的财富。</div>
-        </div>
-    </div>
+        <aside class="demo-tip">
+            <p>Data API 和 Javascript API方式都包含以下两个自定义事件：</p>
+            <p>1. [open.ydui.tab]：打开一个选项卡时立即触发</p>
+            <p>2. [opened.ydui.tab]：选项卡打开完成后触发（CSS 动画执行完成）</p>
+        </aside>
 
-    <div id="J_Tab" class="m-tab demo-pitch">
-        <ul class="tab-nav">
-            <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
-            <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
-        </ul>
-        <div class="tab-panel">
-            <div class="tab-panel-item tab-active">Javascript API调用</div>
-            <div class="tab-panel-item">真理惟一可靠的标准就是永远自相符合。</div>
-            <div class="tab-panel-item">真正的科学家应当是个幻想家；谁不是幻想家，谁就只能把自己称为实践家。</div>
+        <div class="m-tab demo-small-pitch" data-ydui-tab>
+            <ul class="tab-nav">
+                <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+                <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+                <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
+                <li class="tab-nav-item"><a href="javascript:;">选项四</a></li>
+            </ul>
+            <div class="tab-panel">
+                <div class="tab-panel-item tab-active">Data API调用</div>
+                <div class="tab-panel-item">土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</div>
+                <div class="tab-panel-item">我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</div>
+                <div class="tab-panel-item">时间是一切财富中最宝贵的财富。</div>
+            </div>
         </div>
-    </div>
+
+        <div id="J_Tab" class="m-tab demo-pitch">
+            <ul class="tab-nav">
+                <li class="tab-nav-item tab-active"><a href="javascript:;">选项一</a></li>
+                <li class="tab-nav-item"><a href="javascript:;">选项二</a></li>
+                <li class="tab-nav-item"><a href="javascript:;">选项三</a></li>
+            </ul>
+            <div class="tab-panel">
+                <div class="tab-panel-item tab-active">Javascript API调用</div>
+                <div class="tab-panel-item">真理惟一可靠的标准就是永远自相符合。</div>
+                <div class="tab-panel-item">真正的科学家应当是个幻想家；谁不是幻想家，谁就只能把自己称为实践家。</div>
+            </div>
+        </div>
+
+    </section>
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>

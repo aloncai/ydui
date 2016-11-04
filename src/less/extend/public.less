@@ -1,15 +1,17 @@
-.g-doc {
-  max-width: @max-width;
+.g-view {
   margin: 0 auto;
+  max-width: @max-width;
   min-width: @min-width;
-  padding-bottom: .5rem;
+  padding-bottom: @body-padding-bottom;
 }
 
 .g-flexview {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 0;
+  margin: 0 auto;
+  max-width: @max-width;
+  min-width: @min-width;
 }
 
 .g-scrollview {
@@ -19,8 +21,14 @@
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   position: relative;
-  z-index: 0;
-  margin-top: -1px;
+  z-index: @base-zindex * 10;
+  margin: -1px 0 -1px 0;
+  &:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: @body-padding-bottom;
+  }
 }
 
 .mask-black {
@@ -28,9 +36,5 @@
 }
 
 .mask-white {
-  .mask(rgba(0, 0, 0, 0), 1000);
-}
-
-.maks-white-high {
-  .mask(rgba(255, 255, 255, .98));
+  .mask(rgba(0, 0, 0, 0));
 }

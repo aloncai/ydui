@@ -142,11 +142,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-.g-doc {
-  max-width: 750px;
+.g-view {
   margin: 0 auto;
+  max-width: 750px;
   min-width: 300px;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 .g-flexview {
   height: 100%;
@@ -159,7 +159,9 @@ table {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  padding-bottom: 0;
+  margin: 0 auto;
+  max-width: 750px;
+  min-width: 300px;
 }
 .g-scrollview {
   width: 100%;
@@ -171,13 +173,19 @@ table {
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   position: relative;
-  z-index: 0;
-  margin-top: -1px;
+  z-index: 10;
+  margin: -1px 0 -1px 0;
+}
+.g-scrollview:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0.5rem;
 }
 .mask-black {
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
-  z-index: 998;
+  z-index: 500;
   bottom: 0;
   right: 0;
   left: 0;
@@ -198,28 +206,7 @@ table {
 .mask-white {
   background-color: rgba(0, 0, 0, 0);
   position: fixed;
-  z-index: 1000;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-.maks-white-high {
-  background-color: rgba(255, 255, 255, 0.98);
-  position: fixed;
-  z-index: 998;
+  z-index: 500;
   bottom: 0;
   right: 0;
   left: 0;
@@ -248,6 +235,7 @@ table {
   text-align: center;
   position: relative;
   border: none;
+  pointer-events: auto;
   height: 0.7rem;
   line-height: 0.7rem;
   font-size: 0.26rem;
@@ -259,6 +247,7 @@ table {
   text-align: center;
   position: relative;
   border: none;
+  pointer-events: auto;
   width: 100%;
   display: block;
   font-size: 0.36rem;
@@ -291,9 +280,10 @@ table {
 .btn-disabled {
   background-color: #CCC;
   color: #F0F0F0;
+  pointer-events: none;
 }
 .btn-disabled:active {
-  background-color: #cccccc;
+  background-color: #b8b8b8;
 }
 .btn-hollow {
   background-color: #FFF;
@@ -324,86 +314,37 @@ input[type="submit"].btn-hollow {
 .hairline input[type="submit"].btn-hollow {
   border: 0.5px solid #B2B2B2;
 }
-@-webkit-keyframes bounceInDown {
-  from,
-  60%,
-  75%,
-  90%,
-  to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  0% {
+@-webkit-keyframes zoomIn {
+  from {
     opacity: 0;
-    -webkit-transform: translate3d(0, -3000px, 0);
-    transform: translate3d(0, -3000px, 0);
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
-  60% {
+  50% {
     opacity: 1;
-    -webkit-transform: translate3d(0, 25px, 0);
-    transform: translate3d(0, 25px, 0);
-  }
-  75% {
-    -webkit-transform: translate3d(0, -15px, 0);
-    transform: translate3d(0, -15px, 0);
-  }
-  90% {
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-  to {
-    -webkit-transform: none;
-    transform: none;
   }
 }
-@keyframes bounceInDown {
-  from,
-  60%,
-  75%,
-  90%,
-  to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  0% {
+@keyframes zoomIn {
+  from {
     opacity: 0;
-    -webkit-transform: translate3d(0, -3000px, 0);
-    transform: translate3d(0, -3000px, 0);
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
-  60% {
+  50% {
     opacity: 1;
-    -webkit-transform: translate3d(0, 25px, 0);
-    transform: translate3d(0, 25px, 0);
-  }
-  75% {
-    -webkit-transform: translate3d(0, -15px, 0);
-    transform: translate3d(0, -15px, 0);
-  }
-  90% {
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-  to {
-    -webkit-transform: none;
-    transform: none;
   }
 }
 .m-confirm {
-  position: fixed;
-  z-index: 999;
   width: 85%;
-  top: 30%;
-  left: 50%;
   background-color: #FAFAFA;
   border-radius: 3px;
-  margin-left: -42.5%;
   font-size: 15px;
-  -webkit-animation: bounceInDown .3s ease forwards;
-  animation: bounceInDown .3s ease forwards;
+  -webkit-animation: zoomIn .2s ease forwards;
+  animation: zoomIn .2s ease forwards;
 }
 .m-alert {
-  -webkit-animation: zoomIn .25s ease forwards;
-  animation: zoomIn .25s ease forwards;
+  -webkit-animation: zoomIn .2s ease forwards;
+  animation: zoomIn .2s ease forwards;
 }
 .m-alert .confirm-bd {
   text-align: center;
@@ -488,49 +429,26 @@ input[type="submit"].btn-hollow {
     margin-left: -20%;
   }
 }
-@-webkit-keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
 .m-toast {
-  position: fixed;
-  width: 140px;
-  top: 25%;
-  left: 50%;
-  margin-left: -70px;
-  background: rgba(40, 40, 40, 0.75);
+  min-width: 140px;
+  max-width: 80%;
+  padding-top: 15px;
+  background: rgba(40, 40, 40, 0.8);
   text-align: center;
   border-radius: 5px;
   color: #FFF;
-  z-index: 999;
-  -webkit-animation: zoomIn 0.06s ease-in forwards;
-  animation: zoomIn 0.06s ease-in forwards;
+  z-index: 1501;
+  -webkit-animation: zoomIn .06s ease forwards;
+  animation: zoomIn .06s ease forwards;
 }
 .toast-content {
-  font-size: 14px;
-  padding: 0 10px 15px;
+  font-size: 15px;
+  padding: 0 15px 15px 15px;
   line-height: 22px;
   word-break: break-all;
 }
 .toast-success-ico,
 .toast-error-ico {
-  margin: 22px 0 0;
   display: block;
   margin-bottom: 10px;
 }
@@ -548,7 +466,7 @@ input[type="submit"].btn-hollow {
 .toast-error-ico:after {
   width: 40px;
   height: 40px;
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAMAAAC5zwKfAAACwVBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8rW7LaAAAA6nRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAkJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERkdJSktMTU5PUFFTVFZXWFlaW1xdXl9gYWJjZGZnaGlqa2xvcHFyc3R1dnd4eXp7fH1+f4CBgoSFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam52foKGio6SlpqeoqaqrrK2ur7GytLW2t7i5uru8vb6/wMHCw8TFyMnKy8zNzs/Q0dLT1NXW19na29zd3t/g4eLj5OXm5+jp6uvs7e7w8fLz9PX29/j5+vv8/f6tqYiUAAAEt0lEQVQYGa3BiWOOBQDH8d/YELOxWGUraTkqt0quhaQcuVKOLoucCZkMIyJHVKOYKMdMskjTlKMVDbEwM7KhYSL7/hW9z/tur/d5Pc97bO/no5AYmk/RSIXOhximKFRG4HRMIVLrDE5/11ZoTMIlWwGo12n0nDWZ2fv2ZWeuThnVoa4snMTpanP5EfHcqt9uYFKWu6JnTZn1Ze+E1yclvxwl33qmX8ZQfip7U9rKlWmb957GqeTLRHkaM0L+1X4zH4fCdZN7xMrtvsQp68/j8OfocFUKqxMmv5L+AS6u6CgLnT8rAa6MlreoAcu3LWwsC4nFwK99ZOvFw8C5zjJZhKHoYXmrnQH83FY+dToEfBWhO8LaLMIwT166lUJRb/nV/wIUd5KnATikyOxdYJkCEf45ME6eRsOeSJmkwY3uClCfm7BKnpp2CZfJNsiNVMAaH4ct8iELNiko22GrbG2BNQpSOqyXjWWwVkHbDKmylASZqoLdMFwW2sCxCFXBPSehpe5SI48bzVQlj8N+3WUejFQVjYEZ8tIaNqrKtsNjMttJWZyqLAG+lsmzME3VMBO6y9MeToSpGqJL+F4eEmGcqmUqtNMdaVysr2qJLuFTucWWMVfVtJirjVQpCVrIS6tuDWUrpntzeekMr6nSLg7KrGsBsFg2lgOn2sssl42q0KCU92XyJE6rZWkrTu1kMouSunLpDR1l8gMuXWUhEZcMmTwFveQym4IweWpyG5c5spCKS3Edeap3iQ/kspMtMnmICvNlYREulyNlks23cmp0llSZHcLlBVnoj8sumS3lpJzawRsy64fTTln6Bae+MnuLaw1lGAA95WUUDln1ZanBHqD8JXnpDY/IMAZayVv08HHtZKvDO0Pry9sT8IwMMyBeIfAQ9JMhlesxCoHG/zJEhoWURikEoksZIcMCrjVUCNxbxjAZkrn9gEIgDgbIMBYeVQi0gB4yDIEuCoEe0EqGp+EVhcBIbsXKEFdMsvyIHz4sTn6kUhAmpxzWyrd5OMyUb9v5US5LOSqftuKULl9qFvKRXAZBgnwYT4Wx8qElDJRLPLwtezFXqFAcKXtjuXm/KhwgS/aScBsie7vIUqWZ3I6TrbW4rZatBJioSs1hrGzl4nZQtqZDgtwyOSI7Nc/hVhgmO0fJ0B1DYZBsRJzH7UJN2RgOfeThGNmycxS3I7LzB4flaRQMkY2tuG2SjRHwqkzyyK8ha9NxS5K1uoXsk1l/mC1rCVQqf1DWlsPz8rIBusjacioskbVE+ELeml7naLgs1TqOU66sRZ3jQrTuMhi2yFqDAzjkRMtaBgyUhZWQIhu9VizrIRsfw1xZ2g0TFbRpsEPWok5AkoI0Hg7XkI3YQpisoMyE/BjZijsLnygIaXAmVj40OAb76ylAMbnwe235lgk3+ysgg8vhG/k1A9jWSH7FZQETFYAORVA+p658qr8A+Ku1ArMQuJnSSLZi598CUhSwJjtx2NGnhiyE98vCISNWwUjYjEPp9nFtI+ShVvsJ313DYUMzBatp8mkMV35atzh5fFLShFlL0nNKMeRPj1eVdF647z+83MpJ7ahqaNj7vfScvIJLpaUlBXl7103tFSV//gdBGS+HTn1vcwAAAABJRU5ErkJggg==') no-repeat;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAACWFBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+SCbtoAAAAx3RSTlMAAQIDBAUGBwgKDA4PEBESExQVFhcYGRobHB4fICEiIyQlJikqLC0uLzAxMjM0NTY3ODo7PD0/QEFCREVGSElLTE1OT1BRUlNUVVlaW1xdXl9iY2RlZ2hpamttbnBxc3R1dnh5fYCBhIeIiouMj5CRk5SVlpeYmZqbnJ2eoKGjpKaoqaqrrLCxsrS1tre4ubq8vb7AwsPFxsfIycrOz9HS09TV1tjZ2tvd3t/g4uPk5efo6err7e7v8PHy8/T19vf4+fr7/P3+xMlmOwAABJZJREFUGBntwf1jTWUAB/Dv2d2u7W5ZjcXMYuJWGFuaSFmW0SIKIRkaFauksCQieemFNBOmWKWZl43ptnXNLp3tOt9/K8bmPM9z7rnnnHv6zeeDhx56yI3w2TVB/M9md5OtVfBLKBeqVXHedbIMfgiu7KiHLH0b7zPqhyJVaa+1kn3FEOX8yAeuLUBqnv+Vd30NQdHvFBwdA+9G7ec9RgnMPqPk5to0eBOsjXHAUQhqein5eQy8KD9Hk3IIpl2hpGe5Breytxs02TYEorxjlB0eAXdmtdEk9joUgTrKIrPhQqjeoEnLBFhZcJMS48MMODWlhWYHs2FtUhtlp4vgSNr6XpoY72lIZNhxyqJz4cCoRpp1vwIbwS8oMz4IIJmKTpq1joe9dXHKDufCVmCTQbPGXCQzt4eyC8/ARv4xCnZkILnJHZTFqpFQeQfNbq+DI4V/UGZs0GBteS/NeirhUO5xKvZmwkLGdgquTYVjmQeoOJkPRd5xClqegAtpn1BxeTwk4csUnHgU7tQalHWVQ/BSNwXfZsKtZXHKbs2HyfI+Cr5Kh3vVOmW338GAtDqKtmjwYlYPFZs09Ms8QNH78Kisi4rPA7jjkUYKjNXwbOLfVOwLAo+fpSD+BlIwvoOKI1njLlHw71ykZFwbFb9EKLgxEykafZFJXJ+GlBVepK1oGXxQeJE2/pkCXxReYkJdk+CTwktMIDoZvilqp6XoVPiouIMWup+FryZEqKqGzyZGqWh+DD77iKrTOfDVUoMWGrPgo0VxWvo+CN/MjzOBbwLwSYXOhL7U4IsXbtHGx/BDeYy2apG6iVHaMxYiVcURJqPPRGoK2imKtFPRU4pU5J2jKFYa7qYiMhbeZTVRZMwDKuNUtObBq2ADJbW4YyVVTVnwRttDyTb020rVoQA82UhJQxD9AoeoqoMXtZT8loP7cpqpWgH3FhoUdY7FoNERKuKVcGumTlF8Fkxm9FHRHYY74SglNRCsoqp9JNwoaKdkFyQ7qWrKgnM5zZQ0DYEkeIqqvRqcCjZQcnUkFCOuULUBDml7KOl9Dham6VQY1XBmI2U1sFRDVawETqygbL8GS9p+qtqHI7nKOCUt2Uggu4WqE0EkUxqjJBZGQuEYVTuQRFGEskWwsZgW3oatnGbKdsHWbqr06bARbKDszxBshc5TFSlEQtoeyvRJSGKyTtWZLCSykYrVSGoNLezTYG0FFd9pSEo7QgvrYakyTlnHMDgw/C+q4hWwUBqjzKiAI1W0EH0SirERKurh0G5aaM2FpKCVigshODS0nRYaAhDkNFNhTIdjLxq08CnMQiep2gwXttLKW3ggq5GqyyG4EGqjBX0GBh2ihdlw5WWq+jY/jUFTrlKxFy7to+xCGcwKzlDSOQwu5XdR9EM2RKGDFC2Ba8so2BKALK2OZqc0uKad4gPGGlhZqnPQ7RJ4UGJwQHwJrE3v5ICd8GQX79OrkUhxC++5ng9P8q+znz4PiQ39if3WwqN3eZdeBTsZO3hHWyY8ymwjqVchiZo4uQSevUnqVUhqzo3WdHiWfj7+Khx4ag5SsGgxVP8B5afAD5V2CgcAAAAASUVORK5CYII=') no-repeat;
   background-size: 40px 40px;
 }
 @-webkit-keyframes downIn {
@@ -616,9 +534,9 @@ input[type="submit"].btn-hollow {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.78);
   line-height: .28rem;
-  z-index: 99999;
+  z-index: 1501;
   font-size: .26rem;
   color: #FFF;
   padding: .3rem .24rem;
@@ -633,141 +551,135 @@ input[type="submit"].btn-hollow {
   -webkit-animation: upOut .15s linear forwards;
   animation: upOut .15s linear forwards;
 }
-/* copy from weui. */
 .m-loading {
-  position: fixed;
-  z-index: 9999;
   width: 120px;
-  top: 27%;
-  left: 50%;
-  margin-left: -60px;
   border-radius: 5px;
+  padding: 20px 15px;
   color: #FFF;
-  background-color: rgba(40, 40, 40, 0.75);
+  background-color: rgba(40, 40, 40, 0.8);
   text-align: center;
   -webkit-animation: zoomIn .1s ease forwards;
   animation: zoomIn .1s ease forwards;
 }
 .m-loading .loading-hd {
-  position: absolute;
-  width: 0;
-  z-index: 99999;
-  left: 50%;
-  top: 43px;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
 }
 .m-loading .loading-txt {
-  margin: 75px 5px 15px;
+  padding-top: 10px;
   font-size: 14px;
   line-height: 20px;
   word-break: break-all;
 }
 .loading-leaf {
-  position: absolute;
-  top: -1px;
-  opacity: .25;
+  position: relative;
+  top: 19px;
 }
 .loading-leaf:before {
   content: '';
   position: absolute;
+  left: 20px;
+  top: 0;
   width: 10px;
   height: 3px;
-  background-color: #d1d1d5;
-  box-shadow: rgba(0, 0, 0, 0.098) 0 0 1px;
+  background-color: #FFF;
   border-radius: 1px;
   -webkit-transform-origin: left 50% 0;
   transform-origin: left 50% 0;
 }
 .loading-leaf-0 {
-  -webkit-animation: opacity-60-25-0-12 1.25s linear infinite;
-  animation: opacity-60-25-0-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-0-12 1s linear infinite;
+  animation: opacity-60-25-0-12 1s linear infinite;
 }
 .loading-leaf-0:before {
   -webkit-transform: rotate(0deg) translate(10px, 0px);
   transform: rotate(0deg) translate(10px, 0px);
 }
 .loading-leaf-1 {
-  -webkit-animation: opacity-60-25-1-12 1.25s linear infinite;
-  animation: opacity-60-25-1-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-1-12 1s linear infinite;
+  animation: opacity-60-25-1-12 1s linear infinite;
 }
 .loading-leaf-1:before {
   -webkit-transform: rotate(30deg) translate(10px, 0px);
   transform: rotate(30deg) translate(10px, 0px);
 }
 .loading-leaf-2 {
-  -webkit-animation: opacity-60-25-2-12 1.25s linear infinite;
-  animation: opacity-60-25-2-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-2-12 1s linear infinite;
+  animation: opacity-60-25-2-12 1s linear infinite;
 }
 .loading-leaf-2:before {
   -webkit-transform: rotate(60deg) translate(10px, 0px);
   transform: rotate(60deg) translate(10px, 0px);
 }
 .loading-leaf-3 {
-  -webkit-animation: opacity-60-25-3-12 1.25s linear infinite;
-  animation: opacity-60-25-3-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-3-12 1s linear infinite;
+  animation: opacity-60-25-3-12 1s linear infinite;
 }
 .loading-leaf-3:before {
   -webkit-transform: rotate(90deg) translate(10px, 0px);
   transform: rotate(90deg) translate(10px, 0px);
 }
 .loading-leaf-4 {
-  -webkit-animation: opacity-60-25-4-12 1.25s linear infinite;
-  animation: opacity-60-25-4-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-4-12 1s linear infinite;
+  animation: opacity-60-25-4-12 1s linear infinite;
 }
 .loading-leaf-4:before {
   -webkit-transform: rotate(120deg) translate(10px, 0px);
   transform: rotate(120deg) translate(10px, 0px);
 }
 .loading-leaf-5 {
-  -webkit-animation: opacity-60-25-5-12 1.25s linear infinite;
-  animation: opacity-60-25-5-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-5-12 1s linear infinite;
+  animation: opacity-60-25-5-12 1s linear infinite;
 }
 .loading-leaf-5:before {
   -webkit-transform: rotate(150deg) translate(10px, 0px);
   transform: rotate(150deg) translate(10px, 0px);
 }
 .loading-leaf-6 {
-  -webkit-animation: opacity-60-25-6-12 1.25s linear infinite;
-  animation: opacity-60-25-6-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-6-12 1s linear infinite;
+  animation: opacity-60-25-6-12 1s linear infinite;
 }
 .loading-leaf-6:before {
   -webkit-transform: rotate(180deg) translate(10px, 0px);
   transform: rotate(180deg) translate(10px, 0px);
 }
 .loading-leaf-7 {
-  -webkit-animation: opacity-60-25-7-12 1.25s linear infinite;
-  animation: opacity-60-25-7-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-7-12 1s linear infinite;
+  animation: opacity-60-25-7-12 1s linear infinite;
 }
 .loading-leaf-7:before {
   -webkit-transform: rotate(210deg) translate(10px, 0px);
   transform: rotate(210deg) translate(10px, 0px);
 }
 .loading-leaf-8 {
-  -webkit-animation: opacity-60-25-8-12 1.25s linear infinite;
-  animation: opacity-60-25-8-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-8-12 1s linear infinite;
+  animation: opacity-60-25-8-12 1s linear infinite;
 }
 .loading-leaf-8:before {
   -webkit-transform: rotate(240deg) translate(10px, 0px);
   transform: rotate(240deg) translate(10px, 0px);
 }
 .loading-leaf-9 {
-  -webkit-animation: opacity-60-25-9-12 1.25s linear infinite;
-  animation: opacity-60-25-9-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-9-12 1s linear infinite;
+  animation: opacity-60-25-9-12 1s linear infinite;
 }
 .loading-leaf-9:before {
   -webkit-transform: rotate(270deg) translate(10px, 0px);
   transform: rotate(270deg) translate(10px, 0px);
 }
 .loading-leaf-10 {
-  -webkit-animation: opacity-60-25-10-12 1.25s linear infinite;
-  animation: opacity-60-25-10-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-10-12 1s linear infinite;
+  animation: opacity-60-25-10-12 1s linear infinite;
 }
 .loading-leaf-10:before {
   -webkit-transform: rotate(300deg) translate(10px, 0px);
   transform: rotate(300deg) translate(10px, 0px);
 }
 .loading-leaf-11 {
-  -webkit-animation: opacity-60-25-11-12 1.25s linear infinite;
-  animation: opacity-60-25-11-12 1.25s linear infinite;
+  -webkit-animation: opacity-60-25-11-12 1s linear infinite;
+  animation: opacity-60-25-11-12 1s linear infinite;
 }
 .loading-leaf-11:before {
   -webkit-transform: rotate(330deg) translate(10px, 0px);
@@ -1339,8 +1251,7 @@ input[type="submit"].btn-hollow {
   flex: 1;
   height: 1rem;
   border: none;
-  line-height: 1.15;
-  font-size: 0.3rem;
+  font-size: 0.28rem;
   background: transparent;
   color: #555;
   display: -webkit-box;
@@ -1837,7 +1748,7 @@ input[type="submit"].btn-hollow {
 }
 .nav-box {
   position: relative;
-  z-index: 9;
+  z-index: 100;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1874,7 +1785,7 @@ input[type="submit"].btn-hollow {
   -webkit-flex: 0 0 25%;
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
-  padding: 0 0.12rem;
+  padding: 0 0.2rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1955,7 +1866,7 @@ input[type="submit"].btn-hollow {
 .m-tabbar {
   width: 100%;
   position: relative;
-  z-index: 9;
+  z-index: 100;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

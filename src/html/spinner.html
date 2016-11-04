@@ -13,55 +13,59 @@
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Spinner</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>Spinner 支持 Data API 和 Javascript API方式调用；</p>
-        <p>1. 目前暂不支持小数加减；</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">Javascript API调用（设置最大值为15，累计值为3）</span>
-        <span class="m-spinner" id="J_Quantity">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" value="1" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <aside class="demo-tip">
+            <p>Spinner 支持 Data API 和 Javascript API方式调用；</p>
+            <p>1. 目前暂不支持小数加减；</p>
+        </aside>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">Data API调用（不设置最大值和累计值，默认累计值为1）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">Javascript API调用（设置最大值为15，累计值为3）</span>
+            <span class="m-spinner" id="J_Quantity">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" value="1" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">设置默认值为15（累计值为5，默认值与累计值成倍数关系）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', unit: 5}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" value="15" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">Data API调用（不设置最大值和累计值，默认累计值为1）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">禁止修改（设置文本框readonly或者disabled即可）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" readonly placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">设置默认值为15（累计值为5，默认值与累计值成倍数关系）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', unit: 5}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" value="15" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">禁止修改（设置文本框readonly或者disabled即可）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" readonly placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+    </section>
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>

@@ -65,7 +65,7 @@
         fill: '',
         progress: 0,
         delay: true,
-        container: window
+        binder: window
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -86,7 +86,7 @@
             svgView = _this.createSvgView(),
             $element = _this.$element;
 
-        _this.$container = options.container === window || options.container == 'window' ? $(window) : $(options.container);
+        _this.$binder = options.binder === window || options.binder == 'window' ? $(window) : $(options.binder);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
@@ -102,7 +102,7 @@
         if (options.delay) {
             _this.checkInView($svg);
 
-            _this.$container.on('scroll.ydui.progressbar', function () {
+            _this.$binder.on('scroll.ydui.progressbar', function () {
                 _this.checkInView($svg);
             });
 
@@ -119,9 +119,9 @@
     ProgressBar.prototype.checkInView = function ($svg) {
 
         var _this = this,
-            $container = _this.$container,
-            contentHeight = $container.height(),
-            contentTop = $container.get(0) === window ? $(window).scrollTop() : $container.offset().top;
+            $binder = _this.$binder,
+            contentHeight = $binder.height(),
+            contentTop = $binder.get(0) === window ? $(window).scrollTop() : $binder.offset().top;
 
         var post = $svg.offset().top - contentTop,
             posb = post + $svg.height();

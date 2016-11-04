@@ -6,6 +6,7 @@
   text-align: center;
   position: relative;
   border: none;
+  pointer-events: auto;
 }
 
 .btn {
@@ -45,8 +46,9 @@
 }
 
 .btn-disabled {
-  .tap-color(@btn-disabled-bg, 1);
+  .tap-color(@btn-disabled-bg);
   color: @btn-disabled-color;
+  pointer-events: none;
 }
 
 .btn-hollow {

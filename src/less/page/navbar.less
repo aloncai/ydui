@@ -4,7 +4,7 @@
 
 .nav-box {
   position: relative;
-  z-index: 9;
+  z-index: @base-zindex * 100;
   display: flex;
   background-color: @navbar-bg;
   &:after {
@@ -23,7 +23,7 @@
   height: @navbar-height;
   min-width: (100% - @navbar-center-width) / 2; /* for low version android */
   flex: 0 0 (100% - @navbar-center-width) / 2;
-  padding: 0 @body-padding-vertical / 2;
+  padding: 0 @body-padding-vertical / 1.2;
   display: flex;
   align-items: center;
   font-size: @navbar-item-fontsize;

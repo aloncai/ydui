@@ -14,7 +14,7 @@
         typeof FastClick == 'function' && FastClick.attach(doc.body);
     });
 
-    ydui.util = {
+    var util = ydui.util = {
         /**
          * 格式化参数
          * @param string
@@ -58,8 +58,62 @@
                     doc.removeEventListener('touchmove', fn);
                 }
             };
-        }()
+        }(),
+        /**
+         * 本地存储
+         */
+        localStorage: function () {
+            return storage(window.localStorage);
+        }(),
+        /**
+         * Session存储
+         */
+        sessionStorage: function () {
+            return storage(window.sessionStorage);
+        }(),
+        /**
+         * 序列化
+         * @param value
+         * @returns {string}
+         */
+        serialize: function (value) {
+            if (typeof value === 'string') return value;
+            return JSON.stringify(value);
+        },
+        /**
+         * 反序列化
+         * @param value
+         * @returns {*}
+         */
+        deserialize: function (value) {
+            if (typeof value !== 'string') return undefined;
+            try {
+                return JSON.parse(value);
+            } catch (e) {
+                return value || undefined;
+            }
+        }
     };
+
+    /**
+     * HTML5存储
+     */
+    function storage (ls) {
+        return {
+            set: function (key, value) {
+                ls.setItem(key, util.serialize(value));
+            },
+            get: function (key) {
+                return util.deserialize(ls.getItem(key));
+            },
+            remove: function (key) {
+                ls.removeItem(key);
+            },
+            clear: function () {
+                ls.clear();
+            }
+        };
+    }
 
     /**
      * 判断css3动画是否执行完毕

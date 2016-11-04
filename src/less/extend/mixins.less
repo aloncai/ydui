@@ -9,7 +9,7 @@
 
 // 遮罩层
 // -----------------------------------------------------------------------------
-.mask(@bgcolor: rgba(0, 0, 0, .4), @z-index: 998) {
+.mask(@bgcolor: rgba(0, 0, 0, .4), @z-index: @base-zindex * 500) {
   background-color: @bgcolor;
   position: fixed;
   z-index: @z-index;

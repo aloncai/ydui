@@ -51,8 +51,7 @@
         }
 
         var $dom = $('' +
-            '<div id="' + ID + '">' +
-            '   <div class="mask-black"></div>' +
+            '<div class="mask-black" id="' + ID + '">' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
@@ -107,8 +106,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div>' +
-            '       <div class="mask-black"></div>' +
+            '   <div class="mask-black">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -154,13 +152,16 @@
                 return;
             }
 
+            var iconHtml = '';
+            if (type == 'success' || type == 'error') {
+                iconHtml = '<div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>';
+            }
+
             var $dom = $('' +
-                '<div id="' + ID + '">' +
-                '   <div class="mask-white"></div>' +
-                '   <div class="m-toast">' +
-                '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
-                '       <p class="toast-content">' + (mes || '') + '</p>' +
-                '   </div>' +
+                '<div class="mask-white" id="' + ID + '">' +
+                '    <div class="m-toast">' + iconHtml +
+                '        <p class="toast-content">' + (mes || '') + '</p>' +
+                '    </div>' +
                 '</div>');
 
             ydui.util.pageScroll.lock();
@@ -241,25 +242,24 @@
                 $('#' + ID).remove();
 
                 var $dom = $('' +
-                    '<div id="' + ID + '">' +
-                    '    <div class="mask-white"></div>' +
-                    '    <div class="m-loading">' +
-                    '        <div class="loading-hd">' +
-                    '            <div class="loading-leaf loading-leaf-0"></div>' +
-                    '            <div class="loading-leaf loading-leaf-1"></div>' +
-                    '            <div class="loading-leaf loading-leaf-2"></div>' +
-                    '            <div class="loading-leaf loading-leaf-3"></div>' +
-                    '            <div class="loading-leaf loading-leaf-4"></div>' +
-                    '            <div class="loading-leaf loading-leaf-5"></div>' +
-                    '            <div class="loading-leaf loading-leaf-6"></div>' +
-                    '            <div class="loading-leaf loading-leaf-7"></div>' +
-                    '            <div class="loading-leaf loading-leaf-8"></div>' +
-                    '            <div class="loading-leaf loading-leaf-9"></div>' +
-                    '            <div class="loading-leaf loading-leaf-10"></div>' +
-                    '            <div class="loading-leaf loading-leaf-11"></div>' +
-                    '        </div>' +
-                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
-                    '    </div>' +
+                    '<div class="mask-white" id="' + ID + '">' +
+                    '   <div class="m-loading">' +
+                    '       <div class="loading-hd">' +
+                    '           <div class="loading-leaf loading-leaf-0"></div>' +
+                    '           <div class="loading-leaf loading-leaf-1"></div>' +
+                    '           <div class="loading-leaf loading-leaf-2"></div>' +
+                    '           <div class="loading-leaf loading-leaf-3"></div>' +
+                    '           <div class="loading-leaf loading-leaf-4"></div>' +
+                    '           <div class="loading-leaf loading-leaf-5"></div>' +
+                    '           <div class="loading-leaf loading-leaf-6"></div>' +
+                    '           <div class="loading-leaf loading-leaf-7"></div>' +
+                    '           <div class="loading-leaf loading-leaf-8"></div>' +
+                    '           <div class="loading-leaf loading-leaf-9"></div>' +
+                    '           <div class="loading-leaf loading-leaf-10"></div>' +
+                    '           <div class="loading-leaf loading-leaf-11"></div>' +
+                    '       </div>' +
+                    '       <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
+                    '   </div>' +
                     '</div>').remove();
 
                 ydui.util.pageScroll.lock();

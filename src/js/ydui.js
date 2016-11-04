@@ -14,7 +14,7 @@
         typeof FastClick == 'function' && FastClick.attach(doc.body);
     });
 
-    ydui.util = {
+    var util = ydui.util = {
         /**
          * 格式化参数
          * @param string
@@ -58,8 +58,62 @@
                     doc.removeEventListener('touchmove', fn);
                 }
             };
-        }()
+        }(),
+        /**
+         * 本地存储
+         */
+        localStorage: function () {
+            return storage(window.localStorage);
+        }(),
+        /**
+         * Session存储
+         */
+        sessionStorage: function () {
+            return storage(window.sessionStorage);
+        }(),
+        /**
+         * 序列化
+         * @param value
+         * @returns {string}
+         */
+        serialize: function (value) {
+            if (typeof value === 'string') return value;
+            return JSON.stringify(value);
+        },
+        /**
+         * 反序列化
+         * @param value
+         * @returns {*}
+         */
+        deserialize: function (value) {
+            if (typeof value !== 'string') return undefined;
+            try {
+                return JSON.parse(value);
+            } catch (e) {
+                return value || undefined;
+            }
+        }
     };
+
+    /**
+     * HTML5存储
+     */
+    function storage (ls) {
+        return {
+            set: function (key, value) {
+                ls.setItem(key, util.serialize(value));
+            },
+            get: function (key) {
+                return util.deserialize(ls.getItem(key));
+            },
+            remove: function (key) {
+                ls.removeItem(key);
+            },
+            clear: function () {
+                ls.clear();
+            }
+        };
+    }
 
     /**
      * 判断css3动画是否执行完毕
@@ -410,8 +464,7 @@
         }
 
         var $dom = $('' +
-            '<div id="' + ID + '">' +
-            '   <div class="mask-black"></div>' +
+            '<div class="mask-black" id="' + ID + '">' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
@@ -466,8 +519,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div>' +
-            '       <div class="mask-black"></div>' +
+            '   <div class="mask-black">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -513,13 +565,16 @@
                 return;
             }
 
+            var iconHtml = '';
+            if (type == 'success' || type == 'error') {
+                iconHtml = '<div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>';
+            }
+
             var $dom = $('' +
-                '<div id="' + ID + '">' +
-                '   <div class="mask-white"></div>' +
-                '   <div class="m-toast">' +
-                '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
-                '       <p class="toast-content">' + (mes || '') + '</p>' +
-                '   </div>' +
+                '<div class="mask-white" id="' + ID + '">' +
+                '    <div class="m-toast">' + iconHtml +
+                '        <p class="toast-content">' + (mes || '') + '</p>' +
+                '    </div>' +
                 '</div>');
 
             ydui.util.pageScroll.lock();
@@ -600,25 +655,24 @@
                 $('#' + ID).remove();
 
                 var $dom = $('' +
-                    '<div id="' + ID + '">' +
-                    '    <div class="mask-white"></div>' +
-                    '    <div class="m-loading">' +
-                    '        <div class="loading-hd">' +
-                    '            <div class="loading-leaf loading-leaf-0"></div>' +
-                    '            <div class="loading-leaf loading-leaf-1"></div>' +
-                    '            <div class="loading-leaf loading-leaf-2"></div>' +
-                    '            <div class="loading-leaf loading-leaf-3"></div>' +
-                    '            <div class="loading-leaf loading-leaf-4"></div>' +
-                    '            <div class="loading-leaf loading-leaf-5"></div>' +
-                    '            <div class="loading-leaf loading-leaf-6"></div>' +
-                    '            <div class="loading-leaf loading-leaf-7"></div>' +
-                    '            <div class="loading-leaf loading-leaf-8"></div>' +
-                    '            <div class="loading-leaf loading-leaf-9"></div>' +
-                    '            <div class="loading-leaf loading-leaf-10"></div>' +
-                    '            <div class="loading-leaf loading-leaf-11"></div>' +
-                    '        </div>' +
-                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
-                    '    </div>' +
+                    '<div class="mask-white" id="' + ID + '">' +
+                    '   <div class="m-loading">' +
+                    '       <div class="loading-hd">' +
+                    '           <div class="loading-leaf loading-leaf-0"></div>' +
+                    '           <div class="loading-leaf loading-leaf-1"></div>' +
+                    '           <div class="loading-leaf loading-leaf-2"></div>' +
+                    '           <div class="loading-leaf loading-leaf-3"></div>' +
+                    '           <div class="loading-leaf loading-leaf-4"></div>' +
+                    '           <div class="loading-leaf loading-leaf-5"></div>' +
+                    '           <div class="loading-leaf loading-leaf-6"></div>' +
+                    '           <div class="loading-leaf loading-leaf-7"></div>' +
+                    '           <div class="loading-leaf loading-leaf-8"></div>' +
+                    '           <div class="loading-leaf loading-leaf-9"></div>' +
+                    '           <div class="loading-leaf loading-leaf-10"></div>' +
+                    '           <div class="loading-leaf loading-leaf-11"></div>' +
+                    '       </div>' +
+                    '       <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
+                    '   </div>' +
                     '</div>').remove();
 
                 ydui.util.pageScroll.lock();
@@ -1261,6 +1315,9 @@
 !function (window) {
     "use strict";
 
+    var util = window.YDUI.util,
+        key = 'fuck';
+
     function InfiniteScroll (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, InfiniteScroll.DEFAULTS, options || {});
@@ -1271,30 +1328,91 @@
         binder: window,
         initLoad: true,
         pageSize: 0,
+        lazyLoad: true,
+        contentBox: '',
+        backposition: true,
         loadFunction: null,
         loadingHtml: '加载中...',
-        doneTxt: '没有更多数据了'
+        doneTxt: '没有更多数据了',
+        loadFormCache: null
     };
 
     InfiniteScroll.prototype.init = function () {
-        var _this = this;
+        var _this = this,
+            options = _this.options;
 
-        if (~~_this.options.pageSize <= 0) {
+        if (~~options.pageSize <= 0) {
             console.error('[YDUI warn]: 需指定pageSize参数【即每页请求数据的长度】');
             return;
         }
 
         _this.$element.append(_this.$tag = $('<div class="J_InfiniteScrollTag"></div>'));
 
+        _this.ConOffsetTop = _this.$element.offset().top;
+
         _this.initLoadingTip();
 
         _this.bindScroll();
+
+        _this.loadCacheList();
+
+        _this.bindLinkRedirect();
     };
 
     InfiniteScroll.prototype.initLoadingTip = function () {
         var _this = this;
 
         _this.$element.append(_this.$loading = $('<div class="list-loading">' + _this.options.loadingHtml + '</div>'));
+    };
+
+    InfiniteScroll.prototype.scrollPosition = function () {
+
+        var _this = this,
+            $binder = $(_this.options.binder);
+
+        var ff = util.sessionStorage.get(key);
+
+        ff && $binder.stop().animate({scrollTop: ff.offsetTop}, 0, function () {
+            _this.scrolling = false;
+        });
+
+        _this.bindLinkRedirect();
+
+        util.sessionStorage.remove(key);
+    };
+
+    InfiniteScroll.prototype.loadCacheList = function () {
+        var _this = this;
+
+        util.pageScroll.lock();
+
+        var storage = util.sessionStorage.get(key);
+
+        if(!storage)return;
+        //
+
+        //总需滚动的页码数
+        var num = storage.page;
+
+        var listArr = [];
+
+        for (var i = 1; i <= num; i++) {
+            var _data = util.sessionStorage.get('LIST' + i);
+
+            var a = {};
+            a.page = i;
+            a.data = _data;
+
+            listArr.push(a);
+
+            if (i == num && _data.length < _this.options.pageSize) {
+                //判断是否处于所有数据加载完毕的状态
+                _this.isDone = true;
+            }
+        }
+        _this.options.loadFormCache(listArr, num).done(function () {
+            _this.options.backposition && _this.scrollPosition();
+        });
     };
 
     InfiniteScroll.prototype.bindScroll = function () {
@@ -1305,7 +1423,7 @@
             isWindow = $binder.get(0) === window,
             contentHeight = isWindow ? $(window).height() : $binder.height();
 
-        options.initLoad && _this.checkLoad();
+        options.initLoad && !util.sessionStorage.get(key) && _this.checkLoad();
 
         $binder.on('scroll.ydui.infinitescroll', function () {
 
@@ -1320,6 +1438,24 @@
         });
     };
 
+    InfiniteScroll.prototype.bindLinkRedirect = function () {
+
+        var _this = this;
+
+        $(_this.options.binder).on('click.ydui.infinitescroll', '.J_Link', function (e) {
+            e.preventDefault();
+
+            var $this = $(this);
+
+            util.sessionStorage.set(key, {
+                offsetTop: $(_this.options.binder).scrollTop() + $this.offset().top - _this.ConOffsetTop,
+                page: $this.data('page')
+            });
+
+            location.href = $this.attr('href');
+        });
+    };
+
     InfiniteScroll.prototype.checkLoad = function () {
         var _this = this,
             options = _this.options;
@@ -1327,9 +1463,11 @@
         _this.loading = true;
         _this.$loading.show();
 
-        typeof options.loadFunction == 'function' && options.loadFunction().done(function (len) {
+        typeof options.loadFunction == 'function' && options.loadFunction().done(function (listArr, page) {
+            var len = listArr.length;
+
             if (~~len <= 0) {
-                console.error('[YDUI warn]: 需在 resolve() 方法里回传本次获取记录的总数');
+                console.error('[YDUI warn]: 需在 resolve() 方法里回传本次获取记录集合');
                 return;
             }
 
@@ -1339,6 +1477,10 @@
             }
             _this.$loading.hide();
             _this.loading = false;
+
+            if (options.backposition) {
+                util.sessionStorage.set('LIST' + page, listArr);
+            }
         });
     };
 
@@ -1778,7 +1920,7 @@
         fill: '',
         progress: 0,
         delay: true,
-        container: window
+        binder: window
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -1799,7 +1941,7 @@
             svgView = _this.createSvgView(),
             $element = _this.$element;
 
-        _this.$container = options.container === window || options.container == 'window' ? $(window) : $(options.container);
+        _this.$binder = options.binder === window || options.binder == 'window' ? $(window) : $(options.binder);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
@@ -1815,7 +1957,7 @@
         if (options.delay) {
             _this.checkInView($svg);
 
-            _this.$container.on('scroll.ydui.progressbar', function () {
+            _this.$binder.on('scroll.ydui.progressbar', function () {
                 _this.checkInView($svg);
             });
 
@@ -1832,9 +1974,9 @@
     ProgressBar.prototype.checkInView = function ($svg) {
 
         var _this = this,
-            $container = _this.$container,
-            contentHeight = $container.height(),
-            contentTop = $container.get(0) === window ? $(window).scrollTop() : $container.offset().top;
+            $binder = _this.$binder,
+            contentHeight = $binder.height(),
+            contentTop = $binder.get(0) === window ? $(window).scrollTop() : $binder.offset().top;
 
         var post = $svg.offset().top - contentTop,
             posb = post + $svg.height();
@@ -3175,44 +3317,6 @@
     };
 
     /**
-     * 序列化
-     * @param value
-     * @returns {string}
-     */
-    util.serialize = function (value) {
-        if (typeof value === 'string') return value;
-        return JSON.stringify(value);
-    };
-
-    /**
-     * 反序列化
-     * @param value
-     * @returns {*}
-     */
-    util.deserialize = function (value) {
-        if (typeof value !== 'string') return undefined;
-        try {
-            return JSON.parse(value);
-        } catch (e) {
-            return value || undefined;
-        }
-    };
-
-    /**
-     * 本地存储
-     */
-    util.localStorage = function () {
-        return storage(window.localStorage);
-    }();
-
-    /**
-     * Session存储
-     */
-    util.sessionStorage = function () {
-        return storage(window.sessionStorage);
-    }();
-
-    /**
      * Cookie
      * @type {{get, set}}
      */
@@ -3258,26 +3362,5 @@
             }
         }
     }();
-
-    /**
-     * HTML5存储
-     */
-    function storage (ls) {
-        var _util = util;
-        return {
-            set: function (key, value) {
-                ls.setItem(key, _util.serialize(value));
-            },
-            get: function (key) {
-                return _util.deserialize(ls.getItem(key));
-            },
-            remove: function (key) {
-                ls.removeItem(key);
-            },
-            clear: function () {
-                ls.clear();
-            }
-        };
-    }
 
 }(window);

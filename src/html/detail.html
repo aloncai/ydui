@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>AsideBar</title>
+    <title>Detail</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -16,25 +16,16 @@
 <section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box">
-            <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
-            <div class="nav-center"><span class="nav-title">AsideBar</span></div>
+        <nav class="nav-box nav-fixed">
+            <a href="javascript:history.back();" class="nav-item"><i class="back-ico"></i></a>
+            <div class="nav-center"><span class="nav-title">Detail</span></div>
         </nav>
     </header>
 
     <section class="g-scrollview">
-
-        <div class="m-cell">
-            <a href="navbar.html" class="cell-item">
-                <div class="cell-left">NavBar</div>
-                <div class="cell-right cell-arrow"></div>
-            </a>
-            <a href="tabbar.html" class="cell-item">
-                <div class="cell-left">Tabbar</div>
-                <div class="cell-right cell-arrow"></div>
-            </a>
+        <div class="m-button">
+            <a href="javascript:history.back();" class="btn-block btn-primary">返回列表页试试水</a>
         </div>
-
     </section>
 
 </section>
