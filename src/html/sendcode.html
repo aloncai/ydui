@@ -61,7 +61,7 @@
 
         $getCode.on('click', function () {
             var $this = $(this);
-            dialog.loading.open('发送中');
+            dialog.loading.open('发送中...');
             // ajax 成功发送验证码后调用【start】
             setTimeout(function () { //模拟ajax发送
                 dialog.loading.close();

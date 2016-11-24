@@ -61,7 +61,6 @@
                     pagesize: pageSize
                 },
                 success: function (ret) {
-                    console.log(ret);
                     typeof callback == 'function' && callback(ret);
                 }
             });
@@ -91,17 +90,17 @@
                 return def.promise();
             },
             loadFormCache: function (ret, retPage) {
-
                 var def = $.Deferred();
 
                 page = retPage + 1;
 
+                var html = '';
                 for (var i = 0; i < ret.length; i++) {
                     var t = ret[i].data;
                     t.page = ret[i].page;
-                    var html = template('J_ListHtml', {list: t});
-                    $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
+                    html += template('J_ListHtml', {list: t});
                 }
+                $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
 
                 def.resolve();
                 return def.promise();

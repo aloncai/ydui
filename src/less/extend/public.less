@@ -18,10 +18,10 @@
   width: 100%;
   height: 100%;
   flex: 1;
-  -webkit-overflow-scrolling: touch;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   position: relative;
-  z-index: @base-zindex * 10;
   margin: -1px 0 -1px 0;
   &:after {
     content: '';
@@ -31,10 +31,22 @@
   }
 }
 
+.g-fix-ios-overflow-scrolling-bug {
+  -webkit-overflow-scrolling: auto;
+}
+
+.mask-black-dialog {
+  .mask(rgba(0, 0, 0, .4), @base-zindex * 1500);
+}
+
 .mask-black {
-  .mask(rgba(0, 0, 0, .4));
+  .mask(rgba(0, 0, 0, .4), @base-zindex * 500);
+}
+
+.mask-white-dialog {
+  .mask(rgba(0, 0, 0, 0), @base-zindex * 1500);
 }
 
 .mask-white {
-  .mask(rgba(0, 0, 0, 0));
+  .mask(rgba(0, 0, 0, 0), @base-zindex * 500);
 }

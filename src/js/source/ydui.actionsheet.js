@@ -16,6 +16,9 @@
     }
 
     ActionSheet.prototype.open = function () {
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
+
         var _this = this;
         $body.append($mask);
 
@@ -36,6 +39,9 @@
 
     ActionSheet.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
+
         $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
         //$doc.off('click.ydui.actionsheet', _this.closeElement);

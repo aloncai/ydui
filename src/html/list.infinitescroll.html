@@ -55,20 +55,14 @@
         var page = 1, pageSize = 10;
         var loadMore = function (callback) {
             $.ajax({
-                url: 'http://list.ydui.org/getdata.php?type=infinitescroll',
+                url: 'http://list.ydui.org/getdata.php?type=backposition',
                 dataType: 'jsonp',
                 data: {
                     page: page,
                     pagesize: pageSize
                 },
                 success: function (ret) {
-                    ++page;
-
-                    // 该示例使用arttemplate模板引擎，当然也可使用其他方式
-                    var html = template('J_ListHtml', {list: ret});
-                    $('#J_ListContent').append(html).find('img').lazyLoad({binder:  '#J_List'});
-
-                    typeof callback == 'function' && callback(ret.length);
+                    typeof callback == 'function' && callback(ret);
                 }
             });
         };
@@ -81,9 +75,15 @@
             loadFunction: function () {
                 var def = $.Deferred();
 
-                loadMore(function (len) {
-                    // 当本次获取记录总数len 小于pageSize 即认为所有数据已请求完毕
-                    def.resolve(len);
+                loadMore(function (listArr) {
+                    listArr.page = page;
+
+                    var html = template('J_ListHtml', {list: listArr});
+                    $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
+
+                    def.resolve(listArr, page);
+
+                    ++page;
                 });
 
                 return def.promise();

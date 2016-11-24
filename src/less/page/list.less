@@ -1,14 +1,16 @@
 .m-list {
   overflow: hidden;
+  position: relative;
   .list-img {
     height: 0;
     width: 100%;
     padding: 50% 0;
     overflow: hidden;
-    background-color: #F0F0F0;
     img {
       width: 100%;
       margin-top: -50%;
+      background-color: #FFF;
+      border: none;
     }
   }
   .list-ft {
@@ -52,7 +54,7 @@
 }
 
 .list-theme1 {
-  padding: 0 2px;
+  padding: 0 2px .5rem;
   .list-item {
     width: 50%;
     float: left;
@@ -69,6 +71,7 @@
 }
 
 .list-theme2 {
+  padding-bottom: .5rem;
   .list-item {
     width: 50%;
     float: left;
@@ -90,23 +93,28 @@
 }
 
 .list-theme3 {
+  padding-bottom: .5rem;
   .list-item {
     width: 50%;
     float: left;
     padding: .2rem;
     position: relative;
+    z-index: 0;
     background-color: #FFF;
     &:before {
-      .bottom-line(@line-color, 2);
+      .bottom-line(@line-color);
     }
     &:nth-child(odd):after {
-      .right-line(@line-color, 2);
+      .right-line(@line-color);
     }
     .list-ft {
       padding-top: .1rem;
       .title {
         .text-overflow();
         height: .28rem;
+      }
+      .item {
+        padding-top: 4px;
       }
     }
   }
@@ -145,6 +153,7 @@
   .list-item {
     display: block;
     position: relative;
+    z-index: 1;
     padding: .2rem .2rem 0 .2rem;
     &:after {
       .bottom-line(@line-color);

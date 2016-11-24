@@ -67,18 +67,19 @@
 
         _this.bindLinkRedirect();
 
+        util.pageScroll.unlock();
+
         util.sessionStorage.remove(key);
     };
 
     InfiniteScroll.prototype.loadCacheList = function () {
         var _this = this;
 
-        util.pageScroll.lock();
-
         var storage = util.sessionStorage.get(key);
 
         if(!storage)return;
-        //
+
+        util.pageScroll.lock();
 
         //总需滚动的页码数
         var num = storage.page;

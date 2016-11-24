@@ -160,6 +160,9 @@
     }
 
     ActionSheet.prototype.open = function () {
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
+
         var _this = this;
         $body.append($mask);
 
@@ -180,6 +183,9 @@
 
     ActionSheet.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
+
         $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
         //$doc.off('click.ydui.actionsheet', _this.closeElement);
@@ -232,6 +238,8 @@
 !function (window) {
     "use strict";
 
+    var $body = $(window.document.body);
+
     function CitySelect (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, CitySelect.DEFAULTS, options || {});
@@ -239,91 +247,254 @@
     }
 
     CitySelect.DEFAULTS = {
-        provance: '.provance',
-        city: '.city',
-        area: '.area',
-        d_provance: '',
-        d_city: '',
-        d_area: ''
+        provance: '',
+        city: '',
+        area: ''
     };
 
     CitySelect.prototype.init = function () {
         var _this = this,
             options = _this.options;
 
-        _this.$provance = $(options.provance, _this.$element);
-        _this.$city = $(options.city, _this.$element);
-        _this.$area = $(options.area, _this.$element);
-
-        if (typeof yduiCitys == 'undefined') {
-            console.error('请在ydui.js前引入ydui.citys.js。下载地址：http://static.ydcss.com/uploads/ydui/ydui.citys.js');
+        if (typeof YDUI_CITYS == 'undefined') {
+            console.error('请在ydui.js前引入ydui.citys.js。下载地址：http://cityselect.ydui.org');
             return;
         }
 
-        _this.citys = yduiCitys;
+        _this.citys = YDUI_CITYS;
 
-        var _defaultProvance = _this.$provance.data('default');
-        var _defaultCity = _this.$city.data('default');
-        var _defaultArea = _this.$area.data('default');
+        _this.createDOM();
 
-        if (_defaultProvance)
-            options.d_provance = _defaultProvance;
+        _this.defaultSet = {
+            provance: options.provance,
+            city: options.city,
+            area: options.area
+        };
+    };
 
-        if (_defaultCity)
-            options.d_city = _defaultCity;
+    CitySelect.prototype.open = function () {
+        var _this = this;
 
-        if (_defaultArea)
-            options.d_area = _defaultArea;
+        $body.append(_this.$mask);
+
+        _this.$mask.on('click.ydui.cityselect.mask', function () {
+            _this.close();
+        });
+
+        var $cityElement = _this.$cityElement,
+            defaultSet = _this.defaultSet;
+
+        $cityElement.find('.cityselect-content').removeClass('cityselect-move-animate cityselect-next cityselect-prev');
 
         _this.loadProvance();
 
-        _this.bindEvent();
+        if (defaultSet.provance) {
+            _this.setNavTxt(0, defaultSet.provance);
+        } else {
+            $cityElement.find('.cityselect-nav a').eq(0).addClass('crt').html('请选择');
+        }
+
+        if (defaultSet.city) {
+            _this.loadCity();
+            _this.setNavTxt(1, defaultSet.city)
+        }
+
+        if (defaultSet.area) {
+            _this.loadArea();
+            _this.ForwardView(false);
+            _this.setNavTxt(2, defaultSet.area);
+        }
+
+        $cityElement.addClass('brouce-in');
     };
 
-    CitySelect.prototype.bindEvent = function () {
+    CitySelect.prototype.close = function () {
         var _this = this;
 
-        !!_this.$city[0] && _this.$provance.on('change.ydui.cityselect', function () {
-            _this.loadCity();
+        _this.$mask.remove();
+        _this.$cityElement.removeClass('brouce-in').find('.cityselect-nav a').removeClass('crt').html('');
+        _this.$itemBox.html('');
+    };
+
+    CitySelect.prototype.createDOM = function () {
+        var _this = this;
+
+        _this.$mask = $('<div class="mask-black"></div>');
+
+        _this.$cityElement = $('' +
+            '<div class="m-cityselect">' +
+            '    <div class="cityselect-header">' +
+            '        <p class="cityselect-title">所在地区</p>' +
+            '        <div class="cityselect-nav">' +
+            '            <a href="javascript:;" ></a>' +
+            '            <a href="javascript:;"></a>' +
+            '            <a href="javascript:;"></a>' +
+            '        </div>' +
+            '    </div>' +
+            '    <ul class="cityselect-content">' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '    </ul>' +
+            '</div>');
+
+        $body.append(_this.$cityElement);
+
+        _this.$itemBox = _this.$cityElement.find('.cityselect-item-box');
+
+        _this.$cityElement.on('click.ydui.cityselect', '.cityselect-nav a', function () {
+            var $this = $(this);
+
+            $this.addClass('crt').siblings().removeClass('crt');
+
+            $this.index() < 2 ? _this.backOffView() : _this.ForwardView(true);
         });
-        !!_this.$area[0] && _this.$city.on('change.ydui.cityselect', function () {
-            _this.loadArea();
+    };
+
+    CitySelect.prototype.setNavTxt = function (index, txt) {
+
+        var $nav = this.$cityElement.find('.cityselect-nav a');
+
+        index < 2 && $nav.removeClass('crt');
+
+        $nav.eq(index).html(txt);
+        $nav.eq(index + 1).addClass('crt').html('请选择');
+        $nav.eq(index + 2).removeClass('crt').html('');
+    };
+
+    CitySelect.prototype.backOffView = function () {
+        this.$cityElement.find('.cityselect-content').removeClass('cityselect-next')
+        .addClass('cityselect-move-animate cityselect-prev');
+    };
+
+    CitySelect.prototype.ForwardView = function (animate) {
+        this.$cityElement.find('.cityselect-content').removeClass('cityselect-move-animate cityselect-prev')
+        .addClass((animate ? 'cityselect-move-animate' : '') + ' cityselect-next');
+    };
+
+    CitySelect.prototype.bindItemEvent = function () {
+        var _this = this,
+            $cityElement = _this.$cityElement;
+
+        $cityElement.on('click.ydui.cityselect', '.cityselect-item-box a', function () {
+            var $this = $(this);
+
+            if ($this.hasClass('crt'))return;
+            $this.addClass('crt').siblings().removeClass('crt');
+
+            var tag = $this.data('tag');
+
+            _this.setNavTxt(tag, $this.text());
+
+
+            var $nav = $cityElement.find('.cityselect-nav a'),
+                defaultSet = _this.defaultSet;
+
+            if (tag == 0) {
+
+                _this.loadCity();
+                $cityElement.find('.cityselect-item-box').eq(1).find('a').removeClass('crt');
+
+            } else if (tag == 1) {
+
+                _this.loadArea();
+                _this.ForwardView(true);
+                $cityElement.find('.cityselect-item-box').eq(2).find('a').removeClass('crt');
+
+            } else {
+
+                defaultSet.provance = $nav.eq(0).html();
+                defaultSet.city = $nav.eq(1).html();
+                defaultSet.area = $nav.eq(2).html();
+
+                _this.returnValue();
+            }
         });
+    };
+
+    CitySelect.prototype.returnValue = function () {
+        var _this = this,
+            defaultSet = _this.defaultSet;
+
+        _this.$element.trigger($.Event('done.ydui.cityselect', {
+            provance: defaultSet.provance,
+            city: defaultSet.city,
+            area: defaultSet.area
+        }));
+
+        _this.close();
+    };
+
+    CitySelect.prototype.scrollPosition = function (index) {
+
+        var _this = this,
+            $itemBox = _this.$itemBox.eq(index),
+            itemHeight = $itemBox.find('a.crt').height(),
+            itemBoxHeight = $itemBox.parent().height();
+
+        $itemBox.parent().animate({
+            scrollTop: $itemBox.find('a.crt').index() * itemHeight - itemBoxHeight / 3
+        }, 0, function () {
+            _this.bindItemEvent();
+        });
+    };
+
+    CitySelect.prototype.fillItems = function (index, arr) {
+        var _this = this;
+
+        _this.$itemBox.eq(index).html(arr).parent().animate({scrollTop: 0}, 10);
+
+        _this.scrollPosition(index);
     };
 
     CitySelect.prototype.loadProvance = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
 
         var arr = [];
         $.each(_this.citys, function (k, v) {
-            arr.push($('<option value="' + v.n + '" ' + (options.d_provance && v.n.indexOf(options.d_provance) > -1 ? 'selected' : '') + '>' + v.n + '</option>').data('city', v.c));
+            arr.push($('<a class="' + (v.n == _this.defaultSet.provance ? 'crt' : '') + '" href="javascript:;"><span>' + v.n + '</span></a>').data({
+                citys: v.c,
+                tag: 0
+            }));
         });
-        _this.$provance.html(arr);
-        _this.$city.length > 0 && _this.loadCity();
+        _this.fillItems(0, arr);
     };
 
     CitySelect.prototype.loadCity = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
+
+        var cityData = _this.$itemBox.eq(0).find('a.crt').data('citys');
 
         var arr = [];
-        $.each(_this.$provance.find('option:selected').data('city'), function (k, v) {
-            arr.push($('<option value="' + v.n + '" ' + (options.d_city && v.n.indexOf(options.d_city) > -1 ? 'selected' : '') + '>' + v.n + '</option>').data('area', v.a));
+        $.each(cityData, function (k, v) {
+            arr.push($('<a class="' + (v.n == _this.defaultSet.city ? 'crt' : '') + '" href="javascript:;"><span>' + v.n + '</span></a>').data({
+                citys: v.a,
+                tag: 1
+            }));
         });
-        _this.$city.html(arr);
-        _this.$area.length > 0 && _this.loadArea();
+        _this.fillItems(1, arr);
     };
 
     CitySelect.prototype.loadArea = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
+
+        var areaData = _this.$itemBox.eq(1).find('a.crt').data('citys');
 
         var arr = [];
-        $.each(_this.$city.find('option:selected').data('area'), function (k, v) {
-            arr.push($('<option value="' + v + '" ' + (options.d_area && v.indexOf(options.d_area) > -1 ? 'selected' : '') + '>' + v + '</option>'));
+        $.each(areaData, function (k, v) {
+            arr.push($('<a class="' + (v == _this.defaultSet.area ? 'crt' : '') + '" href="javascript:;"><span>' + v + '</span></a>').data({tag: 2}));
         });
-        _this.$area.html(arr);
+
+        if (arr.length <= 0) {
+            arr.push($('<a href="javascript:;"><span>全区</span></a>').data({tag: 2}));
+        }
+        _this.fillItems(2, arr);
     };
 
     function Plugin (option) {
@@ -343,14 +514,8 @@
         });
     }
 
-    $(window).on('load.ydui.cityselect', function () {
-        $('[data-ydui-cityselect]').each(function () {
-            var $this = $(this);
-            $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));
-        });
-    });
-
     $.fn.citySelect = Plugin;
+
 }(window);
 /**
  * device
@@ -464,7 +629,7 @@
         }
 
         var $dom = $('' +
-            '<div class="mask-black" id="' + ID + '">' +
+            '<div class="mask-black-dialog" id="' + ID + '">' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
@@ -519,7 +684,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div class="mask-black">' +
+            '   <div class="mask-black-dialog">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -571,7 +736,7 @@
             }
 
             var $dom = $('' +
-                '<div class="mask-white" id="' + ID + '">' +
+                '<div class="mask-white-dialog" id="' + ID + '">' +
                 '    <div class="m-toast">' + iconHtml +
                 '        <p class="toast-content">' + (mes || '') + '</p>' +
                 '    </div>' +
@@ -655,7 +820,7 @@
                 $('#' + ID).remove();
 
                 var $dom = $('' +
-                    '<div class="mask-white" id="' + ID + '">' +
+                    '<div class="mask-white-dialog" id="' + ID + '">' +
                     '   <div class="m-loading">' +
                     '       <div class="loading-hd">' +
                     '           <div class="loading-leaf loading-leaf-0"></div>' +
@@ -1378,18 +1543,19 @@
 
         _this.bindLinkRedirect();
 
+        util.pageScroll.unlock();
+
         util.sessionStorage.remove(key);
     };
 
     InfiniteScroll.prototype.loadCacheList = function () {
         var _this = this;
 
-        util.pageScroll.lock();
-
         var storage = util.sessionStorage.get(key);
 
         if(!storage)return;
-        //
+
+        util.pageScroll.lock();
 
         //总需滚动的页码数
         var num = storage.page;
@@ -1535,8 +1701,10 @@
             '<ul class="keyboard-password J_FillPwdBox">' + getDot() + '</ul>';
 
         var ft = '' +
-            '<div class="keyboard-title">' + _this.options.title + '</div>' +
-            '<ul class="keyboard-numbers"></ul>';
+            '<div class="keyboard-content">' +
+            '   <div class="keyboard-title">' + _this.options.title + '</div>' +
+            '   <ul class="keyboard-numbers"></ul>' +
+            '</div>';
 
         _this.$element.prepend(hd).append(ft);
 
@@ -1552,6 +1720,8 @@
         var _this = this,
             $element = _this.$element,
             $numsBox = _this.$numsBox;
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
 
         $element.addClass(_this.toggleClass);
 
@@ -1569,6 +1739,8 @@
      */
     KeyBoard.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
 
         _this.$mask.remove();
         _this.$element.removeClass(_this.toggleClass);
@@ -1593,8 +1765,6 @@
         });
 
         $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
-            e.preventDefault();
-
             if (_this.inputNums.length >= 6)return;
 
             _this.inputNums = _this.inputNums + $(this).html();
@@ -1634,7 +1804,7 @@
 
         var $li = _this.$element.find('.J_FillPwdBox').find('li');
         $li.find('i').hide();
-        $li.filter(':lt(' + length + ')').find('i').show();
+        $li.filter(':lt(' + length + ')').find('i').css('display', 'block');
 
         if (length >= 6) {
             _this.$element.trigger($.Event('done.ydui.keyboard', {
@@ -2354,7 +2524,10 @@
         _this.$navItem.removeClass('crt');
         _this.$navItem.eq(index).addClass('crt');
 
-        var offset = _this.$contentItem.eq(index).offset().top;
+        var $item = _this.$contentItem.eq(index);
+        if (!$item[0])return;
+
+        var offset = $item.offset().top;
 
         var top = offset + _this.$content.scrollTop() - _this.contentOffsetTop + 1;
 
@@ -2880,6 +3053,7 @@
         minus: '.J_Del',
         unit: 1,
         max: 0,
+        longpress: true,
         callback: null
     };
 
@@ -2897,6 +3071,8 @@
 
         _this.bindEvent();
     };
+
+    Spinner.prototype.tapParams = {};
 
     Spinner.prototype.initInputVal = function () {
         var _this = this,
@@ -2957,15 +3133,27 @@
         });
     };
 
-    Spinner.prototype.setValue = function (val) {
+    Spinner.prototype.setValue = function (type) {
         var _this = this,
             options = _this.options,
             max = options.max,
-            unit = options.unit;
-
-        val = _this.FixNumber(val);
+            unit = options.unit,
+            $input = _this.$input,
+            val = _this.FixNumber($input.val());
 
         if (!_this.isNumber(val)) val = unit;
+
+        if (!!$input.attr('readonly') || !!$input.attr('disabled'))return;
+
+        var newVal;
+        if (type == 'add') {
+            newVal = val + unit;
+            if (max != 0 && newVal > max)return;
+        } else {
+            newVal = val - unit;
+            if (newVal < unit)return;
+        }
+        val = newVal;
 
         if (val > max && max != 0) val = max;
 
@@ -2979,32 +3167,69 @@
         _this.$input.val(val);
 
         typeof options.callback == 'function' && options.callback(val, _this.$input);
+
+        if (options.longpress) {
+
+            var currentDate = new Date().getTime() / 1000,
+                intervalTime = currentDate - _this.tapStartTime;
+
+            if (intervalTime < 1) intervalTime = 0.5;
+
+            var secondCount = intervalTime * 10;
+            if (intervalTime == 30) secondCount = 50;
+            if (intervalTime >= 40) secondCount = 100;
+
+            _this.tapParams.timer = setTimeout(function () {
+                _this.setValue(type);
+            }, 1000 / secondCount);
+        }
     };
 
     Spinner.prototype.bindEvent = function () {
         var _this = this,
             options = _this.options,
-            unit = options.unit,
-            max = options.max,
-            isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
-            triggerEvent = isMobile ? 'touchstart.ydui.spinner' : 'click.ydui.spinner';
+            isMobile = YDUI.device.isMobile,
+            mousedownEvent = 'mousedown.ydui.spinner',
+            mouseupEvent = 'mouseup.ydui.spinner',
+            mouseleaveEvent = 'mouseleave.ydui.spinner';
 
-        _this.$add.on(triggerEvent, function () {
-            var $input = _this.$input,
-                val = $input.val(),
-                temp = _this.FixNumber(val) + unit;
+        if (isMobile) {
+            mousedownEvent = 'touchstart.ydui.spinner';
+            mouseupEvent = 'touchend.ydui.spinner';
+            mouseleaveEvent = 'touchcencel.ydui.spinner';
+        }
 
-            if ((max != 0 && temp > max) || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
-            _this.setValue(temp);
+        _this.$add.on(mousedownEvent, function (e) {
+            if (options.longpress) {
+                e.preventDefault();
+                e.stopPropagation();
+                _this.tapStartTime = new Date().getTime() / 1000;
+
+                _this.$add.on(mouseupEvent, function () {
+                    _this.clearTapTimer();
+                }).on(mouseleaveEvent, function () {
+                    _this.clearTapHandlers();
+                });
+            }
+
+            _this.setValue('add');
         });
 
-        _this.$minus.on(triggerEvent, function () {
-            var $input = _this.$input,
-                val = $input.val(),
-                temp = val - unit;
+        _this.$minus.on(mousedownEvent, function (e) {
+            if (options.longpress) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            if (temp < unit || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
-            _this.setValue(temp);
+                _this.tapStartTime = new Date().getTime() / 1000;
+
+                _this.$minus.on(mouseupEvent, function () {
+                    _this.clearTapTimer();
+                }).on(mouseleaveEvent, function () {
+                    _this.clearTapHandlers();
+                });
+            }
+
+            _this.setValue('minus');
         });
 
         _this.$input.on('change.ydui.spinner', function () {
@@ -3014,6 +3239,21 @@
                 _this.setValue($(this).val());
                 return false;
             }
+        });
+    };
+
+    Spinner.prototype.clearTapTimer = function () {
+        var _this = this;
+        clearTimeout(_this.tapParams.timer);
+    };
+
+    Spinner.prototype.clearTapHandlers = function () {
+        var _this = this;
+
+        _this.$add.off('mouseup.ydui.spinner', function () {
+            _this.clearTapTimer();
+        }).off('mouseleave.ydui.spinner', function () {
+            _this.clearTapHandlers();
         });
     };
 

@@ -51,7 +51,7 @@
         }
 
         var $dom = $('' +
-            '<div class="mask-black" id="' + ID + '">' +
+            '<div class="mask-black-dialog" id="' + ID + '">' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
@@ -106,7 +106,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div class="mask-black">' +
+            '   <div class="mask-black-dialog">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -158,7 +158,7 @@
             }
 
             var $dom = $('' +
-                '<div class="mask-white" id="' + ID + '">' +
+                '<div class="mask-white-dialog" id="' + ID + '">' +
                 '    <div class="m-toast">' + iconHtml +
                 '        <p class="toast-content">' + (mes || '') + '</p>' +
                 '    </div>' +
@@ -242,7 +242,7 @@
                 $('#' + ID).remove();
 
                 var $dom = $('' +
-                    '<div class="mask-white" id="' + ID + '">' +
+                    '<div class="mask-white-dialog" id="' + ID + '">' +
                     '   <div class="m-loading">' +
                     '       <div class="loading-hd">' +
                     '           <div class="loading-leaf loading-leaf-0"></div>' +

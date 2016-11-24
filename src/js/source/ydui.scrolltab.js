@@ -55,7 +55,10 @@
         _this.$navItem.removeClass('crt');
         _this.$navItem.eq(index).addClass('crt');
 
-        var offset = _this.$contentItem.eq(index).offset().top;
+        var $item = _this.$contentItem.eq(index);
+        if (!$item[0])return;
+
+        var offset = $item.offset().top;
 
         var top = offset + _this.$content.scrollTop() - _this.contentOffsetTop + 1;
 

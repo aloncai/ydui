@@ -40,8 +40,10 @@
             '<ul class="keyboard-password J_FillPwdBox">' + getDot() + '</ul>';
 
         var ft = '' +
-            '<div class="keyboard-title">' + _this.options.title + '</div>' +
-            '<ul class="keyboard-numbers"></ul>';
+            '<div class="keyboard-content">' +
+            '   <div class="keyboard-title">' + _this.options.title + '</div>' +
+            '   <ul class="keyboard-numbers"></ul>' +
+            '</div>';
 
         _this.$element.prepend(hd).append(ft);
 
@@ -57,6 +59,8 @@
         var _this = this,
             $element = _this.$element,
             $numsBox = _this.$numsBox;
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
 
         $element.addClass(_this.toggleClass);
 
@@ -74,6 +78,8 @@
      */
     KeyBoard.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
 
         _this.$mask.remove();
         _this.$element.removeClass(_this.toggleClass);
@@ -98,8 +104,6 @@
         });
 
         $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
-            e.preventDefault();
-
             if (_this.inputNums.length >= 6)return;
 
             _this.inputNums = _this.inputNums + $(this).html();
@@ -139,7 +143,7 @@
 
         var $li = _this.$element.find('.J_FillPwdBox').find('li');
         $li.find('i').hide();
-        $li.filter(':lt(' + length + ')').find('i').show();
+        $li.filter(':lt(' + length + ')').find('i').css('display', 'block');
 
         if (length >= 6) {
             _this.$element.trigger($.Event('done.ydui.keyboard', {
