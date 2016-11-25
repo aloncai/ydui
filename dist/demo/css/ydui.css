@@ -471,7 +471,6 @@ input[type="submit"].btn-hollow {
 @media screen and (min-width: 768px) {
   .m-confirm {
     width: 40%;
-    margin-left: -20%;
   }
 }
 .m-toast {

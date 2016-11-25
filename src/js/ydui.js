@@ -1531,7 +1531,7 @@
         // 在列表底部添加一个标记，用其判断是否滚动至底部
         _this.$element.append(_this.$tag = $('<div class="J_InfiniteScrollTag"></div>'));
 
-        // 初始化赋值列表距离顶部的距离，用以返回列表定位准确位置
+        // 初始化赋值列表距离顶部的距离(比如去除导航的高度距离)，用以返回列表定位准确位置
         _this.listOffsetTop = _this.$element.offset().top;
 
         _this.initLoadingTip();
@@ -1621,7 +1621,6 @@
             console.error('[YDUI warn]: 需指定跳转详情页链接元素');
             return;
         }
-
 
         $(_this.options.binder).on('click.ydui.infinitescroll', _this.options.jumpLink, function (e) {
             e.preventDefault();
