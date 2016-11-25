@@ -1553,7 +1553,7 @@
 
         var storage = util.sessionStorage.get(key);
 
-        if(!storage)return;
+        if (!storage)return;
 
         util.pageScroll.lock();
 
@@ -1605,7 +1605,6 @@
     };
 
     InfiniteScroll.prototype.bindLinkRedirect = function () {
-
         var _this = this;
 
         $(_this.options.binder).on('click.ydui.infinitescroll', '.J_Link', function (e) {
@@ -1659,6 +1658,7 @@
     $.fn.infiniteScroll = Plugin;
 
 }(window);
+
 /**
  * KeyBoard
  */

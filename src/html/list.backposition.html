@@ -95,11 +95,11 @@
                 page = retPage + 1;
 
                 var html = '';
-                for (var i = 0; i < ret.length; i++) {
-                    var t = ret[i].data;
-                    t.page = ret[i].page;
-                    html += template('J_ListHtml', {list: t});
-                }
+                ret.forEach(function (val) {
+                    var list = val.data;
+                    list.page = val.page;
+                    html += template('J_ListHtml', {list: list});
+                });
                 $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
 
                 def.resolve();
