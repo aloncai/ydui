@@ -8,63 +8,114 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=72f88ab314addd34015e098453e7de49"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=5aec48b3e49aa70f795f2f4eff261880"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
+    <style>
+        .section {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -webkit-align-items: center;
+            align-items: center;
+            height: 30px;
+            width: 130px;
+            font-size: 16px;
+        }
+        .number {
+            -webkit-flex: 1;
+            flex: 1;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            display: inline-block;
+            border-radius: 5px;
+            margin: 0 10px;
+            text-align: center;
+        }
+        .decrement, .increment {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            display: inline-block;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 28px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Spinner</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>Spinner 支持 Data API 和 Javascript API方式调用；</p>
-        <p>1. 目前暂不支持小数加减；</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">Javascript API调用（设置最大值为15，累计值为3）</span>
-        <span class="m-spinner" id="J_Quantity">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" value="1" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <aside class="demo-tip">
+            <p>Spinner 支持 Data API 和 Javascript API方式调用；</p>
+            <p>1. 支持长按快速加减；</p>
+            <p>2. 目前暂不支持小数加减；</p>
+        </aside>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">Data API调用（不设置最大值和累计值，默认累计值为1）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">Javascript API调用（设置最大值为75，累计值为3）</span>
+            <span class="m-spinner" id="J_Quantity">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" value="1" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">设置默认值为15（累计值为5，默认值与累计值成倍数关系）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', unit: 5}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" value="15" placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">Data API调用（不设置最大值和累计值，默认累计值为1）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
 
-    <div class="demo-spinner demo-small-pitch">
-        <span class="demo-spinner-title">禁止修改（设置文本框readonly或者disabled即可）</span>
-        <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
-            <a href="javascript:;" class="J_Del"></a>
-            <input type="text" class="J_Input" readonly placeholder=""/>
-            <a href="javascript:;" class="J_Add"></a>
-        </span>
-    </div>
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">设置默认值为15（累计值为5，默认值与累计值成倍数关系）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', unit: 5}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" value="15" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">禁止修改（设置文本框readonly或者disabled即可）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" readonly placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">禁用长按快速加减（设置参数longpress为false即可）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', longpress: false}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" value="1" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+    </section>
 
 </section>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://static.ydcss.com/libs/jquery/2.1.3/jquery.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
     !function () {
@@ -76,11 +127,12 @@
                 return 1 + 2;
             },
             max: function () {
-                return 1 + 2 + 3 + 4 + 5;
+                return (1 + 2 + 3 + 4 + 5) * 5;
             },
-            callback: function (value, ele) {
-                ele.css('background', '#FF5E53');
-                console.log(value, ele);
+            callback: function (value, $ele) {
+                // $ele 当前文本框[jQuery对象]
+                // $ele.css('background', '#FF5E53');
+                console.log('值：' + value);
             }
         });
     }();

@@ -70,17 +70,18 @@
             binder: '#J_List',
             pageSize: pageSize,
             initLoad: true,
-            lazyLoad: true,
+            backposition: true,
+            jumpLink: '.J_Link',
             contentBox: '#J_ListContent',
             loadingHtml: '<img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>',
-            loadFunction: function () {
+            loadListFn: function () {
                 var def = $.Deferred();
 
                 loadMore(function (listArr) {
                     listArr.page = page;
 
                     var html = template('J_ListHtml', {list: listArr});
-                    $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
+                    $('#J_ListContent').append(html);
 
                     def.resolve(listArr, page);
 
@@ -89,18 +90,18 @@
 
                 return def.promise();
             },
-            loadFormCache: function (ret, retPage) {
+            loadStorageListFn: function (ret, retPage) {
                 var def = $.Deferred();
 
                 page = retPage + 1;
 
                 var html = '';
                 ret.forEach(function (val) {
-                    var list = val.data;
+                    var list = val.list;
                     list.page = val.page;
                     html += template('J_ListHtml', {list: list});
                 });
-                $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
+                $('#J_ListContent').append(html);
 
                 def.resolve();
                 return def.promise();

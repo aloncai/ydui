@@ -149,7 +149,33 @@
   margin-bottom: .1rem;
 }
 .demo-badege {
-  padding: 0 .24rem;
+  padding: 0 .24rem .5rem .24rem;
+  background-color: #FFF;
+}
+.demo-badege .demo-badege-title {
+  font-size: .26rem;
+  padding-top: .5rem;
+  padding-bottom: .15rem;
+  color: #777;
+  position: relative;
+}
+.demo-badege .demo-badege-title:after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #D9D9D9;
+  border-bottom: 1px solid #D9D9D9;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+.demo-badege .badge {
+  margin-right: .1rem;
 }
 .demo-icons [class^="icon-"]:before,
 .demo-icons [class*=" icon-"]:before {

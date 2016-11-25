@@ -29,7 +29,7 @@
 </section>
 <script id="J_ListHtml" type="text/html">
     {{each list as data}}
-    <a href="#" class="list-item">
+    <a href="{{data.url}}" class="list-item">
         <div class="list-img">
             <img src="http://static.ydcss.com/uploads/ydui/goods_default.jpg" data-url="{{data.img}}">
         </div>
@@ -71,6 +71,7 @@
             binder: '#J_List',
             pageSize: pageSize,
             initLoad: true,
+            lazyLoad: true,
             loadingHtml: '<img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>',
             loadFunction: function () {
                 var def = $.Deferred();

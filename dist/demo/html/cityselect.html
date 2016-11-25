@@ -8,105 +8,89 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=72f88ab314addd34015e098453e7de49"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=5aec48b3e49aa70f795f2f4eff261880"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">CitySelect</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>CitySelect 支持 Data API 和 Javascript API方式调用；</p>
-        <p>1. 需另引入数据文件：ydui.citys.js；</p>
-        <p>2. ydui.citys.js是从京东偷取的数据，点击<a href="http://cityselect.ydui.org" target="_blank">这里</a>可获取最新数据；</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="m-celltitle">Javascript API调用：</div>
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left">地址：</div>
-            <div class="cell-right" id="J_Address">
-                <label class="cell-multiple-selecet">
-                    <select class="J_Provance"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_City"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_Area"></select>
-                </label>
+        <aside class="demo-tip">
+            <p>CitySelect 仅支持Javascript API方式调用；</p>
+            <p>1. 需另引入数据文件：ydui.citys.js；</p>
+            <p>2. ydui.citys.js是从京东偷取的数据，点击<a href="http://cityselect.ydui.org" target="_blank">这里</a>可获取最新数据；</p>
+        </aside>
+
+        <div class="m-celltitle">默认调用</div>
+        <div class="m-cell">
+            <div class="cell-item">
+                <div class="cell-left">所在地区：</div>
+                <div class="cell-right cell-arrow">
+                    <input type="text" class="cell-input" readonly id="J_Address" placeholder="请选择收货地址">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="m-celltitle">Data API调用：</div>
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left">地址：</div>
-            <div class="cell-right" data-ydui-cityselect="{provance: '.J_Provance', city: '.J_City', area: '.J_Area'}">
-                <label class="cell-multiple-selecet">
-                    <select class="J_Provance"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_City"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_Area"></select>
-                </label>
+        <div class="m-celltitle">设置默认值</div>
+        <div class="m-cell">
+            <div class="cell-item">
+                <div class="cell-left">所在地区：</div>
+                <div class="cell-right cell-arrow">
+                    <input type="text" class="cell-input" readonly id="J_Address2" value="新疆 乌鲁木齐市 天山区" placeholder="请选择收货地址">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="m-celltitle">设置默认值：</div>
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left">地址：</div>
-            <div class="cell-right" data-ydui-cityselect="{provance: '.J_Provance', city: '.J_City', area: '.J_Area'}">
-                <label class="cell-multiple-selecet">
-                    <select class="J_Provance" data-default="新疆"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_City" data-default="乌鲁木齐"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_Area" data-default="天山区"></select>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div class="m-celltitle">只要省市：</div>
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left">地址：</div>
-            <div class="cell-right" data-ydui-cityselect="{provance: '.J_Provance', city: '.J_City'}">
-                <label class="cell-multiple-selecet">
-                    <select class="J_Provance"></select>
-                </label>
-                <label class="cell-multiple-selecet">
-                    <select class="J_City"></select>
-                </label>
-            </div>
-        </div>
-    </div>
+    </section>
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js"></script>
+<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js?t=3.1415926"></script>
 <script src="../js/ydui.js"></script>
 <script>
+    /**
+     * 默认调用
+     */
     !function () {
-        $('#J_Address').citySelect({
-            provance: '.J_Provance',
-            city: '.J_City',
-            area: '.J_Area'
+        var $target = $('#J_Address');
+
+        $target.citySelect();
+
+        $target.on('click', function () {
+            $target.citySelect('open');
+        });
+
+        $target.on('done.ydui.cityselect', function (ret) {
+            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+        });
+    }();
+    /**
+     * 设置默认值
+     */
+    !function () {
+        var $target = $('#J_Address2');
+
+        $target.citySelect({
+            provance: '新疆',
+            city: '乌鲁木齐市',
+            area: '天山区'
+        });
+
+        $target.on('click', function () {
+            $target.citySelect('open');
+        });
+
+        $target.on('done.ydui.cityselect', function (ret) {
+            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
         });
     }();
 </script>

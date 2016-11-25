@@ -8,42 +8,65 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=72f88ab314addd34015e098453e7de49"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=5aec48b3e49aa70f795f2f4eff261880"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Badge</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>badge包含默认圆形样式和.badge-radius小圆角样式</p>
-        <p>五中颜色样式：default、primary、danger、warning、hollow</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="demo-badege">
-        <div class="demo-small-pitch">
-            <span class="badge">1</span>
-            <span class="badge badge-primary">2</span>
-            <span class="badge badge-danger">3</span>
-            <span class="badge badge-warning">4</span>
-            <span class="badge badge-hollow">5</span>
+        <aside class="demo-tip">
+            <p>badge包含默认圆形样式和.badge-radius方形样式</p>
+            <p>五中颜色样式：default、primary、danger、warning、hollow</p>
+        </aside>
+
+        <div class="demo-badege">
+            <div class="demo-badege-title">圆形角标：</div>
+            <div class="demo-small-pitch">
+                <span class="badge">1</span>
+                <span class="badge badge-primary">2</span>
+                <span class="badge badge-danger">3</span>
+                <span class="badge badge-warning">4</span>
+                <span class="badge badge-hollow">5</span>
+            </div>
+
+            <div class="demo-small-pitch">
+                <span class="badge">123</span>
+                <span class="badge badge-primary">321</span>
+                <span class="badge badge-danger">333</span>
+                <span class="badge badge-warning">4444</span>
+                <span class="badge badge-hollow">55555</span>
+            </div>
+
+            <div class="demo-badege-title">方形角标：</div>
+            <div class="demo-small-pitch">
+                <span class="badge badge-radius">1</span>
+                <span class="badge badge-radius badge-primary">2</span>
+                <span class="badge badge-radius badge-danger">3</span>
+                <span class="badge badge-radius badge-warning">4</span>
+                <span class="badge badge-radius badge-hollow">5</span>
+            </div>
+
+            <div class="demo-small-pitch">
+                <span class="badge badge-radius">123</span>
+                <span class="badge badge-radius badge-primary">321</span>
+                <span class="badge badge-radius badge-danger">333</span>
+                <span class="badge badge-radius badge-warning">4444</span>
+                <span class="badge badge-radius badge-hollow">55555</span>
+            </div>
+
         </div>
 
-        <div class="demo-small-pitch">
-            <span class="badge badge-radius">1</span>
-            <span class="badge badge-radius badge-primary">2</span>
-            <span class="badge badge-radius badge-danger">3</span>
-            <span class="badge badge-radius badge-warning">4</span>
-            <span class="badge badge-radius badge-hollow">5</span>
-        </div>
-    </div>
+    </section>
 
 </section>
 </body>

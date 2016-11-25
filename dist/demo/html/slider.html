@@ -8,44 +8,48 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=72f88ab314addd34015e098453e7de49"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=5aec48b3e49aa70f795f2f4eff261880"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">Slider</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        <p>Slider 支持 Data API 和 Javascript API方式调用；</p>
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="m-slider" data-ydui-slider>
-        <div class="slider-wrapper">
-            <div class="slider-item">
-                <a href="http://www.ydcss.com">
-                    <img src="http://static.ydcss.com/uploads/ydui/1.jpg">
-                </a>
+        <aside class="demo-tip">
+            <p>Slider 支持 Data API 和 Javascript API方式调用；</p>
+        </aside>
+
+        <div class="m-slider" data-ydui-slider>
+            <div class="slider-wrapper">
+                <div class="slider-item">
+                    <a href="http://www.ydcss.com">
+                        <img src="http://static.ydcss.com/uploads/ydui/1.jpg">
+                    </a>
+                </div>
+                <div class="slider-item">
+                    <a href="http://www.ydcss.com">
+                        <img src="http://static.ydcss.com/uploads/ydui/2.jpg">
+                    </a>
+                </div>
+                <div class="slider-item">
+                    <a href="http://www.ydcss.com">
+                        <img src="http://static.ydcss.com/uploads/ydui/3.jpg">
+                    </a>
+                </div>
             </div>
-            <div class="slider-item">
-                <a href="http://www.ydcss.com">
-                    <img src="http://static.ydcss.com/uploads/ydui/2.jpg">
-                </a>
-            </div>
-            <div class="slider-item">
-                <a href="http://www.ydcss.com">
-                    <img src="http://static.ydcss.com/uploads/ydui/3.jpg">
-                </a>
-            </div>
+            <div class="slider-pagination"></div>
         </div>
-        <div class="slider-pagination"></div>
-    </div>
+
+    </section>
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>

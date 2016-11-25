@@ -8,33 +8,37 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=72f88ab314addd34015e098453e7de49"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=5aec48b3e49aa70f795f2f4eff261880"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
 <body>
-<section class="g-doc">
+<section class="g-flexview">
 
     <header class="m-nav">
-        <nav class="nav-box nav-fixed">
+        <nav class="nav-box">
             <a href="../index.html" class="nav-item"><i class="back-ico"></i></a>
             <div class="nav-center"><span class="nav-title">SendCode</span></div>
         </nav>
     </header>
 
-    <aside class="demo-tip">
-        SendCode 仅支持Javascript API方式调用，需手动触发【发送事件】。
-    </aside>
+    <section class="g-scrollview">
 
-    <div class="m-cell">
-        <div class="cell-item">
-            <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
-            <div class="cell-right">
-                <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
-                <a href="javascript:;" class="btn btn-warning" id="J_GetCode">获取短信验证码</a>
+        <aside class="demo-tip">
+            SendCode 仅支持Javascript API方式调用，需手动触发【发送事件】。
+        </aside>
+
+        <div class="m-cell">
+            <div class="cell-item">
+                <div class="cell-left"><i class="cell-icon demo-icons-phone"></i></div>
+                <div class="cell-right">
+                    <input type="number" pattern="[0-9]*" class="cell-input" placeholder="请输入手机号码" autocomplete="off" />
+                    <a href="javascript:;" class="btn btn-warning" id="J_GetCode">获取短信验证码</a>
+                </div>
             </div>
         </div>
-    </div>
+
+    </section>
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -57,7 +61,7 @@
 
         $getCode.on('click', function () {
             var $this = $(this);
-            dialog.loading.open('发送中');
+            dialog.loading.open('发送中...');
             // ajax 成功发送验证码后调用【start】
             setTimeout(function () { //模拟ajax发送
                 dialog.loading.close();

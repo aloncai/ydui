@@ -14,7 +14,7 @@
         typeof FastClick == 'function' && FastClick.attach(doc.body);
     });
 
-    ydui.util = {
+    var util = ydui.util = {
         /**
          * 格式化参数
          * @param string
@@ -58,8 +58,62 @@
                     doc.removeEventListener('touchmove', fn);
                 }
             };
-        }()
+        }(),
+        /**
+         * 本地存储
+         */
+        localStorage: function () {
+            return storage(window.localStorage);
+        }(),
+        /**
+         * Session存储
+         */
+        sessionStorage: function () {
+            return storage(window.sessionStorage);
+        }(),
+        /**
+         * 序列化
+         * @param value
+         * @returns {string}
+         */
+        serialize: function (value) {
+            if (typeof value === 'string') return value;
+            return JSON.stringify(value);
+        },
+        /**
+         * 反序列化
+         * @param value
+         * @returns {*}
+         */
+        deserialize: function (value) {
+            if (typeof value !== 'string') return undefined;
+            try {
+                return JSON.parse(value);
+            } catch (e) {
+                return value || undefined;
+            }
+        }
     };
+
+    /**
+     * HTML5存储
+     */
+    function storage (ls) {
+        return {
+            set: function (key, value) {
+                ls.setItem(key, util.serialize(value));
+            },
+            get: function (key) {
+                return util.deserialize(ls.getItem(key));
+            },
+            remove: function (key) {
+                ls.removeItem(key);
+            },
+            clear: function () {
+                ls.clear();
+            }
+        };
+    }
 
     /**
      * 判断css3动画是否执行完毕
@@ -106,6 +160,9 @@
     }
 
     ActionSheet.prototype.open = function () {
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
+
         var _this = this;
         $body.append($mask);
 
@@ -126,6 +183,9 @@
 
     ActionSheet.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
+
         $mask.off('click.ydui.actionsheet.mask').remove();
         _this.$element.removeClass(_this.toggleClass).trigger('close.ydui.actionsheet');
         //$doc.off('click.ydui.actionsheet', _this.closeElement);
@@ -178,6 +238,8 @@
 !function (window) {
     "use strict";
 
+    var $body = $(window.document.body);
+
     function CitySelect (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, CitySelect.DEFAULTS, options || {});
@@ -185,91 +247,254 @@
     }
 
     CitySelect.DEFAULTS = {
-        provance: '.provance',
-        city: '.city',
-        area: '.area',
-        d_provance: '',
-        d_city: '',
-        d_area: ''
+        provance: '',
+        city: '',
+        area: ''
     };
 
     CitySelect.prototype.init = function () {
         var _this = this,
             options = _this.options;
 
-        _this.$provance = $(options.provance, _this.$element);
-        _this.$city = $(options.city, _this.$element);
-        _this.$area = $(options.area, _this.$element);
-
-        if (typeof yduiCitys == 'undefined') {
-            console.error('请在ydui.js前引入ydui.citys.js。下载地址：http://static.ydcss.com/uploads/ydui/ydui.citys.js');
+        if (typeof YDUI_CITYS == 'undefined') {
+            console.error('请在ydui.js前引入ydui.citys.js。下载地址：http://cityselect.ydui.org');
             return;
         }
 
-        _this.citys = yduiCitys;
+        _this.citys = YDUI_CITYS;
 
-        var _defaultProvance = _this.$provance.data('default');
-        var _defaultCity = _this.$city.data('default');
-        var _defaultArea = _this.$area.data('default');
+        _this.createDOM();
 
-        if (_defaultProvance)
-            options.d_provance = _defaultProvance;
+        _this.defaultSet = {
+            provance: options.provance,
+            city: options.city,
+            area: options.area
+        };
+    };
 
-        if (_defaultCity)
-            options.d_city = _defaultCity;
+    CitySelect.prototype.open = function () {
+        var _this = this;
 
-        if (_defaultArea)
-            options.d_area = _defaultArea;
+        $body.append(_this.$mask);
+
+        _this.$mask.on('click.ydui.cityselect.mask', function () {
+            _this.close();
+        });
+
+        var $cityElement = _this.$cityElement,
+            defaultSet = _this.defaultSet;
+
+        $cityElement.find('.cityselect-content').removeClass('cityselect-move-animate cityselect-next cityselect-prev');
 
         _this.loadProvance();
 
-        _this.bindEvent();
+        if (defaultSet.provance) {
+            _this.setNavTxt(0, defaultSet.provance);
+        } else {
+            $cityElement.find('.cityselect-nav a').eq(0).addClass('crt').html('请选择');
+        }
+
+        if (defaultSet.city) {
+            _this.loadCity();
+            _this.setNavTxt(1, defaultSet.city)
+        }
+
+        if (defaultSet.area) {
+            _this.loadArea();
+            _this.ForwardView(false);
+            _this.setNavTxt(2, defaultSet.area);
+        }
+
+        $cityElement.addClass('brouce-in');
     };
 
-    CitySelect.prototype.bindEvent = function () {
+    CitySelect.prototype.close = function () {
         var _this = this;
 
-        !!_this.$city[0] && _this.$provance.on('change.ydui.cityselect', function () {
-            _this.loadCity();
+        _this.$mask.remove();
+        _this.$cityElement.removeClass('brouce-in').find('.cityselect-nav a').removeClass('crt').html('');
+        _this.$itemBox.html('');
+    };
+
+    CitySelect.prototype.createDOM = function () {
+        var _this = this;
+
+        _this.$mask = $('<div class="mask-black"></div>');
+
+        _this.$cityElement = $('' +
+            '<div class="m-cityselect">' +
+            '    <div class="cityselect-header">' +
+            '        <p class="cityselect-title">所在地区</p>' +
+            '        <div class="cityselect-nav">' +
+            '            <a href="javascript:;" ></a>' +
+            '            <a href="javascript:;"></a>' +
+            '            <a href="javascript:;"></a>' +
+            '        </div>' +
+            '    </div>' +
+            '    <ul class="cityselect-content">' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '        <li class="cityselect-item">' +
+            '            <div class="cityselect-item-box"></div>' +
+            '        </li>' +
+            '    </ul>' +
+            '</div>');
+
+        $body.append(_this.$cityElement);
+
+        _this.$itemBox = _this.$cityElement.find('.cityselect-item-box');
+
+        _this.$cityElement.on('click.ydui.cityselect', '.cityselect-nav a', function () {
+            var $this = $(this);
+
+            $this.addClass('crt').siblings().removeClass('crt');
+
+            $this.index() < 2 ? _this.backOffView() : _this.ForwardView(true);
         });
-        !!_this.$area[0] && _this.$city.on('change.ydui.cityselect', function () {
-            _this.loadArea();
+    };
+
+    CitySelect.prototype.setNavTxt = function (index, txt) {
+
+        var $nav = this.$cityElement.find('.cityselect-nav a');
+
+        index < 2 && $nav.removeClass('crt');
+
+        $nav.eq(index).html(txt);
+        $nav.eq(index + 1).addClass('crt').html('请选择');
+        $nav.eq(index + 2).removeClass('crt').html('');
+    };
+
+    CitySelect.prototype.backOffView = function () {
+        this.$cityElement.find('.cityselect-content').removeClass('cityselect-next')
+        .addClass('cityselect-move-animate cityselect-prev');
+    };
+
+    CitySelect.prototype.ForwardView = function (animate) {
+        this.$cityElement.find('.cityselect-content').removeClass('cityselect-move-animate cityselect-prev')
+        .addClass((animate ? 'cityselect-move-animate' : '') + ' cityselect-next');
+    };
+
+    CitySelect.prototype.bindItemEvent = function () {
+        var _this = this,
+            $cityElement = _this.$cityElement;
+
+        $cityElement.on('click.ydui.cityselect', '.cityselect-item-box a', function () {
+            var $this = $(this);
+
+            if ($this.hasClass('crt'))return;
+            $this.addClass('crt').siblings().removeClass('crt');
+
+            var tag = $this.data('tag');
+
+            _this.setNavTxt(tag, $this.text());
+
+
+            var $nav = $cityElement.find('.cityselect-nav a'),
+                defaultSet = _this.defaultSet;
+
+            if (tag == 0) {
+
+                _this.loadCity();
+                $cityElement.find('.cityselect-item-box').eq(1).find('a').removeClass('crt');
+
+            } else if (tag == 1) {
+
+                _this.loadArea();
+                _this.ForwardView(true);
+                $cityElement.find('.cityselect-item-box').eq(2).find('a').removeClass('crt');
+
+            } else {
+
+                defaultSet.provance = $nav.eq(0).html();
+                defaultSet.city = $nav.eq(1).html();
+                defaultSet.area = $nav.eq(2).html();
+
+                _this.returnValue();
+            }
         });
+    };
+
+    CitySelect.prototype.returnValue = function () {
+        var _this = this,
+            defaultSet = _this.defaultSet;
+
+        _this.$element.trigger($.Event('done.ydui.cityselect', {
+            provance: defaultSet.provance,
+            city: defaultSet.city,
+            area: defaultSet.area
+        }));
+
+        _this.close();
+    };
+
+    CitySelect.prototype.scrollPosition = function (index) {
+
+        var _this = this,
+            $itemBox = _this.$itemBox.eq(index),
+            itemHeight = $itemBox.find('a.crt').height(),
+            itemBoxHeight = $itemBox.parent().height();
+
+        $itemBox.parent().animate({
+            scrollTop: $itemBox.find('a.crt').index() * itemHeight - itemBoxHeight / 3
+        }, 0, function () {
+            _this.bindItemEvent();
+        });
+    };
+
+    CitySelect.prototype.fillItems = function (index, arr) {
+        var _this = this;
+
+        _this.$itemBox.eq(index).html(arr).parent().animate({scrollTop: 0}, 10);
+
+        _this.scrollPosition(index);
     };
 
     CitySelect.prototype.loadProvance = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
 
         var arr = [];
         $.each(_this.citys, function (k, v) {
-            arr.push($('<option value="' + v.n + '" ' + (options.d_provance && v.n.indexOf(options.d_provance) > -1 ? 'selected' : '') + '>' + v.n + '</option>').data('city', v.c));
+            arr.push($('<a class="' + (v.n == _this.defaultSet.provance ? 'crt' : '') + '" href="javascript:;"><span>' + v.n + '</span></a>').data({
+                citys: v.c,
+                tag: 0
+            }));
         });
-        _this.$provance.html(arr);
-        _this.$city.length > 0 && _this.loadCity();
+        _this.fillItems(0, arr);
     };
 
     CitySelect.prototype.loadCity = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
+
+        var cityData = _this.$itemBox.eq(0).find('a.crt').data('citys');
 
         var arr = [];
-        $.each(_this.$provance.find('option:selected').data('city'), function (k, v) {
-            arr.push($('<option value="' + v.n + '" ' + (options.d_city && v.n.indexOf(options.d_city) > -1 ? 'selected' : '') + '>' + v.n + '</option>').data('area', v.a));
+        $.each(cityData, function (k, v) {
+            arr.push($('<a class="' + (v.n == _this.defaultSet.city ? 'crt' : '') + '" href="javascript:;"><span>' + v.n + '</span></a>').data({
+                citys: v.a,
+                tag: 1
+            }));
         });
-        _this.$city.html(arr);
-        _this.$area.length > 0 && _this.loadArea();
+        _this.fillItems(1, arr);
     };
 
     CitySelect.prototype.loadArea = function () {
-        var _this = this,
-            options = _this.options;
+        var _this = this;
+
+        var areaData = _this.$itemBox.eq(1).find('a.crt').data('citys');
 
         var arr = [];
-        $.each(_this.$city.find('option:selected').data('area'), function (k, v) {
-            arr.push($('<option value="' + v + '" ' + (options.d_area && v.indexOf(options.d_area) > -1 ? 'selected' : '') + '>' + v + '</option>'));
+        $.each(areaData, function (k, v) {
+            arr.push($('<a class="' + (v == _this.defaultSet.area ? 'crt' : '') + '" href="javascript:;"><span>' + v + '</span></a>').data({tag: 2}));
         });
-        _this.$area.html(arr);
+
+        if (arr.length <= 0) {
+            arr.push($('<a href="javascript:;"><span>全区</span></a>').data({tag: 2}));
+        }
+        _this.fillItems(2, arr);
     };
 
     function Plugin (option) {
@@ -289,14 +514,8 @@
         });
     }
 
-    $(window).on('load.ydui.cityselect', function () {
-        $('[data-ydui-cityselect]').each(function () {
-            var $this = $(this);
-            $this.citySelect(window.YDUI.util.parseOptions($this.data('ydui-cityselect')));
-        });
-    });
-
     $.fn.citySelect = Plugin;
+
 }(window);
 /**
  * device
@@ -410,8 +629,7 @@
         }
 
         var $dom = $('' +
-            '<div id="' + ID + '">' +
-            '   <div class="mask-black"></div>' +
+            '<div class="mask-black-dialog" id="' + ID + '">' +
             '   <div class="m-confirm">' +
             '       <div class="confirm-hd"><strong class="confirm-title">' + title + '</strong></div>' +
             '       <div class="confirm-bd">' + mes + '</div>' +
@@ -466,8 +684,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div>' +
-            '       <div class="mask-black"></div>' +
+            '   <div class="mask-black-dialog">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -513,13 +730,16 @@
                 return;
             }
 
+            var iconHtml = '';
+            if (type == 'success' || type == 'error') {
+                iconHtml = '<div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>';
+            }
+
             var $dom = $('' +
-                '<div id="' + ID + '">' +
-                '   <div class="mask-white"></div>' +
-                '   <div class="m-toast">' +
-                '       <div class="' + (type == 'error' ? 'toast-error-ico' : 'toast-success-ico') + '"></div>' +
-                '       <p class="toast-content">' + (mes || '') + '</p>' +
-                '   </div>' +
+                '<div class="mask-white-dialog" id="' + ID + '">' +
+                '    <div class="m-toast">' + iconHtml +
+                '        <p class="toast-content">' + (mes || '') + '</p>' +
+                '    </div>' +
                 '</div>');
 
             ydui.util.pageScroll.lock();
@@ -600,25 +820,24 @@
                 $('#' + ID).remove();
 
                 var $dom = $('' +
-                    '<div id="' + ID + '">' +
-                    '    <div class="mask-white"></div>' +
-                    '    <div class="m-loading">' +
-                    '        <div class="loading-hd">' +
-                    '            <div class="loading-leaf loading-leaf-0"></div>' +
-                    '            <div class="loading-leaf loading-leaf-1"></div>' +
-                    '            <div class="loading-leaf loading-leaf-2"></div>' +
-                    '            <div class="loading-leaf loading-leaf-3"></div>' +
-                    '            <div class="loading-leaf loading-leaf-4"></div>' +
-                    '            <div class="loading-leaf loading-leaf-5"></div>' +
-                    '            <div class="loading-leaf loading-leaf-6"></div>' +
-                    '            <div class="loading-leaf loading-leaf-7"></div>' +
-                    '            <div class="loading-leaf loading-leaf-8"></div>' +
-                    '            <div class="loading-leaf loading-leaf-9"></div>' +
-                    '            <div class="loading-leaf loading-leaf-10"></div>' +
-                    '            <div class="loading-leaf loading-leaf-11"></div>' +
-                    '        </div>' +
-                    '        <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
-                    '    </div>' +
+                    '<div class="mask-white-dialog" id="' + ID + '">' +
+                    '   <div class="m-loading">' +
+                    '       <div class="loading-hd">' +
+                    '           <div class="loading-leaf loading-leaf-0"></div>' +
+                    '           <div class="loading-leaf loading-leaf-1"></div>' +
+                    '           <div class="loading-leaf loading-leaf-2"></div>' +
+                    '           <div class="loading-leaf loading-leaf-3"></div>' +
+                    '           <div class="loading-leaf loading-leaf-4"></div>' +
+                    '           <div class="loading-leaf loading-leaf-5"></div>' +
+                    '           <div class="loading-leaf loading-leaf-6"></div>' +
+                    '           <div class="loading-leaf loading-leaf-7"></div>' +
+                    '           <div class="loading-leaf loading-leaf-8"></div>' +
+                    '           <div class="loading-leaf loading-leaf-9"></div>' +
+                    '           <div class="loading-leaf loading-leaf-10"></div>' +
+                    '           <div class="loading-leaf loading-leaf-11"></div>' +
+                    '       </div>' +
+                    '       <p class="loading-txt">' + (text || '数据加载中') + '</p>' +
+                    '   </div>' +
                     '</div>').remove();
 
                 ydui.util.pageScroll.lock();
@@ -1261,51 +1480,121 @@
 !function (window) {
     "use strict";
 
+    var util = window.YDUI.util;
+
     function InfiniteScroll (element, options) {
         this.$element = $(element);
         this.options = $.extend({}, InfiniteScroll.DEFAULTS, options || {});
         this.init();
     }
 
+    /**
+     * 默认参数
+     */
     InfiniteScroll.DEFAULTS = {
-        binder: window,
-        initLoad: true,
-        pageSize: 0,
-        loadFunction: null,
-        loadingHtml: '加载中...',
-        doneTxt: '没有更多数据了'
+        binder: window, // 绑定浏览器滚动事件DOM
+        initLoad: true, // 是否初始化加载第一屏数据
+        pageSize: 0, // 每页请求的数据量
+        lazyLoad: false, // 是否延迟加载图片
+        loadingHtml: '加载中...', // 加载中提示，支持HTML
+        doneTxt: '没有更多数据了', // 加载完毕提示
+        backposition: false, // 是否从详情页返回列表页重新定位之前位置
+        jumpLink: '', // 跳转详情页链接元素
+        loadListFn: null, // 加载数据方法
+        loadStorageListFn: null // 加载SesstionStorage数据方法
     };
 
+    /**
+     * 初始化
+     */
     InfiniteScroll.prototype.init = function () {
-        var _this = this;
+        var _this = this,
+            options = _this.options,
+            _location = window.location;
 
-        if (~~_this.options.pageSize <= 0) {
+        if (~~options.pageSize <= 0) {
             console.error('[YDUI warn]: 需指定pageSize参数【即每页请求数据的长度】');
             return;
         }
 
+        // 获取页面唯一键，防止多个页面调用数据错乱
+        var primaryKey = _location.pathname.toUpperCase().replace(/\/?\.?/g, '');
+        if (!primaryKey) {
+            primaryKey = 'YDUI_' + _location.host.toUpperCase().replace(/\/?\.?:?/g, '');
+        }
+
+        // 保存返回页面定位所需参数的键名
+        _this.backParamsKey = primaryKey + '_BACKPARAMS';
+        // 保存列表数据的键名
+        _this.backParamsListKey = primaryKey + '_LIST_';
+
+        // 在列表底部添加一个标记，用其判断是否滚动至底部
         _this.$element.append(_this.$tag = $('<div class="J_InfiniteScrollTag"></div>'));
+
+        // 初始化赋值列表距离顶部的距离，用以返回列表定位准确位置
+        _this.listOffsetTop = _this.$element.offset().top;
 
         _this.initLoadingTip();
 
-        _this.bindScroll();
+        // 是否初始化就需要加载第一屏数据
+        if (options.initLoad) {
+            if (!options.backposition) {
+                _this.loadList();
+            } else {
+                !util.localStorage.get(_this.backParamsKey) && _this.loadList();
+            }
+        }
+
+        _this.bindScrollEvent();
+
+        if (options.backposition) {
+            _this.loadListFromStorage();
+
+            _this.bindLinkEvent();
+        }
     };
 
+    /**
+     * 初始化加载中提示
+     */
     InfiniteScroll.prototype.initLoadingTip = function () {
         var _this = this;
 
         _this.$element.append(_this.$loading = $('<div class="list-loading">' + _this.options.loadingHtml + '</div>'));
     };
 
-    InfiniteScroll.prototype.bindScroll = function () {
-
+    /**
+     * 滚动页面至SesstionStorage储存的坐标
+     */
+    InfiniteScroll.prototype.scrollPosition = function () {
         var _this = this,
             options = _this.options,
-            $binder = $(options.binder),
+            $binder = $(options.binder);
+
+        var backParams = util.sessionStorage.get(_this.backParamsKey);
+
+        // 滚动页面
+        backParams && $binder.stop().animate({scrollTop: backParams.offsetTop}, 0, function () {
+            _this.scrolling = false;
+        });
+
+        options.backposition && _this.bindLinkEvent();
+
+        // 释放页面滚动权限
+        util.pageScroll.unlock();
+
+        // 删除保存坐标页码的存储
+        util.sessionStorage.remove(_this.backParamsKey);
+    };
+
+    /**
+     * 给浏览器绑定滚动事件
+     */
+    InfiniteScroll.prototype.bindScrollEvent = function () {
+        var _this = this,
+            $binder = $(_this.options.binder),
             isWindow = $binder.get(0) === window,
             contentHeight = isWindow ? $(window).height() : $binder.height();
-
-        options.initLoad && _this.checkLoad();
 
         $binder.on('scroll.ydui.infinitescroll', function () {
 
@@ -1315,30 +1604,118 @@
 
             // 当浏览器滚动到底部时，此时 _this.$tag.offset().top 等于 contentTop + contentHeight
             if (_this.$tag.offset().top <= contentTop + contentHeight + contentHeight / 10) {
-                _this.checkLoad();
+                _this.loadList();
             }
         });
     };
 
-    InfiniteScroll.prototype.checkLoad = function () {
+    /**
+     * 跳转详情页前处理操作
+     * description: 点击跳转前储存当前位置以及页面，之后再跳转
+     */
+    InfiniteScroll.prototype.bindLinkEvent = function () {
+        var _this = this,
+            options = _this.options;
+
+        if (!options.jumpLink) {
+            console.error('[YDUI warn]: 需指定跳转详情页链接元素');
+            return;
+        }
+
+
+        $(_this.options.binder).on('click.ydui.infinitescroll', _this.options.jumpLink, function (e) {
+            e.preventDefault();
+
+            var $this = $(this),
+                page = $this.data('page');
+
+            if (!page) {
+                console.error('[YDUI warn]: 跳转链接元素需添加属性[data-page="其所在页码"]');
+                return;
+            }
+
+            // 储存top[距离顶部的距离]与page[页码]
+            util.sessionStorage.set(_this.backParamsKey, {
+                offsetTop: $(_this.options.binder).scrollTop() + $this.offset().top - _this.listOffsetTop,
+                page: page
+            });
+
+            location.href = $this.attr('href');
+        });
+    };
+
+    /**
+     * 加载数据
+     */
+    InfiniteScroll.prototype.loadList = function () {
         var _this = this,
             options = _this.options;
 
         _this.loading = true;
         _this.$loading.show();
 
-        typeof options.loadFunction == 'function' && options.loadFunction().done(function (len) {
-            if (~~len <= 0) {
-                console.error('[YDUI warn]: 需在 resolve() 方法里回传本次获取记录的总数');
-                return;
-            }
+        if (typeof options.loadListFn == 'function') {
 
-            if (len < options.pageSize) {
-                _this.$element.append('<div class="list-donetip">' + options.doneTxt + '</div>');
+            // 监听外部获取数据方法，以便获取数据
+            options.loadListFn().done(function (listArr, page) {
+                var len = listArr.length;
+
+                if (~~len <= 0) {
+                    console.error('[YDUI warn]: 需在 resolve() 方法里回传本次获取记录集合');
+                    return;
+                }
+
+                // 当请求的数据小于pageSize[每页请求数据数]，则认为数据加载完毕，提示相应信息
+                if (len < options.pageSize) {
+                    _this.$element.append('<div class="list-donetip">' + options.doneTxt + '</div>');
+                    _this.isDone = true;
+                }
+                _this.$loading.hide();
+                _this.loading = false;
+
+                // 将请求到的数据存入SessionStorage
+                if (options.backposition) {
+                    util.sessionStorage.set(_this.backParamsListKey + page, listArr);
+                }
+            });
+        }
+    };
+
+    /**
+     * 从SessionStorage取出数据
+     */
+    InfiniteScroll.prototype.loadListFromStorage = function () {
+        var _this = this,
+            storage = util.sessionStorage.get(_this.backParamsKey);
+
+        if (!storage)return;
+
+        // 锁定页面禁止滚动
+        util.pageScroll.lock();
+
+        // 总需滚动的页码数
+        var pageTotal = storage.page;
+
+        var listArr = [];
+
+        // 根据页码从Storage获取数据所需数据
+        for (var i = 1; i <= pageTotal; i++) {
+            var _list = util.sessionStorage.get(_this.backParamsListKey + i);
+
+            listArr.push({
+                page: i,
+                list: _list
+            });
+
+            // 判断跳转前数据是否加载完毕
+            if (i == pageTotal && _list.length < _this.options.pageSize) {
                 _this.isDone = true;
             }
-            _this.$loading.hide();
-            _this.loading = false;
+        }
+
+        // 将数据传出外部方法，直至其通知已插入页面后滚动至相应位置
+        _this.options.loadStorageListFn(listArr, pageTotal).done(function () {
+            _this.scrollPosition();
         });
     };
 
@@ -1351,6 +1728,7 @@
     $.fn.infiniteScroll = Plugin;
 
 }(window);
+
 /**
  * KeyBoard
  */
@@ -1393,8 +1771,10 @@
             '<ul class="keyboard-password J_FillPwdBox">' + getDot() + '</ul>';
 
         var ft = '' +
-            '<div class="keyboard-title">' + _this.options.title + '</div>' +
-            '<ul class="keyboard-numbers"></ul>';
+            '<div class="keyboard-content">' +
+            '   <div class="keyboard-title">' + _this.options.title + '</div>' +
+            '   <ul class="keyboard-numbers"></ul>' +
+            '</div>';
 
         _this.$element.prepend(hd).append(ft);
 
@@ -1410,6 +1790,8 @@
         var _this = this,
             $element = _this.$element,
             $numsBox = _this.$numsBox;
+
+        YDUI.device.isIOS && $('.g-scrollview').addClass('g-fix-ios-overflow-scrolling-bug');
 
         $element.addClass(_this.toggleClass);
 
@@ -1427,6 +1809,8 @@
      */
     KeyBoard.prototype.close = function () {
         var _this = this;
+
+        YDUI.device.isIOS && $('.g-scrollview').removeClass('g-fix-ios-overflow-scrolling-bug');
 
         _this.$mask.remove();
         _this.$element.removeClass(_this.toggleClass);
@@ -1451,8 +1835,6 @@
         });
 
         $element.on(triggerEvent + '.ydui.keyboard.nums', '.J_Nums', function (e) {
-            e.preventDefault();
-
             if (_this.inputNums.length >= 6)return;
 
             _this.inputNums = _this.inputNums + $(this).html();
@@ -1492,7 +1874,7 @@
 
         var $li = _this.$element.find('.J_FillPwdBox').find('li');
         $li.find('i').hide();
-        $li.filter(':lt(' + length + ')').find('i').show();
+        $li.filter(':lt(' + length + ')').find('i').css('display', 'block');
 
         if (length >= 6) {
             _this.$element.trigger($.Event('done.ydui.keyboard', {
@@ -1778,7 +2160,7 @@
         fill: '',
         progress: 0,
         delay: true,
-        container: window
+        binder: window
     };
 
     ProgressBar.prototype.set = function (progress) {
@@ -1799,7 +2181,7 @@
             svgView = _this.createSvgView(),
             $element = _this.$element;
 
-        _this.$container = options.container === window || options.container == 'window' ? $(window) : $(options.container);
+        _this.$binder = options.binder === window || options.binder == 'window' ? $(window) : $(options.binder);
 
         var path = svgView.trailPath,
             length = path.getTotalLength();
@@ -1815,7 +2197,7 @@
         if (options.delay) {
             _this.checkInView($svg);
 
-            _this.$container.on('scroll.ydui.progressbar', function () {
+            _this.$binder.on('scroll.ydui.progressbar', function () {
                 _this.checkInView($svg);
             });
 
@@ -1832,9 +2214,9 @@
     ProgressBar.prototype.checkInView = function ($svg) {
 
         var _this = this,
-            $container = _this.$container,
-            contentHeight = $container.height(),
-            contentTop = $container.get(0) === window ? $(window).scrollTop() : $container.offset().top;
+            $binder = _this.$binder,
+            contentHeight = $binder.height(),
+            contentTop = $binder.get(0) === window ? $(window).scrollTop() : $binder.offset().top;
 
         var post = $svg.offset().top - contentTop,
             posb = post + $svg.height();
@@ -2212,7 +2594,10 @@
         _this.$navItem.removeClass('crt');
         _this.$navItem.eq(index).addClass('crt');
 
-        var offset = _this.$contentItem.eq(index).offset().top;
+        var $item = _this.$contentItem.eq(index);
+        if (!$item[0])return;
+
+        var offset = $item.offset().top;
 
         var top = offset + _this.$content.scrollTop() - _this.contentOffsetTop + 1;
 
@@ -2738,6 +3123,7 @@
         minus: '.J_Del',
         unit: 1,
         max: 0,
+        longpress: true,
         callback: null
     };
 
@@ -2755,6 +3141,8 @@
 
         _this.bindEvent();
     };
+
+    Spinner.prototype.tapParams = {};
 
     Spinner.prototype.initInputVal = function () {
         var _this = this,
@@ -2815,15 +3203,27 @@
         });
     };
 
-    Spinner.prototype.setValue = function (val) {
+    Spinner.prototype.setValue = function (type) {
         var _this = this,
             options = _this.options,
             max = options.max,
-            unit = options.unit;
-
-        val = _this.FixNumber(val);
+            unit = options.unit,
+            $input = _this.$input,
+            val = _this.FixNumber($input.val());
 
         if (!_this.isNumber(val)) val = unit;
+
+        if (!!$input.attr('readonly') || !!$input.attr('disabled'))return;
+
+        var newVal;
+        if (type == 'add') {
+            newVal = val + unit;
+            if (max != 0 && newVal > max)return;
+        } else {
+            newVal = val - unit;
+            if (newVal < unit)return;
+        }
+        val = newVal;
 
         if (val > max && max != 0) val = max;
 
@@ -2837,32 +3237,69 @@
         _this.$input.val(val);
 
         typeof options.callback == 'function' && options.callback(val, _this.$input);
+
+        if (options.longpress) {
+
+            var currentDate = new Date().getTime() / 1000,
+                intervalTime = currentDate - _this.tapStartTime;
+
+            if (intervalTime < 1) intervalTime = 0.5;
+
+            var secondCount = intervalTime * 10;
+            if (intervalTime == 30) secondCount = 50;
+            if (intervalTime >= 40) secondCount = 100;
+
+            _this.tapParams.timer = setTimeout(function () {
+                _this.setValue(type);
+            }, 1000 / secondCount);
+        }
     };
 
     Spinner.prototype.bindEvent = function () {
         var _this = this,
             options = _this.options,
-            unit = options.unit,
-            max = options.max,
-            isMobile = !!(window.navigator && window.navigator.userAgent || '').match(/AppleWebKit.*Mobile.*/) || 'ontouchstart' in window.document.documentElement,
-            triggerEvent = isMobile ? 'touchstart.ydui.spinner' : 'click.ydui.spinner';
+            isMobile = YDUI.device.isMobile,
+            mousedownEvent = 'mousedown.ydui.spinner',
+            mouseupEvent = 'mouseup.ydui.spinner',
+            mouseleaveEvent = 'mouseleave.ydui.spinner';
 
-        _this.$add.on(triggerEvent, function () {
-            var $input = _this.$input,
-                val = $input.val(),
-                temp = _this.FixNumber(val) + unit;
+        if (isMobile) {
+            mousedownEvent = 'touchstart.ydui.spinner';
+            mouseupEvent = 'touchend.ydui.spinner';
+            mouseleaveEvent = 'touchcencel.ydui.spinner';
+        }
 
-            if ((max != 0 && temp > max) || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
-            _this.setValue(temp);
+        _this.$add.on(mousedownEvent, function (e) {
+            if (options.longpress) {
+                e.preventDefault();
+                e.stopPropagation();
+                _this.tapStartTime = new Date().getTime() / 1000;
+
+                _this.$add.on(mouseupEvent, function () {
+                    _this.clearTapTimer();
+                }).on(mouseleaveEvent, function () {
+                    _this.clearTapHandlers();
+                });
+            }
+
+            _this.setValue('add');
         });
 
-        _this.$minus.on(triggerEvent, function () {
-            var $input = _this.$input,
-                val = $input.val(),
-                temp = val - unit;
+        _this.$minus.on(mousedownEvent, function (e) {
+            if (options.longpress) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            if (temp < unit || !!$input.attr('readonly') || !!$input.attr('disabled'))return;
-            _this.setValue(temp);
+                _this.tapStartTime = new Date().getTime() / 1000;
+
+                _this.$minus.on(mouseupEvent, function () {
+                    _this.clearTapTimer();
+                }).on(mouseleaveEvent, function () {
+                    _this.clearTapHandlers();
+                });
+            }
+
+            _this.setValue('minus');
         });
 
         _this.$input.on('change.ydui.spinner', function () {
@@ -2872,6 +3309,21 @@
                 _this.setValue($(this).val());
                 return false;
             }
+        });
+    };
+
+    Spinner.prototype.clearTapTimer = function () {
+        var _this = this;
+        clearTimeout(_this.tapParams.timer);
+    };
+
+    Spinner.prototype.clearTapHandlers = function () {
+        var _this = this;
+
+        _this.$add.off('mouseup.ydui.spinner', function () {
+            _this.clearTapTimer();
+        }).off('mouseleave.ydui.spinner', function () {
+            _this.clearTapHandlers();
         });
     };
 
@@ -3175,44 +3627,6 @@
     };
 
     /**
-     * 序列化
-     * @param value
-     * @returns {string}
-     */
-    util.serialize = function (value) {
-        if (typeof value === 'string') return value;
-        return JSON.stringify(value);
-    };
-
-    /**
-     * 反序列化
-     * @param value
-     * @returns {*}
-     */
-    util.deserialize = function (value) {
-        if (typeof value !== 'string') return undefined;
-        try {
-            return JSON.parse(value);
-        } catch (e) {
-            return value || undefined;
-        }
-    };
-
-    /**
-     * 本地存储
-     */
-    util.localStorage = function () {
-        return storage(window.localStorage);
-    }();
-
-    /**
-     * Session存储
-     */
-    util.sessionStorage = function () {
-        return storage(window.sessionStorage);
-    }();
-
-    /**
      * Cookie
      * @type {{get, set}}
      */
@@ -3258,26 +3672,5 @@
             }
         }
     }();
-
-    /**
-     * HTML5存储
-     */
-    function storage (ls) {
-        var _util = util;
-        return {
-            set: function (key, value) {
-                ls.setItem(key, _util.serialize(value));
-            },
-            get: function (key) {
-                return _util.deserialize(ls.getItem(key));
-            },
-            remove: function (key) {
-                ls.removeItem(key);
-            },
-            clear: function () {
-                ls.clear();
-            }
-        };
-    }
 
 }(window);
