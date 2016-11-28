@@ -1790,10 +1790,10 @@ input[type="submit"].btn-hollow {
 .icon-order:before {
   content: '\e638';
 }
-.m-nav {
+.m-navbar {
   height: 0.9rem;
 }
-.nav-box {
+.navbar-box {
   position: relative;
   z-index: 100;
   display: -webkit-box;
@@ -1802,7 +1802,7 @@ input[type="submit"].btn-hollow {
   display: flex;
   background-color: rgba(255, 255, 255, 0.98);
 }
-.nav-box:after {
+.navbar-box:after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -1817,14 +1817,14 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.nav-box.nav-fixed {
+.navbar-box.nav-fixed {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 997;
 }
-.nav-item {
+.navbar-item {
   height: 0.9rem;
   min-width: 25%;
   /* for low version android */
@@ -1846,14 +1846,14 @@ input[type="submit"].btn-hollow {
   overflow: hidden;
   color: #5C5C5C;
 }
-.nav-item:first-child {
+.navbar-item:first-child {
   -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
   margin-right: -25%;
 }
-.nav-item:last-child {
+.navbar-item:last-child {
   -webkit-box-ordinal-group: 4;
   -webkit-order: 3;
   -ms-flex-order: 3;
@@ -1863,20 +1863,20 @@ input[type="submit"].btn-hollow {
   -ms-flex-pack: end;
   justify-content: flex-end;
 }
-.nav-item .back-ico:before,
-.nav-item .next-ico:before {
+.navbar-item .back-ico:before,
+.navbar-item .next-ico:before {
   display: block;
   font-family: 'YDUI-INLAY';
   font-size: 0.36rem;
   color: #5C5C5C;
 }
-.nav-item .back-ico:before {
+.navbar-item .back-ico:before {
   content: '\e607';
 }
-.nav-item .next-ico:before {
+.navbar-item .next-ico:before {
   content: '\e608';
 }
-.nav-center {
+.navbar-center {
   -webkit-box-ordinal-group: 3;
   -webkit-order: 2;
   -ms-flex-order: 2;
@@ -1897,7 +1897,7 @@ input[type="submit"].btn-hollow {
   width: 50%;
   margin-left: 25%;
 }
-.nav-center .nav-title {
+.navbar-center .navbar-title {
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -1907,7 +1907,7 @@ input[type="submit"].btn-hollow {
   font-size: 0.4rem;
   color: #5C5C5C;
 }
-.nav-center > img {
+.navbar-center > img {
   height: 60%;
 }
 .m-tabbar {
@@ -2024,27 +2024,27 @@ input[type="submit"].btn-hollow {
   overflow: hidden;
   position: relative;
 }
-.m-list .list-img {
+.list-img {
   height: 0;
   width: 100%;
   padding: 50% 0;
   overflow: hidden;
 }
-.m-list .list-img img {
+.list-img img {
   width: 100%;
   margin-top: -50%;
   background-color: #FFF;
   border: none;
 }
-.m-list .list-ft {
+.list-mes {
   background-color: #FFF;
 }
-.m-list .list-ft .title {
+.list-mes .list-title {
   color: #505050;
   font-size: .26rem;
   text-align: justify;
 }
-.m-list .list-ft .item {
+.list-mes .list-mes-item {
   padding-top: .06rem;
   overflow: hidden;
   display: -webkit-box;
@@ -2061,25 +2061,21 @@ input[type="submit"].btn-hollow {
   justify-content: space-between;
   color: #999;
 }
-.m-list .list-ft .item .left,
-.m-list .list-ft .item .right {
-  display: block;
-}
-.m-list .list-ft .d-price {
+.list-price {
   font-size: .3rem;
   color: #EB5211;
 }
-.m-list .list-ft .d-price > em {
+.list-price > em {
   font-size: .22rem;
 }
-.m-list .list-ft .del-price {
+.list-del-price {
   padding-left: .06rem;
   font-size: .2rem;
   margin-left: .02rem;
   position: relative;
   color: #8C8C8C;
 }
-.m-list .list-ft .del-price:after {
+.list-del-price:after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -2105,10 +2101,11 @@ input[type="submit"].btn-hollow {
   padding: 0 2px;
   margin-top: 4px;
 }
-.list-theme1 .list-item .list-ft {
+.list-theme1 .list-item .list-mes {
   padding: .1rem;
 }
-.list-theme1 .list-item .list-ft .title {
+.list-theme1 .list-item .list-mes .list-title {
+  font-weight: bold;
   word-wrap: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2130,10 +2127,10 @@ input[type="submit"].btn-hollow {
 .list-theme2 .list-item:nth-child(even) {
   padding-left: 2px;
 }
-.list-theme2 .list-item .list-ft {
+.list-theme2 .list-item .list-mes {
   padding: .1rem;
 }
-.list-theme2 .list-item .list-ft .title {
+.list-theme2 .list-item .list-mes .list-title {
   word-wrap: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2180,10 +2177,10 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
 }
-.list-theme3 .list-item .list-ft {
+.list-theme3 .list-item .list-mes {
   padding-top: .1rem;
 }
-.list-theme3 .list-item .list-ft .title {
+.list-theme3 .list-item .list-mes .list-title {
   word-wrap: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2191,7 +2188,7 @@ input[type="submit"].btn-hollow {
   text-align: justify;
   height: .28rem;
 }
-.list-theme3 .list-item .list-ft .item {
+.list-theme3 .list-item .list-mes .list-mes-item {
   padding-top: 4px;
 }
 .list-theme4 {
@@ -2226,14 +2223,14 @@ input[type="submit"].btn-hollow {
   width: 2rem;
   padding: 1rem 0;
 }
-.list-theme4 .list-item .list-ft {
+.list-theme4 .list-item .list-mes {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   padding-left: 7px;
 }
-.list-theme4 .list-item .list-ft .title {
+.list-theme4 .list-item .list-mes .list-title {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -2243,7 +2240,7 @@ input[type="submit"].btn-hollow {
   line-height: 0.38rem;
   max-height: 1.34rem;
 }
-.list-theme4 .list-item .list-ft .item {
+.list-theme4 .list-item .list-mes .list-mes-item {
   padding-top: .1rem;
 }
 .list-theme5 {
@@ -2270,10 +2267,10 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.list-theme5 .list-item .list-ft {
+.list-theme5 .list-item .list-mes {
   padding: .2rem 0 .15rem;
 }
-.list-theme5 .list-item .list-ft .item {
+.list-theme5 .list-item .list-mes .list-mes-item {
   padding-top: .1rem;
 }
 @media screen and (min-width: 768px) {
@@ -2299,7 +2296,7 @@ input[type="submit"].btn-hollow {
   .list-theme4 .list-item {
     padding: 9px 0 10px 0;
   }
-  .list-theme4 .list-item .list-ft {
+  .list-theme4 .list-item .list-mes {
     padding-left: 9px;
   }
 }

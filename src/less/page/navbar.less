@@ -1,8 +1,8 @@
-.m-nav {
+.m-navbar {
   height: @navbar-height;
 }
 
-.nav-box {
+.navbar-box {
   position: relative;
   z-index: @base-zindex * 100;
   display: flex;
@@ -19,7 +19,7 @@
   }
 }
 
-.nav-item {
+.navbar-item {
   height: @navbar-height;
   min-width: (100% - @navbar-center-width) / 2; /* for low version android */
   flex: 0 0 (100% - @navbar-center-width) / 2;
@@ -52,7 +52,7 @@
   }
 }
 
-.nav-center {
+.navbar-center {
   order: 2;
   display: flex;
   justify-content: center;
@@ -60,7 +60,7 @@
   height: @navbar-height;
   width: @navbar-center-width;
   margin-left: (100% - @navbar-center-width) / 2;
-  .nav-title {
+  .navbar-title {
     text-align: center;
     width: 100%;
     white-space: nowrap;
