@@ -1978,10 +1978,10 @@ input[type="submit"].btn-hollow {
   align-items: center;
   color: #979797;
 }
-.tabbar-item.crt {
+.tabbar-item.tabbar-crt {
   color: #09BB07;
 }
-.tabbar-item.crt .tabbar-icon {
+.tabbar-item.tabbar-crt .tabbar-icon {
   color: inherit;
 }
 .tabbar-item .badge {
