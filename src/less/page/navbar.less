@@ -1,21 +1,17 @@
 .m-navbar {
   height: @navbar-height;
-}
-
-.navbar-box {
   position: relative;
-  z-index: @base-zindex * 100;
   display: flex;
   background-color: @navbar-bg;
   &:after {
     .bottom-line(@navbar-border-color);
   }
-  &.nav-fixed {
+  &.navbar-fixed {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 997;
+    z-index: @base-zindex * 100;
   }
 }
 

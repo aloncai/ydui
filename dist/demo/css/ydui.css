@@ -146,7 +146,18 @@ table {
   margin: 0 auto;
   max-width: 750px;
   min-width: 300px;
-  padding-bottom: 0.5rem;
+}
+.g-view:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0.9rem;
+}
+.g-view:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1.5rem;
 }
 .g-flexview {
   height: 100%;
@@ -174,7 +185,7 @@ table {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  margin: -1px 0 -1px 0;
+  margin-bottom: -1px;
 }
 .g-scrollview:after {
   content: '';
@@ -1792,17 +1803,14 @@ input[type="submit"].btn-hollow {
 }
 .m-navbar {
   height: 0.9rem;
-}
-.navbar-box {
   position: relative;
-  z-index: 100;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   background-color: rgba(255, 255, 255, 0.98);
 }
-.navbar-box:after {
+.m-navbar:after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -1817,12 +1825,12 @@ input[type="submit"].btn-hollow {
   -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
-.navbar-box.nav-fixed {
+.m-navbar.navbar-fixed {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 997;
+  z-index: 100;
 }
 .navbar-item {
   height: 0.9rem;
