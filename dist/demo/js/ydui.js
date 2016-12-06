@@ -277,6 +277,9 @@
 
         $body.append(_this.$mask);
 
+        // 防止火狐浏览器文本框丑丑的一坨小水滴
+        YDUI.device.isMozilla && _this.$element.blur();
+
         _this.$mask.on('click.ydui.cityselect.mask', function () {
             _this.close();
         });
@@ -517,6 +520,7 @@
     $.fn.citySelect = Plugin;
 
 }(window);
+
 /**
  * device
  */
@@ -571,11 +575,16 @@
          */
         isWeixin: ua.indexOf('MicroMessenger') > -1,
         /**
+         * 是否火狐浏览器
+         */
+        isMozilla: /firefox/.test(navigator.userAgent.toLowerCase()),
+        /**
          * 设备像素比
          */
         pixelRatio: window.devicePixelRatio || 1
     };
 }(window);
+
 /**
  * dialog
  */
@@ -737,7 +746,7 @@
 
             var $dom = $('' +
                 '<div class="mask-white-dialog" id="' + ID + '">' +
-                '    <div class="m-toast">' + iconHtml +
+                '    <div class="m-toast ' + (iconHtml == '' ? 'none-icon' : '') + '">' + iconHtml +
                 '        <p class="toast-content">' + (mes || '') + '</p>' +
                 '    </div>' +
                 '</div>');
@@ -853,6 +862,7 @@
         };
     }();
 }(window, YDUI);
+
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *

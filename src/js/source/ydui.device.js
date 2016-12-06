@@ -52,6 +52,10 @@
          */
         isWeixin: ua.indexOf('MicroMessenger') > -1,
         /**
+         * 是否火狐浏览器
+         */
+        isMozilla: /firefox/.test(navigator.userAgent.toLowerCase()),
+        /**
          * 设备像素比
          */
         pixelRatio: window.devicePixelRatio || 1

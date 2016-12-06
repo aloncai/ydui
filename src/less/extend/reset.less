@@ -1,5 +1,6 @@
 *, *:before, *:after {
   box-sizing: border-box;
+  outline: none;
 }
 
 html, body {
@@ -57,10 +58,18 @@ a, label, button, input, select {
 input, select, button {
   font: 100% tahoma, \5b8b\4f53, arial;
   vertical-align: baseline;
-  outline: none;
   border-radius: 0;
   background-color: transparent;
   -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+  border: none
 }
 
 input[type=checkbox], input[type=radio] {
@@ -70,6 +79,7 @@ input[type=checkbox], input[type=radio] {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
+  -moz-appearance: none !important;
   margin: 0;
 }
 
@@ -81,6 +91,7 @@ textarea {
   outline: none;
   border-radius: 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
   overflow: auto;
   resize: none;
   font: 100% tahoma, \5b8b\4f53, arial;

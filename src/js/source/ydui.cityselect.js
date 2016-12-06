@@ -43,6 +43,9 @@
 
         $body.append(_this.$mask);
 
+        // 防止火狐浏览器文本框丑丑的一坨小水滴
+        YDUI.device.isMozilla && _this.$element.blur();
+
         _this.$mask.on('click.ydui.cityselect.mask', function () {
             _this.close();
         });

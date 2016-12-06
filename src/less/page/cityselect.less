@@ -68,7 +68,6 @@
       }
     }
   }
-
 }
 
 .cityselect-content {
@@ -120,6 +119,9 @@
     z-index: 1;
     &:before {
       .bottom-line(@line-color);
+    }
+    &:active {
+      background: none; /* for firefox */
     }
     span {
       flex: 1;

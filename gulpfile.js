@@ -14,7 +14,7 @@ gulp.task('less', function () {
         .pipe($.plumber({errorHandler: $.notify.onError('Error: <%= error.message %>')}))
         .pipe($.less())
         .pipe($.autoprefixer({
-            browsers: AUTOPREFIXER_BROWSERS, cascade: false, remove: true
+            browsers: AUTOPREFIXER_BROWSERS, cascade: false
         }))
         .pipe(gulp.dest('src/css'))
         .pipe($.livereload());

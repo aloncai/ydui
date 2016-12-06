@@ -159,7 +159,7 @@
 
             var $dom = $('' +
                 '<div class="mask-white-dialog" id="' + ID + '">' +
-                '    <div class="m-toast">' + iconHtml +
+                '    <div class="m-toast ' + (iconHtml == '' ? 'none-icon' : '') + '">' + iconHtml +
                 '        <p class="toast-content">' + (mes || '') + '</p>' +
                 '    </div>' +
                 '</div>');

@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
     <link href="//static.ydcss.com/app-icon144x144@2x.png" rel="apple-touch-icon-precomposed">
-    <link rel="stylesheet" href="../css/ydui.css?rev=93fc043fdfa2933e29ba8a10f4b0baf7"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=c24d00355d740de1d62414c74d5c1ed7"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
@@ -127,12 +127,6 @@
                     <i class="cell-checkbox-icon"></i>
                 </span>
             </label>
-            <div class="cell-item">
-                <div class="cell-left">设为默认地址</div>
-                <label class="cell-right">
-                    <input checked type="checkbox" class="checkbox-ios"/>
-                </label>
-            </div>
         </div>
 
         <div class="m-celltitle">单选(radio改为checkbox样式通用)</div>
@@ -149,6 +143,29 @@
                 <span class="cell-right">
                     <input type="radio" name="radio" id="x2"/>
                     <i class="cell-radio-icon"></i>
+                </span>
+            </label>
+        </div>
+
+        <div class="m-celltitle">复选框（只兼容微信端第一种方法最简单）</div>
+        <div class="m-cell">
+            <div class="cell-item">
+                <div class="cell-left">设为默认地址</div>
+                <label class="cell-right">
+                    <input type="checkbox" class="m-switch"/>
+                </label>
+            </div>
+            <div class="cell-item">
+                <div class="cell-left">兼容火狐写法</div>
+                <label class="cell-right">
+                    <input type="checkbox" class="m-switch-old" checked/>
+                    <span class="m-switch"></span>
+                </label>
+            </div>
+            <label class="cell-item">
+                <span class="cell-left">整行可点击</span>
+                <span class="cell-right">
+                    <input type="checkbox" class="m-switch"/>
                 </span>
             </label>
         </div>
