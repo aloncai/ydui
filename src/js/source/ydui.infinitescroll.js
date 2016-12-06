@@ -19,7 +19,6 @@
         binder: window, // 绑定浏览器滚动事件DOM
         initLoad: true, // 是否初始化加载第一屏数据
         pageSize: 0, // 每页请求的数据量
-        lazyLoad: false, // 是否延迟加载图片
         loadingHtml: '加载中...', // 加载中提示，支持HTML
         doneTxt: '没有更多数据了', // 加载完毕提示
         backposition: false, // 是否从详情页返回列表页重新定位之前位置
@@ -237,7 +236,7 @@
         }
 
         // 将数据传出外部方法，直至其通知已插入页面后滚动至相应位置
-        _this.options.loadStorageListFn(listArr, pageTotal).done(function () {
+        _this.options.loadStorageListFn(listArr, pageTotal + 1).done(function () {
             _this.scrollPosition();
         });
     };

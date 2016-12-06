@@ -79,7 +79,7 @@
         };
 
         $('#J_ListContent').pullRefresh({
-            loadFunction: function () {
+            loadListFn: function () {
                 var def = $.Deferred();
 
                 loadMore(function () {

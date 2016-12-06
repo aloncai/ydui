@@ -11,7 +11,7 @@
     }
 
     PullRefresh.DEFAULTS = {
-        loadFunction: null,
+        loadListFn: null,
         initLoad: true,
         dragDistance: 100,
         dragTxt: '按住下拉',
@@ -142,7 +142,7 @@
 
         _this.$dragTip.find('span').removeClass('down up').text(_this.options.loadingTxt);
 
-        typeof _this.options.loadFunction == 'function' && _this.options.loadFunction().done(function () {
+        typeof _this.options.loadListFn == 'function' && _this.options.loadListFn().done(function () {
             touches.isDraging = false;
             touches.loading = false;
             _this.resetDragTipTxt();

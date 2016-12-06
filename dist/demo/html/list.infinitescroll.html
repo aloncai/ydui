@@ -69,18 +69,16 @@
             binder: '#J_List',
             pageSize: pageSize,
             initLoad: true,
-            lazyLoad: true,
             loadingHtml: '<img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>',
             loadListFn: function () {
                 var def = $.Deferred();
 
                 loadMore(function (listArr) {
-                    listArr.page = page;
 
                     var html = template('J_ListHtml', {list: listArr});
                     $('#J_ListContent').append(html).find('img').lazyLoad({binder: '#J_List'});
 
-                    def.resolve(listArr, page);
+                    def.resolve(listArr);
 
                     ++page;
                 });

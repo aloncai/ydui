@@ -70,7 +70,6 @@
             initLoad: true,
             backposition: true,
             jumpLink: '.J_Link',
-            contentBox: '#J_ListContent',
             loadingHtml: '<img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>',
             loadListFn: function () {
                 var def = $.Deferred();
@@ -91,7 +90,7 @@
             loadStorageListFn: function (ret, retPage) {
                 var def = $.Deferred();
 
-                page = retPage + 1;
+                page = retPage;
 
                 var html = '';
                 ret.forEach(function (val) {
