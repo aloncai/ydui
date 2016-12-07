@@ -1,5 +1,5 @@
 /**
- * CitySelect
+ * CitySelect Plugin
  */
 !function (window) {
     "use strict";

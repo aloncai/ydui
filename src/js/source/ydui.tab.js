@@ -1,5 +1,5 @@
 /**
- * Tab
+ * Tab Plugin
  */
 !function (window) {
     "use strict";

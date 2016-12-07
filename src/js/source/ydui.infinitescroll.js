@@ -1,5 +1,5 @@
 /**
- * InfiniteScroll
+ * InfiniteScroll Plugin
  */
 !function (window) {
     "use strict";

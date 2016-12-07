@@ -3,6 +3,6 @@
  */
 !function (window) {
     window.document.addEventListener('touchstart', function (event) {
-        /* do nothing */
+        /* Do Nothing */
     }, false);
 }(window);

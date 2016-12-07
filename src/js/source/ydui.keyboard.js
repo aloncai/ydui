@@ -1,5 +1,5 @@
 /**
- * KeyBoard
+ * KeyBoard Plugin
  */
 !function (window) {
     "use strict";

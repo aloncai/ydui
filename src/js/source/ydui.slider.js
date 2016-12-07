@@ -1,5 +1,5 @@
 /**
- * Slider
+ * Slider Plugin
  */
 !function (window) {
     "use strict";

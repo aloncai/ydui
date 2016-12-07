@@ -1,5 +1,5 @@
 /**
- * Spinner
+ * Spinner Plugin
  */
 !function (window) {
     "use strict";

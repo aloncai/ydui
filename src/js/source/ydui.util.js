@@ -1,5 +1,5 @@
 /**
- * util
+ * ydui.util
  */
 !function (window) {
     "use strict";

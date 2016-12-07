@@ -5,7 +5,7 @@ var pkg = require('./package.json');
 
 var AUTOPREFIXER_BROWSERS = ["Android >= 4", "Explorer >= 10", "iOS >= 6"];
 
-//注释信息
+// 注释信息
 var banner = '/*! <%= pkg.title %> v<%= pkg.version %> by YDCSS (c) ' +
     $.util.date(Date.now(), 'UTC:yyyy') + ' Licensed <%= pkg.license %>' + ' */ \n';
 

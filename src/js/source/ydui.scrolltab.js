@@ -1,5 +1,5 @@
 /**
- * ScrollTab
+ * ScrollTab Plugin
  */
 !function (window) {
     "use strict";

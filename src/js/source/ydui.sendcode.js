@@ -1,5 +1,5 @@
 /**
- * SendCode
+ * SendCode Plugin
  */
 !function () {
     "use strict";

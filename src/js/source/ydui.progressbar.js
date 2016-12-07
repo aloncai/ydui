@@ -1,5 +1,5 @@
 /**
- * ProgressBar
+ * ProgressBar Plugin
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (window) {

@@ -1,5 +1,5 @@
 /**
- * ydui
+ * ydui main
  */
 !function (window) {
     "use strict";
@@ -142,8 +142,9 @@
     }
 
 }(window);
+
 /**
- * ActionSheet
+ * ActionSheet Plugin
  */
 !function (window) {
     "use strict";
@@ -224,16 +225,18 @@
     $.fn.actionSheet = Plugin;
 
 }(window);
+
 /**
  * 解决:active这个高端洋气的CSS伪类不能使用问题
  */
 !function (window) {
     window.document.addEventListener('touchstart', function (event) {
-        /* do nothing */
+        /* Do Nothing */
     }, false);
 }(window);
+
 /**
- * CitySelect
+ * CitySelect Plugin
  */
 !function (window) {
     "use strict";
@@ -522,7 +525,7 @@
 }(window);
 
 /**
- * device
+ * Device
  */
 !function (window) {
     var doc = window.document,
@@ -586,7 +589,7 @@
 }(window);
 
 /**
- * dialog
+ * Dialog
  */
 !function (window, ydui) {
     "use strict";
@@ -865,7 +868,6 @@
 
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
- *
  * @codingstandard ftlabs-jsv2
  * @copyright The Financial Times Limited [All Rights Reserved]
  * @license MIT License (see LICENSE.txt)
@@ -1484,8 +1486,9 @@
 
     window.FastClick = FastClick;
 }();
+
 /**
- * InfiniteScroll
+ * InfiniteScroll Plugin
  */
 !function (window) {
     "use strict";
@@ -1738,7 +1741,7 @@
 }(window);
 
 /**
- * KeyBoard
+ * KeyBoard Plugin
  */
 !function (window) {
     "use strict";
@@ -2015,8 +2018,9 @@
     $.fn.keyBoard = Plugin;
 
 }(window);
+
 /**
- * LazyLoad
+ * LazyLoad Plugin
  * @example $(selector).find("img").lazyLoad();
  */
 !function (window) {
@@ -2101,8 +2105,9 @@
     };
 
 }(window);
+
 /**
- * ProgressBar
+ * ProgressBar Plugin
  * Refer to: https://github.com/kimmobrunfeldt/progressbar.js.git
  */
 !function (window) {
@@ -2350,8 +2355,9 @@
     $.fn.progressBar = Plugin;
 
 }(window);
+
 /**
- * PullRefresh
+ * PullRefresh Plugin
  */
 !function (window) {
     "use strict";
@@ -2547,7 +2553,7 @@
 }(window);
 
 /**
- * ScrollTab
+ * ScrollTab Plugin
  */
 !function (window) {
     "use strict";
@@ -2681,8 +2687,9 @@
     $.fn.scrollTab = Plugin;
 
 }(window);
+
 /**
- * SendCode
+ * SendCode Plugin
  */
 !function () {
     "use strict";
@@ -2762,8 +2769,9 @@
 
     $.fn.sendCode = Plugin;
 }();
+
 /**
- * Slider
+ * Slider Plugin
  */
 !function (window) {
     "use strict";
@@ -3114,8 +3122,9 @@
     $.fn.slider = Plugin;
 
 }(window);
+
 /**
- * Spinner
+ * Spinner Plugin
  */
 !function (window) {
     "use strict";
@@ -3362,8 +3371,9 @@
 
     $.fn.spinner = Plugin;
 }(window);
+
 /**
- * Tab
+ * Tab Plugin
  */
 !function (window) {
     "use strict";
@@ -3491,8 +3501,9 @@
     $.fn.tab = Plugin;
 
 }(window);
+
 /**
- * util
+ * ydui.util
  */
 !function (window) {
     "use strict";

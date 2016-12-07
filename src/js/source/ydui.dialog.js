@@ -1,5 +1,5 @@
 /**
- * dialog
+ * Dialog
  */
 !function (window, ydui) {
     "use strict";

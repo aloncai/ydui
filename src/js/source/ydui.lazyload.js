@@ -1,5 +1,5 @@
 /**
- * LazyLoad
+ * LazyLoad Plugin
  * @example $(selector).find("img").lazyLoad();
  */
 !function (window) {

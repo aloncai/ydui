@@ -20,7 +20,7 @@
         return refreshRem;
     })();
 
-    /* 添加倍屏标识，安卓为1 */
+    /* 添加倍屏标识，安卓倍屏为1 */
     docEl.setAttribute('data-dpr', window.navigator.appVersion.match(/iphone/gi) ? window.devicePixelRatio : 1);
 
     if (/iP(hone|od|ad)/.test(window.navigator.userAgent)) {

@@ -1,5 +1,5 @@
 /**
- * ActionSheet
+ * ActionSheet Plugin
  */
 !function (window) {
     "use strict";

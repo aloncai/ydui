@@ -1,5 +1,5 @@
 /**
- * device
+ * Device
  */
 !function (window) {
     var doc = window.document,

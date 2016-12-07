@@ -1,5 +1,5 @@
 /**
- * PullRefresh
+ * PullRefresh Plugin
  */
 !function (window) {
     "use strict";
