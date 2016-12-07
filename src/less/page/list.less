@@ -1,6 +1,9 @@
 .m-list {
   overflow: hidden;
   position: relative;
+  .list-item:active {
+    background: none; /* for firefox */
+  }
 }
 
 .list-img {
@@ -113,11 +116,14 @@
       padding-top: .1rem;
       .list-title {
         .text-overflow();
-        height: .28rem;
+        height: .3rem;
       }
       .list-mes-item {
         padding-top: 4px;
       }
+    }
+    &:active {
+      background: #FFF; /* for old android */
     }
   }
 }

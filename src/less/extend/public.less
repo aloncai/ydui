@@ -34,13 +34,20 @@
   -webkit-overflow-scrolling: touch;
   position: relative;
   margin-bottom: -1px;
-  //margin-top: -1px;
   &:after {
     content: '';
     display: block;
     width: 100%;
     height: @body-padding-bottom;
   }
+}
+
+.ios .g-scrollview {
+  margin-top: 1px;
+}
+
+.hairline .g-scrollview {
+  margin-top: 0.5px;
 }
 
 .g-fix-ios-overflow-scrolling-bug {

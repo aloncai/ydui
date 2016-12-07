@@ -23,8 +23,10 @@
     /* 添加倍屏标识，安卓为1 */
     docEl.setAttribute('data-dpr', window.navigator.appVersion.match(/iphone/gi) ? window.devicePixelRatio : 1);
 
-    /* IOS8以上给html添加hairline样式，以便特殊处理 */
     if (/iP(hone|od|ad)/.test(window.navigator.userAgent)) {
+        /* 添加IOS标识 */
+        doc.documentElement.classList.add('ios');
+        /* IOS8以上给html添加hairline样式，以便特殊处理 */
         if (parseInt(window.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
             doc.documentElement.classList.add('hairline');
     }
