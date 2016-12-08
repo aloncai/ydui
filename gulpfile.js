@@ -34,9 +34,9 @@ gulp.task('watch', function () {
 
 gulp.task('build:cssmin', ['less'], function () {
     gulp.src('src/css/ydui.css')
-        .pipe($.cssBase64({
-            extensionsAllowed: ['.ttf']
-        }))
+        //.pipe($.cssBase64({
+        //    extensionsAllowed: ['.ttf']
+        //}))
         .pipe($.cleanCss({keepSpecialComments: '*'}))
         .pipe($.header(banner, {pkg: pkg}))
         .pipe(gulp.dest('dist/build/css'));
