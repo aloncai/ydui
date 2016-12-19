@@ -7,7 +7,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
-    <link rel="stylesheet" href="../css/ydui.css?rev=f5918745c9b99a66511092860249206c"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=3ad9a84a528b26b2ede5582369fef97d"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
@@ -105,24 +105,24 @@
 
         <div class="m-celltitle">多选(checkbox改为radio样式通用)</div>
         <div class="m-cell">
-            <label class="cell-item" for="y1">
+            <label class="cell-item">
                 <span class="cell-left">多选一</span>
                 <span class="cell-right">
-                    <input type="checkbox" name="checkbox" id="y1"/>
+                    <input type="checkbox" name="checkbox"/>
                     <i class="cell-checkbox-icon"></i>
                 </span>
             </label>
-            <label class="cell-item" for="y2">
+            <label class="cell-item">
                 <span class="cell-left">多选二</span>
                 <span class="cell-right">
-                    <input type="checkbox" name="checkbox" id="y2"/>
+                    <input type="checkbox" name="checkbox"/>
                     <i class="cell-checkbox-icon"></i>
                 </span>
             </label>
-            <label class="cell-item" for="y3">
+            <label class="cell-item">
                 <span class="cell-left">多选三</span>
                 <span class="cell-right">
-                    <input type="checkbox" name="checkbox" id="y3"/>
+                    <input type="checkbox" name="checkbox"/>
                     <i class="cell-checkbox-icon"></i>
                 </span>
             </label>
@@ -130,17 +130,17 @@
 
         <div class="m-celltitle">单选(radio改为checkbox样式通用)</div>
         <div class="m-cell">
-            <label class="cell-item" for="x1">
+            <label class="cell-item">
                 <span class="cell-left">单选一</span>
                 <span class="cell-right">
-                    <input type="radio" name="radio" id="x1" checked/>
+                    <input type="radio" name="radio" checked/>
                     <i class="cell-radio-icon"></i>
                 </span>
             </label>
-            <label class="cell-item" for="x2">
+            <label class="cell-item">
                 <span class="cell-left">单选二</span>
                 <span class="cell-right">
-                    <input type="radio" name="radio" id="x2"/>
+                    <input type="radio" name="radio"/>
                     <i class="cell-radio-icon"></i>
                 </span>
             </label>
@@ -148,23 +148,17 @@
 
         <div class="m-celltitle">复选框（只兼容微信端第一种方法最简单）</div>
         <div class="m-cell">
-            <div class="cell-item">
-                <div class="cell-left">设为默认地址</div>
-                <label class="cell-right">
-                    <input type="checkbox" class="m-switch"/>
-                </label>
-            </div>
-            <div class="cell-item">
-                <div class="cell-left">兼容火狐写法</div>
-                <label class="cell-right">
-                    <input type="checkbox" class="m-switch-old" checked/>
-                    <span class="m-switch"></span>
-                </label>
-            </div>
             <label class="cell-item">
-                <span class="cell-left">整行可点击</span>
+                <span class="cell-left">设为默认地址</span>
                 <span class="cell-right">
                     <input type="checkbox" class="m-switch"/>
+                </span>
+            </label>
+            <label class="cell-item">
+                <span class="cell-left">兼容火狐写法</span>
+                <span class="cell-right">
+                    <input type="checkbox" class="m-switch-old" checked/>
+                    <span class="m-switch"></span>
                 </span>
             </label>
         </div>
