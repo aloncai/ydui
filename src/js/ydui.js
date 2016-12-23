@@ -2378,7 +2378,7 @@
         var _this = this,
             touches = _this.touches;
 
-        _this.$dragTip = $('<div class="pullfresh-dragtip"><span></span></div>');
+        _this.$dragTip = $('<div class="pullrefresh-dragtip"><span></span></div>');
 
         _this.$element.after(_this.$dragTip);
 
@@ -2484,11 +2484,11 @@
             return;
         }
 
-        _this.$dragTip.addClass('pullfresh-animation-timing');
+        _this.$dragTip.addClass('pullrefresh-animation-timing');
 
         if (touches.moveOffset >= _this.options.distance) {
             _this.moveDragTip(_this.options.distance / 1.5);
-            _this.$dragTip.find('span').addClass('pullfresh-loading');
+            _this.$dragTip.find('span').addClass('pullrefresh-loading');
             _this.triggerLoad();
             return;
         }
@@ -2518,7 +2518,7 @@
         var _this = this;
         _this.moveDragTip(0);
 
-        _this.$dragTip.find('span').removeClass('pullfresh-loading').css({'opacity': 0.5, 'transform': 'rotate(0deg)'});
+        _this.$dragTip.find('span').removeClass('pullrefresh-loading').css({'opacity': 0.5, 'transform': 'rotate(0deg)'});
     };
 
     PullRefresh.prototype.resetDragTip = function () {
@@ -2531,7 +2531,7 @@
             touches.moveOffset = 0;
             _this.moveDragTip(0);
             _this.resetLoading();
-            _this.$dragTip.removeClass('pullfresh-animation-timing');
+            _this.$dragTip.removeClass('pullrefresh-animation-timing');
         }, 150);
     };
 
@@ -2545,7 +2545,7 @@
 
         if (ls.getItem('LIST-PULLREFRESH-TIP') == 'YDUI')return;
 
-        _this.$tip = $('<div class="pullfresh-draghelp"><div><span>下拉更新</span></div></div>');
+        _this.$tip = $('<div class="pullrefresh-draghelp"><div><span>下拉更新</span></div></div>');
 
         _this.$tip.on('click.ydui.pullrefresh', function () {
             $(this).remove();
