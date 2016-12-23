@@ -4,7 +4,7 @@
 !function (window) {
     "use strict";
 
-    function PullRefresh (element, options) {
+    function PullRefresh(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, PullRefresh.DEFAULTS, options || {});
         this.init();
@@ -13,16 +13,14 @@
     PullRefresh.DEFAULTS = {
         loadListFn: null,
         initLoad: true,
-        dragDistance: 100,
-        dragTxt: '按住下拉',
-        doneTxt: '松开刷新',
-        loadingTxt: '加载中...'
+        distance: 100
     };
 
     PullRefresh.prototype.init = function () {
-        var _this = this;
+        var _this = this,
+            touches = _this.touches;
 
-        _this.$dragTip = $('<div class="list-dragtip"><span>' + _this.options.dragTxt + '</span></div>');
+        _this.$dragTip = $('<div class="pullfresh-dragtip"><span></span></div>');
 
         _this.$element.after(_this.$dragTip);
 
@@ -32,7 +30,13 @@
 
         _this.bindEvent();
 
-        _this.options.initLoad && _this.checkLoad();
+        if (_this.options.initLoad) {
+            touches.loading = true;
+
+            typeof _this.options.loadListFn == 'function' && _this.options.loadListFn().done(function () {
+                touches.loading = false;
+            });
+        }
     };
 
     PullRefresh.prototype.bindEvent = function () {
@@ -93,14 +97,16 @@
 
         _this.touches.isDraging = true;
 
-        _this.$dragTip.show().find('span').addClass('down');
-
         var deltaSlide = _touches.clientY - _this.touches.startClientY;
 
-        if (deltaSlide >= _this.options.dragDistance) {
-            _this.$dragTip.find('span').addClass('up').text(_this.options.doneTxt);
-            deltaSlide = _this.options.dragDistance;
+        _this.$dragTip.find('span').css('opacity', deltaSlide / 100);
+
+        if (deltaSlide >= _this.options.distance) {
+            deltaSlide = _this.options.distance;
         }
+
+        _this.$dragTip.find('span').css('transform', 'rotate(' + deltaSlide / 0.25 + 'deg)');
+
         _this.touches.moveOffset = deltaSlide;
 
         _this.moveDragTip(deltaSlide);
@@ -120,47 +126,59 @@
             return;
         }
 
-        _this.$dragTip.addClass('list-draganimation');
+        _this.$dragTip.addClass('pullfresh-animation-timing');
 
-        if (touches.moveOffset >= _this.options.dragDistance) {
-            _this.checkLoad();
+        if (touches.moveOffset >= _this.options.distance) {
+            _this.moveDragTip(_this.options.distance / 1.5);
+            _this.$dragTip.find('span').addClass('pullfresh-loading');
+            _this.triggerLoad();
             return;
         }
 
         _this.touches.isDraging = false;
 
-        _this.resetDragTipTxt();
+        _this.resetDragTip();
 
-        _this.moveDragTip(0);
+        _this.resetLoading();
     };
 
-    PullRefresh.prototype.checkLoad = function () {
+    PullRefresh.prototype.triggerLoad = function () {
         var _this = this,
             touches = _this.touches;
 
         touches.loading = true;
 
-        _this.$dragTip.find('span').removeClass('down up').text(_this.options.loadingTxt);
-
         typeof _this.options.loadListFn == 'function' && _this.options.loadListFn().done(function () {
-            touches.isDraging = false;
-            touches.loading = false;
-            _this.resetDragTipTxt();
-            _this.moveDragTip(0);
-            touches.moveOffset = 0;
+            setTimeout(function () {
+                _this.$dragTip.css({'transform': 'translate3d(0px, ' + (_this.options.distance / 1.5) + 'px, 0px) scale(0)'});
+                _this.resetDragTip();
+            }, 200);
         });
     };
 
-    PullRefresh.prototype.resetDragTipTxt = function () {
+    PullRefresh.prototype.resetLoading = function () {
         var _this = this;
+        _this.moveDragTip(0);
 
-        _this.$dragTip.one('webkitTransitionEnd.ydui.pullrefresh', function () {
-            $(this).removeClass('list-draganimation').hide().find('span').removeClass('down up').text(_this.options.dragTxt);
-        }).emulateTransitionEnd(150);
+        _this.$dragTip.find('span').removeClass('pullfresh-loading').css({'opacity': 0.5, 'transform': 'rotate(0deg)'});
+    };
+
+    PullRefresh.prototype.resetDragTip = function () {
+        var _this = this,
+            touches = _this.touches;
+
+        setTimeout(function () {
+            touches.isDraging = false;
+            touches.loading = false;
+            touches.moveOffset = 0;
+            _this.moveDragTip(0);
+            _this.resetLoading();
+            _this.$dragTip.removeClass('pullfresh-animation-timing');
+        }, 150);
     };
 
     PullRefresh.prototype.moveDragTip = function (y) {
-        this.$dragTip.css({'transform': 'translate3d(0,' + y + 'px,0)'});
+        this.$dragTip.css({'transform': 'translate3d(0,' + y + 'px,0) scale(1)'});
     };
 
     PullRefresh.prototype.initTip = function () {
@@ -169,7 +187,7 @@
 
         if (ls.getItem('LIST-PULLREFRESH-TIP') == 'YDUI')return;
 
-        _this.$tip = $('<div class="list-draghelp"><div><span>下拉更新</span></div></div>');
+        _this.$tip = $('<div class="pullfresh-draghelp"><div><span>下拉更新</span></div></div>');
 
         _this.$tip.on('click.ydui.pullrefresh', function () {
             $(this).remove();
@@ -183,7 +201,7 @@
         }, 5000);
     };
 
-    function Plugin (option) {
+    function Plugin(option) {
         return this.each(function () {
             var self = this;
             new PullRefresh(self, option);
