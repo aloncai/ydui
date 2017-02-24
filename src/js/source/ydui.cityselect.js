@@ -161,7 +161,6 @@
 
             _this.setNavTxt(tag, $this.text());
 
-
             var $nav = $cityElement.find('.cityselect-nav a'),
                 defaultSet = _this.defaultSet;
 

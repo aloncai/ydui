@@ -4,7 +4,7 @@
 !function (window) {
     "use strict";
 
-    function Spinner (element, options) {
+    function Spinner(element, options) {
         this.$element = $(element);
         this.options = $.extend({}, Spinner.DEFAULTS, options || {});
         this.init();
@@ -16,6 +16,7 @@
         minus: '.J_Del',
         unit: 1,
         max: 0,
+        min: -1,
         longpress: true,
         callback: null
     };
@@ -28,22 +29,14 @@
         _this.$add = $(options.add, _this.$element);
         _this.$minus = $(options.minus, _this.$element);
 
-        _this.checkParameters();
+        _this.changeParameters();
 
-        _this.initInputVal();
+        _this.checkParameters();
 
         _this.bindEvent();
     };
 
     Spinner.prototype.tapParams = {};
-
-    Spinner.prototype.initInputVal = function () {
-        var _this = this,
-            options = _this.options,
-            v = _this.$input.val();
-
-        _this.$input.val(!v || v % options.unit != 0 ? options.unit : v);
-    };
 
     Spinner.prototype.isNumber = function (val) {
         //return /^([0]|[1-9]\d*)(\.\d{1,2})?$/.test(val);
@@ -55,7 +48,7 @@
         return parseInt(val);
     };
 
-    Spinner.prototype.checkParameters = function () {
+    Spinner.prototype.changeParameters = function () {
 
         var _this = this,
             options = _this.options;
@@ -96,27 +89,88 @@
         });
     };
 
-    Spinner.prototype.setValue = function (type) {
+    Spinner.prototype.checkParameters = function () {
+        var _this = this,
+            options = _this.options,
+            value = _this.$input.val();
+
+        if (value) {
+            _this.setValue(value);
+        } else {
+            if (options.max < options.min && options.max != 0) {
+                options.max = options.min;
+            }
+
+            if (options.min < options.unit && options.min > 0) {
+                options.min = options.unit;
+            }
+            if (options.min % options.unit != 0 && options.min > 0) {
+                options.min = options.min - options.min % options.unit;
+            }
+
+            if (options.max < options.unit && options.max != 0) {
+                options.max = options.unit;
+            }
+            if (options.max % options.unit != 0) {
+                options.max = options.max - options.max % options.unit;
+            }
+            if (options.min < 0) {
+                options.min = options.unit;
+            }
+            _this.setValue(options.min);
+        }
+    };
+
+    Spinner.prototype.calculation = function (type) {
         var _this = this,
             options = _this.options,
             max = options.max,
             unit = options.unit,
+            min = options.min,
             $input = _this.$input,
             val = _this.FixNumber($input.val());
 
-        if (!_this.isNumber(val)) val = unit;
-
         if (!!$input.attr('readonly') || !!$input.attr('disabled'))return;
 
-        var newVal;
+        var newval;
         if (type == 'add') {
-            newVal = val + unit;
-            if (max != 0 && newVal > max)return;
+            newval = val + unit;
+            if (max != 0 && newval > max)return;
         } else {
-            newVal = val - unit;
-            if (newVal < unit)return;
+            newval = val - unit;
+            if (newval < min)return;
         }
-        val = newVal;
+
+        _this.setValue(newval);
+
+        options.longpress && _this.longpressHandler(type);
+    };
+
+    Spinner.prototype.longpressHandler = function (type) {
+        var _this = this;
+
+        var currentDate = new Date().getTime() / 1000,
+            intervalTime = currentDate - _this.tapStartTime;
+
+        if (intervalTime < 1) intervalTime = 0.5;
+
+        var secondCount = intervalTime * 10;
+        if (intervalTime == 30) secondCount = 50;
+        if (intervalTime >= 40) secondCount = 100;
+
+        _this.tapParams.timer = setTimeout(function () {
+            _this.calculation(type);
+        }, 1000 / secondCount);
+    };
+
+    Spinner.prototype.setValue = function (val) {
+        var _this = this,
+            options = _this.options,
+            max = options.max,
+            unit = options.unit,
+            min = options.min < 0 ? unit : options.min;
+
+        if (!/^(([1-9]\d*)|0)$/.test(val)) val = max;
 
         if (val > max && max != 0) val = max;
 
@@ -125,27 +179,11 @@
             if (val > max && max != 0) val -= unit;
         }
 
-        if (val < unit) val = unit;
+        if (val < min) val = min - min % unit;
 
         _this.$input.val(val);
 
         typeof options.callback == 'function' && options.callback(val, _this.$input);
-
-        if (options.longpress) {
-
-            var currentDate = new Date().getTime() / 1000,
-                intervalTime = currentDate - _this.tapStartTime;
-
-            if (intervalTime < 1) intervalTime = 0.5;
-
-            var secondCount = intervalTime * 10;
-            if (intervalTime == 30) secondCount = 50;
-            if (intervalTime >= 40) secondCount = 100;
-
-            _this.tapParams.timer = setTimeout(function () {
-                _this.setValue(type);
-            }, 1000 / secondCount);
-        }
     };
 
     Spinner.prototype.bindEvent = function () {
@@ -153,13 +191,11 @@
             options = _this.options,
             isMobile = YDUI.device.isMobile,
             mousedownEvent = 'mousedown.ydui.spinner',
-            mouseupEvent = 'mouseup.ydui.spinner',
-            mouseleaveEvent = 'mouseleave.ydui.spinner';
+            mouseupEvent = 'mouseup.ydui.spinner';
 
         if (isMobile) {
             mousedownEvent = 'touchstart.ydui.spinner';
             mouseupEvent = 'touchend.ydui.spinner';
-            mouseleaveEvent = 'touchcencel.ydui.spinner';
         }
 
         _this.$add.on(mousedownEvent, function (e) {
@@ -170,12 +206,10 @@
 
                 _this.$add.on(mouseupEvent, function () {
                     _this.clearTapTimer();
-                }).on(mouseleaveEvent, function () {
-                    _this.clearTapHandlers();
                 });
             }
 
-            _this.setValue('add');
+            _this.calculation('add');
         });
 
         _this.$minus.on(mousedownEvent, function (e) {
@@ -187,12 +221,10 @@
 
                 _this.$minus.on(mouseupEvent, function () {
                     _this.clearTapTimer();
-                }).on(mouseleaveEvent, function () {
-                    _this.clearTapHandlers();
                 });
             }
 
-            _this.setValue('minus');
+            _this.calculation('minus');
         });
 
         _this.$input.on('change.ydui.spinner', function () {
@@ -210,17 +242,7 @@
         clearTimeout(_this.tapParams.timer);
     };
 
-    Spinner.prototype.clearTapHandlers = function () {
-        var _this = this;
-
-        _this.$add.off('mouseup.ydui.spinner', function () {
-            _this.clearTapTimer();
-        }).off('mouseleave.ydui.spinner', function () {
-            _this.clearTapHandlers();
-        });
-    };
-
-    function Plugin (option) {
+    function Plugin(option) {
         var args = Array.prototype.slice.call(arguments, 1);
 
         return this.each(function () {

@@ -31,13 +31,22 @@
             <span class="demo-spinner-title">Javascript API调用（设置最大值为75，累计值为3）</span>
             <span class="m-spinner" id="J_Quantity">
                 <a href="javascript:;" class="J_Del"></a>
-                <input type="text" class="J_Input" value="1" placeholder=""/>
+                <input type="text" class="J_Input" placeholder=""/>
                 <a href="javascript:;" class="J_Add"></a>
             </span>
         </div>
 
         <div class="demo-spinner demo-small-pitch">
-            <span class="demo-spinner-title">Data API调用（不设置最大值和累计值，默认累计值为1）</span>
+            <span class="demo-spinner-title">Data API调用（设置最小值为6，累计值为3）</span>
+            <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', min: 6, unit: 3}">
+                <a href="javascript:;" class="J_Del"></a>
+                <input type="text" class="J_Input" placeholder=""/>
+                <a href="javascript:;" class="J_Add"></a>
+            </span>
+        </div>
+
+        <div class="demo-spinner demo-small-pitch">
+            <span class="demo-spinner-title">不设置最大值和累计值，默认累计值为1</span>
             <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del'}">
                 <a href="javascript:;" class="J_Del"></a>
                 <input type="text" class="J_Input" placeholder=""/>
@@ -67,7 +76,7 @@
             <span class="demo-spinner-title">禁用长按快速加减（设置参数longpress为false即可）</span>
             <span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del', longpress: false}">
                 <a href="javascript:;" class="J_Del"></a>
-                <input type="text" class="J_Input" value="1" placeholder=""/>
+                <input type="text" class="J_Input" placeholder=""/>
                 <a href="javascript:;" class="J_Add"></a>
             </span>
         </div>

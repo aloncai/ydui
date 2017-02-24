@@ -72,18 +72,18 @@
 
         if (_this.scrolling)return;
 
+        if (_this.isScrollTop()) {
+            _this.setClass(0);
+            return;
+        }
+
+        if (_this.isScrollBottom()) {
+            _this.setClass(_this.$navItem.length - 1);
+            return;
+        }
+
         _this.$contentItem.each(function () {
             var $this = $(this);
-
-            if (_this.isScrollTop()) {
-                _this.setClass(0);
-                return;
-            }
-
-            if (_this.isScrollBottom()) {
-                _this.setClass(_this.$navItem.length - 1);
-                return;
-            }
 
             if ($this.offset().top <= _this.contentOffsetTop) {
                 _this.setClass($this.index());

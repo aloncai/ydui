@@ -25,9 +25,9 @@
             <input type="button" class="btn-block btn-primary" id="J_Confirm" value="Confirm"/>
             <input type="button" class="btn-block btn-primary" id="J_ConfirmCustom" value="Confirm->Custom"/>
             <input type="button" class="btn-block btn-hollow" id="J_Alert" value="Alert"/>
-            <input type="button" class="btn-block btn-danger" id="J_ToastS" value="toast->Success"/>
-            <input type="button" class="btn-block btn-danger" id="J_ToastE" value="toast->Error"/>
-            <input type="button" class="btn-block btn-danger" id="J_ToastN" value="toast->None"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastS" value="Toast->Success"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastE" value="Toast->Error"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastN" value="Toast->None"/>
             <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
             <input type="button" class="btn-block btn-hollow" id="J_Notify" value="Notify"/>
         </div>
@@ -55,7 +55,7 @@
                     txt: '取消',
                     color: false, //false:黑色  true:绿色 或 使用颜色值
                     callback: function () {
-                        dialog.toast('你点了取消', 'success', 1000);
+                        dialog.toast('你点了取消', 'none', 1000);
                     }
                 },
                 {
@@ -63,14 +63,14 @@
                     stay: true, //是否保留提示框
                     color: '#CCC', //使用颜色值
                     callback: function () {
-                        dialog.toast('别犹豫了', 'success', 1000);
+                        dialog.toast('别犹豫了', 'none', 1000);
                     }
                 },
                 {
                     txt: '确定',
                     color: true,
                     callback: function () {
-                        dialog.toast('你点了确定', 'success', 1000);
+                        dialog.toast('你点了确定', 'none', 1000);
                     }
                 }
             ]);

@@ -51,7 +51,7 @@
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js?t=3.1415926"></script>
+<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
     /**
@@ -62,7 +62,8 @@
 
         $target.citySelect();
 
-        $target.on('click', function () {
+        $target.on('click', function (event) {
+            event.stopPropagation();
             $target.citySelect('open');
         });
 
@@ -82,7 +83,8 @@
             area: '天山区'
         });
 
-        $target.on('click', function () {
+        $target.on('click', function (event) {
+            event.stopPropagation();
             $target.citySelect('open');
         });
 
