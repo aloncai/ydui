@@ -5,6 +5,10 @@
   "description": "YDUI, A focus on aesthetics, and the performance of efficient mobile terminal & WeChat UI. ",
   "author": "Ooo_My_God",
   "homepage": "http://ydcss.github.io/ydui",
+  "scripts": {
+    "dev": "gulp dev --gulpfile ./gulpfile.js",
+    "build": "gulp --gulpfile ./gulpfile.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ydcss/ydui.git"
@@ -12,6 +16,16 @@
   "bugs": {
     "url": "https://github.com/ydcss/ydui/issues"
   },
+  "keywords": [
+    "YDUI Touch",
+    "ui",
+    "ydui",
+    "component",
+    "components",
+    "framework",
+    "mobile",
+    "mobile ui"
+  ],
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",

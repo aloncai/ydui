@@ -29,9 +29,9 @@
     color: #505050;
     font-size: .26rem;
     text-align: justify;
+    font-weight: 800;
   }
   .list-mes-item {
-    padding-top: .06rem;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -71,7 +71,6 @@
     .list-mes {
       padding: .1rem;
       .list-title {
-        font-weight: bold;
         .text-overflow();
         height: .32rem;
       }
@@ -80,7 +79,6 @@
 }
 
 .list-theme2 {
-  padding-bottom: .5rem;
   .list-item {
     width: 50%;
     float: left;
@@ -102,7 +100,6 @@
 }
 
 .list-theme3 {
-  padding-bottom: .5rem;
   .list-item {
     width: 50%;
     float: left;
@@ -120,10 +117,7 @@
       padding-top: .1rem;
       .list-title {
         .text-overflow();
-        height: .3rem;
-      }
-      .list-mes-item {
-        padding-top: 4px;
+        height: .36rem;
       }
     }
     &:active {
@@ -173,7 +167,7 @@
     .list-mes {
       padding: .2rem 0 .15rem;
       .list-mes-item {
-        padding-top: .1rem;
+        padding-top: .06rem;
       }
     }
   }
@@ -227,7 +221,7 @@
 .list-donetip {
   font-size: .24rem;
   text-align: center;
-  padding: .2rem 0;
+  padding: .25rem 0;
   color: #777;
 }
 
@@ -249,7 +243,7 @@
   top: -46px;
   left: 50%;
   z-index: 996;
-  transform: translate3d(0px, 0px, 0px) scale(1);
+  transform: translate3d(0px, 0px, 0px);
   width: 42px;
   height: 42px;
   line-height: 42px;
@@ -259,7 +253,6 @@
   background-color: #FFF;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
   > span {
-    opacity: .5;
     display: flex;
     justify-content: center;
     align-items: center;

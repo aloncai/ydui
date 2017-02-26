@@ -516,7 +516,7 @@ input[type="submit"].btn-hollow {
   border-radius: 3px;
 }
 .m-toast.none-icon .toast-content {
-  padding: 0 20px 10px 20px;
+  padding: 0 36px 10px 36px;
 }
 .toast-content {
   font-size: 15px;
@@ -911,7 +911,7 @@ input[type="submit"].btn-hollow {
   margin-right: .1rem;
 }
 .cell-icon img {
-  width: 0.42rem;
+  height: .4rem;
   margin-right: .1rem;
 }
 .cell-arrow:after {
@@ -1186,7 +1186,7 @@ input[type="submit"].btn-hollow {
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
   font-family: 'YDUI-ICONS';
-  font-size: .36rem;
+  font-size: inherit;
 }
 .icon-footmark:before {
   content: '\e636';
@@ -1197,10 +1197,10 @@ input[type="submit"].btn-hollow {
 .icon-verifycode:before {
   content: '\e632';
 }
-.icon-star:before {
+.icon-star-outline:before {
   content: '\e630';
 }
-.icon-star-crt:before {
+.icon-star:before {
   content: '\e631';
 }
 .icon-weibo:before {
@@ -1212,10 +1212,10 @@ input[type="submit"].btn-hollow {
 .icon-next:before {
   content: '\e62d';
 }
-.icon-home:before {
+.icon-home-outline:before {
   content: '\e62c';
 }
-.icon-home-crt:before {
+.icon-home:before {
   content: '\e63d';
 }
 .icon-weixin:before {
@@ -1236,10 +1236,10 @@ input[type="submit"].btn-hollow {
 .icon-prev:before {
   content: '\e624';
 }
-.icon-like:before {
+.icon-like-outline:before {
   content: '\e639';
 }
-.icon-like-crt:before {
+.icon-like:before {
   content: '\e63a';
 }
 .icon-setting:before {
@@ -1263,10 +1263,10 @@ input[type="submit"].btn-hollow {
 .icon-more:before {
   content: '\e618';
 }
-.icon-shopcart:before {
+.icon-shopcart-outline:before {
   content: '\e61a';
 }
-.icon-shopcart-crt:before {
+.icon-shopcart:before {
   content: '\e619';
 }
 .icon-checkoff:before {
@@ -1281,16 +1281,16 @@ input[type="submit"].btn-hollow {
 .icon-clock:before {
   content: '\e61e';
 }
-.icon-ucenter:before {
+.icon-ucenter-outline:before {
   content: '\e616';
 }
-.icon-ucenter-crt:before {
+.icon-ucenter:before {
   content: '\e615';
 }
-.icon-warn:before {
+.icon-warn-outline:before {
   content: '\e613';
 }
-.icon-warn-crt:before {
+.icon-warn:before {
   content: '\e614';
 }
 .icon-share1:before {
@@ -1314,10 +1314,10 @@ input[type="submit"].btn-hollow {
 .icon-good:before {
   content: '\e61b';
 }
-.icon-shield:before {
+.icon-shield-outline:before {
   content: '\e608';
 }
-.icon-shield-crt:before {
+.icon-shield:before {
   content: '\e60a';
 }
 .icon-qrscan:before {
@@ -1335,10 +1335,10 @@ input[type="submit"].btn-hollow {
 .icon-phone3:before {
   content: '\e63b';
 }
-.icon-error:before {
+.icon-error-outline:before {
   content: '\e602';
 }
-.icon-error-crt:before {
+.icon-error:before {
   content: '\e603';
 }
 .icon-play:before {
@@ -1605,9 +1605,9 @@ input[type="submit"].btn-hollow {
   color: #505050;
   font-size: .26rem;
   text-align: justify;
+  font-weight: 800;
 }
 .list-mes .list-mes-item {
-  padding-top: .06rem;
   overflow: hidden;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1666,16 +1666,12 @@ input[type="submit"].btn-hollow {
   padding: .1rem;
 }
 .list-theme1 .list-item .list-mes .list-title {
-  font-weight: bold;
   word-wrap: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   text-align: justify;
   height: .32rem;
-}
-.list-theme2 {
-  padding-bottom: .5rem;
 }
 .list-theme2 .list-item {
   width: 50%;
@@ -1698,9 +1694,6 @@ input[type="submit"].btn-hollow {
   overflow: hidden;
   text-align: justify;
   height: .36rem;
-}
-.list-theme3 {
-  padding-bottom: .5rem;
 }
 .list-theme3 .list-item {
   width: 50%;
@@ -1746,10 +1739,7 @@ input[type="submit"].btn-hollow {
   white-space: nowrap;
   overflow: hidden;
   text-align: justify;
-  height: .3rem;
-}
-.list-theme3 .list-item .list-mes .list-mes-item {
-  padding-top: 4px;
+  height: .36rem;
 }
 .list-theme3 .list-item:active {
   background: #FFF;
@@ -1833,7 +1823,7 @@ input[type="submit"].btn-hollow {
   padding: .2rem 0 .15rem;
 }
 .list-theme5 .list-item .list-mes .list-mes-item {
-  padding-top: .1rem;
+  padding-top: .06rem;
 }
 @media screen and (min-width: 768px) {
   .list-theme1 {
@@ -1877,7 +1867,7 @@ input[type="submit"].btn-hollow {
 .list-donetip {
   font-size: .24rem;
   text-align: center;
-  padding: .2rem 0;
+  padding: .25rem 0;
   color: #777;
 }
 .pullrefresh-animation-timing {
@@ -1911,8 +1901,8 @@ input[type="submit"].btn-hollow {
   top: -46px;
   left: 50%;
   z-index: 996;
-  -webkit-transform: translate3d(0px, 0px, 0px) scale(1);
-  transform: translate3d(0px, 0px, 0px) scale(1);
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
   width: 42px;
   height: 42px;
   line-height: 42px;
@@ -1923,7 +1913,6 @@ input[type="submit"].btn-hollow {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 .pullrefresh-dragtip > span {
-  opacity: .5;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
