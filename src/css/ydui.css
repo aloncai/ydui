@@ -649,7 +649,7 @@ input[type="submit"].btn-hollow {
   }
 }
 .m-loading {
-  border-radius: 5px;
+  border-radius: 4px;
   color: #FFF;
   background-color: rgba(40, 40, 40, 0.8);
   -webkit-animation: zoomIn .1s ease forwards;
@@ -1135,7 +1135,7 @@ input[type="submit"].btn-hollow {
   float: left;
   position: relative;
   z-index: 0;
-  padding: 0.35rem 0;
+  padding: 0.32rem 0;
   font-size: 0.28rem;
 }
 .grids-item:after {
@@ -1671,7 +1671,7 @@ input[type="submit"].btn-hollow {
   white-space: nowrap;
   overflow: hidden;
   text-align: justify;
-  height: .32rem;
+  height: .36rem;
 }
 .list-theme2 .list-item {
   width: 50%;
@@ -1732,6 +1732,7 @@ input[type="submit"].btn-hollow {
 }
 .list-theme3 .list-item .list-mes {
   padding-top: .1rem;
+  box-sizing: content-box;
 }
 .list-theme3 .list-item .list-mes .list-title {
   word-wrap: normal;
@@ -1739,7 +1740,7 @@ input[type="submit"].btn-hollow {
   white-space: nowrap;
   overflow: hidden;
   text-align: justify;
-  height: .36rem;
+  height: .35rem;
 }
 .list-theme3 .list-item:active {
   background: #FFF;
