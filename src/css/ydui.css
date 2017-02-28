@@ -1528,10 +1528,10 @@ input[type="submit"].btn-hollow {
   align-items: center;
   color: #979797;
 }
-.tabbar-item.tabbar-crt {
+.tabbar-item.tabbar-active {
   color: #09BB07;
 }
-.tabbar-item.tabbar-crt .tabbar-icon {
+.tabbar-item.tabbar-active .tabbar-icon {
   color: inherit;
 }
 .tabbar-item .badge {
