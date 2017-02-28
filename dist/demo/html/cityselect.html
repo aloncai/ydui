@@ -7,7 +7,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <meta content="telephone=no" name="format-detection"/>
-    <link rel="stylesheet" href="../css/ydui.css?rev=36f00eb491235af3e3279d90b3919413"/>
+    <link rel="stylesheet" href="../css/ydui.css?rev=2053933654803373452839e3161560f5"/>
     <link rel="stylesheet" href="../css/demo.css"/>
     <script src="../js/ydui.flexible.js"></script>
 </head>
@@ -51,7 +51,7 @@
 
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js?t=3.1415926"></script>
+<script src="http://static.ydcss.com/uploads/ydui/ydui.citys.js"></script>
 <script src="../js/ydui.js"></script>
 <script>
     /**
@@ -62,7 +62,8 @@
 
         $target.citySelect();
 
-        $target.on('click', function () {
+        $target.on('click', function (event) {
+            event.stopPropagation();
             $target.citySelect('open');
         });
 
@@ -82,7 +83,8 @@
             area: '天山区'
         });
 
-        $target.on('click', function () {
+        $target.on('click', function (event) {
+            event.stopPropagation();
             $target.citySelect('open');
         });
 
