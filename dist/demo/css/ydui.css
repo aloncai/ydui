@@ -683,13 +683,12 @@ input[type="submit"].btn-hollow {
   text-overflow: ellipsis;
 }
 .m-celltitle {
-  padding: 0.15rem 0.24rem 0.1rem;
+  padding: 0 0.24rem 0.1rem;
   font-size: 0.3rem;
   text-align: left;
   color: #888;
   position: relative;
   z-index: 1;
-  margin-top: .2rem;
 }
 .m-celltitle:after {
   content: '';
@@ -709,6 +708,7 @@ input[type="submit"].btn-hollow {
   background-color: #FFF;
   position: relative;
   z-index: 1;
+  margin-bottom: .35rem;
 }
 .m-cell:after {
   content: '';
