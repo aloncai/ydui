@@ -678,13 +678,6 @@
 
         $dom.find('.m-confirm').append($btnBox);
 
-        $('body').on('click', '#' + ID, function (e) {
-            e.stopPropagation();
-
-            ydui.util.pageScroll.unlock();
-            $(this).remove();
-        });
-
         // 禁止滚动屏幕【移动端】
         ydui.util.pageScroll.lock();
 
@@ -704,7 +697,7 @@
 
         var $dom = $('' +
             '<div id="' + ID + '">' +
-            '   <div class="mask-black-dialog J_Mask">' +
+            '   <div class="mask-black-dialog">' +
             '       <div class="m-confirm m-alert">' +
             '           <div class="confirm-bd">' + (mes || 'YDUI Touch') + '</div>' +
             '           <div class="confirm-ft">' +
@@ -722,11 +715,6 @@
             $dom.remove();
             ydui.util.pageScroll.unlock();
             typeof callback === 'function' && callback();
-        });
-
-        $dom.find('.J_Mask').on('click', function () {
-            $dom.remove();
-            ydui.util.pageScroll.unlock();
         });
     };
 
