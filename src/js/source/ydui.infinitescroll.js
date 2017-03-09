@@ -64,7 +64,8 @@
             if (!options.backposition) {
                 _this.loadList();
             } else {
-                !util.localStorage.get(_this.backParamsKey) && _this.loadList();
+                // !util.localStorage.get(_this.backParamsKey) && _this.loadList();
+                !util.sessionStorage.get(_this.backParamsKey) && _this.loadList();
             }
         }
 
