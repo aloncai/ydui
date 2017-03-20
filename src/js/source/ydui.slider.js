@@ -309,6 +309,7 @@
                 // --为左移，++为右移
                 _this.setTranslate(speed, -((moveOffset > 0 ? --_this.index : ++_this.index) * _width));
             }
+            _this.autoPlay();
         }
     };
 

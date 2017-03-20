@@ -1930,6 +1930,9 @@
 
             // 判断跳转前数据是否加载完毕
             if (i == pageTotal && _list.length < _this.options.pageSize) {
+                _this.$element.append('<div class="list-donetip">' + _this.options.doneTxt + '</div>');
+                _this.$loading.hide();
+                _this.loading = false;
                 _this.isDone = true;
             }
         }
@@ -3309,6 +3312,7 @@
                 // --为左移，++为右移
                 _this.setTranslate(speed, -((moveOffset > 0 ? --_this.index : ++_this.index) * _width));
             }
+            _this.autoPlay();
         }
     };
 

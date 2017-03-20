@@ -232,6 +232,9 @@
 
             // 判断跳转前数据是否加载完毕
             if (i == pageTotal && _list.length < _this.options.pageSize) {
+                _this.$element.append('<div class="list-donetip">' + _this.options.doneTxt + '</div>');
+                _this.$loading.hide();
+                _this.loading = false;
                 _this.isDone = true;
             }
         }
