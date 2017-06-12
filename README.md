@@ -1,3 +1,6 @@
+##### △（因个人原因，jQuery版本的YDUI暂定维护，给你带来不便，还请谅解。）
+
+
 #### YDUI，一只注重审美，且性能高效的移动端&微信UI。 
 
 Home: <a href="http://www.ydui.org">http://www.ydui.org</a>  
